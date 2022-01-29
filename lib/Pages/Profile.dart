@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:tenniston/Pages/RecentMacthesPages.dart';
 import 'package:tenniston/components/MatchCard.dart';
 import 'package:tenniston/components/ProfileCard.dart';
 import 'package:tenniston/components/StatsTile.dart';
@@ -34,6 +35,67 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     final mq = MediaQuery.of(context).size;
     return Scaffold(
+      bottomNavigationBar: SizedBox(
+        height: 58,
+        child: Align(
+          alignment: Alignment.center,
+          child: BottomNavigationBar(
+              selectedItemColor: Color(0xff31A05F),
+              unselectedItemColor: Color(0xff808080),
+              selectedFontSize: 10,
+              unselectedFontSize: 10,
+              showUnselectedLabels: true,
+              currentIndex: 3,
+              showSelectedLabels: true,
+              type: BottomNavigationBarType.fixed,
+              items: [
+                BottomNavigationBarItem(
+                    label: ("Matches"),
+                    icon: Padding(
+                      padding: const EdgeInsets.only(bottom: 5.0),
+                      child: Image.asset(
+                        "assets/Vector (3).png",
+                        height: 18,
+                        width: 18,
+                        fit: BoxFit.cover,
+                      ),
+                    )),
+                BottomNavigationBarItem(
+                    label: ("Schedule"),
+                    icon: Padding(
+                      padding: const EdgeInsets.only(bottom: 5.0),
+                      child: Image.asset(
+                        "assets/Vector (2).png",
+                        height: 18,
+                        width: 18,
+                        fit: BoxFit.cover,
+                      ),
+                    )),
+                BottomNavigationBarItem(
+                    label: ("Stats"),
+                    icon: Padding(
+                      padding: const EdgeInsets.only(bottom: 5.0),
+                      child: Image.asset(
+                        "assets/Active (1).png",
+                        height: 18,
+                        width: 18,
+                        fit: BoxFit.cover,
+                      ),
+                    )),
+                BottomNavigationBarItem(
+                    label: ("Profile"),
+                    icon: Padding(
+                      padding: const EdgeInsets.only(bottom: 5.0),
+                      child: Image.asset(
+                        "assets/Active (2).png",
+                        height: 18,
+                        width: 18,
+                        fit: BoxFit.cover,
+                      ),
+                    ))
+              ]),
+        ),
+      ),
       body: Container(
         height: mq.height,
         child: Query(
@@ -134,13 +196,21 @@ class _ProfilePageState extends State<ProfilePage> {
                           style: GoogleFonts.poppins(
                               fontSize: 16, color: Color(0xff263238)),
                         ),
-                        Text("See All")
+                        GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (_) => RecentMatchesPage()));
+                            },
+                            child: Text("See All"))
                       ],
                     ),
                   ),
-                  for (int i = 0; i < 5; i++)
+                  for (int i = 0; i < 2; i++)
                     Padding(
-                      padding: const EdgeInsets.all(16.0),
+                      padding:
+                          const EdgeInsets.only(left: 16.0, right: 16, top: 10),
                       child: MatchCard(),
                     )
                 ],
