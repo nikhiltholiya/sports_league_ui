@@ -61,6 +61,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         "assets/Vector (2).png",
                         height: 18,
                         width: 18,
+                        color: cuurent_index == 0 ? Colors.green : Colors.grey,
                         fit: BoxFit.cover,
                       ),
                     )),
@@ -69,9 +70,10 @@ class _ProfilePageState extends State<ProfilePage> {
                     icon: Padding(
                       padding: const EdgeInsets.only(bottom: 5.0),
                       child: Image.asset(
-                        "assets/Active (2).png",
+                        "assets/Active (3).png",
                         height: 18,
                         width: 18,
+                        color: cuurent_index == 1 ? Colors.green : Colors.grey,
                         fit: BoxFit.cover,
                       ),
                     ))
