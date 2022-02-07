@@ -12,7 +12,7 @@ class _MatchCardState extends State<MatchCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 151,
+      height: 155,
       decoration: BoxDecoration(
           border: Border.all(color: Color.fromRGBO(128, 128, 128, 0.1)),
           borderRadius: BorderRadius.circular(12),

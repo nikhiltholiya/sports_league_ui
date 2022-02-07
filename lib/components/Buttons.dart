@@ -13,7 +13,7 @@ class _ProfileButtonsState extends State<ProfileButtons> {
   @override
   Widget build(BuildContext context) {
     return MaterialButton(
-      minWidth: 146,
+      minWidth: MediaQuery.of(context).size.width * 0.35,
       height: 44,
       onPressed: () {},
       color: widget.primary ? Color(0xff31A05F) : Colors.white,
