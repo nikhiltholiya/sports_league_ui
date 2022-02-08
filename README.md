@@ -7,9 +7,12 @@
 4. Clone this Repo
 
 # How to run
-
+Cancel changes
 1. Open the emulator or connect your device 
 2. Run the following command ``` flutter run lib/main.dart ```
+
+# How to start simulator
+open -a Simulator
 
 # Connect to API
 
