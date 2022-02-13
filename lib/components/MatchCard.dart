@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class MatchCard extends StatefulWidget {
-  const MatchCard({Key? key}) : super(key: key);
+  final playerOneName, playerTwoName, scores;
+  const MatchCard(
+      {Key? key, this.playerOneName, this.playerTwoName, this.scores})
+      : super(key: key);
 
   @override
   _MatchCardState createState() => _MatchCardState();
@@ -29,9 +32,13 @@ class _MatchCardState extends State<MatchCard> {
           ),
           matchCardPlayer(
             isActive: true,
+            playerName: widget.playerOneName,
+            scores: widget.scores,
           ),
           matchCardPlayer(
             isActive: false,
+            playerName: widget.playerTwoName,
+            scores: widget.scores,
           )
         ],
       ),
@@ -40,10 +47,12 @@ class _MatchCardState extends State<MatchCard> {
 }
 
 class matchCardPlayer extends StatelessWidget {
-  final isActive;
+  final isActive, playerName, scores;
   const matchCardPlayer({
     Key? key,
     this.isActive,
+    this.playerName,
+    this.scores,
   }) : super(key: key);
 
   @override
@@ -68,7 +77,7 @@ class matchCardPlayer extends StatelessWidget {
           width: 12,
         ),
         Text(
-          "John S",
+          playerName.toString(),
           style: GoogleFonts.poppins(
               color: Color(0xff263238),
               fontSize: 15,
@@ -79,7 +88,8 @@ class matchCardPlayer extends StatelessWidget {
           Padding(
             padding: EdgeInsets.only(left: 10),
             child: Text(
-              (i + 5).toString(),
+              scores[i]["node"][isActive ? "playerOneScore" : "playerTwoScore"]
+                  .toString(),
               style: GoogleFonts.poppins(
                   color: Color(0xff263238),
                   fontWeight: FontWeight.w600,

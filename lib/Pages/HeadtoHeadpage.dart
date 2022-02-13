@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:tenniston/Pages/HeadtoHeadDetails.dart';
 import 'package:tenniston/components/HeadToHead.dart';
 import 'package:tenniston/components/MatchCard.dart';
 
@@ -40,7 +41,14 @@ class _HeadtoHeadpageState extends State<HeadtoHeadpage> {
             for (int i = 0; i < 10; i++)
               Padding(
                 padding: const EdgeInsets.only(top: 12),
-                child: HeadToHead(),
+                child: InkWell(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => HeadToHeadDetails()));
+                    },
+                    child: HeadToHead()),
               )
           ],
         ),

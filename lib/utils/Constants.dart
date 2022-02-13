@@ -16,3 +16,34 @@ const String homepageQuery = """
     }
   }
 """;
+const String matchesQuery = """
+  query (\$userSearch: String!) {
+    allMatches(userSearch:\$userSearch){
+      edges {
+      node {
+        id
+        matchId
+        matchSet(first: 5) {
+          edges {
+            node {
+              id
+              playerOneScore
+              playerTwoScore
+            }
+          }
+        }
+        playerOne {
+          firstName
+          userId
+          lastName
+        }
+        playerTwo {
+          userId
+          lastName
+          firstName
+        }
+      }
+    }
+    }
+  }
+""";

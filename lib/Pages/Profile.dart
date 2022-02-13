@@ -21,6 +21,7 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   String readRepositories = Constants.homepageQuery;
   int cuurent_index = 1;
+  var dataRecent;
   @override
   Widget build(BuildContext context) {
     final mq = MediaQuery.of(context).size;
@@ -102,7 +103,6 @@ class _ProfilePageState extends State<ProfilePage> {
                       return Text('Loading');
                     }
                     var data = result.data;
-                    print(data);
                     return ListView(
                       children: [
                         Container(
@@ -196,19 +196,56 @@ class _ProfilePageState extends State<ProfilePage> {
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                            builder: (_) =>
-                                                RecentMatchesPage()));
+                                            builder: (_) => RecentMatchesPage(
+                                                recentData: dataRecent)));
                                   },
                                   child: Text("See All"))
                             ],
                           ),
                         ),
-                        for (int i = 0; i < 2; i++)
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                left: 16.0, right: 16, top: 10),
-                            child: MatchCard(),
+                        Query(
+                          builder: (result, {fetchMore, refetch}) {
+                            if (result.hasException) {
+                              return Text(result.exception.toString());
+                            }
+
+                            if (result.isLoading) {
+                              return Text('Loading');
+                            }
+                            print(result.data!["allMatches"]["edges"][0]["node"]
+                                ["matchSet"]);
+                            dataRecent = result.data;
+                            return Column(
+                              children: [
+                                for (int i = 0; i < 2; i++)
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 16.0, right: 16, top: 10),
+                                    child: MatchCard(
+                                      scores: result.data!["allMatches"]
+                                              ["edges"][i]["node"]["matchSet"]
+                                          ["edges"],
+                                      playerOneName: result.data!["allMatches"]
+                                              ["edges"][i]["node"]["playerOne"]
+                                          ["firstName"],
+                                      playerTwoName: result.data!["allMatches"]
+                                              ["edges"][i]["node"]["playerTwo"]
+                                          ["firstName"],
+                                    ),
+                                  ),
+                              ],
+                            );
+                          },
+                          options: QueryOptions(
+                            document: gql(Constants
+                                .matchesQuery), // this is the query string you just created
+                            variables: {
+                              'userSearch':
+                                  "bcb1a25f-1bf1-4d98-b77d-b52df8e13a39",
+                            },
+                            pollInterval: Duration(seconds: 100),
                           ),
+                        ),
                         SizedBox(
                           height: 20,
                         ),

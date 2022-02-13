@@ -3,7 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:tenniston/components/MatchCard.dart';
 
 class RecentMatchesPage extends StatefulWidget {
-  const RecentMatchesPage({Key? key}) : super(key: key);
+  final recentData;
+  const RecentMatchesPage({Key? key, this.recentData}) : super(key: key);
 
   @override
   _RecentMatchesPageState createState() => _RecentMatchesPageState();
@@ -52,8 +53,18 @@ class _RecentMatchesPageState extends State<RecentMatchesPage> {
             for (int i = 0; i < 10; i++)
               Padding(
                 padding: const EdgeInsets.only(top: 12),
-                child: MatchCard(),
-              )
+                child: MatchCard(
+                  scores: widget.recentData!["allMatches"]["edges"][i]["node"]
+                      ["matchSet"]["edges"],
+                  playerOneName: widget.recentData!["allMatches"]["edges"][i]
+                      ["node"]["playerOne"]["firstName"],
+                  playerTwoName: widget.recentData!["allMatches"]["edges"][i]
+                      ["node"]["playerTwo"]["firstName"],
+                ),
+              ),
+            SizedBox(
+              height: 30,
+            )
           ],
         ),
       ),
