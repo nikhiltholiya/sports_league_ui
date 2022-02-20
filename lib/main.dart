@@ -4,7 +4,7 @@ import 'package:graphql_flutter/graphql_flutter.dart';
 
 void main() {
   final HttpLink httpLink = HttpLink(
-    'http://10.0.2.2:8000/graphql/',
+    'http://0.0.0.0:8000/graphql/',
   );
   final AuthLink authLink = AuthLink(
     getToken: () async => '',

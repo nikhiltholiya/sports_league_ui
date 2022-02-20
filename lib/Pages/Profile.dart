@@ -90,7 +90,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     document: gql(
                         readRepositories), // this is the query string you just created
                     variables: {
-                      'userId': "bcb1a25f-1bf1-4d98-b77d-b52df8e13a39",
+                      'userId': "1e0c7b27-353d-4959-9821-e1f6a5067769",
                     },
                     pollInterval: Duration(seconds: 100),
                   ),
@@ -212,8 +212,6 @@ class _ProfilePageState extends State<ProfilePage> {
                             if (result.isLoading) {
                               return Text('Loading');
                             }
-                            print(result.data!["allMatches"]["edges"][0]["node"]
-                                ["matchSet"]);
                             dataRecent = result.data;
                             return Column(
                               children: [
@@ -241,7 +239,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 .matchesQuery), // this is the query string you just created
                             variables: {
                               'userSearch':
-                                  "bcb1a25f-1bf1-4d98-b77d-b52df8e13a39",
+                                  "1e0c7b27-353d-4959-9821-e1f6a5067769",
                             },
                             pollInterval: Duration(seconds: 100),
                           ),
