@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tenniston/Pages/Profile.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:tenniston/Pages/dashboard.dart';
 
 void main() {
   final HttpLink httpLink = HttpLink(
@@ -38,7 +39,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: const ProfilePage(),
+      home: const DashboardPage(),
     );
   }
 }
