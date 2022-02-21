@@ -2,6 +2,56 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+class dashboardHeader extends StatelessWidget {
+  const dashboardHeader({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 200,
+      height: 200,
+      padding: EdgeInsets.symmetric(vertical: 50.0, horizontal: 20.0),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(16),
+          bottomRight: Radius.circular(16),
+        ),
+        gradient: LinearGradient(
+            colors: [Color(0xff47BA79), Color(0xff47BA79), Color(0xff3E4982)]),
+        image: DecorationImage(
+          image: AssetImage(
+            "assets/tennis.png",
+          ),
+          fit: BoxFit.fill,
+          colorFilter: new ColorFilter.mode(
+              Colors.black.withOpacity(0.19), BlendMode.dstATop),
+        ),
+      ),
+      child: Stack(
+        children: [
+          RichText(
+              text: TextSpan(children: <TextSpan>[
+            TextSpan(
+              text: "Hello,\n",
+              style: GoogleFonts.poppins(
+                fontSize: 14,
+                color: Colors.white,
+              ),
+            ),
+            TextSpan(
+              text: "Andy\n",
+              style: GoogleFonts.poppins(
+                fontSize: 26,
+                color: Colors.white,
+              ),
+            ),
+          ]))
+        ],
+      ),
+    );
+  }
+}
+
 class dashboardMenu extends StatelessWidget {
   final menu_image, menu_color, title, subtitle;
 
@@ -33,7 +83,7 @@ class dashboardMenu extends StatelessWidget {
                   shape: BoxShape.circle,
                   image: DecorationImage(
                     fit: BoxFit.fill,
-                    image: AssetImage(menu_image),
+                    image: AssetImage("assets/" + menu_image),
                   ),
                 ),
               )),
@@ -56,7 +106,7 @@ class dashboardMenu extends StatelessWidget {
                 style: GoogleFonts.workSans(
                   fontSize: 11,
                   color: Color(0xffffffff),
-                  fontWeight: FontWeight.w200,
+                  fontWeight: FontWeight.w300,
                 ),
               )),
         ],
@@ -73,25 +123,9 @@ class DashboardPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Container(
-            padding: EdgeInsets.all(100),
-            decoration: BoxDecoration(
-                gradient: LinearGradient(colors: [
-                  Color(0xff47BA79),
-                  Color(0xff47BA79),
-                  Color(0xff3E4982)
-                ]),
-                image: DecorationImage(
-                  fit: BoxFit.cover,
-                  image: AssetImage("assets/tennis.png"),
-                  colorFilter: new ColorFilter.mode(
-                      Colors.black.withOpacity(0.19), BlendMode.dstATop),
-                ),
-                borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(16),
-                    bottomRight: Radius.circular(16))),
-          ),
+          Container(child: dashboardHeader()),
           SizedBox(
             height: 18,
           ),
@@ -121,7 +155,7 @@ class DashboardPage extends StatelessWidget {
                           menu_image: "transperent_tennis_ball_icon_green.png",
                           menu_color: 0xff31a05f,
                           title: "My Leagues",
-                          subtitle: "Join league / check status",
+                          subtitle: "Check league status",
                         ),
                       ]),
                     ),
