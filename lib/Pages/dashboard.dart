@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:tenniston/Pages/Profile.dart';
 
 class dashboardHeader extends StatelessWidget {
   const dashboardHeader({Key? key}) : super(key: key);
@@ -49,7 +50,7 @@ class dashboardHeader extends StatelessWidget {
           Positioned(
             right: 20,
             child: CircleAvatar(
-              radius: 50,
+              radius: 40,
               backgroundImage: NetworkImage(
                 'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'
               ),
@@ -203,12 +204,21 @@ class DashboardPage extends StatelessWidget {
                     Expanded(
                       flex: 7,
                       child: Column(children: [
-                        dashboardMenu(
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => const ProfilePage()),
+                            );
+                          },
+                        child: dashboardMenu(
                           menu_image: "transperent_tennis_ball_icon_red.png",
                           menu_color: 0xffeb5945,
                           title: "My Profile",
                           subtitle: "Check / edit profile",
                         ),
+                        )
+
                       ]),
                     )
                   ],
