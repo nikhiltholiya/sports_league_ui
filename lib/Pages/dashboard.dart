@@ -45,7 +45,16 @@ class dashboardHeader extends StatelessWidget {
                 color: Colors.white,
               ),
             ),
-          ]))
+          ])),
+          Positioned(
+            right: 20,
+            child: CircleAvatar(
+              radius: 50,
+              backgroundImage: NetworkImage(
+                'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'
+              ),
+            )
+          )
         ],
       ),
     );
