@@ -1,7 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:tenniston/Pages/Profile.dart';
+import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
-import 'package:tenniston/Pages/dashboard.dart';
+import 'package:tenniston/Pages/challenges_chat.dart';
+import 'package:tenniston/Pages/league_details.dart';
 
 void main() {
   final HttpLink httpLink = HttpLink(
@@ -28,18 +31,43 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
-      ),
-      home: const DashboardPage(),
+          // This is the theme of your application.
+          //
+          // Try running your application with "flutter run". You'll see the
+          // application has a blue toolbar. Then, without quitting the app, try
+          // changing the primarySwatch below to Colors.green and then invoke
+          // "hot reload" (press "r" in the console where you ran "flutter run",
+          // or simply save your changes to "hot reload" in a Flutter IDE).
+          // Notice that the counter didn't reset back to zero; the application
+          // is not restarted.
+          primarySwatch: Colors.blue,
+          textTheme: GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme),
+          primaryTextTheme:
+              GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme),
+          appBarTheme: AppBarTheme(
+              systemOverlayStyle: SystemUiOverlayStyle.dark,
+              backgroundColor: Colors.white,
+              titleTextStyle: TextStyle(
+                color: Colors.black,
+                fontSize: 16,
+              ),
+              centerTitle: true)),
+
+      //20220223
+      initialRoute: LeagueDetails().path,
+      onGenerateRoute: (settings) {
+        if (settings.name == LeagueDetails().path) {
+          return CupertinoPageRoute(
+              builder: (context) => LeagueDetails(), settings: settings);
+        } else if (settings.name == ChallengesChat().path) {
+          return CupertinoPageRoute(
+              builder: (context) => ChallengesChat(), settings: settings);
+        } else {
+          return null;
+        }
+      },
+
+      // home: const LeagueDetailCompleted(), //20220222
     );
   }
 }

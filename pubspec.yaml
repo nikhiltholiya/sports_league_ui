@@ -35,10 +35,14 @@ dependencies:
   cupertino_icons: ^1.0.2
   google_fonts: ^2.2.0
   graphql_flutter: ^5.0.0
+  freezed_annotation: ^1.1.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  freezed: ^1.1.1
+  build_runner: ^2.1.7
+  json_serializable: ^6.1.4
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
