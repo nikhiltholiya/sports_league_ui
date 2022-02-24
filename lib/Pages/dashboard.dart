@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tenniston/Pages/Profile.dart';
 
+import 'league_details.dart';
+
 class dashboardHeader extends StatelessWidget {
   const dashboardHeader({Key? key}) : super(key: key);
 
@@ -48,14 +50,12 @@ class dashboardHeader extends StatelessWidget {
             ),
           ])),
           Positioned(
-            right: 20,
-            child: CircleAvatar(
-              radius: 40,
-              backgroundImage: NetworkImage(
-                'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'
-              ),
-            )
-          )
+              right: 20,
+              child: CircleAvatar(
+                radius: 40,
+                backgroundImage: NetworkImage(
+                    'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'),
+              ))
         ],
       ),
     );
@@ -127,6 +127,7 @@ class dashboardMenu extends StatelessWidget {
 
 class DashboardPage extends StatelessWidget {
   const DashboardPage({Key? key}) : super(key: key);
+  final String path = "dashboard";
 
   @override
   Widget build(BuildContext context) {
@@ -161,12 +162,18 @@ class DashboardPage extends StatelessWidget {
                     Expanded(
                       flex: 9,
                       child: Column(children: [
-                        dashboardMenu(
-                          menu_image: "transperent_tennis_ball_icon_green.png",
-                          menu_color: 0xff31a05f,
-                          title: "My Leagues",
-                          subtitle: "Check league status",
-                        ),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.pushNamed(context, LeagueDetails().path);
+                          },
+                          child: dashboardMenu(
+                            menu_image:
+                                "transperent_tennis_ball_icon_green.png",
+                            menu_color: 0xff31a05f,
+                            title: "My Leagues",
+                            subtitle: "Check league status",
+                          ),
+                        )
                       ]),
                     ),
                     Expanded(flex: 1, child: Container()),
@@ -208,17 +215,17 @@ class DashboardPage extends StatelessWidget {
                           onTap: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => const ProfilePage()),
+                              MaterialPageRoute(
+                                  builder: (context) => const ProfilePage()),
                             );
                           },
-                        child: dashboardMenu(
-                          menu_image: "transperent_tennis_ball_icon_red.png",
-                          menu_color: 0xffeb5945,
-                          title: "My Profile",
-                          subtitle: "Check / edit profile",
-                        ),
+                          child: dashboardMenu(
+                            menu_image: "transperent_tennis_ball_icon_red.png",
+                            menu_color: 0xffeb5945,
+                            title: "My Profile",
+                            subtitle: "Check / edit profile",
+                          ),
                         )
-
                       ]),
                     )
                   ],

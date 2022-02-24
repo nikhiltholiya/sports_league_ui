@@ -6,6 +6,8 @@ import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:tenniston/Pages/challenges_chat.dart';
 import 'package:tenniston/Pages/league_details.dart';
 
+import 'Pages/dashboard.dart';
+
 void main() {
   final HttpLink httpLink = HttpLink(
     'http://0.0.0.0:8000/graphql/',
@@ -54,9 +56,13 @@ class MyApp extends StatelessWidget {
               centerTitle: true)),
 
       //20220223
-      initialRoute: LeagueDetails().path,
+      // initialRoute: LeagueDetails().path,
+      initialRoute: DashboardPage().path,
       onGenerateRoute: (settings) {
-        if (settings.name == LeagueDetails().path) {
+        if (settings.name == DashboardPage().path) {
+          return CupertinoPageRoute(
+              builder: (context) => DashboardPage(), settings: settings);
+        } else if (settings.name == LeagueDetails().path) {
           return CupertinoPageRoute(
               builder: (context) => LeagueDetails(), settings: settings);
         } else if (settings.name == ChallengesChat().path) {
