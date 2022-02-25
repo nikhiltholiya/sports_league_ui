@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:tenniston/Pages/Profile.dart';
 import 'package:tenniston/Pages/challenges_chat.dart';
 import 'package:tenniston/Pages/league_details.dart';
 
@@ -68,6 +69,9 @@ class MyApp extends StatelessWidget {
         } else if (settings.name == ChallengesChat().path) {
           return CupertinoPageRoute(
               builder: (context) => ChallengesChat(), settings: settings);
+        } else if (settings.name == ProfilePage().path) {
+          return CupertinoPageRoute(
+              builder: (context) => ProfilePage(), settings: settings);
         } else {
           return null;
         }

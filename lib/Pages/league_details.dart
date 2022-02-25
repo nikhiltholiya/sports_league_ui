@@ -4,11 +4,69 @@ import 'package:tenniston/Pages/challenges_chat.dart';
 import 'package:tenniston/components/league_detail_tile.dart';
 
 //Created on 20220222
-class LeagueDetails extends StatelessWidget {
+
+class LeagueDetails extends StatefulWidget {
   final String path = 'leagueDetail';
 
   const LeagueDetails({Key? key}) : super(key: key);
 
+  @override
+  _LeagueDetailsState createState() => _LeagueDetailsState();
+}
+
+class _LeagueDetailsState extends State<LeagueDetails> {
+
+  ScrollController? _scrollController;
+  GlobalKey? _stackKey = GlobalKey();
+  GlobalKey? _textTitleKey = GlobalKey();
+  GlobalKey? _imgLocationKey = GlobalKey();
+  GlobalKey? _imgCalendarKey = GlobalKey();
+  GlobalKey? _textDescKey = GlobalKey();
+  GlobalKey? _textStatusKey = GlobalKey();
+  double? _dynamicTotalHeight;
+  List<double>? _childWidgetHeights  = [];
+
+
+  @override
+  void initState() {
+    _scrollController = ScrollController();
+    WidgetsBinding.instance?.addPostFrameCallback(_getTotalHeight);
+    super.initState();
+  }
+
+  double _getWidgetHeight(GlobalKey? key) {
+    final RenderBox renderBoxRed = key?.currentContext?.findRenderObject() as RenderBox;
+    return renderBoxRed.size.height;
+  }
+
+  _getTotalHeight(_) {
+    _dynamicTotalHeight = 0;
+    _childWidgetHeights = [];
+
+    _childWidgetHeights!.add(_getWidgetHeight(_textTitleKey));
+    _childWidgetHeights!.add(_getWidgetHeight(_imgLocationKey));
+    _childWidgetHeights!.add(_getWidgetHeight(_imgCalendarKey));
+    _childWidgetHeights!.add(_getWidgetHeight(_textDescKey));
+    _childWidgetHeights!.add(_getWidgetHeight(_textStatusKey));
+    _childWidgetHeights!.add(_getWidgetHeight(_stackKey));
+    // print(_childWidgetHeights!);
+
+    for (double height in _childWidgetHeights!) {
+      _dynamicTotalHeight = height + _dynamicTotalHeight!;
+    }
+
+    setState(() {
+      _dynamicTotalHeight = _dynamicTotalHeight! + 56.0;
+    });
+
+    return _dynamicTotalHeight;
+  }
+
+  @override
+  void dispose() {
+    _scrollController!.dispose();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -31,6 +89,7 @@ class LeagueDetails extends StatelessWidget {
           children: [
             Expanded(
                 child: CustomScrollView(
+                  controller: _scrollController,
                   physics: const BouncingScrollPhysics(),
                   shrinkWrap: true,
                   slivers: <Widget>[
@@ -45,7 +104,9 @@ class LeagueDetails extends StatelessWidget {
                           stretch: true,
                           centerTitle: true,
                           leading: IconButton(
-                              onPressed: () {}, icon: Icon(Icons.arrow_back)),
+                              onPressed: () {
+                                Navigator.pop(context);
+                              }, icon: Icon(Icons.arrow_back)),
                           titleTextStyle: TextStyle(
                               color: height <= scrollPosition
                                   ? Colors.black
@@ -56,8 +117,10 @@ class LeagueDetails extends StatelessWidget {
                                   : Colors.white),
                           flexibleSpace: FlexibleSpaceBar(
                             background: Stack(
+
                               children: [
                                 Container(
+                                  key: _stackKey,
                                   width: double.infinity,
                                   height: 170,
                                   padding: EdgeInsets.symmetric(
@@ -84,6 +147,7 @@ class LeagueDetails extends StatelessWidget {
                                   ),
                                 ),
                                 Align(
+
                                   alignment: Alignment.bottomCenter,
                                   child: Stack(
                                     alignment: Alignment.topLeft,
@@ -93,12 +157,12 @@ class LeagueDetails extends StatelessWidget {
                                         margin: EdgeInsets.symmetric(horizontal: 15,vertical: 30),
                                         shape: RoundedRectangleBorder(
                                           borderRadius:
-                                              BorderRadius.circular(12.0),
+                                          BorderRadius.circular(12.0),
                                         ),
                                         elevation: 2.0,
                                         child: ClipRRect(
                                           borderRadius:
-                                              BorderRadius.circular(12.0),
+                                          BorderRadius.circular(12.0),
                                           child: Stack(
                                             children: [
                                               Padding(
@@ -116,20 +180,22 @@ class LeagueDetails extends StatelessWidget {
                                                     Text(
                                                       'Coventry Tennis League',
                                                       maxLines: 1,
+                                                      key: _textTitleKey,
                                                       style: TextStyle(
                                                           fontSize: 18,
                                                           fontWeight:
-                                                              FontWeight.bold),
+                                                          FontWeight.bold),
                                                     ),
                                                     Row(
+                                                      key: _imgLocationKey,
                                                       crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .center,
+                                                      CrossAxisAlignment
+                                                          .center,
                                                       children: [
                                                         Padding(
                                                           padding:
-                                                              const EdgeInsets
-                                                                  .all(5.0),
+                                                          const EdgeInsets
+                                                              .all(5.0),
                                                           child: Icon(
                                                               Icons
                                                                   .location_pin,
@@ -145,14 +211,15 @@ class LeagueDetails extends StatelessWidget {
                                                       ],
                                                     ),
                                                     Row(
+                                                      key: _imgCalendarKey,
                                                       crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .center,
+                                                      CrossAxisAlignment
+                                                          .center,
                                                       children: [
                                                         Padding(
                                                           padding:
-                                                              const EdgeInsets
-                                                                  .all(5.0),
+                                                          const EdgeInsets
+                                                              .all(5.0),
                                                           child: Icon(
                                                               Icons
                                                                   .calendar_today,
@@ -172,17 +239,21 @@ class LeagueDetails extends StatelessWidget {
                                                         )
                                                       ],
                                                     ),
-                                                    Text(
-                                                      'Friendly, competitive tennis on Coventry\'s public courts.\nLocal Tennis Leagues is for anyone, no matter your tennis experience. Play YOUR way.',
-                                                      maxLines: 4,
-                                                      softWrap: true,
-                                                      textAlign:
-                                                          TextAlign.start,
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                      style: TextStyle(
-                                                        color:
-                                                            Color(0XFF808080),
+
+                                                    SizedBox(
+                                                      key: _textDescKey,
+                                                      child: Text(
+                                                        'Friendly, competitive tennis on Coventry\'s public courts.\nLocal Tennis Leagues is for anyone, no matter your tennis experience. Play YOUR way.',
+                                                        maxLines: 4,
+                                                        softWrap: true,
+                                                        textAlign:
+                                                        TextAlign.start,
+                                                        overflow:
+                                                        TextOverflow.ellipsis,
+                                                        style: TextStyle(
+                                                          color:
+                                                          Color(0XFF808080),
+                                                        ),
                                                       ),
                                                     ),
                                                   ],
@@ -199,21 +270,23 @@ class LeagueDetails extends StatelessWidget {
                                           ),
                                         ),
                                       ),
+
                                       Positioned(
                                           child: Card(
+                                            key: _textStatusKey,
                                             elevation: 2.0,
                                             shape: RoundedRectangleBorder(
                                                 borderRadius:
-                                                    BorderRadius.circular(
-                                                        10.0)),
+                                                BorderRadius.circular(
+                                                    10.0)),
                                             color: Color(leagueStatus == 0
                                                 ? 0xFFD99726
                                                 : 0xFF31A05F),
                                             child: Padding(
                                               padding:
-                                                  const EdgeInsets.symmetric(
-                                                      horizontal: 10.0,
-                                                      vertical: 5.0),
+                                              const EdgeInsets.symmetric(
+                                                  horizontal: 10.0,
+                                                  vertical: 5.0),
                                               child: Text(
                                                 leagueStatus == 0
                                                     ? 'Ongoing'
@@ -225,7 +298,7 @@ class LeagueDetails extends StatelessWidget {
                                             ),
                                           ),
                                           top: 10.0,
-                                          left: 25)
+                                          left: 25.0)
                                     ],
                                   ),
                                 ),
@@ -237,7 +310,7 @@ class LeagueDetails extends StatelessWidget {
                                 ? Text('Participating Players')
                                 : SizedBox(),
                           ),
-                          expandedHeight: height,
+                          expandedHeight: _dynamicTotalHeight,
                           backgroundColor: Colors.white,
                         );
                       },
@@ -273,7 +346,7 @@ class LeagueDetails extends StatelessWidget {
                                       padding: EdgeInsets.all(10),
                                       child: Wrap(
                                         crossAxisAlignment:
-                                            WrapCrossAlignment.center,
+                                        WrapCrossAlignment.center,
                                         alignment: WrapAlignment.center,
                                         children: [
                                           Column(
@@ -282,7 +355,7 @@ class LeagueDetails extends StatelessWidget {
                                                 child: Image.asset(
                                                     'assets/Ellipse 1.png'),
                                                 backgroundColor:
-                                                    Color(0x808C8C8C),
+                                                Color(0x808C8C8C),
                                                 radius: 40,
                                               ),
                                               Text(
@@ -291,19 +364,19 @@ class LeagueDetails extends StatelessWidget {
                                                 style: TextStyle(
                                                     fontSize: 20,
                                                     fontWeight:
-                                                        FontWeight.bold),
+                                                    FontWeight.bold),
                                               ),
                                             ],
                                           ),
                                           Row(
                                             crossAxisAlignment:
-                                                CrossAxisAlignment.center,
+                                            CrossAxisAlignment.center,
                                             mainAxisAlignment:
-                                                MainAxisAlignment.center,
+                                            MainAxisAlignment.center,
                                             children: [
                                               Padding(
                                                 padding:
-                                                    const EdgeInsets.all(5.0),
+                                                const EdgeInsets.all(5.0),
                                                 child: Icon(Icons.location_pin,
                                                     size: 16.0,
                                                     color: Color(0xFF3E4982)),
@@ -337,9 +410,9 @@ class LeagueDetails extends StatelessWidget {
                                             padding: const EdgeInsets.all(8.0),
                                             child: Row(
                                               mainAxisAlignment:
-                                                  MainAxisAlignment.center,
+                                              MainAxisAlignment.center,
                                               crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
+                                              CrossAxisAlignment.center,
                                               children: [
                                                 Expanded(
                                                   child: Text(
@@ -349,7 +422,7 @@ class LeagueDetails extends StatelessWidget {
                                                       color: Color(0XFF808080),
                                                       fontSize: 14,
                                                       fontWeight:
-                                                          (FontWeight.normal),
+                                                      (FontWeight.normal),
                                                     ),
                                                   ),
                                                   flex: 1,
@@ -362,7 +435,7 @@ class LeagueDetails extends StatelessWidget {
                                                       color: Color(0XFF808080),
                                                       fontSize: 14,
                                                       fontWeight:
-                                                          (FontWeight.normal),
+                                                      (FontWeight.normal),
                                                     ),
                                                   ),
                                                   flex: 1,
@@ -375,7 +448,7 @@ class LeagueDetails extends StatelessWidget {
                                                       color: Color(0XFF808080),
                                                       fontSize: 14,
                                                       fontWeight:
-                                                          (FontWeight.normal),
+                                                      (FontWeight.normal),
                                                     ),
                                                   ),
                                                   flex: 1,
@@ -388,7 +461,7 @@ class LeagueDetails extends StatelessWidget {
                                                       color: Color(0XFF808080),
                                                       fontSize: 14,
                                                       fontWeight:
-                                                          (FontWeight.normal),
+                                                      (FontWeight.normal),
                                                     ),
                                                   ),
                                                   flex: 1,
@@ -400,9 +473,9 @@ class LeagueDetails extends StatelessWidget {
                                             padding: const EdgeInsets.all(8.0),
                                             child: Row(
                                               mainAxisAlignment:
-                                                  MainAxisAlignment.center,
+                                              MainAxisAlignment.center,
                                               crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
+                                              CrossAxisAlignment.center,
                                               children: [
                                                 Expanded(
                                                   child: Text(
@@ -412,7 +485,7 @@ class LeagueDetails extends StatelessWidget {
                                                       color: Color(0XFF000000),
                                                       fontSize: 18,
                                                       fontWeight:
-                                                          (FontWeight.bold),
+                                                      (FontWeight.bold),
                                                     ),
                                                   ),
                                                   flex: 1,
@@ -425,7 +498,7 @@ class LeagueDetails extends StatelessWidget {
                                                       color: Color(0XFF31A05F),
                                                       fontSize: 18,
                                                       fontWeight:
-                                                          (FontWeight.bold),
+                                                      (FontWeight.bold),
                                                     ),
                                                   ),
                                                   flex: 1,
@@ -438,7 +511,7 @@ class LeagueDetails extends StatelessWidget {
                                                       color: Color(0XFFEB5945),
                                                       fontSize: 18,
                                                       fontWeight:
-                                                          (FontWeight.bold),
+                                                      (FontWeight.bold),
                                                     ),
                                                   ),
                                                   flex: 1,
@@ -451,7 +524,7 @@ class LeagueDetails extends StatelessWidget {
                                                       color: Color(0XFF3E4982),
                                                       fontSize: 18,
                                                       fontWeight:
-                                                          (FontWeight.bold),
+                                                      (FontWeight.bold),
                                                     ),
                                                   ),
                                                   flex: 1,
@@ -478,7 +551,7 @@ class LeagueDetails extends StatelessWidget {
                     ),
                     SliverList(
                       delegate: SliverChildBuilderDelegate(
-                        (context, index) => LeagueDetailTile(
+                            (context, index) => LeagueDetailTile(
                           name: 'Novak J.',
                           games: 12,
                           loss: 15,
@@ -516,14 +589,11 @@ class LeagueDetails extends StatelessWidget {
                   style: ButtonStyle(
                     shape: MaterialStateProperty.all(
                       RoundedRectangleBorder(
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(12.0),
-                          topRight: Radius.circular(12.0),
-                        ),
+                        borderRadius: BorderRadius.zero,
                       ),
                     ),
                     backgroundColor:
-                        MaterialStateProperty.all(Color(0XFF31A05F)),
+                    MaterialStateProperty.all(Color(0XFF31A05F)),
                     elevation: MaterialStateProperty.all(0.0),
                     // textStyle: MaterialStateProperty.all(TextStyle(backgroundColor: Colors.black,))
                   ),
