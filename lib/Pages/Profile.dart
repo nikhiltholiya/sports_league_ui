@@ -12,6 +12,7 @@ import 'package:tenniston/utils/Constants.dart' as Constants;
 import 'HeadtoHeadpage.dart';
 
 class ProfilePage extends StatefulWidget {
+  final String? path = 'profilePage';
   const ProfilePage({Key? key}) : super(key: key);
 
   @override
