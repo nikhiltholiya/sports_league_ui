@@ -47,3 +47,27 @@ const String matchesQuery = """
     }
   }
 """;
+const String leagueStatus = """
+query (\$leagueId: String!) {
+  leagueStat(leagueId: \$leagueId) {
+    leagueId
+    name
+    city
+    state
+    country
+    startDate
+    endDate
+    level
+    description
+    status
+    format
+    userStat {
+      loss
+      total
+      userId
+      won
+    }
+  }
+}
+
+""";
