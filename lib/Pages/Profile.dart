@@ -91,7 +91,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     document: gql(
                         readRepositories), // this is the query string you just created
                     variables: {
-                      'userId': "1e0c7b27-353d-4959-9821-e1f6a5067769",
+                      'userId': "3a766ad6-3642-46dc-b31f-73e08f2df0df",
                     },
                     pollInterval: Duration(seconds: 100),
                   ),
@@ -240,7 +240,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 .matchesQuery), // this is the query string you just created
                             variables: {
                               'userSearch':
-                                  "1e0c7b27-353d-4959-9821-e1f6a5067769",
+                                  "3a766ad6-3642-46dc-b31f-73e08f2df0df",
                             },
                             pollInterval: Duration(seconds: 100),
                           ),

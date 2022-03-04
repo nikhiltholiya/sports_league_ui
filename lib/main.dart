@@ -11,7 +11,7 @@ import 'Pages/dashboard.dart';
 
 void main() {
   final HttpLink httpLink = HttpLink(
-    'http://0.0.0.0:8000/graphql/',
+    'http://52.144.47.85:8000/graphql/',
   );
   final AuthLink authLink = AuthLink(
     getToken: () async => '',
