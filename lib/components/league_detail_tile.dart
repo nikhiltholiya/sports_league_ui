@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tenniston/utils/app_colors.dart';
 
 //Created on 20220222
 class LeagueDetailTile extends StatefulWidget {
@@ -27,11 +28,11 @@ class _LeagueDetailTileState extends State<LeagueDetailTile> {
         margin: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
         padding: EdgeInsets.all(2),
         decoration: ShapeDecoration(
-          color: Color(0X0D808080),
+          color: aPartGray5,
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12.0),
               side: BorderSide(
-                  color: Color(0X1F808080),
+                  color: aPartGray10,
                   style: BorderStyle.solid,
                   width: 1.0)),
         ),
@@ -54,7 +55,7 @@ class _LeagueDetailTileState extends State<LeagueDetailTile> {
                       'Games',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        color: Color(0XFF808080),
+                        color: aLightGray,
                         fontSize: 14,
                         fontWeight: (FontWeight.normal),
                       ),
@@ -66,7 +67,7 @@ class _LeagueDetailTileState extends State<LeagueDetailTile> {
                       'Win',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        color: Color(0XFF808080),
+                        color: aLightGray,
                         fontSize: 14,
                         fontWeight: (FontWeight.normal),
                       ),
@@ -78,7 +79,7 @@ class _LeagueDetailTileState extends State<LeagueDetailTile> {
                       'Loss',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        color: Color(0XFF808080),
+                        color: aLightGray,
                         fontSize: 14,
                         fontWeight: (FontWeight.normal),
                       ),
@@ -89,7 +90,7 @@ class _LeagueDetailTileState extends State<LeagueDetailTile> {
               ),
             ),
             Divider(
-              color: Color(0X1F808080),
+              color: aPartGray10,
               height: 1,
               thickness: 1,
             ),
@@ -103,9 +104,12 @@ class _LeagueDetailTileState extends State<LeagueDetailTile> {
                     child: GestureDetector(
                       onTap: () => widget.onProfileClick!(),
                       child: CircleAvatar(
-                        child: Image.asset(widget.profileImg!),
-                        backgroundColor: Color(0x808C8C8C),
+                        backgroundColor: aLightGray,
                         radius: 30,
+                        child: CircleAvatar(
+                          backgroundImage: AssetImage(widget.profileImg!),
+                          radius: 29,
+                        ),
                       ),
                     ),
                     flex: 1,
@@ -115,7 +119,7 @@ class _LeagueDetailTileState extends State<LeagueDetailTile> {
                       widget.name!,
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        color: Color(0XFF000000),
+                        color: aBlack,
                         fontSize: 14,
                         fontWeight: (FontWeight.bold),
                       ),
@@ -127,7 +131,7 @@ class _LeagueDetailTileState extends State<LeagueDetailTile> {
                       '${widget.games}',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        color: Color(0XFF000000),
+                        color: aBlack,
                         fontSize: 14,
                         fontWeight: (FontWeight.bold),
                       ),
@@ -139,7 +143,7 @@ class _LeagueDetailTileState extends State<LeagueDetailTile> {
                       '${widget.win}',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        color: Color(0XFF31A05F),
+                        color: aGreen,
                         fontSize: 14,
                         fontWeight: (FontWeight.bold),
                       ),
@@ -151,7 +155,7 @@ class _LeagueDetailTileState extends State<LeagueDetailTile> {
                       '${widget.loss}',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        color: Color(0XFFEB5945),
+                        color: aRed,
                         fontSize: 14,
                         fontWeight: (FontWeight.bold),
                       ),
