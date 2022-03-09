@@ -3,13 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
-import 'package:tenniston/Pages/Profile.dart';
+import 'package:tenniston/Pages/profile_page.dart';
 import 'package:tenniston/Pages/challenges_chat.dart';
+import 'package:tenniston/Pages/head_to_head_details.dart';
 import 'package:tenniston/Pages/league_details.dart';
+import 'package:tenniston/Pages/recent_macthes_pages.dart';
 
 import 'Pages/dashboard.dart';
 
-void main() {
+void main() async {
+  await initHiveForFlutter();
+
   final HttpLink httpLink = HttpLink(
     'http://52.144.47.85:8000/graphql/',
   );
@@ -72,6 +76,12 @@ class MyApp extends StatelessWidget {
         } else if (settings.name == ProfilePage().path) {
           return CupertinoPageRoute(
               builder: (context) => ProfilePage(), settings: settings);
+        } else if (settings.name == HeadToHeadDetails().path) {
+          return CupertinoPageRoute(
+              builder: (context) => HeadToHeadDetails(), settings: settings);
+        } else if (settings.name == RecentMatchesPage().path) {
+          return CupertinoPageRoute(
+              builder: (context) => RecentMatchesPage(), settings: settings);
         } else {
           return null;
         }

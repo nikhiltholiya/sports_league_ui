@@ -1,4 +1,31 @@
+import 'package:gql/language.dart';
 const String SUCCESS_MESSAGE = " You will be contacted by us very soon.";
+
+
+const String leaque = """
+query MyQuery {
+leagueStat(leagueId: "ae2b8a9e-e87a-4402-a125-dabf5d8f7ef8") {
+leagueId
+name
+city
+state
+country
+startDate
+endDate
+level
+description
+format
+status
+userStat {
+loss
+total
+userId
+won
+}
+}
+}
+""";
+
 const String homepageQuery = """
   query (\$userId: String!) {
     userProfiles(userId:\$userId){
@@ -47,7 +74,18 @@ const String matchesQuery = """
     }
   }
 """;
-const String leagueStatus = """
+
+final hello = parseString('''
+  query hello {
+    hello {
+      id
+    }
+  }
+  ''');
+
+
+final leagueStatus = /*parseString(*/'''
+
 query (\$leagueId: String!) {
   leagueStat(leagueId: \$leagueId) {
     leagueId
@@ -70,4 +108,4 @@ query (\$leagueId: String!) {
   }
 }
 
-""";
+'''/*)*/;
