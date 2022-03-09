@@ -74,6 +74,7 @@ const String matchesQuery = """
     }
   }
 """;
+<<<<<<< HEAD
 
 
 final hello = parseString('''
@@ -86,6 +87,9 @@ final hello = parseString('''
 
 
 final leagueStatus = /*parseString(*/'''
+=======
+const String leagueStatus = """
+>>>>>>> main
 query (\$leagueId: String!) {
   leagueStat(leagueId: \$leagueId) {
     leagueId
@@ -108,4 +112,8 @@ query (\$leagueId: String!) {
   }
 }
 
+<<<<<<< HEAD
 '''/*)*/;
+=======
+""";
+>>>>>>> main

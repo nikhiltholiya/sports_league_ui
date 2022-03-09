@@ -15,7 +15,6 @@ void main() async {
   await initHiveForFlutter();
 
   final HttpLink httpLink = HttpLink(
-    // 'http://0.0.0.0:8000/graphql/',
     'http://52.144.47.85:8000/graphql/',
   );
   final AuthLink authLink = AuthLink(
