@@ -93,8 +93,8 @@ const String matchesQuery = """
   }
 """;
 
-
 final leagueStatus = /*parseString(*/'''
+
 query (\$leagueId: String!) {
   leagueStat(leagueId: \$leagueId) {
     leagueId
