@@ -1,28 +1,36 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tenniston/components/decorated_app_header_tile.dart';
 import 'package:tenniston/components/iconic_text_view.dart';
 import 'package:tenniston/utils/app_colors.dart';
 
 class LeagueDetailsHeaderTile extends StatefulWidget {
+  final String? playerName;
+  final String? leagueLocation;
+  final String? leagueDate;
+  final String? leagueDesc;
+  final String? leagueStatus;
+
   final GlobalKey? stackKey;
   final GlobalKey? textTitleKey;
   final GlobalKey? imgLocationKey;
   final GlobalKey? imgCalendarKey;
   final GlobalKey? textDescKey;
   final GlobalKey? textStatusKey;
-  final int? leagueStatus;
 
-
-  const LeagueDetailsHeaderTile(
-      {Key? key,
-      required this.stackKey,
-      required this.textTitleKey,
-      required this.imgLocationKey,
-      required this.imgCalendarKey,
-      required this.textDescKey,
-      required this.textStatusKey, this.leagueStatus})
-      : super(key: key);
+  const LeagueDetailsHeaderTile({
+    Key? key,
+    required this.leagueStatus,
+    required this.playerName,
+    required this.leagueLocation,
+    required this.leagueDate,
+    required this.leagueDesc,
+     this.stackKey,
+     this.textTitleKey,
+     this.imgLocationKey,
+     this.imgCalendarKey,
+     this.textDescKey,
+     this.textStatusKey,
+  }) : super(key: key);
 
   @override
   State<LeagueDetailsHeaderTile> createState() =>
@@ -64,7 +72,7 @@ class _LeagueDetailsHeaderTileState extends State<LeagueDetailsHeaderTile> {
                           crossAxisAlignment: WrapCrossAlignment.start,
                           children: [
                             Text(
-                              'Coventry Tennis League',
+                              widget.playerName ?? 'playerName',
                               maxLines: 1,
                               key: widget.textTitleKey,
                               style: TextStyle(
@@ -74,22 +82,21 @@ class _LeagueDetailsHeaderTileState extends State<LeagueDetailsHeaderTile> {
                               key: widget.imgLocationKey,
                               child: IconicTextView(
                                   icon: Icons.location_pin,
-                                  label: 'CBS Arena, Los Angeles, CA',
+                                  label: widget.leagueLocation?? '',
                                   labelTextSize: 14.0),
                             ),
                             SizedBox(
                               key: widget.imgCalendarKey,
                               child: IconicTextView(
                                 icon: Icons.calendar_today,
-                                label:
-                                    'Sat 21st Jan 2022  -  Sat 20th Feb 2022',
+                                label: widget.leagueDate ??  '',
                                 labelTextSize: 14.0,
                               ),
                             ),
                             SizedBox(
                               key: widget.textDescKey,
                               child: Text(
-                                'Friendly, competitive tennis on Coventry\'s public courts.\nLocal Tennis Leagues is for anyone, no matter your tennis experience. Play YOUR way.',
+                                widget.leagueDesc ??  '',
                                 maxLines: 4,
                                 softWrap: true,
                                 textAlign: TextAlign.start,
@@ -119,12 +126,14 @@ class _LeagueDetailsHeaderTileState extends State<LeagueDetailsHeaderTile> {
                     elevation: 2.0,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10.0)),
-                    color: widget.leagueStatus == 0 ? aYellow : aGreen,
+                    color: widget.leagueStatus?.toLowerCase() == 'ongoing'
+                        ? aYellow
+                        : aGreen,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 10.0, vertical: 5.0),
                       child: Text(
-                        widget.leagueStatus == 0 ? 'Ongoing' : 'Completed',
+                        widget.leagueStatus ?? '',
                         style: TextStyle(
                           color: Colors.white,
                         ),

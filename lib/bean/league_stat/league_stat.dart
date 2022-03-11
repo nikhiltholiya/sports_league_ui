@@ -5,24 +5,14 @@ part 'league_stat.g.dart';
 part 'league_stat.freezed.dart';
 
 @Freezed()
-class LeagueStatData with LeagueStatData {
+class LeagueStatData with _$LeagueStatData {
 
   const factory LeagueStatData({
-    required Data? data
+    required LeagueStat? leagueStat
   }) = _LeagueStatData;
 
   factory LeagueStatData.fromJson(Map<String, dynamic>Map) =>
       _$LeagueStatDataFromJson(Map);
-}
-
-@Freezed()
-class Data with _$Data{
-
-  const factory Data({
-    required LeagueStat? leagueStat
-}) = _Data;
-
-  factory Data.fromJson(Map<String, dynamic> dataJson) => _$DataFromJson(dataJson);
 }
 
 @Freezed()
@@ -39,6 +29,8 @@ class LeagueStat with _$LeagueStat{
     required String? description,
     required String? status,
     required String? format,
+    required String? winnerOneId,
+    required String? winnerTwoId,
     required List<UserStat>? userStat
 }) = _LeagueStat;
 

@@ -37,6 +37,7 @@ dependencies:
   graphql_flutter: ^5.0.1
   freezed_annotation: ^1.1.0
   flutter_keyboard_visibility: ^5.2.0
+  date_format: ^2.0.5
 
 dev_dependencies:
   flutter_test:

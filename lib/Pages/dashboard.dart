@@ -1,12 +1,13 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:tenniston/Pages/profile_page.dart';
-import 'package:tenniston/Pages/base_activity.dart';
-import 'package:tenniston/Pages/league_details.dart';
-import 'package:tenniston/components/dashboard_menu_item.dart';
-import 'package:tenniston/components/decorated_app_header_tile.dart';
-import 'package:tenniston/utils/app_colors.dart';
+
+import '../Pages/base_activity.dart';
+import '../Pages/league_details.dart';
+import '../Pages/profile_page.dart';
+import '../components/dashboard_menu_item.dart';
+import '../components/decorated_app_header_tile.dart';
+import '../utils/app_colors.dart';
+import '../utils/app_labels.dart';
 
 //Changes on 20220225
 class DashboardPage extends StatefulWidget {
@@ -62,6 +63,7 @@ class _DashboardPageState extends State<DashboardPage> {
           path: ''),
     ];
 
+
     return BaseWidget(
       scaffoldKey: scKey,
       appbar: AppBar(),
@@ -75,7 +77,7 @@ class _DashboardPageState extends State<DashboardPage> {
           Padding(
             padding: const EdgeInsets.only(top: 10, left: 10),
             child: Text(
-              'Explore',
+              explore,
               style: TextStyle(color: aLightGray, fontSize: 16),
             ),
           ),

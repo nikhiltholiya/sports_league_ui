@@ -22,9 +22,9 @@ LeagueStatData _$LeagueStatDataFromJson(Map<String, dynamic> json) {
 class _$LeagueStatDataTearOff {
   const _$LeagueStatDataTearOff();
 
-  _LeagueStatData call({required Data? data}) {
+  _LeagueStatData call({required LeagueStat? leagueStat}) {
     return _LeagueStatData(
-      data: data,
+      leagueStat: leagueStat,
     );
   }
 
@@ -38,7 +38,7 @@ const $LeagueStatData = _$LeagueStatDataTearOff();
 
 /// @nodoc
 mixin _$LeagueStatData {
-  Data? get data => throw _privateConstructorUsedError;
+  LeagueStat? get leagueStat => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -51,9 +51,9 @@ abstract class $LeagueStatDataCopyWith<$Res> {
   factory $LeagueStatDataCopyWith(
           LeagueStatData value, $Res Function(LeagueStatData) then) =
       _$LeagueStatDataCopyWithImpl<$Res>;
-  $Res call({Data? data});
+  $Res call({LeagueStat? leagueStat});
 
-  $DataCopyWith<$Res>? get data;
+  $LeagueStatCopyWith<$Res>? get leagueStat;
 }
 
 /// @nodoc
@@ -64,168 +64,6 @@ class _$LeagueStatDataCopyWithImpl<$Res>
   final LeagueStatData _value;
   // ignore: unused_field
   final $Res Function(LeagueStatData) _then;
-
-  @override
-  $Res call({
-    Object? data = freezed,
-  }) {
-    return _then(_value.copyWith(
-      data: data == freezed
-          ? _value.data
-          : data // ignore: cast_nullable_to_non_nullable
-              as Data?,
-    ));
-  }
-
-  @override
-  $DataCopyWith<$Res>? get data {
-    if (_value.data == null) {
-      return null;
-    }
-
-    return $DataCopyWith<$Res>(_value.data!, (value) {
-      return _then(_value.copyWith(data: value));
-    });
-  }
-}
-
-/// @nodoc
-abstract class _$LeagueStatDataCopyWith<$Res>
-    implements $LeagueStatDataCopyWith<$Res> {
-  factory _$LeagueStatDataCopyWith(
-          _LeagueStatData value, $Res Function(_LeagueStatData) then) =
-      __$LeagueStatDataCopyWithImpl<$Res>;
-  @override
-  $Res call({Data? data});
-
-  @override
-  $DataCopyWith<$Res>? get data;
-}
-
-/// @nodoc
-class __$LeagueStatDataCopyWithImpl<$Res>
-    extends _$LeagueStatDataCopyWithImpl<$Res>
-    implements _$LeagueStatDataCopyWith<$Res> {
-  __$LeagueStatDataCopyWithImpl(
-      _LeagueStatData _value, $Res Function(_LeagueStatData) _then)
-      : super(_value, (v) => _then(v as _LeagueStatData));
-
-  @override
-  _LeagueStatData get _value => super._value as _LeagueStatData;
-
-  @override
-  $Res call({
-    Object? data = freezed,
-  }) {
-    return _then(_LeagueStatData(
-      data: data == freezed
-          ? _value.data
-          : data // ignore: cast_nullable_to_non_nullable
-              as Data?,
-    ));
-  }
-}
-
-/// @nodoc
-@JsonSerializable()
-class _$_LeagueStatData implements _LeagueStatData {
-  const _$_LeagueStatData({required this.data});
-
-  factory _$_LeagueStatData.fromJson(Map<String, dynamic> json) =>
-      _$$_LeagueStatDataFromJson(json);
-
-  @override
-  final Data? data;
-
-  @override
-  String toString() {
-    return 'LeagueStatData(data: $data)';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _LeagueStatData &&
-            const DeepCollectionEquality().equals(other.data, data));
-  }
-
-  @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(data));
-
-  @JsonKey(ignore: true)
-  @override
-  _$LeagueStatDataCopyWith<_LeagueStatData> get copyWith =>
-      __$LeagueStatDataCopyWithImpl<_LeagueStatData>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$_LeagueStatDataToJson(this);
-  }
-}
-
-abstract class _LeagueStatData implements LeagueStatData {
-  const factory _LeagueStatData({required Data? data}) = _$_LeagueStatData;
-
-  factory _LeagueStatData.fromJson(Map<String, dynamic> json) =
-      _$_LeagueStatData.fromJson;
-
-  @override
-  Data? get data;
-  @override
-  @JsonKey(ignore: true)
-  _$LeagueStatDataCopyWith<_LeagueStatData> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-Data _$DataFromJson(Map<String, dynamic> json) {
-  return _Data.fromJson(json);
-}
-
-/// @nodoc
-class _$DataTearOff {
-  const _$DataTearOff();
-
-  _Data call({required LeagueStat? leagueStat}) {
-    return _Data(
-      leagueStat: leagueStat,
-    );
-  }
-
-  Data fromJson(Map<String, Object?> json) {
-    return Data.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $Data = _$DataTearOff();
-
-/// @nodoc
-mixin _$Data {
-  LeagueStat? get leagueStat => throw _privateConstructorUsedError;
-
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
-  $DataCopyWith<Data> get copyWith => throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $DataCopyWith<$Res> {
-  factory $DataCopyWith(Data value, $Res Function(Data) then) =
-      _$DataCopyWithImpl<$Res>;
-  $Res call({LeagueStat? leagueStat});
-
-  $LeagueStatCopyWith<$Res>? get leagueStat;
-}
-
-/// @nodoc
-class _$DataCopyWithImpl<$Res> implements $DataCopyWith<$Res> {
-  _$DataCopyWithImpl(this._value, this._then);
-
-  final Data _value;
-  // ignore: unused_field
-  final $Res Function(Data) _then;
 
   @override
   $Res call({
@@ -252,9 +90,11 @@ class _$DataCopyWithImpl<$Res> implements $DataCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$DataCopyWith<$Res> implements $DataCopyWith<$Res> {
-  factory _$DataCopyWith(_Data value, $Res Function(_Data) then) =
-      __$DataCopyWithImpl<$Res>;
+abstract class _$LeagueStatDataCopyWith<$Res>
+    implements $LeagueStatDataCopyWith<$Res> {
+  factory _$LeagueStatDataCopyWith(
+          _LeagueStatData value, $Res Function(_LeagueStatData) then) =
+      __$LeagueStatDataCopyWithImpl<$Res>;
   @override
   $Res call({LeagueStat? leagueStat});
 
@@ -263,19 +103,21 @@ abstract class _$DataCopyWith<$Res> implements $DataCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$DataCopyWithImpl<$Res> extends _$DataCopyWithImpl<$Res>
-    implements _$DataCopyWith<$Res> {
-  __$DataCopyWithImpl(_Data _value, $Res Function(_Data) _then)
-      : super(_value, (v) => _then(v as _Data));
+class __$LeagueStatDataCopyWithImpl<$Res>
+    extends _$LeagueStatDataCopyWithImpl<$Res>
+    implements _$LeagueStatDataCopyWith<$Res> {
+  __$LeagueStatDataCopyWithImpl(
+      _LeagueStatData _value, $Res Function(_LeagueStatData) _then)
+      : super(_value, (v) => _then(v as _LeagueStatData));
 
   @override
-  _Data get _value => super._value as _Data;
+  _LeagueStatData get _value => super._value as _LeagueStatData;
 
   @override
   $Res call({
     Object? leagueStat = freezed,
   }) {
-    return _then(_Data(
+    return _then(_LeagueStatData(
       leagueStat: leagueStat == freezed
           ? _value.leagueStat
           : leagueStat // ignore: cast_nullable_to_non_nullable
@@ -286,24 +128,25 @@ class __$DataCopyWithImpl<$Res> extends _$DataCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_Data implements _Data {
-  const _$_Data({required this.leagueStat});
+class _$_LeagueStatData implements _LeagueStatData {
+  const _$_LeagueStatData({required this.leagueStat});
 
-  factory _$_Data.fromJson(Map<String, dynamic> json) => _$$_DataFromJson(json);
+  factory _$_LeagueStatData.fromJson(Map<String, dynamic> json) =>
+      _$$_LeagueStatDataFromJson(json);
 
   @override
   final LeagueStat? leagueStat;
 
   @override
   String toString() {
-    return 'Data(leagueStat: $leagueStat)';
+    return 'LeagueStatData(leagueStat: $leagueStat)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _Data &&
+            other is _LeagueStatData &&
             const DeepCollectionEquality()
                 .equals(other.leagueStat, leagueStat));
   }
@@ -314,25 +157,28 @@ class _$_Data implements _Data {
 
   @JsonKey(ignore: true)
   @override
-  _$DataCopyWith<_Data> get copyWith =>
-      __$DataCopyWithImpl<_Data>(this, _$identity);
+  _$LeagueStatDataCopyWith<_LeagueStatData> get copyWith =>
+      __$LeagueStatDataCopyWithImpl<_LeagueStatData>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_DataToJson(this);
+    return _$$_LeagueStatDataToJson(this);
   }
 }
 
-abstract class _Data implements Data {
-  const factory _Data({required LeagueStat? leagueStat}) = _$_Data;
+abstract class _LeagueStatData implements LeagueStatData {
+  const factory _LeagueStatData({required LeagueStat? leagueStat}) =
+      _$_LeagueStatData;
 
-  factory _Data.fromJson(Map<String, dynamic> json) = _$_Data.fromJson;
+  factory _LeagueStatData.fromJson(Map<String, dynamic> json) =
+      _$_LeagueStatData.fromJson;
 
   @override
   LeagueStat? get leagueStat;
   @override
   @JsonKey(ignore: true)
-  _$DataCopyWith<_Data> get copyWith => throw _privateConstructorUsedError;
+  _$LeagueStatDataCopyWith<_LeagueStatData> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 LeagueStat _$LeagueStatFromJson(Map<String, dynamic> json) {
@@ -355,6 +201,8 @@ class _$LeagueStatTearOff {
       required String? description,
       required String? status,
       required String? format,
+      required String? winnerOneId,
+      required String? winnerTwoId,
       required List<UserStat>? userStat}) {
     return _LeagueStat(
       leagueId: leagueId,
@@ -368,6 +216,8 @@ class _$LeagueStatTearOff {
       description: description,
       status: status,
       format: format,
+      winnerOneId: winnerOneId,
+      winnerTwoId: winnerTwoId,
       userStat: userStat,
     );
   }
@@ -393,6 +243,8 @@ mixin _$LeagueStat {
   String? get description => throw _privateConstructorUsedError;
   String? get status => throw _privateConstructorUsedError;
   String? get format => throw _privateConstructorUsedError;
+  String? get winnerOneId => throw _privateConstructorUsedError;
+  String? get winnerTwoId => throw _privateConstructorUsedError;
   List<UserStat>? get userStat => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -418,6 +270,8 @@ abstract class $LeagueStatCopyWith<$Res> {
       String? description,
       String? status,
       String? format,
+      String? winnerOneId,
+      String? winnerTwoId,
       List<UserStat>? userStat});
 }
 
@@ -442,6 +296,8 @@ class _$LeagueStatCopyWithImpl<$Res> implements $LeagueStatCopyWith<$Res> {
     Object? description = freezed,
     Object? status = freezed,
     Object? format = freezed,
+    Object? winnerOneId = freezed,
+    Object? winnerTwoId = freezed,
     Object? userStat = freezed,
   }) {
     return _then(_value.copyWith(
@@ -489,6 +345,14 @@ class _$LeagueStatCopyWithImpl<$Res> implements $LeagueStatCopyWith<$Res> {
           ? _value.format
           : format // ignore: cast_nullable_to_non_nullable
               as String?,
+      winnerOneId: winnerOneId == freezed
+          ? _value.winnerOneId
+          : winnerOneId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      winnerTwoId: winnerTwoId == freezed
+          ? _value.winnerTwoId
+          : winnerTwoId // ignore: cast_nullable_to_non_nullable
+              as String?,
       userStat: userStat == freezed
           ? _value.userStat
           : userStat // ignore: cast_nullable_to_non_nullable
@@ -515,6 +379,8 @@ abstract class _$LeagueStatCopyWith<$Res> implements $LeagueStatCopyWith<$Res> {
       String? description,
       String? status,
       String? format,
+      String? winnerOneId,
+      String? winnerTwoId,
       List<UserStat>? userStat});
 }
 
@@ -541,6 +407,8 @@ class __$LeagueStatCopyWithImpl<$Res> extends _$LeagueStatCopyWithImpl<$Res>
     Object? description = freezed,
     Object? status = freezed,
     Object? format = freezed,
+    Object? winnerOneId = freezed,
+    Object? winnerTwoId = freezed,
     Object? userStat = freezed,
   }) {
     return _then(_LeagueStat(
@@ -588,6 +456,14 @@ class __$LeagueStatCopyWithImpl<$Res> extends _$LeagueStatCopyWithImpl<$Res>
           ? _value.format
           : format // ignore: cast_nullable_to_non_nullable
               as String?,
+      winnerOneId: winnerOneId == freezed
+          ? _value.winnerOneId
+          : winnerOneId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      winnerTwoId: winnerTwoId == freezed
+          ? _value.winnerTwoId
+          : winnerTwoId // ignore: cast_nullable_to_non_nullable
+              as String?,
       userStat: userStat == freezed
           ? _value.userStat
           : userStat // ignore: cast_nullable_to_non_nullable
@@ -611,6 +487,8 @@ class _$_LeagueStat implements _LeagueStat {
       required this.description,
       required this.status,
       required this.format,
+      required this.winnerOneId,
+      required this.winnerTwoId,
       required this.userStat});
 
   factory _$_LeagueStat.fromJson(Map<String, dynamic> json) =>
@@ -639,11 +517,15 @@ class _$_LeagueStat implements _LeagueStat {
   @override
   final String? format;
   @override
+  final String? winnerOneId;
+  @override
+  final String? winnerTwoId;
+  @override
   final List<UserStat>? userStat;
 
   @override
   String toString() {
-    return 'LeagueStat(leagueId: $leagueId, name: $name, city: $city, state: $state, country: $country, startDate: $startDate, endDate: $endDate, level: $level, description: $description, status: $status, format: $format, userStat: $userStat)';
+    return 'LeagueStat(leagueId: $leagueId, name: $name, city: $city, state: $state, country: $country, startDate: $startDate, endDate: $endDate, level: $level, description: $description, status: $status, format: $format, winnerOneId: $winnerOneId, winnerTwoId: $winnerTwoId, userStat: $userStat)';
   }
 
   @override
@@ -663,6 +545,10 @@ class _$_LeagueStat implements _LeagueStat {
                 .equals(other.description, description) &&
             const DeepCollectionEquality().equals(other.status, status) &&
             const DeepCollectionEquality().equals(other.format, format) &&
+            const DeepCollectionEquality()
+                .equals(other.winnerOneId, winnerOneId) &&
+            const DeepCollectionEquality()
+                .equals(other.winnerTwoId, winnerTwoId) &&
             const DeepCollectionEquality().equals(other.userStat, userStat));
   }
 
@@ -680,6 +566,8 @@ class _$_LeagueStat implements _LeagueStat {
       const DeepCollectionEquality().hash(description),
       const DeepCollectionEquality().hash(status),
       const DeepCollectionEquality().hash(format),
+      const DeepCollectionEquality().hash(winnerOneId),
+      const DeepCollectionEquality().hash(winnerTwoId),
       const DeepCollectionEquality().hash(userStat));
 
   @JsonKey(ignore: true)
@@ -706,6 +594,8 @@ abstract class _LeagueStat implements LeagueStat {
       required String? description,
       required String? status,
       required String? format,
+      required String? winnerOneId,
+      required String? winnerTwoId,
       required List<UserStat>? userStat}) = _$_LeagueStat;
 
   factory _LeagueStat.fromJson(Map<String, dynamic> json) =
@@ -733,6 +623,10 @@ abstract class _LeagueStat implements LeagueStat {
   String? get status;
   @override
   String? get format;
+  @override
+  String? get winnerOneId;
+  @override
+  String? get winnerTwoId;
   @override
   List<UserStat>? get userStat;
   @override
