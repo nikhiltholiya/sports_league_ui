@@ -26,6 +26,24 @@ won
 }
 """;
 
+const temp = """
+query (\$userId : String!) {
+  userProfiles(userId:\$userId) {
+    userId
+    firstName
+    lastName
+    matchesCount
+    wonCount
+    drawCount
+    lostCount
+    city
+    state
+    dob
+    age
+  }
+}
+
+""";
 const String homepageQuery = """
   query (\$userId: String!) {
     userProfiles(userId:\$userId){
@@ -75,15 +93,6 @@ const String matchesQuery = """
   }
 """;
 
-final hello = parseString('''
-  query hello {
-    hello {
-      id
-    }
-  }
-  ''');
-
-
 final leagueStatus = /*parseString(*/'''
 
 query (\$leagueId: String!) {
@@ -99,6 +108,8 @@ query (\$leagueId: String!) {
     description
     status
     format
+    winnerOneId
+    winnerTwoId
     userStat {
       loss
       total
@@ -107,5 +118,5 @@ query (\$leagueId: String!) {
     }
   }
 }
-
 '''/*)*/;
+

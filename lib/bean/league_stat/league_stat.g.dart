@@ -8,23 +8,13 @@ part of 'league_stat.dart';
 
 _$_LeagueStatData _$$_LeagueStatDataFromJson(Map<String, dynamic> json) =>
     _$_LeagueStatData(
-      data: json['data'] == null
-          ? null
-          : Data.fromJson(json['data'] as Map<String, dynamic>),
-    );
-
-Map<String, dynamic> _$$_LeagueStatDataToJson(_$_LeagueStatData instance) =>
-    <String, dynamic>{
-      'data': instance.data,
-    };
-
-_$_Data _$$_DataFromJson(Map<String, dynamic> json) => _$_Data(
       leagueStat: json['leagueStat'] == null
           ? null
           : LeagueStat.fromJson(json['leagueStat'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$$_DataToJson(_$_Data instance) => <String, dynamic>{
+Map<String, dynamic> _$$_LeagueStatDataToJson(_$_LeagueStatData instance) =>
+    <String, dynamic>{
       'leagueStat': instance.leagueStat,
     };
 
@@ -41,6 +31,8 @@ _$_LeagueStat _$$_LeagueStatFromJson(Map<String, dynamic> json) =>
       description: json['description'] as String?,
       status: json['status'] as String?,
       format: json['format'] as String?,
+      winnerOneId: json['winnerOneId'] as String?,
+      winnerTwoId: json['winnerTwoId'] as String?,
       userStat: (json['userStat'] as List<dynamic>?)
           ?.map((e) => UserStat.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -59,6 +51,8 @@ Map<String, dynamic> _$$_LeagueStatToJson(_$_LeagueStat instance) =>
       'description': instance.description,
       'status': instance.status,
       'format': instance.format,
+      'winnerOneId': instance.winnerOneId,
+      'winnerTwoId': instance.winnerTwoId,
       'userStat': instance.userStat,
     };
 

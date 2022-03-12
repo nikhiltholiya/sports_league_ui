@@ -41,14 +41,14 @@ class _LeagueDetailTileState extends State<LeagueDetailTile> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(5.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Expanded(
                     child: SizedBox(),
-                    flex: 3,
+                    flex: 4,
                   ),
                   Expanded(
                     child: Text(
@@ -56,7 +56,7 @@ class _LeagueDetailTileState extends State<LeagueDetailTile> {
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: aLightGray,
-                        fontSize: 14,
+                        fontSize: 12,
                         fontWeight: (FontWeight.normal),
                       ),
                     ),
@@ -68,7 +68,7 @@ class _LeagueDetailTileState extends State<LeagueDetailTile> {
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: aLightGray,
-                        fontSize: 14,
+                        fontSize: 12,
                         fontWeight: (FontWeight.normal),
                       ),
                     ),
@@ -80,7 +80,7 @@ class _LeagueDetailTileState extends State<LeagueDetailTile> {
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: aLightGray,
-                        fontSize: 14,
+                        fontSize: 12,
                         fontWeight: (FontWeight.normal),
                       ),
                     ),
@@ -95,7 +95,7 @@ class _LeagueDetailTileState extends State<LeagueDetailTile> {
               thickness: 1,
             ),
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(5.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -115,16 +115,18 @@ class _LeagueDetailTileState extends State<LeagueDetailTile> {
                     flex: 1,
                   ),
                   Expanded(
-                    child: Text(
-                      widget.name!,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: aBlack,
-                        fontSize: 14,
-                        fontWeight: (FontWeight.bold),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 3),
+                      child: Text(
+                        widget.name!,
+                        style: TextStyle(
+                          color: aBlack,
+                          fontSize: 14,
+                          fontWeight: (FontWeight.bold),
+                        ),
                       ),
                     ),
-                    flex: 2,
+                    flex: 3,
                   ),
                   Expanded(
                     child: Text(

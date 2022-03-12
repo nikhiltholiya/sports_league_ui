@@ -6,11 +6,26 @@ import 'package:tenniston/components/stats_tile.dart';
 import 'package:tenniston/utils/app_colors.dart';
 
 class LeagueDetailsWinnerTile extends StatefulWidget {
+  final String? winnerName;
+  final String? winnerLocation;
+  final int? winnerAge;
+  final int? matchesCount;
+  final int? wonCount;
+  final int? drawCount;
+  final int? lostCount;
+  final double? rate;
 
-
-  const LeagueDetailsWinnerTile(
-      {Key? key,})
-      : super(key: key);
+  const LeagueDetailsWinnerTile({
+    Key? key,
+    this.winnerName,
+    this.winnerLocation,
+    this.winnerAge,
+    this.matchesCount,
+    this.wonCount,
+    this.drawCount,
+    this.lostCount,
+    this.rate = 0.0,
+  }) : super(key: key);
 
   @override
   State<LeagueDetailsWinnerTile> createState() =>
@@ -33,92 +48,117 @@ class _LeagueDetailsWinnerTileState extends State<LeagueDetailsWinnerTile> {
           children: [
             Positioned(
               child: Center(
-                  child: Image.asset(
-                      'assets/Vector_round.png')),
+                child: Image.asset(
+                  'assets/vector_round_winner.png',
+                  width: MediaQuery.of(context).size.width,
+                ),
+              ),
               top: -15,
+            ),
+            Positioned(
+              child: Center(
+                child: Image.asset(
+                  'assets/winner_cel.png',
+                  width: 150.0,
+                ),
+              ),
+              top: 0,
             ),
             Padding(
               padding: EdgeInsets.all(10),
               child: Wrap(
-                crossAxisAlignment:
-                WrapCrossAlignment.center,
+                crossAxisAlignment: WrapCrossAlignment.center,
                 alignment: WrapAlignment.center,
                 children: [
                   Column(
-                    crossAxisAlignment:
-                    CrossAxisAlignment.center,
-                    mainAxisAlignment:
-                    MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      CircleAvatar(
-                        child: Image.asset(
-                            'assets/Ellipse 1.png'),
-                        backgroundColor:
-                        Color(0x808C8C8C),
-                        radius: 40,
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: CircleAvatar(
+                          child: CircleAvatar(
+                            child: Image.asset('assets/Ellipse 1.png'),
+                            backgroundColor: aWhite,
+                            radius: 38,
+                          ),
+                          backgroundColor: aWhite,
+                          radius: 40,
+                        ),
                       ),
                       Text(
-                        'John Snow',
+                        widget.winnerName ?? '',
                         maxLines: 1,
                         style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold),
+                            fontSize: 20, fontWeight: FontWeight.bold),
                       ),
                     ],
                   ),
-
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Flexible(flex: 1,
+                      Flexible(
+                        flex: 1,
                         fit: FlexFit.loose,
                         child: IconicTextView(
                           icon: Icons.location_pin,
-                          label: 'Gabriel',
+                          label: widget.winnerLocation ?? '',
                           align: MainAxisAlignment.end,
                         ),
                       ),
-                      Flexible(flex: 1,
+                      Flexible(
+                        flex: 1,
                         fit: FlexFit.loose,
                         child: IconicTextView(
                             icon: Icons.circle,
                             iconColor: aLightGray,
                             iconSize: 5.0,
-                            label: '32 years'),
+                            label: '${widget.winnerAge} years'),
                       ),
                     ],
                   ),
-
                   Divider(
                     color: aPartGray10,
                     height: 1,
                     thickness: 1,
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(4.0),
                     child: Row(
-                      mainAxisAlignment:
-                      MainAxisAlignment.center,
-                      crossAxisAlignment:
-                      CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Expanded(
-                          child:
-                      StatsTile(title: 'Matches',subtitle: '32',colors: aBlack,),
+                          child: StatsTile(
+                            title: 'Matches',
+                            subtitle: '${widget.matchesCount}',
+                            colors: aBlack,
+                          ),
                           flex: 1,
                         ),
                         Expanded(
-                          child:
-                          StatsTile(title: 'Victories',subtitle: '16',colors: aGreen,),
+                          child: StatsTile(
+                            title: 'Victories',
+                            subtitle: '${widget.wonCount}',
+                            colors: aGreen,
+                          ),
                           flex: 1,
                         ),
                         Expanded(
-                          child: StatsTile(title: 'Defeats',subtitle: '16',colors: aRed,),
+                          child: StatsTile(
+                            title: 'Defeats',
+                            subtitle: '${widget.lostCount}',
+                            colors: aRed,
+                          ),
                           flex: 1,
                         ),
                         Expanded(
-                          child: StatsTile(title: 'Rating',subtitle: '4.5',colors: aBlue,),
+                          child: StatsTile(
+                            title: 'Rating',
+                            subtitle: '${widget.rate}',
+                            colors: aBlue,
+                          ),
                           flex: 1,
                         ),
                       ],

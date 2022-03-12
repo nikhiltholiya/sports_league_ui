@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:tenniston/Pages/base_activity.dart';
 import 'package:tenniston/Pages/profile_detail_page.dart';
 import 'package:tenniston/Pages/schedule_page.dart';
 import 'package:tenniston/utils/Constants.dart' as Constants;
 import 'package:tenniston/utils/app_colors.dart';
 
-import 'base_activity.dart';
+
 
 //Updated on 20220307
 class ProfilePage extends StatefulWidget {
@@ -18,16 +19,12 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   String readRepositories = Constants.homepageQuery;
-  int cuurent_index = 1;
+  int curent_index = 1;
   var dataRecent;
 
 
   @override
   Widget build(BuildContext context) {
-    final mq = MediaQuery.of(context).size;
-    var size = MediaQuery.of(context).size;
-    double? height = (size.height / 2) - 56;
-    var scrollPosition;
 
     return BaseWidget(
       appbar: AppBar(
@@ -35,7 +32,7 @@ class _ProfilePageState extends State<ProfilePage> {
         title: Text(''),
         toolbarHeight: 0,
       ),
-      body: cuurent_index == 0
+      body: curent_index == 0
           ? SchedulePage()
           : ProfileDetailPage(),
       fab: FloatingActionButton(
@@ -57,11 +54,11 @@ class _ProfilePageState extends State<ProfilePage> {
               unselectedFontSize: 10,
               onTap: (d) {
                 setState(() {
-                  cuurent_index = d;
+                  curent_index = d;
                 });
               },
               showUnselectedLabels: true,
-              currentIndex: cuurent_index,
+              currentIndex: curent_index,
               showSelectedLabels: true,
               type: BottomNavigationBarType.fixed,
               items: [
@@ -73,7 +70,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         "assets/Vector (2).png",
                         height: 18,
                         width: 18,
-                        color: cuurent_index == 0 ? Colors.green : Colors.grey,
+                        color: curent_index == 0 ? Colors.green : Colors.grey,
                         fit: BoxFit.cover,
                       ),
                     )),
@@ -85,7 +82,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       "assets/Active (3).png",
                       height: 18,
                       width: 18,
-                      color: cuurent_index == 1 ? Colors.green : Colors.grey,
+                      color: curent_index == 1 ? Colors.green : Colors.grey,
                       fit: BoxFit.cover,
                     ),
                   ),
