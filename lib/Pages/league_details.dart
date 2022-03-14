@@ -1,17 +1,18 @@
-import 'package:date_format/date_format.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
-import 'package:tenniston/bean/user_profiles/user_profiles.dart';
 
+import '../bean/all_league_Applications/all_leagues_applications.dart';
 import '../Pages/base_activity.dart';
 import '../Pages/challenges_chat.dart';
+import '../bean/user_profiles/user_profiles.dart';
 import '../bean/league_stat/league_stat.dart';
 import '../components/elevated_buttons.dart';
 import '../components/league_detail_tile.dart';
 import '../components/league_details_header_tile.dart';
 import '../components/league_details_winner_tile.dart';
 import '../utils/Constants.dart' as Constants;
+import '../utils/common.dart';
 import '../utils/app_colors.dart';
 import '../utils/app_labels.dart';
 
@@ -38,8 +39,11 @@ class _LeagueDetailsState extends State<LeagueDetails> {
   List<double>? _childWidgetHeights = [];
   late List<UserStat>? userStat;
 
+  // passedData = applicantsList![index].node
+  // late Edges? passedData;
+
   String fetchLeague = Constants.leagueStatus;
-  String fetchU = Constants.temp;
+  String fetchUsers = Constants.fetchUserProfiles;
 
   late LeagueStatData? LeagueData;
   bool? isBuildWidgets = false;
@@ -91,6 +95,10 @@ class _LeagueDetailsState extends State<LeagueDetails> {
     double? height = (size.height / 2) - 56;
     var scrollPosition;
 
+    var PassData = ModalRoute.of(context)?.settings.arguments as Node;
+    print('${PassData.league?.leagueId}');
+
+    // passedData = applicantsList![index].node
     // int? leagueStatus = 0; //0 = Ongoing | 1 = Completed
 
     return BaseWidget(
@@ -106,9 +114,7 @@ class _LeagueDetailsState extends State<LeagueDetails> {
             document: gql(fetchLeague),
             // this is the query string you just created
             variables: {
-              // 'leagueId': '1ea19084-9f61-43af-bf66-efd0da26a6d9',//Ongoing -old -null
-              // 'leagueId': '6b32b9ee-4fc4-4bea-a996-f383071e4fa6',//Ongoing
-              'leagueId': 'c5fb3e2e-6ce4-4cee-b074-cf630958994e',//Completed
+              'leagueId': '${PassData.league?.leagueId}',
             },
             pollInterval: Duration(seconds: 100),
           ),
@@ -124,7 +130,6 @@ class _LeagueDetailsState extends State<LeagueDetails> {
                 LeagueData = LeagueStatData.fromJson(result.data!);
                 userStat = [];
                 userStat = LeagueData?.leagueStat?.userStat;
-
               } catch (e) {
                 debugPrint('Exception -- $e');
               }
@@ -175,7 +180,8 @@ class _LeagueDetailsState extends State<LeagueDetails> {
                                   leagueDate: convertDate(
                                       LeagueData?.leagueStat?.startDate,
                                       LeagueData?.leagueStat?.endDate),
-                                  leagueDesc: LeagueData?.leagueStat?.description,
+                                  leagueDesc:
+                                      LeagueData?.leagueStat?.description,
                                   leagueLocation:
                                       '${LeagueData?.leagueStat?.city}, ${LeagueData?.leagueStat?.state}, ${LeagueData?.leagueStat?.country}',
                                   stackKey: _stackKey,
@@ -199,63 +205,68 @@ class _LeagueDetailsState extends State<LeagueDetails> {
                         if (LeagueData!.leagueStat!.status != null &&
                             LeagueData!.leagueStat!.status!.toString() !=
                                 'ongoing')
-            SliverToBoxAdapter(
-                          child : Query(
-                            options: QueryOptions(
-                              document: gql(fetchU),
-                              // this is the query string you just created
+                          SliverToBoxAdapter(
+                            child: Query(
+                              options: QueryOptions(
+                                document: gql(fetchUsers),
+                                // this is the query string you just created
                                 variables: {
-                                'userId': '${LeagueData!.leagueStat!.winnerOneId}',
-                                // 'userId': '${LeagueData!.leagueStat!.winnerOneId}',
+                                  'userId':
+                                      '${LeagueData!.leagueStat!.winnerOneId}',
+                                  // 'userId': '${LeagueData!.leagueStat!.winnerOneId}',
                                 },
-                              pollInterval: Duration(seconds: 100),
-                            ),
-                            builder: (winnerResult, {fetchMore, refetch}) {
-                              late UserProfiles? profile;
-                              if (winnerResult.hasException) {
-                                return Text(winnerResult.exception.toString());
-                              }
-
-                              if(winnerResult.isLoading) {
-                                return Center(
-                                    child: CupertinoActivityIndicator());
-                              }else{
-                                profile = UserProfileData.fromJson(winnerResult.data!).userProfiles!;
-                              }
-
-                              return Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsets.all(8.0),
-                                    child: Text(leagueWinner),
-                                  ),
-
-                              LeagueDetailsWinnerTile(
-                                  winnerName: '${profile.firstName} ${profile.lastName} ',
-                              winnerLocation: '${profile.city}, ${profile.state}',
-                              winnerAge: profile.age,
-                              drawCount: profile.drawCount,
-                              wonCount: profile.wonCount,
-                              matchesCount: profile.matchesCount,
-                              lostCount: profile.lostCount,
+                                pollInterval: Duration(seconds: 100),
                               ),
-                              // try {
-                              // LeagueData = LeagueStatData.fromJson(result.data!);
-                              // userStat = [];
-                              // userStat = LeagueData?.leagueStat?.userStat;
-                              // } catch (e) {
-                              // debugPrint('Exception -- $e');
-                              // }
+                              builder: (winnerResult, {fetchMore, refetch}) {
+                                late UserProfiles? profile;
+                                if (winnerResult.hasException) {
+                                  return Text(
+                                      winnerResult.exception.toString());
+                                }
 
-                              // }
+                                if (winnerResult.isLoading) {
+                                  return Center(
+                                      child: CupertinoActivityIndicator());
+                                } else {
+                                  profile = UserProfileData.fromJson(
+                                          winnerResult.data!)
+                                      .userProfiles!;
+                                }
 
-                                ],
-                              );
-                            },
+                                return Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.all(8.0),
+                                      child: Text(leagueWinner),
+                                    ),
+
+                                    LeagueDetailsWinnerTile(
+                                      winnerName:
+                                          '${profile.firstName} ${profile.lastName} ',
+                                      winnerLocation:
+                                          '${profile.city}, ${profile.state}',
+                                      winnerAge: profile.age,
+                                      drawCount: profile.drawCount,
+                                      wonCount: profile.wonCount,
+                                      matchesCount: profile.matchesCount,
+                                      lostCount: profile.lostCount,
+                                    ),
+                                    // try {
+                                    // LeagueData = LeagueStatData.fromJson(result.data!);
+                                    // userStat = [];
+                                    // userStat = LeagueData?.leagueStat?.userStat;
+                                    // } catch (e) {
+                                    // debugPrint('Exception -- $e');
+                                    // }
+
+                                    // }
+                                  ],
+                                );
+                              },
+                            ),
                           ),
-            ),
                         const SliverToBoxAdapter(
                           child: Padding(
                             padding: EdgeInsets.all(8.0),
@@ -303,38 +314,5 @@ class _LeagueDetailsState extends State<LeagueDetails> {
         ),
       ),
     );
-  }
-
-  String? convertDate(String? startDate, String? endDate) {
-    String? sDate = '';
-    String? eDate = '';
-    try {
-      if (startDate != null)
-        sDate = '${formatDate(DateTime.parse(startDate), [
-              D,
-              ' ',
-              dd,
-              'st',
-              ' ',
-              M,
-              ' ',
-              yyyy
-            ])}';
-
-      if (endDate != null)
-        eDate = '${formatDate(DateTime.parse(endDate), [
-              D,
-              ' ',
-              dd,
-              'st',
-              ' ',
-              M,
-              ' ',
-              yyyy
-            ])}';
-    } catch (e) {
-      debugPrint(e.toString());
-    }
-    return '$sDate - $eDate';
   }
 }

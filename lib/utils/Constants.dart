@@ -26,7 +26,7 @@ won
 }
 """;
 
-const temp = """
+const fetchUserProfiles = """
 query (\$userId : String!) {
   userProfiles(userId:\$userId) {
     userId
@@ -122,8 +122,49 @@ query (\$leagueId: String!) {
 
 //20220313
 final allLeagueApplications = '''
-query (\$applicant_UserId: String!) {
-  allLeagueApplications(applicant_UserId: \$applicant_UserId) {
+query (
+\$applicant_UserId: UUID,
+\$league_City: String!, 
+\$league_State: String!) {
+
+  allLeagueApplications(
+    applicant_UserId: \$applicant_UserId,
+    league_City: \$league_City,
+    league_State: \$league_State) {
+      edges {
+        node {
+         id
+          league {
+          id
+          city
+          endDate
+          leagueId
+          name
+          startDate
+          state
+          status
+          country
+          createdAt
+          description
+          level
+          updatedAt
+        }
+        applicant {
+          userId
+        }
+        status
+      }
+    }
+  }
+}
+''';
+
+
+final allLCitiesStates = '''
+query (\$league_City: String!, \$league_State: String!) {
+  allLeagueApplications(
+  league_City: \$league_City,
+  league_State: \$league_State) {
     edges {
       node {
         id

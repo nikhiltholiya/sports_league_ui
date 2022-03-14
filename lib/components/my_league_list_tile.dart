@@ -36,7 +36,7 @@ class _MyLeagueListTileState extends State<MyLeagueListTile> {
       child: Stack(
         children: [
           Padding(
-            padding: const EdgeInsets.only(top: 10.0),
+            padding: const EdgeInsets.only(top: 15.0),
             child: Container(
               margin: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
               padding: EdgeInsets.all(2),
@@ -50,7 +50,7 @@ class _MyLeagueListTileState extends State<MyLeagueListTile> {
                         width: 1.0)),
               ),
               child: Padding(
-                padding: const EdgeInsets.all(5.0),
+                padding: const EdgeInsets.only(top: 15,right: 5,left: 5,bottom: 10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
