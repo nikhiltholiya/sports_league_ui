@@ -18,7 +18,7 @@ import '../utils/app_labels.dart';
 //Created on 20220222
 
 class LeagueDetails extends StatefulWidget {
-  final String path = 'leagueDetail';
+  static const String path = 'leagueDetail';
 
   const LeagueDetails({Key? key}) : super(key: key);
 
@@ -274,9 +274,9 @@ class _LeagueDetailsState extends State<LeagueDetails> {
                                 if (LeagueData!.leagueStat!.status!
                                         .toLowerCase() ==
                                     'ongoing') {
-                                  // Navigator.pushNamed(context, ChallengesChat().path);
+                                  // Navigator.pushNamed(context, ChallengesChat.path);
                                   Navigator.pushNamed(
-                                      context, ChallengesChat().path);
+                                      context, ChallengesChat.path);
                                 }
                               },
                               onProfileClick: () {},

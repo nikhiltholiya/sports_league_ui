@@ -10,7 +10,7 @@ import 'package:tenniston/components/edit_text_form_field.dart';
 
 //Created on 20220223
 class ChallengesChat extends StatefulWidget {
-  final String path = 'challengesChat';
+  static const String path = 'challengesChat';
 
   const ChallengesChat({Key? key}) : super(key: key);
 

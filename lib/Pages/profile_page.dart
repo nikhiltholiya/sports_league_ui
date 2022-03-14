@@ -9,7 +9,7 @@ import 'package:tenniston/utils/app_colors.dart';
 
 //Updated on 20220307
 class ProfilePage extends StatefulWidget {
-  final String path = 'profilePage';
+  static const String path = 'profilePage';
 
   const ProfilePage({Key? key}) : super(key: key);
 

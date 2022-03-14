@@ -229,7 +229,7 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> {
                               ),
                               GestureDetector(
                                   onTap: () {
-                                    Navigator.pushNamed(context,  RecentMatchesPage().path);
+                                    Navigator.pushNamed(context,  RecentMatchesPage.path);
                                   },
                                   child: Text("See All"))
                             ],

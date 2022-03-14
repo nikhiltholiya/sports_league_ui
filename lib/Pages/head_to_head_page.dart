@@ -5,7 +5,7 @@ import 'package:tenniston/components/head_to_head_list_tile.dart';
 
 //Updated on 20220307
 class HeadtoHeadpage extends StatefulWidget {
-  final String path = 'profilePage';
+  static const String path = 'profilePage';
   const HeadtoHeadpage({Key? key}) : super(key: key);
 
   @override
@@ -44,7 +44,7 @@ class _HeadtoHeadpageState extends State<HeadtoHeadpage> {
                 padding: const EdgeInsets.only(top: 12),
                 child: InkWell(
                     onTap: () {
-                      Navigator.pushNamed(context, HeadToHeadDetails().path);
+                      Navigator.pushNamed(context, HeadToHeadDetails.path);
                     },
                   //Added on 20220304
                     child: HeadToHeadListTile(title: 'CBS Arena, Los Angeles, CA',

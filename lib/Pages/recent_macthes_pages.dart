@@ -6,7 +6,7 @@ import 'package:tenniston/components/head_to_head_details_list_tile.dart';
 
 //Updated on 20220308
 class RecentMatchesPage extends StatefulWidget {
-  final String path = 'recentMarchesPage';
+  static const String path = 'recentMarchesPage';
 
   const RecentMatchesPage({Key? key}) : super(key: key);
 

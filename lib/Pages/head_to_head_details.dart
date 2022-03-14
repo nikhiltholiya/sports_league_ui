@@ -6,7 +6,7 @@ import 'package:tenniston/components/head_to_head_details_list_tile.dart';
 
 //Edited on 20220307- Redesign with scroll
 class HeadToHeadDetails extends StatefulWidget {
-  final String path = 'headToHeadDetails';
+  static const String path = 'headToHeadDetails';
 
   const HeadToHeadDetails({Key? key}) : super(key: key);
 

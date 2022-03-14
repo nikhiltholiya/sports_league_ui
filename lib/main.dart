@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:tenniston/Pages/my_league_list.dart';
 import 'package:tenniston/Pages/profile_page.dart';
 import 'package:tenniston/Pages/challenges_chat.dart';
 import 'package:tenniston/Pages/head_to_head_details.dart';
@@ -61,27 +62,30 @@ class MyApp extends StatelessWidget {
               centerTitle: true)),
 
       //20220223
-      // initialRoute: LeagueDetails().path,
-      initialRoute: DashboardPage().path,
+      // initialRoute: LeagueDetails.path,
+      initialRoute: DashboardPage.path,
       onGenerateRoute: (settings) {
-        if (settings.name == DashboardPage().path) {
+        if (settings.name == DashboardPage.path) {
           return CupertinoPageRoute(
               builder: (context) => DashboardPage(), settings: settings);
-        } else if (settings.name == LeagueDetails().path) {
+        } else if (settings.name == LeagueDetails.path) {
           return CupertinoPageRoute(
               builder: (context) => LeagueDetails(), settings: settings);
-        } else if (settings.name == ChallengesChat().path) {
+        } else if (settings.name == ChallengesChat.path) {
           return CupertinoPageRoute(
               builder: (context) => ChallengesChat(), settings: settings);
-        } else if (settings.name == ProfilePage().path) {
+        } else if (settings.name == ProfilePage.path) {
           return CupertinoPageRoute(
               builder: (context) => ProfilePage(), settings: settings);
-        } else if (settings.name == HeadToHeadDetails().path) {
+        } else if (settings.name == HeadToHeadDetails.path) {
           return CupertinoPageRoute(
               builder: (context) => HeadToHeadDetails(), settings: settings);
-        } else if (settings.name == RecentMatchesPage().path) {
+        } else if (settings.name == RecentMatchesPage.path) {
           return CupertinoPageRoute(
               builder: (context) => RecentMatchesPage(), settings: settings);
+        } else if (settings.name == MyLeagueList.path) {
+          return CupertinoPageRoute(
+              builder: (context) => MyLeagueList(), settings: settings);
         } else {
           return null;
         }

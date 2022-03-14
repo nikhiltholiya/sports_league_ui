@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:tenniston/Pages/my_league_list.dart';
 
 import '../Pages/base_activity.dart';
 import '../Pages/league_details.dart';
@@ -11,7 +12,7 @@ import '../utils/app_labels.dart';
 
 //Changes on 20220225
 class DashboardPage extends StatefulWidget {
-  final String path = 'dashboard';
+  static const String path = 'dashboard';
 
   const DashboardPage({Key? key}) : super(key: key);
 
@@ -30,7 +31,8 @@ class _DashboardPageState extends State<DashboardPage> {
           image: 'transperent_tennis_ball_icon_green.png',
           subtitle: 'Check league status',
           color: Color(0xff31a05f),
-          path: LeagueDetails().path),
+          path: MyLeagueList.path),
+          // path: LeagueDetails.path),// MenuItems
       MenuItems(
           title: 'Submit Score',
           image: 'transperent_tennis_ball_icon_indigo.png',
@@ -48,7 +50,7 @@ class _DashboardPageState extends State<DashboardPage> {
           image: 'transperent_tennis_ball_icon_red.png',
           subtitle: 'Check / edit profile',
           color: Color(0xffeb5945),
-          path: ProfilePage().path),
+          path: ProfilePage.path),
       MenuItems(
           title: 'Latest Scores',
           image: 'transperent_tennis_ball_icon_yellow.png',

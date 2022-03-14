@@ -120,3 +120,35 @@ query (\$leagueId: String!) {
 }
 '''/*)*/;
 
+//20220313
+final allLeagueApplications = '''
+query (\$applicant_UserId: String!) {
+  allLeagueApplications(applicant_UserId: \$applicant_UserId) {
+    edges {
+      node {
+        id
+        league {
+          id
+          city
+          endDate
+          leagueId
+          name
+          startDate
+          state
+          status
+          country
+          createdAt
+          description
+          level
+          updatedAt
+        }
+        applicant {
+          userId
+        }
+        status
+      }
+    }
+  }
+}
+''';
+
