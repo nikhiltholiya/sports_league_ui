@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tenniston/components/iconic_text_view.dart';
-import 'package:tenniston/utils/app_colors.dart';
+import '../components/iconic_text_view.dart';
+import '../utils/app_colors.dart';
 
 //Created on 20220304
 class UpcommingMatchListTile extends StatefulWidget {

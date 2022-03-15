@@ -1,9 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:tenniston/components/decorated_app_header_tile.dart';
-import 'package:tenniston/components/iconic_text_view.dart';
-import 'package:tenniston/components/stats_tile.dart';
-import 'package:tenniston/utils/app_colors.dart';
+
+import '../components/iconic_text_view.dart';
+import '../components/stats_tile.dart';
+import '../utils/app_colors.dart';
 
 class LeagueDetailsWinnerTile extends StatefulWidget {
   final String? winnerName;

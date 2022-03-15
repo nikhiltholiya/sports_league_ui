@@ -96,7 +96,6 @@ class _LeagueDetailsState extends State<LeagueDetails> {
     var scrollPosition;
 
     var PassData = ModalRoute.of(context)?.settings.arguments as Node;
-    print('${PassData.league?.leagueId}');
 
     // passedData = applicantsList![index].node
     // int? leagueStatus = 0; //0 = Ongoing | 1 = Completed

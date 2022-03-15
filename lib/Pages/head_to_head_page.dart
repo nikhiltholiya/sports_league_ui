@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:tenniston/Pages/head_to_head_details.dart';
-import 'package:tenniston/components/head_to_head_list_tile.dart';
+import '../Pages/head_to_head_details.dart';
+import '../components/head_to_head_list_tile.dart';
 
 //Updated on 20220307
 class HeadtoHeadpage extends StatefulWidget {
-  static const String path = 'profilePage';
+  static const String path = 'headToHeadPage';
   const HeadtoHeadpage({Key? key}) : super(key: key);
 
   @override
@@ -29,7 +29,6 @@ class _HeadtoHeadpageState extends State<HeadtoHeadpage> {
         ),
       ),
       body: Container(
-        padding: EdgeInsets.all(16),
         child: ListView(
           children: [
             Text(
@@ -48,7 +47,10 @@ class _HeadtoHeadpageState extends State<HeadtoHeadpage> {
                     },
                   //Added on 20220304
                     child: HeadToHeadListTile(title: 'CBS Arena, Los Angeles, CA',
-                      onProfileClick: (){},onTileClick: (){},
+                      onProfileClick: (){},
+                      onTileClick: (){
+                      Navigator.pushNamed(context, HeadToHeadDetails.path);
+                      },
                       profileImg: 'assets/Ellipse 5.png',
                       date: 'Dec 31st 2021',
                       rating: '4.5',

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:tenniston/components/elevated_buttons.dart';
-import 'package:tenniston/components/iconic_text_view.dart';
-import 'package:tenniston/components/rate_badges.dart';
-import 'package:tenniston/utils/app_colors.dart';
+import '../components/elevated_buttons.dart';
+import '../components/iconic_text_view.dart';
+import '../components/rate_badges.dart';
+import '../utils/app_colors.dart';
 
 class ChattingListHeaderTile extends StatefulWidget {
   final bool? isSilverCollapsed;

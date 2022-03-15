@@ -1,6 +1,6 @@
 import 'package:gql/language.dart';
-const String SUCCESS_MESSAGE = " You will be contacted by us very soon.";
 
+const String SUCCESS_MESSAGE = " You will be contacted by us very soon.";
 
 const String leaque = """
 query MyQuery {
@@ -93,7 +93,7 @@ const String matchesQuery = """
   }
 """;
 
-final leagueStatus = /*parseString(*/'''
+final leagueStatus = /*parseString(*/ '''
 
 query (\$leagueId: String!) {
   leagueStat(leagueId: \$leagueId) {
@@ -118,7 +118,44 @@ query (\$leagueId: String!) {
     }
   }
 }
-'''/*)*/;
+''' /*)*/
+    ;
+
+
+//20220315
+String? allLeagueApplicationsQuery(Map<String, dynamic>? param, Map<String, dynamic>? paramType) {
+  return '''
+query(${param.toString().replaceAll('{',' ').replaceAll('}', ' ')}) {
+  allLeagueApplications(${paramType.toString().replaceAll('{',' ').replaceAll('}', ' ')}) {
+      edges {
+        node {
+         id
+          league {
+          id
+          city
+          endDate
+          leagueId
+          name
+          startDate
+          state
+          status
+          country
+          createdAt
+          description
+          level
+          updatedAt
+        }
+        applicant {
+          userId
+        }
+        status
+      }
+    }
+  }
+}
+''';
+}
+
 
 //20220313
 final allLeagueApplications = '''
@@ -159,7 +196,6 @@ query (
 }
 ''';
 
-
 final allLCitiesStates = '''
 query (\$league_City: String!, \$league_State: String!) {
   allLeagueApplications(
@@ -192,4 +228,3 @@ query (\$league_City: String!, \$league_State: String!) {
   }
 }
 ''';
-

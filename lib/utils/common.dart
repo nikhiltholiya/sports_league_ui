@@ -53,3 +53,27 @@ String? datePrefix(String d) {
   }
   return '';
 }
+
+//SilverHeader
+class SilverDelegates extends SliverPersistentHeaderDelegate {
+  final Widget? child;
+
+  SilverDelegates({this.child});
+
+  @override
+  Widget build(
+      BuildContext context, double shrinkOffset, bool overlapsContent) {
+    return child!;
+  }
+
+  @override
+  double get maxExtent => 60;
+
+  @override
+  double get minExtent => 60;
+
+  @override
+  bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) {
+    return true;
+  }
+}

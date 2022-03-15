@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:tenniston/utils/app_colors.dart';
+import '../utils/app_colors.dart';
 
 //Created on 20220304
 class IconicTextView extends StatefulWidget {

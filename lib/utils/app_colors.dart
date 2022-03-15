@@ -10,5 +10,6 @@ const Color aWhite = Color(0xffFFFFFF);//White
 const Color aBlack = Color(0xff000000);//Black
 const Color aGray = Color(0xff263238);//Dark Gray
 const Color aLightGray = Color(0xff808080);//Light Gray
+const Color aPartGray30 = Color(0x4d808080);//Light PartGray 30%
 const Color aPartGray10 = Color(0x1A808080);//Light Part Gray 10%
 const Color aPartGray5 = Color(0xD808080);//Light Part Gray 5%

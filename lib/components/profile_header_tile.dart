@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:tenniston/components/decorated_app_header_tile.dart';
-import 'package:tenniston/components/elevated_buttons.dart';
-import 'package:tenniston/components/iconic_text_view.dart';
-import 'package:tenniston/components/rate_badges.dart';
-import 'package:tenniston/utils/app_colors.dart';
+import '../components/decorated_app_header_tile.dart';
+import '../components/elevated_buttons.dart';
+import '../components/iconic_text_view.dart';
+import '../utils/app_colors.dart';
 
 //Created on 20220304
 class ProfileHeaderTile extends StatefulWidget {

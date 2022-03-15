@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:tenniston/Pages/my_league_list.dart';
 
+import '../Pages/my_league_list.dart';
+import '../Pages/submit_score_list.dart';
 import '../Pages/base_activity.dart';
-import '../Pages/league_details.dart';
 import '../Pages/profile_page.dart';
 import '../components/dashboard_menu_item.dart';
 import '../components/decorated_app_header_tile.dart';
@@ -32,13 +32,13 @@ class _DashboardPageState extends State<DashboardPage> {
           subtitle: 'Check league status',
           color: Color(0xff31a05f),
           path: MyLeagueList.path),
-          // path: LeagueDetails.path),// MenuItems
+      // path: LeagueDetails.path),// MenuItems
       MenuItems(
           title: 'Submit Score',
           image: 'transperent_tennis_ball_icon_indigo.png',
           subtitle: 'Submit your score',
           color: Color(0xff3e4982),
-          path: ''),
+          path: SubmitScoreList.path),
       MenuItems(
           title: 'Matches',
           image: 'transperent_tennis_ball_icon_blue.png',
@@ -65,12 +65,10 @@ class _DashboardPageState extends State<DashboardPage> {
           path: ''),
     ];
 
-
     return BaseWidget(
       scaffoldKey: scKey,
       appbar: AppBar(),
       appbarHeight: 0.0,
-
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -89,27 +87,27 @@ class _DashboardPageState extends State<DashboardPage> {
             child: Container(
               color: aWhite,
               child: GridView.builder(
-                  padding: EdgeInsets.all(10.0),
-                  gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                      maxCrossAxisExtent: 200,
-                      childAspectRatio: 2,
-                      crossAxisSpacing: 10,
-                      mainAxisSpacing: 10),
-                  itemCount: dashBoardMenuItems.length,
-                  itemBuilder: (BuildContext ctx, index) {
-
-                    return DashboardMenuItem(
-                      menu_color: dashBoardMenuItems[index].color,
-                      menu_image: dashBoardMenuItems[index].image,
-                      subtitle: dashBoardMenuItems[index].subtitle,
-                      title: dashBoardMenuItems[index].title,
-                      onMenuClick: () {
-                        if (dashBoardMenuItems[index].path!.isNotEmpty)
-                          Navigator.pushNamed(
-                              context, dashBoardMenuItems[index].path ?? '');
-                      },
-                    );
-                  },),
+                padding: EdgeInsets.all(10.0),
+                gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                    maxCrossAxisExtent: 200,
+                    childAspectRatio: 2,
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 10),
+                itemCount: dashBoardMenuItems.length,
+                itemBuilder: (BuildContext ctx, index) {
+                  return DashboardMenuItem(
+                    menu_color: dashBoardMenuItems[index].color,
+                    menu_image: dashBoardMenuItems[index].image,
+                    subtitle: dashBoardMenuItems[index].subtitle,
+                    title: dashBoardMenuItems[index].title,
+                    onMenuClick: () {
+                      if (dashBoardMenuItems[index].path!.isNotEmpty)
+                        Navigator.pushNamed(
+                            context, dashBoardMenuItems[index].path ?? '');
+                    },
+                  );
+                },
+              ),
             ),
           ),
         ],
@@ -119,7 +117,6 @@ class _DashboardPageState extends State<DashboardPage> {
 }
 
 class dashboardHeader extends StatelessWidget {
-
   const dashboardHeader({Key? key}) : super(key: key);
 
   @override
@@ -132,30 +129,30 @@ class dashboardHeader extends StatelessWidget {
           left: 20,
           child: RichText(
               text: TextSpan(children: <TextSpan>[
-                TextSpan(
-                  text: "Hello,\n",
-                  style: GoogleFonts.poppins(
-                    fontSize: 14,
-                    color: aWhite,
-                  ),
-                ),
-                TextSpan(
-                  text: "Kalpesh\n",
-                  style: GoogleFonts.poppins(
-                    fontSize: 26,
-                    color: aWhite,
-                  ),
-                ),
-              ])),
+            TextSpan(
+              text: "Hello,\n",
+              style: GoogleFonts.poppins(
+                fontSize: 14,
+                color: aWhite,
+              ),
+            ),
+            TextSpan(
+              text: "Kalpesh\n",
+              style: GoogleFonts.poppins(
+                fontSize: 26,
+                color: aWhite,
+              ),
+            ),
+          ])),
         ),
         Positioned(
           top: 50,
           right: 20,
           child: CircleAvatar(
               radius: 40, child: Image.asset('assets/Ellipse 5.png')
-            // backgroundImage: NetworkImage(
-            //     'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'),
-          ),
+              // backgroundImage: NetworkImage(
+              //     'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'),
+              ),
         )
       ],
     );

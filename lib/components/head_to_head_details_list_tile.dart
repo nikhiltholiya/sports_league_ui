@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tenniston/components/rate_badges.dart';
-import 'package:tenniston/utils/app_colors.dart';
+
+import '../utils/app_colors.dart';
 
 //Created on 20220304
 class HeadToHeadDetailsListTile extends StatefulWidget {

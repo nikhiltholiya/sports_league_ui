@@ -3,14 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
-import 'package:tenniston/Pages/my_league_list.dart';
-import 'package:tenniston/Pages/profile_page.dart';
-import 'package:tenniston/Pages/challenges_chat.dart';
-import 'package:tenniston/Pages/head_to_head_details.dart';
-import 'package:tenniston/Pages/league_details.dart';
-import 'package:tenniston/Pages/recent_macthes_pages.dart';
 
-import 'Pages/dashboard.dart';
+import '../Pages/submit_score_details.dart';
+import '../Pages/head_to_head_page.dart';
+import '../Pages/dashboard.dart';
+import '../Pages/my_league_list.dart';
+import '../Pages/profile_page.dart';
+import '../Pages/challenges_chat.dart';
+import '../Pages/head_to_head_details.dart';
+import '../Pages/league_details.dart';
+import '../Pages/recent_matches_pages.dart';
+import '../Pages/submit_score_list.dart';
 
 void main() async {
   await initHiveForFlutter();
@@ -80,12 +83,21 @@ class MyApp extends StatelessWidget {
         } else if (settings.name == HeadToHeadDetails.path) {
           return CupertinoPageRoute(
               builder: (context) => HeadToHeadDetails(), settings: settings);
+        } else if (settings.name == HeadtoHeadpage.path) {
+          return CupertinoPageRoute(
+              builder: (context) => HeadtoHeadpage(), settings: settings);
         } else if (settings.name == RecentMatchesPage.path) {
           return CupertinoPageRoute(
               builder: (context) => RecentMatchesPage(), settings: settings);
         } else if (settings.name == MyLeagueList.path) {
           return CupertinoPageRoute(
               builder: (context) => MyLeagueList(), settings: settings);
+        } else if (settings.name == SubmitScoreList.path) {
+          return CupertinoPageRoute(
+              builder: (context) => SubmitScoreList(), settings: settings);
+        } else if (settings.name == SubmitScoreDetails.path) {
+          return CupertinoPageRoute(
+              builder: (context) => SubmitScoreDetails(), settings: settings);
         } else {
           return null;
         }

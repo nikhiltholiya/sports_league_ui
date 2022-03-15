@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:tenniston/Pages/base_activity.dart';
-import 'package:tenniston/Pages/profile_detail_page.dart';
-import 'package:tenniston/Pages/schedule_page.dart';
-import 'package:tenniston/utils/Constants.dart' as Constants;
-import 'package:tenniston/utils/app_colors.dart';
+import '../Pages/base_activity.dart';
+import '../Pages/profile_detail_page.dart';
+import '../Pages/schedule_page.dart';
+import '../utils/Constants.dart' as Constants;
+import '../utils/app_colors.dart';
 
 
 

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tenniston/utils/app_colors.dart';
+import '../utils/app_colors.dart';
 
 //Updated on 20220307
 class StatsTile extends StatefulWidget {

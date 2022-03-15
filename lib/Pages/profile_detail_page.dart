@@ -2,14 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
-import 'package:tenniston/Pages/head_to_head_page.dart';
-import 'package:tenniston/Pages/recent_macthes_pages.dart';
-import 'package:tenniston/components/head_to_head_details_list_tile.dart';
-import 'package:tenniston/components/head_to_head_list_tile.dart';
-import 'package:tenniston/components/profile_header_tile.dart';
-import 'package:tenniston/components/stats_tile.dart';
-import 'package:tenniston/utils/Constants.dart' as Constants;
-import 'package:tenniston/utils/app_colors.dart';
+import '../Pages/head_to_head_page.dart';
+import '../Pages/recent_matches_pages.dart';
+import '../components/head_to_head_details_list_tile.dart';
+import '../components/head_to_head_list_tile.dart';
+import '../components/profile_header_tile.dart';
+import '../components/stats_tile.dart';
+import '../utils/Constants.dart' as Constants;
+import '../utils/app_colors.dart';
 
 //Updated on 20220308
 class ProfileDetailPage extends StatefulWidget {
