@@ -20,3 +20,4 @@ const String leagueOpt = 'League (Optional)';
 const String setDetails = 'Set Details';
 const String addMoreSets = 'Add more sets';
 const String submit = 'Submit';
+const String viewProfile = 'View Profile';

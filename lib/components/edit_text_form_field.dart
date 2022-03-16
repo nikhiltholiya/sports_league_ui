@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:tenniston/utils/app_colors.dart';
+import '../utils/app_colors.dart';
 
 class EditTextFormField extends StatefulWidget {
   final FocusNode? focusNode;

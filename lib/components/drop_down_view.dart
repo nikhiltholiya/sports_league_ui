@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:tenniston/utils/app_colors.dart';
-import 'package:tenniston/utils/app_labels.dart';
+import '../utils/app_colors.dart';
+import '../utils/app_labels.dart';
 
 //Created on 20220312
 class DropDownView extends StatefulWidget {

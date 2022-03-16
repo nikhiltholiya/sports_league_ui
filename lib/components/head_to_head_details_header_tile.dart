@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:tenniston/components/decorated_app_header_tile.dart';
-import 'package:tenniston/components/rate_badges.dart';
-import 'package:tenniston/utils/app_colors.dart';
+import '../components/decorated_app_header_tile.dart';
+import '../components/rate_badges.dart';
+import '../utils/app_colors.dart';
 
 //Created on 20220303
 class HeadToHeadDetailsHeaderTile extends StatefulWidget {

@@ -1,12 +1,15 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:tenniston/Pages/base_activity.dart';
-import 'package:tenniston/bean/chat_dto.dart';
-import 'package:tenniston/components/chating_list_tile.dart';
-import 'package:tenniston/components/chatting_list_header_tile.dart';
-import 'package:tenniston/components/decorated_app_header_tile.dart';
-import 'package:tenniston/components/edit_text_form_field.dart';
+
+import '../Pages/profile_page.dart';
+import '../Pages/submit_score_list.dart';
+import '../Pages/base_activity.dart';
+import '../bean/chat_dto.dart';
+import '../components/chatting_list_tile.dart';
+import '../components/chatting_list_header_tile.dart';
+import '../components/edit_text_form_field.dart';
+import '../components/rate_badges.dart';
+import '../utils/app_colors.dart';
 
 //Created on 20220223
 class ChallengesChat extends StatefulWidget {
@@ -29,16 +32,20 @@ class _ChallengesChatState extends State<ChallengesChat> {
     Chat(message: 'Yes, count me in', dateTime: '3:28 PM', isMe: false)
   ];
 
-
   ScrollController? _scrollController;
-  var _headerContentSize = GlobalKey();
-  var _headerBackSize = GlobalKey();
-  double? _totalHeight;
+  var _stackKey = GlobalKey();
+  var _textTitleKey = GlobalKey();
+
+  double? _totalHeight = 0.0;
   bool? _visibility = true;
   bool? _isSilverCollapsed = false;
   FocusNode? _chatNode;
   TextEditingController? _textController = TextEditingController(text: '');
+
   // var scrollPosition;
+  String? userName = '';
+  String? userRate = '';
+  String? userImage = '';
 
   double? _getHeight(GlobalKey? gKey) {
     try {
@@ -50,16 +57,21 @@ class _ChallengesChatState extends State<ChallengesChat> {
 
   void _getTotalHeight(_) {
     _totalHeight = 0;
-    double? content = _getHeight(_headerContentSize);
-    double? box = _getHeight(_headerBackSize);
+    double? stack = _getHeight(_stackKey);
+    double? title = _getHeight(_textTitleKey);
+    // double? location = _getHeight(_imgLocationKey);
+    // double? btn = _getHeight(_btnKey);
 
     setState(() {
       _visibility = false;
     });
 
-    _totalHeight = (content ?? 0.0) + (box ?? 0.0) + 56;
-  }
+    _totalHeight = (stack ?? 0.0) +
+        (title ?? 0.0) /*+ (location ?? 0.0) + (btn ?? 0.0)*/ +
+        kToolbarHeight;
 
+    // print('Height == $_totalHeight');
+  }
 
   void _getListItems() async {
     SchedulerBinding.instance?.addPostFrameCallback((_) {
@@ -75,8 +87,10 @@ class _ChallengesChatState extends State<ChallengesChat> {
     setState(() {
       try {
         if (_scrollController!.offset >
-                100 /*&&
+                _totalHeight! -
+                    kToolbarHeight /*&&
           !_scrollController!.position.outOfRange*/
+            //100
             ) {
           _isSilverCollapsed = true;
         } else {
@@ -88,10 +102,13 @@ class _ChallengesChatState extends State<ChallengesChat> {
 
   void setToolbarTitle() {
     _scrollController!.addListener(() {
+      // print(_scrollController!.offset);
       // collapsing
       if (_scrollController!.offset >
-              100 /*&&
+              _totalHeight! -
+                  kToolbarHeight /*&&
           !_scrollController!.position.outOfRange*/
+          //100
           ) {
         _isSilverCollapsed = true;
       } else {
@@ -125,10 +142,10 @@ class _ChallengesChatState extends State<ChallengesChat> {
     return BaseWidget(
       appbar: AppBar(
         centerTitle: true,
-        title: SizedBox(
-          child: ChattingListHeaderTile(),
-          key: _headerContentSize,
-        ), // This is used for getting dynamic height of contents!!!
+        // title: SizedBox(
+        //   child: ChattingListHeaderTile(),
+        //   key: _headerContentSize,
+        // ), // This is used for getting dynamic height of contents!!!
         toolbarHeight: 0,
       ),
       body: Column(
@@ -173,30 +190,70 @@ class _ChallengesChatState extends State<ChallengesChat> {
                                 ? Colors.black
                                 : Colors.white),*/
                     flexibleSpace: FlexibleSpaceBar(
-                      titlePadding: EdgeInsets.zero,
-                      centerTitle: true,
-                      background: Stack(
-                        key: _headerBackSize,
-                        children: [DecoratedAppHeader()],
-                      ),
-                      title: ChattingListHeaderTile(playerName: 'John s.',
-                        playerLocation: 'Gabriel Parl, Portland, OR Gabriel Parl, Portland, OR ',
-                      playerImg: 'assets/Ellipse 1.png',
-                      isSilverCollapsed: _isSilverCollapsed,
-                      playerRate: '4.5',
-                      onViewProfile: (){},),
-                    ),
+                        titlePadding: EdgeInsets.zero,
+                        centerTitle: true,
+                        background: ChattingListHeaderTile(
+                          playerName: 'John s.',
+                          playerLocation: 'Gabriel Parl, Portland, OR',
+                          playerImg: 'assets/Ellipse 1.png',
+                          playerRate: '4.5',
+                          onViewProfile: () {
+                            Navigator.pushNamed(context, ProfilePage.path);
+                          },
+                          onSubmitScore: () {
+                            Navigator.pushNamed(context, SubmitScoreList.path);
+                          },
+                          stackKey: _stackKey,
+                          textTitleKey: _textTitleKey,
+                        ),
+                        title: _isSilverCollapsed!
+                            ? Center(
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    SizedBox(
+                                      width: 40,
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(5.0),
+                                      child: CircleAvatar(
+                                        backgroundColor: aLightGray,
+                                        radius: 20,
+                                        child: CircleAvatar(
+                                          backgroundImage: AssetImage(
+                                              'assets/Ellipse 1.png'),
+                                          //'assets/Ellipse 1.png'
+                                          radius: 19,
+                                        ),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      flex: 1,
+                                      child: Text(
+                                        'John s.',
+                                        maxLines: 1,
+                                        style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.only(right: 10.0),
+                                      child: RateBadges(
+                                        rate: '4.5',
+                                        textSize: 16.0,
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              )
+                            : SizedBox()),
                     expandedHeight: _totalHeight,
                     backgroundColor: Colors.white,
                   ),
-
-                  // SliverToBoxAdapter(
-                  //   child: Padding(
-                  //     padding: EdgeInsets.all(8.0),
-                  //     child: Text('Participating Players'),
-                  //   ),
-                  // ),
-
                   SliverList(
                     delegate: SliverChildBuilderDelegate(
                       (context, index) => ChattingListTile(
@@ -211,57 +268,57 @@ class _ChallengesChatState extends State<ChallengesChat> {
                 ], //<Widget>[]
               ),
               flex: 1),
-
-          EditTextFormField(onTap: (){},
-          focusNode: _chatNode,
-          hint: 'Enter Message',
-          onTextChange:(dynamic value){
-            setState(() {
-              _textController?.text = value;
-              _textController?.selection = TextSelection.fromPosition(
-                  TextPosition(offset: _textController!.text.length));
-            });
-          },
-          prefixIcon: SizedBox(),
-          suffixIcon: _textController!.text.trim().isNotEmpty
-              ? IconButton(
-            onPressed: () {
-              if (_textController!.text.trim().isNotEmpty) {
-                setState(() {
-                  chatList!.add(
-                    Chat(
-                        message: _textController?.text,
-                        dateTime: '3:27 PM',
-                        isMe: true),
-                  );
-                });
-                _textController!.text = '';
-
-                // _getListItems();
-
-                // Timer(
-                //     Duration(milliseconds: 300),
-                //         () => _scrollController!.jumpTo(
-                //         _scrollController!
-                //             .position.minScrollExtent));
-                // Timer(
-                //     Duration(milliseconds: 300),
-                //         () => _scrollController!.jumpTo(
-                //         _scrollController!
-                //             .position.maxScrollExtent));
-                //
-                // print(_scrollController!
-                //     .position.maxScrollExtent);
-              }
+          EditTextFormField(
+            onTap: () {},
+            focusNode: _chatNode,
+            hint: 'Enter Message',
+            onTextChange: (dynamic value) {
+              setState(() {
+                _textController?.text = value;
+                _textController?.selection = TextSelection.fromPosition(
+                    TextPosition(offset: _textController!.text.length));
+              });
             },
-            icon: Icon(
-              Icons.send,
-              color: Color(0XFF808080),
-            ),
-          )
-              : SizedBox(),
-          textController: _textController,)
+            prefixIcon: SizedBox(),
+            suffixIcon: _textController!.text.trim().isNotEmpty
+                ? IconButton(
+                    onPressed: () {
+                      if (_textController!.text.trim().isNotEmpty) {
+                        setState(() {
+                          chatList!.add(
+                            Chat(
+                                message: _textController?.text,
+                                dateTime: '3:27 PM',
+                                isMe: true),
+                          );
+                        });
+                        _textController!.text = '';
 
+                        // _getListItems();
+
+                        // Timer(
+                        //     Duration(milliseconds: 300),
+                        //         () => _scrollController!.jumpTo(
+                        //         _scrollController!
+                        //             .position.minScrollExtent));
+                        // Timer(
+                        //     Duration(milliseconds: 300),
+                        //         () => _scrollController!.jumpTo(
+                        //         _scrollController!
+                        //             .position.maxScrollExtent));
+                        //
+                        // print(_scrollController!
+                        //     .position.maxScrollExtent);
+                      }
+                    },
+                    icon: Icon(
+                      Icons.send,
+                      color: Color(0XFF808080),
+                    ),
+                  )
+                : SizedBox(),
+            textController: _textController,
+          )
         ],
       ),
     );
