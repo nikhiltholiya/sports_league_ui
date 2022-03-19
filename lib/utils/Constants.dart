@@ -111,6 +111,7 @@ query (\$leagueId: String!) {
     winnerOneId
     winnerTwoId
     userStat {
+      userName
       loss
       total
       userId
@@ -172,39 +173,6 @@ query (
         node {
          id
           league {
-          id
-          city
-          endDate
-          leagueId
-          name
-          startDate
-          state
-          status
-          country
-          createdAt
-          description
-          level
-          updatedAt
-        }
-        applicant {
-          userId
-        }
-        status
-      }
-    }
-  }
-}
-''';
-
-final allLCitiesStates = '''
-query (\$league_City: String!, \$league_State: String!) {
-  allLeagueApplications(
-  league_City: \$league_City,
-  league_State: \$league_State) {
-    edges {
-      node {
-        id
-        league {
           id
           city
           endDate

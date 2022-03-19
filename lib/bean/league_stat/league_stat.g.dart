@@ -60,6 +60,7 @@ _$_UserStat _$$_UserStatFromJson(Map<String, dynamic> json) => _$_UserStat(
       loss: json['loss'] as int?,
       total: json['total'] as int?,
       userId: json['userId'] as String?,
+      userName: json['userName'] as String?,
       won: json['won'] as int?,
     );
 
@@ -68,5 +69,6 @@ Map<String, dynamic> _$$_UserStatToJson(_$_UserStat instance) =>
       'loss': instance.loss,
       'total': instance.total,
       'userId': instance.userId,
+      'userName': instance.userName,
       'won': instance.won,
     };

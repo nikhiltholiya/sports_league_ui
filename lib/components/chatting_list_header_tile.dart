@@ -84,32 +84,41 @@ class _ChattingListHeaderTileState extends State<ChattingListHeaderTile> {
                           IconicTextView(
                               align: MainAxisAlignment.center,
                               icon: Icons.location_pin,
-                              iconSize: 16.0,
-                              labelTextSize: 10.0,
                               label: widget.playerLocation!),
-                          Wrap(
-                            // key: widget.btnKey,
-                            crossAxisAlignment: WrapCrossAlignment.center,
-                            direction: Axis.horizontal,
-                            alignment: WrapAlignment.spaceEvenly,
-                            spacing: 10.0,
-                            children: [
-                              ElevatedButtons(
-                                height: 30.0,
-                                label: viewProfile,
-                                fontSize: 12.0,
-                                width: 100,
-                                onClick: () => widget.onViewProfile!(),
-                              ),
-                              ElevatedButtons(
-                                width: 100,
-                                height: 30.0,
-                                label: submitScore,
-                                fontSize: 12.0,
-                                onClick: () => widget.onSubmitScore!(),
-                              ),
-                            ],
-                          ),
+
+
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Flexible(
+                                  flex: 1,
+                                  fit: FlexFit.loose,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: ElevatedButtons(
+                                      fontSize: 15,
+                                      label: viewProfile,
+                                      onClick: () => widget.onViewProfile!(),
+                                    ),
+                                  ),
+                                ),
+                                Flexible(
+                                  flex: 1,
+                                  fit: FlexFit.loose,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: ElevatedButtons(
+                                      fontSize: 15,
+                                      onClick: () => widget.onSubmitScore!(),
+                                      primary: true,
+                                      label: submitScore,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+
                         ],
                       ),
                       Positioned(

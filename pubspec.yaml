@@ -38,6 +38,9 @@ dependencies:
   freezed_annotation: ^1.1.0
   flutter_keyboard_visibility: ^5.2.0
   date_format: ^2.0.5
+  shared_preferences: ^2.0.13
+  flutter_datetime_picker: ^1.5.1
+  provider: ^6.0.2
 
 dev_dependencies:
   flutter_test:

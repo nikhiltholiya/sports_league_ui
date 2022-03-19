@@ -1,5 +1,14 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:provider/provider.dart';
+import 'package:tenniston/Pages/other_player_profile_page.dart';
+import 'package:tenniston/Pages/submit_score_details.dart';
+import 'package:tenniston/bean/league_stat/league_stat.dart';
+import 'package:tenniston/bean/user_profiles/user_profiles.dart';
+import 'package:tenniston/providers/user_id_provider.dart';
+import 'package:tenniston/utils/shared_preferences_utils.dart';
 
 import '../Pages/profile_page.dart';
 import '../Pages/submit_score_list.dart';
@@ -10,6 +19,7 @@ import '../components/chatting_list_header_tile.dart';
 import '../components/edit_text_form_field.dart';
 import '../components/rate_badges.dart';
 import '../utils/app_colors.dart';
+import '../utils/Constants.dart' as Constants;
 
 //Created on 20220223
 class ChallengesChat extends StatefulWidget {
@@ -21,7 +31,7 @@ class ChallengesChat extends StatefulWidget {
   _ChallengesChatState createState() => _ChallengesChatState();
 }
 
-class _ChallengesChatState extends State<ChallengesChat> {
+class _ChallengesChatState extends State<ChallengesChat> with SharedPrefUtils{
   List<Chat>? chatList = [
     Chat(
         message: 'Are you up for a challenge?',
@@ -43,9 +53,12 @@ class _ChallengesChatState extends State<ChallengesChat> {
   TextEditingController? _textController = TextEditingController(text: '');
 
   // var scrollPosition;
-  String? userName = '';
+  // String? userName = '';
   String? userRate = '';
   String? userImage = '';
+  // UserStat? _userStat;
+  String readRepositories = Constants.homepageQuery;
+  bool? isBuildWidgets = false;
 
   double? _getHeight(GlobalKey? gKey) {
     try {
@@ -124,7 +137,7 @@ class _ChallengesChatState extends State<ChallengesChat> {
     _chatNode = FocusNode();
     WidgetsBinding.instance?.addPostFrameCallback(_getTotalHeight);
 
-    _getListItems();
+    // _getListItems(); No Need for right now
     setToolbarTitle();
     super.initState();
   }
@@ -139,6 +152,8 @@ class _ChallengesChatState extends State<ChallengesChat> {
   //TODO Change AppBar
   @override
   Widget build(BuildContext context) {
+    // _userStat = ModalRoute.of(context)?.settings.arguments as UserStat;
+
     return BaseWidget(
       appbar: AppBar(
         centerTitle: true,
@@ -148,178 +163,226 @@ class _ChallengesChatState extends State<ChallengesChat> {
         // ), // This is used for getting dynamic height of contents!!!
         toolbarHeight: 0,
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Expanded(
-              child: CustomScrollView(
-                controller: _scrollController,
-                keyboardDismissBehavior:
-                    ScrollViewKeyboardDismissBehavior.onDrag,
-                physics: const BouncingScrollPhysics(),
-                shrinkWrap: true,
-                slivers: <Widget>[
-                  SliverAppBar(
-                    automaticallyImplyLeading: false,
-                    elevation: _isSilverCollapsed! ? 2 : 0,
-                    snap: false,
-                    pinned: true,
-                    floating: false,
-                    stretch: true,
-                    centerTitle: true,
-                    leading: IconButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        icon: Icon(Icons.arrow_back)),
-                    titleTextStyle: TextStyle(
-                        fontSize: 10,
-                        color:
-                            _isSilverCollapsed! ? Colors.black : Colors.white),
-                    iconTheme: IconThemeData(
-                        color:
-                            _isSilverCollapsed! ? Colors.black : Colors.white),
-                    /* titleTextStyle: TextStyle(
-                            fontSize: 10.0,
-                            color: scrollPosition >= _totalHeight
-                                ? Colors.black
-                                : Colors.transparent),
-                        iconTheme: IconThemeData(
-                            color:  scrollPosition >= _totalHeight
-                                ? Colors.black
-                                : Colors.white),*/
-                    flexibleSpace: FlexibleSpaceBar(
-                        titlePadding: EdgeInsets.zero,
-                        centerTitle: true,
-                        background: ChattingListHeaderTile(
-                          playerName: 'John s.',
-                          playerLocation: 'Gabriel Parl, Portland, OR',
-                          playerImg: 'assets/Ellipse 1.png',
-                          playerRate: '4.5',
-                          onViewProfile: () {
-                            Navigator.pushNamed(context, ProfilePage.path);
-                          },
-                          onSubmitScore: () {
-                            Navigator.pushNamed(context, SubmitScoreList.path);
-                          },
-                          stackKey: _stackKey,
-                          textTitleKey: _textTitleKey,
-                        ),
-                        title: _isSilverCollapsed!
-                            ? Center(
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    SizedBox(
-                                      width: 40,
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(5.0),
-                                      child: CircleAvatar(
-                                        backgroundColor: aLightGray,
-                                        radius: 20,
-                                        child: CircleAvatar(
-                                          backgroundImage: AssetImage(
-                                              'assets/Ellipse 1.png'),
-                                          //'assets/Ellipse 1.png'
-                                          radius: 19,
-                                        ),
-                                      ),
-                                    ),
-                                    Expanded(
-                                      flex: 1,
-                                      child: Text(
-                                        'John s.',
-                                        maxLines: 1,
-                                        style: TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding:
-                                          const EdgeInsets.only(right: 10.0),
-                                      child: RateBadges(
-                                        rate: '4.5',
-                                        textSize: 16.0,
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              )
-                            : SizedBox()),
-                    expandedHeight: _totalHeight,
-                    backgroundColor: Colors.white,
-                  ),
-                  SliverList(
-                    delegate: SliverChildBuilderDelegate(
-                      (context, index) => ChattingListTile(
-                        key: ValueKey(index),
-                        isMe: chatList![index].isMe,
-                        msg: chatList![index].message,
-                        time: chatList![index].dateTime,
-                      ),
-                      childCount: chatList!.length,
-                    ),
-                  )
-                ], //<Widget>[]
+
+      body :Container(
+        color: aWhite,
+        child: Consumer<UserIdProvider>(
+          builder: (context, value, child) {
+            return Query(
+              options: QueryOptions(
+                document: gql(readRepositories),
+                // this is the query string you just created
+                variables: {
+                  'userId': value.getUserId,
+                },
+                pollInterval: Duration(seconds: 100),
               ),
-              flex: 1),
-          EditTextFormField(
-            onTap: () {},
-            focusNode: _chatNode,
-            hint: 'Enter Message',
-            onTextChange: (dynamic value) {
-              setState(() {
-                _textController?.text = value;
-                _textController?.selection = TextSelection.fromPosition(
-                    TextPosition(offset: _textController!.text.length));
-              });
-            },
-            prefixIcon: SizedBox(),
-            suffixIcon: _textController!.text.trim().isNotEmpty
-                ? IconButton(
-                    onPressed: () {
-                      if (_textController!.text.trim().isNotEmpty) {
+              builder: (userResult, {fetchMore, refetch}) {
+                late UserProfiles? profile;
+                if (userResult.hasException) {
+                  return Text(userResult.exception.toString());
+                }
+
+                if (userResult.isLoading && userResult.data == null) {
+                  return const Center(child: CupertinoActivityIndicator());
+                }
+
+                try {
+
+                  profile =
+                  UserProfileData.fromJson(userResult.data!)
+                      .userProfiles!;
+
+                  if (!isBuildWidgets!) {
+                    isBuildWidgets = true;
+                    WidgetsBinding.instance?.addPostFrameCallback(_getTotalHeight);
+                  }
+
+
+                } catch (e) {
+                  debugPrint('Exception -- $e');
+                }
+
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Expanded(
+                        child: CustomScrollView(
+                          controller: _scrollController,
+                          keyboardDismissBehavior:
+                          ScrollViewKeyboardDismissBehavior.onDrag,
+                          physics: const BouncingScrollPhysics(),
+                          shrinkWrap: true,
+                          slivers: <Widget>[
+                            SliverAppBar(
+                              automaticallyImplyLeading: false,
+                              elevation: _isSilverCollapsed! ? 2 : 0,
+                              snap: false,
+                              pinned: true,
+                              floating: false,
+                              stretch: true,
+                              centerTitle: true,
+                              leading: IconButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  icon: Icon(Icons.arrow_back)),
+                              titleTextStyle: TextStyle(
+                                  fontSize: 10,
+                                  color:
+                                  _isSilverCollapsed! ? Colors.black : Colors.white),
+                              iconTheme: IconThemeData(
+                                  color:
+                                  _isSilverCollapsed! ? Colors.black : Colors.white),
+                              // titleTextStyle: TextStyle(
+                              //        fontSize: 10.0,
+                              //        color: scrollPosition >= _totalHeight
+                              //            ? Colors.black
+                              //            : Colors.transparent),
+                              //    iconTheme: IconThemeData(
+                              //        color:  scrollPosition >= _totalHeight
+                              //            ? Colors.black
+                              //            : Colors.white),
+                              flexibleSpace: FlexibleSpaceBar(
+                                  titlePadding: EdgeInsets.zero,
+                                  centerTitle: true,
+                                  background: ChattingListHeaderTile(
+                                    playerName: '${profile?.firstName} ${profile?.lastName}',
+                                    playerLocation: '${profile?.city}, ${profile?.state}',
+                                    playerImg: 'assets/Ellipse 1.png',// NOT RECEIVED
+                                    playerRate: '4.5',// NOT RECEIVED
+                                    onViewProfile: () {
+                                      // Navigator.pushNamedAndRemoveUntil(context, ProfilePage.path, (route) => false);
+
+                                      Navigator.pushNamed(context, OtherPlayerProfilePage.path);
+                                      // Navigator.popAndPushNamed(context, ProfilePage.path);
+                                    },
+                                    onSubmitScore: () {
+                                      Navigator.pushNamed(context, SubmitScoreDetails.path);
+                                    },
+                                    stackKey: _stackKey,
+                                    textTitleKey: _textTitleKey,
+                                  ),
+                                  title: _isSilverCollapsed!
+                                      ? Center(
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        SizedBox(
+                                          width: 40,
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.all(5.0),
+                                          child: CircleAvatar(
+                                            backgroundColor: aLightGray,
+                                            radius: 20,
+                                            child: CircleAvatar(
+                                              backgroundImage: AssetImage(
+                                                  'assets/Ellipse 1.png'),
+                                              //'assets/Ellipse 1.png'
+                                              radius: 19,
+                                            ),
+                                          ),
+                                        ),
+                                        Expanded(
+                                          flex: 1,
+                                          child: Text(
+                                            '${profile?.firstName} ${profile?.lastName}',
+                                            maxLines: 1,
+                                            style: TextStyle(
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding:
+                                          const EdgeInsets.only(right: 10.0),
+                                          child: RateBadges(
+                                            rate: '4.5',
+                                            textSize: 16.0,
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  )
+                                      : SizedBox()),
+                              expandedHeight: _totalHeight,
+                              backgroundColor: Colors.white,
+                            ),
+                            SliverList(
+                              delegate: SliverChildBuilderDelegate(
+                                    (context, index) => ChattingListTile(
+                                  key: ValueKey(index),
+                                  isMe: chatList![index].isMe,
+                                  msg: chatList![index].message,
+                                  time: chatList![index].dateTime,
+                                ),
+                                childCount: chatList!.length,
+                              ),
+                            )
+                          ], //<Widget>[]
+                        ),
+                        flex: 1),
+                    EditTextFormField(
+                      onTap: () {},
+                      focusNode: _chatNode,
+                      hint: 'Enter Message',
+                      onTextChange: (dynamic value) {
                         setState(() {
-                          chatList!.add(
-                            Chat(
-                                message: _textController?.text,
-                                dateTime: '3:27 PM',
-                                isMe: true),
-                          );
+                          _textController?.text = value;
+                          _textController?.selection = TextSelection.fromPosition(
+                              TextPosition(offset: _textController!.text.length));
                         });
-                        _textController!.text = '';
+                      },
+                      prefixIcon: SizedBox(),
+                      suffixIcon: _textController!.text.trim().isNotEmpty
+                          ? IconButton(
+                        onPressed: () {
+                          if (_textController!.text.trim().isNotEmpty) {
+                            setState(() {
+                              chatList!.add(
+                                Chat(
+                                    message: _textController?.text,
+                                    dateTime: '3:27 PM',
+                                    isMe: true),
+                              );
+                            });
+                            _textController!.text = '';
 
-                        // _getListItems();
+                            // _getListItems();
 
-                        // Timer(
-                        //     Duration(milliseconds: 300),
-                        //         () => _scrollController!.jumpTo(
-                        //         _scrollController!
-                        //             .position.minScrollExtent));
-                        // Timer(
-                        //     Duration(milliseconds: 300),
-                        //         () => _scrollController!.jumpTo(
-                        //         _scrollController!
-                        //             .position.maxScrollExtent));
-                        //
-                        // print(_scrollController!
-                        //     .position.maxScrollExtent);
-                      }
-                    },
-                    icon: Icon(
-                      Icons.send,
-                      color: Color(0XFF808080),
-                    ),
-                  )
-                : SizedBox(),
-            textController: _textController,
-          )
-        ],
+                            // Timer(
+                            //     Duration(milliseconds: 300),
+                            //         () => _scrollController!.jumpTo(
+                            //         _scrollController!
+                            //             .position.minScrollExtent));
+                            // Timer(
+                            //     Duration(milliseconds: 300),
+                            //         () => _scrollController!.jumpTo(
+                            //         _scrollController!
+                            //             .position.maxScrollExtent));
+                            //
+                            // print(_scrollController!
+                            //     .position.maxScrollExtent);
+                          }
+                        },
+                        icon: Icon(
+                          Icons.send,
+                          color: Color(0XFF808080),
+                        ),
+                      )
+                          : SizedBox(),
+                      textController: _textController,
+                    )
+                  ],
+                );
+              },
+            );
+          },
+        ),
       ),
     );
   }

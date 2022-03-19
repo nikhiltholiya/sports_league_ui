@@ -23,7 +23,6 @@ class _SubmitScoreListState extends State<SubmitScoreList> {
   ScrollController? _scrollController;
 
   String fetchAllLeagueApplicants = Constants.allLeagueApplications;
-  String fetchAllLeagueCities = Constants.allLCitiesStates;
 
   FocusNode? _chatNode;
   TextEditingController? _textController = TextEditingController(text: '');

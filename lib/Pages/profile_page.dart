@@ -18,7 +18,7 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  String readRepositories = Constants.homepageQuery;
+  // String readRepositories = Constants.homepageQuery;
   int curent_index = 1;
   var dataRecent;
 
@@ -34,7 +34,7 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
       body: curent_index == 0
           ? SchedulePage()
-          : ProfileDetailPage(),
+          : ProfileDetailPage(from: ProfilePage.path,),
       fab: FloatingActionButton(
         backgroundColor: aGreen,
         onPressed: () {},

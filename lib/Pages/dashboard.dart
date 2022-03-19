@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:tenniston/providers/user_id_provider.dart';
 
+import '../utils/shared_preferences_utils.dart';
 import '../Pages/my_league_list.dart';
 import '../Pages/submit_score_list.dart';
 import '../Pages/base_activity.dart';
@@ -20,8 +23,14 @@ class DashboardPage extends StatefulWidget {
   State<DashboardPage> createState() => _DashboardPageState();
 }
 
-class _DashboardPageState extends State<DashboardPage> {
+class _DashboardPageState extends State<DashboardPage> with SharedPrefUtils {
   var scKey = GlobalKey<ScaffoldState>();
+
+  @override
+  void initState() {
+    setUserId('021c2515-e12e-49bd-bc08-744dc64a508c');
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -87,6 +96,7 @@ class _DashboardPageState extends State<DashboardPage> {
             child: Container(
               color: aWhite,
               child: GridView.builder(
+                physics: BouncingScrollPhysics(),
                 padding: EdgeInsets.all(10.0),
                 gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                     maxCrossAxisExtent: 200,
@@ -101,6 +111,8 @@ class _DashboardPageState extends State<DashboardPage> {
                     subtitle: dashBoardMenuItems[index].subtitle,
                     title: dashBoardMenuItems[index].title,
                     onMenuClick: () {
+                      getUserId().then((value) => Provider.of<UserIdProvider>(context,listen: false).setUserId(value));
+
                       if (dashBoardMenuItems[index].path!.isNotEmpty)
                         Navigator.pushNamed(
                             context, dashBoardMenuItems[index].path ?? '');

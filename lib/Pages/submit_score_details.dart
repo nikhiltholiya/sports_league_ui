@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import '../components/date_picker.dart';
+import '../components/edit_text_form_field.dart';
+import '../utils/common.dart';
 
 import '../Pages/base_activity.dart';
 import '../components/app_chips.dart';
@@ -29,8 +33,21 @@ class _SubmitScoreDetailsState extends State<SubmitScoreDetails> {
   var scrollPosition;
   int setListSize = 3;
 
+  late List<Map<String, dynamic>> setList;
+  late List<String?> player1Sets;
+  late List<String?> player2Sets;
+  late List<String?> tie1;
+  late List<String?> tie2;
+
+  List<String>? matchWinners = [];
+  List<String>? matchTypes = [];
+  List<String>? matchStatus = [];
+
+
+  String? matchDate;
+  String? matchTime;
+
   FocusNode? _chatNode;
-  TextEditingController? _textController = TextEditingController(text: '');
   late String? dropDownValue = null;
 
   double _getWidgetHeight(GlobalKey? key) {
@@ -63,6 +80,17 @@ class _SubmitScoreDetailsState extends State<SubmitScoreDetails> {
     _chatNode = FocusNode();
     _scrollController = ScrollController();
     WidgetsBinding.instance?.addPostFrameCallback(_getTotalHeight);
+
+    player1Sets = [];
+    player2Sets = [];
+    tie1 = [];
+    tie2 = [];
+    for (int i = 0; i < setListSize; i++) {
+      player1Sets.add('');
+      player2Sets.add('');
+      tie1.add('');
+      tie2.add('');
+    }
     super.initState();
   }
 
@@ -146,59 +174,112 @@ class _SubmitScoreDetailsState extends State<SubmitScoreDetails> {
                           fontWeight: FontWeight.bold,
                           fontSize: 16.0),
                     ),
-                    Text(
-                      matchWinner,
-                      style: TextStyle(color: aLightGray, fontSize: 12.0),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 20, bottom: 5),
+                      child: Text(
+                        matchWinner,
+                        style: TextStyle(
+                            color: aLightGray,
+                            fontSize: 12.0,
+                            fontWeight: FontWeight.bold),
+                      ),
                     ),
                     Wrap(
                       verticalDirection: VerticalDirection.down,
                       crossAxisAlignment: WrapCrossAlignment.start,
                       children: [
                         AppChip(
-                          isChipSelected: true,
+                          isChipActive: true,
                           Label: 'Novak J.',
                           onChipTap: () {},
                         ),
                         AppChip(
-                          isChipSelected: false,
+                          isChipActive: false,
                           Label: 'John S.',
                           onChipTap: () {},
                         ),
                       ],
                     ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Text(
-                      matchDateTime,
-                      style: TextStyle(color: aLightGray, fontSize: 12.0),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 20, bottom: 5),
+                      child: Text(
+                        matchDateTime,
+                        style: TextStyle(
+                            color: aLightGray,
+                            fontSize: 12.0,
+                            fontWeight: FontWeight.bold),
+                      ),
                     ),
                     Wrap(
-                      verticalDirection: VerticalDirection.down,
-                      crossAxisAlignment: WrapCrossAlignment.start,
+                      crossAxisAlignment: WrapCrossAlignment.center,
+                      alignment: WrapAlignment.start,
                       children: [
                         AppChip(
                           iconData: Icons.calendar_today,
                           isAvatar: true,
-                          isChipSelected: false,
-                          Label: '31/01/2022',
-                          onChipTap: () {},
+                          isChipActive: false,
+                          Label: convertDate(
+                              matchDate ?? DateTime.now().toString(), null),
+                          onChipTap: () {
+                            DatePicker.showDatePicker(
+                              context,
+                              theme: DatePickerTheme(
+                                backgroundColor: aWhite,
+                                itemStyle: TextStyle(color: aLightGray),
+                              ),
+                              showTitleActions: true,
+                              minTime: DateTime(DateTime.now().year - 5,
+                                  DateTime.now().month, DateTime.now().day),
+                              maxTime: DateTime.now(),
+                              onChanged: (date) {
+                                print('change $date');
+                              },
+                              onConfirm: (date) {
+                                matchDate = date.toString();
+                                setState(() {});
+                                print('confirm $date');
+                              },
+                              currentTime: datePickerDate(matchDate ?? DateTime.now().toString()),
+                            );
+                          },
                         ),
                         AppChip(
                           iconData: Icons.access_time,
                           isAvatar: true,
-                          isChipSelected: false,
-                          Label: '09:00 PM',
-                          onChipTap: () {},
+                          isChipActive: false,
+                          Label: convertTime(
+                              matchTime ?? DateTime.now().toString(), null),
+                          onChipTap: () {
+                            DatePicker.showTime12hPicker(
+                              context,
+                              theme: DatePickerTheme(
+                                backgroundColor: aWhite,
+                                itemStyle: TextStyle(color: aLightGray),
+                              ),
+                              showTitleActions: true,
+                              onChanged: (date) {
+                                print('change $date');
+                              },
+                              onConfirm: (date) {
+                                matchTime = date.toString();
+                                setState(() {});
+                                print('confirm $date');
+                              },
+                              currentTime: datePickerTime(matchTime ?? DateTime.now().toString()),
+                            );
+                          },
                         ),
                       ],
                     ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Text(
-                      matchCourt,
-                      style: TextStyle(color: aLightGray, fontSize: 12.0),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 20, bottom: 5),
+                      child: Text(
+                        matchCourt,
+                        style: TextStyle(
+                            color: aLightGray,
+                            fontSize: 12.0,
+                            fontWeight: FontWeight.bold),
+                      ),
                     ),
                     DropDownView(
                       cityList: [
@@ -215,12 +296,15 @@ class _SubmitScoreDetailsState extends State<SubmitScoreDetails> {
                         // selectedState = split![1].toString().trim();
                       },
                     ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Text(
-                      gameType,
-                      style: TextStyle(color: aLightGray, fontSize: 12.0),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 20, bottom: 5),
+                      child: Text(
+                        gameType,
+                        style: TextStyle(
+                            color: aLightGray,
+                            fontSize: 12.0,
+                            fontWeight: FontWeight.bold),
+                      ),
                     ),
                     Wrap(
                       verticalDirection: VerticalDirection.down,
@@ -228,24 +312,27 @@ class _SubmitScoreDetailsState extends State<SubmitScoreDetails> {
                       children: [
                         AppChip(
                           isAvatar: false,
-                          isChipSelected: true,
+                          isChipActive: true,
                           Label: 'Single',
                           onChipTap: () {},
                         ),
                         AppChip(
                           isAvatar: false,
-                          isChipSelected: false,
+                          isChipActive: false,
                           Label: 'Double',
                           onChipTap: () {},
                         ),
                       ],
                     ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Text(
-                      status,
-                      style: TextStyle(color: aLightGray, fontSize: 12.0),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 20, bottom: 5),
+                      child: Text(
+                        status,
+                        style: TextStyle(
+                            color: aLightGray,
+                            fontSize: 12.0,
+                            fontWeight: FontWeight.bold),
+                      ),
                     ),
                     Wrap(
                       verticalDirection: VerticalDirection.down,
@@ -253,30 +340,33 @@ class _SubmitScoreDetailsState extends State<SubmitScoreDetails> {
                       children: [
                         AppChip(
                           isAvatar: false,
-                          isChipSelected: true,
+                          isChipActive: true,
                           Label: 'Completed',
                           onChipTap: () {},
                         ),
                         AppChip(
                           isAvatar: false,
-                          isChipSelected: false,
+                          isChipActive: false,
                           Label: 'Drawn',
                           onChipTap: () {},
                         ),
                         AppChip(
                           isAvatar: false,
-                          isChipSelected: false,
+                          isChipActive: false,
                           Label: 'Tied',
                           onChipTap: () {},
                         ),
                       ],
                     ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Text(
-                      leagueOpt,
-                      style: TextStyle(color: aLightGray, fontSize: 12.0),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 20, bottom: 5),
+                      child: Text(
+                        leagueOpt,
+                        style: TextStyle(
+                            color: aLightGray,
+                            fontSize: 12.0,
+                            fontWeight: FontWeight.bold),
+                      ),
                     ),
                     DropDownView(
                       cityList: [],
@@ -289,15 +379,15 @@ class _SubmitScoreDetailsState extends State<SubmitScoreDetails> {
                         // selectedState = split![1].toString().trim();
                       },
                     ),
-                    SizedBox(
-                      height: 40,
-                    ),
-                    Text(
-                      setDetails,
-                      style: TextStyle(
-                          color: aLightGray,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16.0),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 30, bottom: 10),
+                      child: Text(
+                        setDetails,
+                        style: TextStyle(
+                            color: aLightGray,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16.0),
+                      ),
                     ),
                   ],
                 ),
@@ -307,7 +397,27 @@ class _SubmitScoreDetailsState extends State<SubmitScoreDetails> {
               padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
               sliver: SliverList(
                 delegate: SliverChildBuilderDelegate(
-                  (context, index) => SetDetailsListTile(),
+                  (context, index) => SetDetailsListTile(
+                    setName: 'Set ${index + 1}',
+                    player1Name: 'Novak J.',
+                    player2Name: 'John S.',
+                    player1Score: (value) {
+                      player1Sets.setAll(index, [value]);
+                      print('$index - $value');
+                    },
+                    player2Score: (value) {
+                      player2Sets.setAll(index, [value]);
+                      print('$index - $value');
+                    },
+                    tieBreak1: (value) {
+                      tie1.setAll(index, [value]);
+                      print('$index - $value');
+                    },
+                    tieBreak2: (value) {
+                      tie2.setAll(index, [value]);
+                      print('$index - $value');
+                    },
+                  ),
                   childCount: setListSize,
                 ),
               ),
@@ -317,23 +427,34 @@ class _SubmitScoreDetailsState extends State<SubmitScoreDetails> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ElevatedButtons(
-                      fontSize: 14,
-                      primary: false,
-                      onClick: () {
-                        setState(() {
-                          setListSize = setListSize+1;
-                        });
-                      },
-                      label: addMoreSets,
-                    ),
-                  ),
+                  player1Sets.length < 5
+                      ? Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: ElevatedButtons(
+                            fontSize: 14,
+                            primary: false,
+                            onClick: () {
+                              if (player1Sets.length < 5) {
+                                setState(() {
+                                  player1Sets.add('');
+                                  player2Sets.add('');
+                                  tie1.add('');
+                                  tie2.add('');
+                                  setListSize = setListSize + 1;
+                                });
+                              }
+                            },
+                            label: addMoreSets,
+                          ),
+                        )
+                      : SizedBox(),
                   ElevatedButtons(
                     fontSize: 16,
                     primary: true,
-                    onClick: () {},
+                    onClick: () {
+                      print(
+                          'player1Sets $player1Sets ** player2Sets $player2Sets ** tie1 $tie1 ** tie2 $tie2');
+                    },
                     label: submit,
                     width: double.infinity,
                     radius: 0.0,
@@ -347,32 +468,3 @@ class _SubmitScoreDetailsState extends State<SubmitScoreDetails> {
     );
   }
 }
-
-////Query For City and State
-// Query(
-//   options: QueryOptions(
-//     document: gql(fetchAllLeagueCities),
-//     variables: {
-//       'league_State': 'Oregon',
-//       'league_City': 'Portland'
-//     },
-//     pollInterval: Duration(seconds: 100),
-//   ),
-//   builder: (result, {fetchMore, refetch}) {
-//     print('CITY');
-//     if (result.hasException) {
-//       return Text(result.exception.toString());
-//     }
-//
-//     if (result.isLoading) {
-//       return Center(child: CupertinoActivityIndicator());
-//     }
-//
-//     allLeaguesApps = AllLeaguesApps.fromJson(result.data!);
-//     for (var data
-//         in allLeaguesApps!.allLeagueApplications!.edges!) {
-//       print('${data.node!.id} -- ${data.node!.status}');
-//     }
-//     return Text('${result.data}');
-//   },
-// ),

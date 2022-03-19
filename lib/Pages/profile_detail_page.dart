@@ -2,6 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:provider/provider.dart';
+import 'package:tenniston/Pages/challenges_chat.dart';
+import 'package:tenniston/bean/user_profiles/user_profiles.dart';
+import 'package:tenniston/providers/user_id_provider.dart';
+import 'package:tenniston/utils/shared_preferences_utils.dart';
 import '../Pages/head_to_head_page.dart';
 import '../Pages/recent_matches_pages.dart';
 import '../components/head_to_head_details_list_tile.dart';
@@ -10,16 +15,18 @@ import '../components/profile_header_tile.dart';
 import '../components/stats_tile.dart';
 import '../utils/Constants.dart' as Constants;
 import '../utils/app_colors.dart';
+import 'other_player_profile_page.dart';
 
 //Updated on 20220308
 class ProfileDetailPage extends StatefulWidget {
-  const ProfileDetailPage({Key? key}) : super(key: key);
+  final String? from;
+  const ProfileDetailPage({Key? key, required this.from}) : super(key: key);
 
   @override
   _ProfileDetailPageState createState() => _ProfileDetailPageState();
 }
 
-class _ProfileDetailPageState extends State<ProfileDetailPage> {
+class _ProfileDetailPageState extends State<ProfileDetailPage> with SharedPrefUtils{
   String readRepositories = Constants.homepageQuery;
   var dataRecent;
 
@@ -33,6 +40,13 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> {
   double? _dynamicTotalHeight;
   List<double>? _childWidgetHeights = [];
   bool? isLoaded = false;
+  String? userId;
+
+  Future<String?> getUserIds() async{
+    return await getUserId().then((value) {
+      return value;
+    });
+  }
 
   @override
   void initState() {
@@ -76,6 +90,7 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> {
     super.dispose();
   }
 
+
   @override
   Widget build(BuildContext context) {
     final mq = MediaQuery.of(context).size;
@@ -83,253 +98,279 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> {
     double? height = (size.height / 2) - 56;
     var scrollPosition;
 
-    return Container(
-      height: mq.height,
-      child: Query(
-        options: QueryOptions(
-          document: gql(readRepositories),
-          // this is the query string you just created
-          variables: {
-            'userId': "3a766ad6-3642-46dc-b31f-73e08f2df0df",
-          },
-          pollInterval: Duration(seconds: 100),
-        ),
-        builder: (result, {fetchMore, refetch}) {
-          if (result.hasException) {
-            return Text(result.exception.toString());
-          }
 
-          if (result.isLoading) {
-            return Center(child: CupertinoActivityIndicator());
-          } else {
-            if (!isLoaded!) {
-              isLoaded = true;
-              WidgetsBinding.instance?.addPostFrameCallback(_getTotalHeight);
-            }
-          }
+    // if(ModalRoute.of(context)?.settings.arguments != null) {
+    //   _userProfiles = ModalRoute
+    //       .of(context)
+    //       ?.settings
+    //       .arguments as UserProfiles;
+    //   userId = _userProfiles?.userId;
+    // }
 
-          return CustomScrollView(
-            controller: _scrollController,
-            physics: const BouncingScrollPhysics(),
-            shrinkWrap: true,
-            slivers: <Widget>[
-              SliverLayoutBuilder(
-                builder: (context, constraints) {
-                  scrollPosition = constraints.scrollOffset + 56;
-                  return SliverAppBar(
-                    elevation: 0,
-                    snap: false,
-                    pinned: true,
-                    floating: false,
-                    stretch: true,
-                    centerTitle: true,
-                    leading: IconButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        icon: Icon(Icons.arrow_back)),
-                    titleTextStyle: TextStyle(
-                        color: height <= scrollPosition
-                            ? Colors.black
-                            : Colors.transparent),
-                    iconTheme: IconThemeData(
-                        color: height <= scrollPosition
-                            ? Colors.black
-                            : Colors.white),
-                    flexibleSpace: FlexibleSpaceBar(
-                      background: ProfileHeaderTile(
-                        playerName:
-                            '${result.data!["userProfiles"]["firstName"]} ${result.data!["userProfiles"]["lastName"].toString()}',
-                        playerAge: result.data!["userProfiles"]["age"],
-                        playerImg: 'assets/Ellipse 2.png',
-                        playerLocation: result.data!["userProfiles"]["city"]
-                                .toString() +
-                            ", " +
-                            result.data!["userProfiles"]["state"].toString(),
-                        stackKey: _stackKey,
-                        btnKey: _btnKey,
-                        imgLocationKey: _imgLocationKey,
-                        playerNameKey: _playerNameKey,
-                        profileImgKey: _profileImgKey,
-                      ),
-                      centerTitle: true,
-                      // title: size.height / 2 <= constraints.scrollOffset ? Text('Participating Players') : SizedBox(),
-                      title: height <= scrollPosition
-                          ? Text(
-                              '${result.data!["userProfiles"]["firstName"]} ${result.data!["userProfiles"]["lastName"].toString()}')
-                          : SizedBox(),
-                    ),
-                    expandedHeight: _dynamicTotalHeight,
-                    // backgroundColor: Colors.white,
-                  );
+
+    return Consumer<UserIdProvider>(
+      builder: (context, userId, child) {
+        print(userId.getUserId);
+        return Container(
+            height: mq.height,
+            child: Query(
+              options: QueryOptions(
+                document: gql(readRepositories),
+                // this is the query string you just created
+                variables: {
+                  'userId': '${userId.getUserId}',
                 },
+                pollInterval: Duration(seconds: 100),
               ),
+              builder: (userResult, {fetchMore, refetch}) {
+                late UserProfiles?  newProfile;
+                if (userResult.hasException) {
+                  return Text(userResult.exception.toString());
+                }
 
-              // SliverPersistentHeader(delegate: Delegate(aBlack, 'Hello'),pinned: true,),
-              SliverPersistentHeader(
-                pinned: true,
-                floating: false,
-                delegate: Delegate(
-                  child: Container(
-                    color: aWhite,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        StatsTile(
-                          title: "Matches",
-                          subtitle: result.data!["userProfiles"]["matchesCount"]
-                              .toString(),
-                        ),
-                        StatsTile(
-                            title: "Victories",
-                            subtitle: result.data!["userProfiles"]["wonCount"]
-                                .toString()),
-                        StatsTile(
-                          title: "Defeats",
-                          subtitle: result.data!["userProfiles"]["lostCount"]
-                              .toString(),
-                        ),
-                        StatsTile(
-                          title: "Rating",
-                          subtitle: "4.5",
-                        )
-                      ],
+                if (userResult.isLoading && userResult.data == null) {
+                  return const Center(child: CupertinoActivityIndicator());
+                } else {
+                  if (!isLoaded!) {
+                    isLoaded = true;
+                    WidgetsBinding.instance?.addPostFrameCallback(_getTotalHeight);
+                  }
+                }
+
+                try {
+                  newProfile =
+                  UserProfileData.fromJson(userResult.data!)
+                      .userProfiles!;
+
+                } catch (e) {
+                  debugPrint('Exception -- $e');
+                }
+                return CustomScrollView(
+                  controller: _scrollController,
+                  physics: const BouncingScrollPhysics(),
+                  shrinkWrap: true,
+                  slivers: <Widget>[
+                    SliverLayoutBuilder(
+                      builder: (context, constraints) {
+                        scrollPosition = constraints.scrollOffset + 56;
+                        return SliverAppBar(
+                          elevation: 0,
+                          snap: false,
+                          pinned: true,
+                          floating: false,
+                          stretch: true,
+                          centerTitle: true,
+                          leading: IconButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              icon: Icon(Icons.arrow_back)),
+                          titleTextStyle: TextStyle(
+                              color: height <= scrollPosition
+                                  ? Colors.black
+                                  : Colors.transparent),
+                          iconTheme: IconThemeData(
+                              color: height <= scrollPosition
+                                  ? Colors.black
+                                  : Colors.white),
+                          flexibleSpace: FlexibleSpaceBar(
+                            background: ProfileHeaderTile(
+                              playerName: '${newProfile?.firstName} ${newProfile?.lastName}',
+                              playerAge: newProfile?.age,
+                              playerImg: 'assets/Ellipse 1.png',
+                              playerLocation: '${newProfile?.city}, ${newProfile?.state}',
+                              stackKey: _stackKey,
+                              btnKey: _btnKey,
+                              imgLocationKey: _imgLocationKey,
+                              playerNameKey: _playerNameKey,
+                              profileImgKey: _profileImgKey,
+                              onChatClick: (){
+                                // dataRecent == null ?  Navigator.pushNamed(
+                                //     context, ChallengesChat.path) : Navigator.of(context).pop();
+                                widget.from! == OtherPlayerProfilePage.path ? Navigator.pop(context)
+                                :Navigator.pushNamed(
+                                    context, ChallengesChat.path);
+                              },
+                              onInviteToPlay: (){},
+                            ),
+                            centerTitle: true,
+                            // title: size.height / 2 <= constraints.scrollOffset ? Text('Participating Players') : SizedBox(),
+                            title: height <= scrollPosition
+                                ? Text('${newProfile?.firstName} ${newProfile?.lastName}',)
+                                : SizedBox(),
+                          ),
+                          expandedHeight: _dynamicTotalHeight,
+                          // backgroundColor: Colors.white,
+                        );
+                      },
                     ),
-                  ),
-                ),
-              ),
 
-              const SliverToBoxAdapter(
-                child: Divider(
-                  height: 10,
-                  endIndent: 10.0,
-                  indent: 10.0,
-                  thickness: 0.5,
-                  color: aLightGray,
-                ),
-              ),
-
-              SliverToBoxAdapter(
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 16.0, right: 16),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Recent Matches",
-                        style: GoogleFonts.poppins(
-                            fontSize: 16, color: Color(0xff263238)),
+                    // SliverPersistentHeader(delegate: Delegate(aBlack, 'Hello'),pinned: true,),
+                    SliverPersistentHeader(
+                      pinned: true,
+                      floating: false,
+                      delegate: Delegate(
+                        child: Container(
+                          color: aWhite,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              StatsTile(
+                                title: "Matches",
+                                subtitle: '${newProfile?.matchesCount}',
+                              ),
+                              StatsTile(
+                                  title: "Victories",
+                                  subtitle: '${newProfile?.wonCount}'),
+                              StatsTile(
+                                  title: "Defeats",
+                                  subtitle: '${newProfile?.lostCount}'
+                              ),
+                              StatsTile(
+                                title: "Rating",
+                                subtitle: "4.5",
+                              )
+                            ],
+                          ),
+                        ),
                       ),
-                      GestureDetector(
-                          onTap: () {
-                            Navigator.pushNamed(
-                                context, RecentMatchesPage.path);
-                          },
-                          child: Text("See All"))
-                    ],
-                  ),
-                ),
-              ),
+                    ),
 
-              SliverToBoxAdapter(
-                child: Query(
-                  builder: (result, {fetchMore, refetch}) {
-                    if (result.hasException) {
-                      return Text(result.exception.toString());
-                    }
-
-                    if (result.isLoading) {
-                      return Text('Loading');
-                    }
-                    dataRecent = result.data;
-                    return Column(
-                      children: [
-                        for (int i = 0; i < 2; i++)
-                          HeadToHeadDetailsListTile(
-                            title: 'CBS Arena',
-                            date: 'Dec 31st 2021',
-                            onProfileClick: () {},
-                            onTileClick: () {},
-                            player1matchScore: [5, 4, 3, 2, 1],
-                            player1Img: 'assets/Ellipse 5.png',
-                            player1Name: result.data!["allMatches"]["edges"][i]
-                                ["node"]["playerOne"]["firstName"],
-                            player1Active: true,
-                            player2matchScore: [1, 2, 3, 4, 5],
-                            player2Img: 'assets/Ellipse 2.png',
-                            player2Name: result.data!["allMatches"]["edges"][i]
-                                ["node"]["playerTwo"]["firstName"],
-                            player2Active: false,
-                          )
-                        // Padding(
-                        //   padding: const EdgeInsets.only(
-                        //       left: 16.0, right: 16, top: 10),
-                        //   child: MatchCard(
-                        //     scores: result.data!["allMatches"]
-                        //     ["edges"][i]["node"]["matchSet"]
-                        //     ["edges"],
-                        //     playerOneName: result.data!["allMatches"]
-                        //     ["edges"][i]["node"]["playerOne"]
-                        //     ["firstName"],
-                        //     playerTwoName: result.data!["allMatches"]
-                        //     ["edges"][i]["node"]["playerTwo"]
-                        //     ["firstName"],
-                        //   ),
-                        // ),
-                      ],
-                    );
-                  },
-                  options: QueryOptions(
-                    document: gql(Constants.matchesQuery),
-                    // this is the query string you just created
-                    variables: {
-                      'userSearch': "3a766ad6-3642-46dc-b31f-73e08f2df0df",
-                    },
-                    pollInterval: Duration(seconds: 100),
-                  ),
-                ),
-              ),
-
-              SliverToBoxAdapter(
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 16.0, right: 16),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Head to Heads",
-                        style: GoogleFonts.poppins(
-                            fontSize: 16, color: Color(0xff263238)),
+                    const SliverToBoxAdapter(
+                      child: Divider(
+                        height: 10,
+                        endIndent: 10.0,
+                        indent: 10.0,
+                        thickness: 0.5,
+                        color: aLightGray,
                       ),
-                      GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (_) => HeadtoHeadpage()));
-                          },
-                          child: Text("See All"))
-                    ],
-                  ),
-                ),
-              ),
+                    ),
 
-              for (int i = 0; i <= 5; i++)
-                SliverToBoxAdapter(
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 10),
-                    child: HeadToHeadListTile(
-                        title: 'CBS Arena',
-                        date: 'Dec 31st 2021',
-                        profileImg: 'assets/Ellipse 5.png',
-                        userName: 'Novak J.',
-                        rating: '4.5'),
-                  ),
-                ),
-            ],
-          );
-        },
-      ),
+                    SliverToBoxAdapter(
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 16.0, right: 16),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "Recent Matches",
+                              style: GoogleFonts.poppins(
+                                  fontSize: 16, color: Color(0xff263238)),
+                            ),
+                            GestureDetector(
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                      context, RecentMatchesPage.path);
+                                },
+                                child: Text("See All"))
+                          ],
+                        ),
+                      ),
+                    ),
+
+                    SliverToBoxAdapter(
+                      child: Query(
+                        builder: (result, {fetchMore, refetch}) {
+                          if (result.hasException) {
+                            return Text(result.exception.toString());
+                          }
+
+                          if (result.isLoading) {
+                            return Text('Loading');
+                          }
+                          dataRecent = result.data;
+                          return Column(
+                            children: [
+                              for (int i = 0; i < 2; i++)
+                                HeadToHeadDetailsListTile(
+                                  title: 'CBS Arena',
+                                  date: 'Dec 31st 2021',
+                                  onProfileClick: () {},
+                                  onTileClick: () {},
+                                  player1matchScore: [5, 4, 3, 2, 1],
+                                  player1Img: 'assets/Ellipse 5.png',
+                                  player1Name: result.data!["allMatches"]["edges"][i]
+                                  ["node"]["playerOne"]["firstName"],
+                                  player1Active: true,
+                                  player2matchScore: [1, 2, 3, 4, 5],
+                                  player2Img: 'assets/Ellipse 2.png',
+                                  player2Name: result.data!["allMatches"]["edges"][i]
+                                  ["node"]["playerTwo"]["firstName"],
+                                  player2Active: false,
+                                )
+                              // Padding(
+                              //   padding: const EdgeInsets.only(
+                              //       left: 16.0, right: 16, top: 10),
+                              //   child: MatchCard(
+                              //     scores: result.data!["allMatches"]
+                              //     ["edges"][i]["node"]["matchSet"]
+                              //     ["edges"],
+                              //     playerOneName: result.data!["allMatches"]
+                              //     ["edges"][i]["node"]["playerOne"]
+                              //     ["firstName"],
+                              //     playerTwoName: result.data!["allMatches"]
+                              //     ["edges"][i]["node"]["playerTwo"]
+                              //     ["firstName"],
+                              //   ),
+                              // ),
+                            ],
+                          );
+                        },
+
+                        options: QueryOptions(
+                          document: gql(Constants.matchesQuery),
+                          // this is the query string you just created
+                          variables: {
+
+                            'userSearch': userId.getUserId,
+                          },
+                          pollInterval: Duration(seconds: 100),
+                        ),
+                      ),
+                    ),
+
+                    SliverToBoxAdapter(
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 16.0, right: 16),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "Head to Heads",
+                              style: GoogleFonts.poppins(
+                                  fontSize: 16, color: Color(0xff263238)),
+                            ),
+                            GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (_) => HeadtoHeadpage()));
+                                },
+                                child: Text("See All"))
+                          ],
+                        ),
+                      ),
+                    ),
+
+                    for (int i = 0; i <= 5; i++)
+                      SliverToBoxAdapter(
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 10),
+                          child: HeadToHeadListTile(
+                              title: 'CBS Arena',
+                              date: 'Dec 31st 2021',
+                              profileImg: 'assets/Ellipse 5.png',
+                              userName: 'Novak J.',
+                              rating: '4.5'),
+                        ),
+                      ),
+                  ],
+                );
+              },
+            )
+        );
+      },
     );
   }
 }

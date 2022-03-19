@@ -647,11 +647,13 @@ class _$UserStatTearOff {
       {required int? loss,
       required int? total,
       required String? userId,
+      required String? userName,
       required int? won}) {
     return _UserStat(
       loss: loss,
       total: total,
       userId: userId,
+      userName: userName,
       won: won,
     );
   }
@@ -669,6 +671,7 @@ mixin _$UserStat {
   int? get loss => throw _privateConstructorUsedError;
   int? get total => throw _privateConstructorUsedError;
   String? get userId => throw _privateConstructorUsedError;
+  String? get userName => throw _privateConstructorUsedError;
   int? get won => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -681,7 +684,8 @@ mixin _$UserStat {
 abstract class $UserStatCopyWith<$Res> {
   factory $UserStatCopyWith(UserStat value, $Res Function(UserStat) then) =
       _$UserStatCopyWithImpl<$Res>;
-  $Res call({int? loss, int? total, String? userId, int? won});
+  $Res call(
+      {int? loss, int? total, String? userId, String? userName, int? won});
 }
 
 /// @nodoc
@@ -697,6 +701,7 @@ class _$UserStatCopyWithImpl<$Res> implements $UserStatCopyWith<$Res> {
     Object? loss = freezed,
     Object? total = freezed,
     Object? userId = freezed,
+    Object? userName = freezed,
     Object? won = freezed,
   }) {
     return _then(_value.copyWith(
@@ -712,6 +717,10 @@ class _$UserStatCopyWithImpl<$Res> implements $UserStatCopyWith<$Res> {
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
               as String?,
+      userName: userName == freezed
+          ? _value.userName
+          : userName // ignore: cast_nullable_to_non_nullable
+              as String?,
       won: won == freezed
           ? _value.won
           : won // ignore: cast_nullable_to_non_nullable
@@ -725,7 +734,8 @@ abstract class _$UserStatCopyWith<$Res> implements $UserStatCopyWith<$Res> {
   factory _$UserStatCopyWith(_UserStat value, $Res Function(_UserStat) then) =
       __$UserStatCopyWithImpl<$Res>;
   @override
-  $Res call({int? loss, int? total, String? userId, int? won});
+  $Res call(
+      {int? loss, int? total, String? userId, String? userName, int? won});
 }
 
 /// @nodoc
@@ -742,6 +752,7 @@ class __$UserStatCopyWithImpl<$Res> extends _$UserStatCopyWithImpl<$Res>
     Object? loss = freezed,
     Object? total = freezed,
     Object? userId = freezed,
+    Object? userName = freezed,
     Object? won = freezed,
   }) {
     return _then(_UserStat(
@@ -756,6 +767,10 @@ class __$UserStatCopyWithImpl<$Res> extends _$UserStatCopyWithImpl<$Res>
       userId: userId == freezed
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      userName: userName == freezed
+          ? _value.userName
+          : userName // ignore: cast_nullable_to_non_nullable
               as String?,
       won: won == freezed
           ? _value.won
@@ -772,6 +787,7 @@ class _$_UserStat implements _UserStat {
       {required this.loss,
       required this.total,
       required this.userId,
+      required this.userName,
       required this.won});
 
   factory _$_UserStat.fromJson(Map<String, dynamic> json) =>
@@ -784,11 +800,13 @@ class _$_UserStat implements _UserStat {
   @override
   final String? userId;
   @override
+  final String? userName;
+  @override
   final int? won;
 
   @override
   String toString() {
-    return 'UserStat(loss: $loss, total: $total, userId: $userId, won: $won)';
+    return 'UserStat(loss: $loss, total: $total, userId: $userId, userName: $userName, won: $won)';
   }
 
   @override
@@ -799,6 +817,7 @@ class _$_UserStat implements _UserStat {
             const DeepCollectionEquality().equals(other.loss, loss) &&
             const DeepCollectionEquality().equals(other.total, total) &&
             const DeepCollectionEquality().equals(other.userId, userId) &&
+            const DeepCollectionEquality().equals(other.userName, userName) &&
             const DeepCollectionEquality().equals(other.won, won));
   }
 
@@ -808,6 +827,7 @@ class _$_UserStat implements _UserStat {
       const DeepCollectionEquality().hash(loss),
       const DeepCollectionEquality().hash(total),
       const DeepCollectionEquality().hash(userId),
+      const DeepCollectionEquality().hash(userName),
       const DeepCollectionEquality().hash(won));
 
   @JsonKey(ignore: true)
@@ -826,6 +846,7 @@ abstract class _UserStat implements UserStat {
       {required int? loss,
       required int? total,
       required String? userId,
+      required String? userName,
       required int? won}) = _$_UserStat;
 
   factory _UserStat.fromJson(Map<String, dynamic> json) = _$_UserStat.fromJson;
@@ -836,6 +857,8 @@ abstract class _UserStat implements UserStat {
   int? get total;
   @override
   String? get userId;
+  @override
+  String? get userName;
   @override
   int? get won;
   @override

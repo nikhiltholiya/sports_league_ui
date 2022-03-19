@@ -1,6 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:provider/provider.dart';
+import 'package:tenniston/providers/league_id_provider.dart';
+import 'package:tenniston/utils/shared_preferences_utils.dart';
 
 import '../bean/all_league_Applications/all_leagues_applications.dart';
 import '../components/drop_down_view.dart';
@@ -23,13 +28,10 @@ class MyLeagueList extends StatefulWidget {
   _MyLeagueListState createState() => _MyLeagueListState();
 }
 
-class _MyLeagueListState extends State<MyLeagueList> {
+class _MyLeagueListState extends State<MyLeagueList> with SharedPrefUtils {
   ScrollController? _scrollController;
 
   String fetchAllLeagueApplicants = Constants.allLeagueApplications;
-  String fetchAllLeagueCities = Constants.allLCitiesStates;
-
-  // String? temp = Constants.allQ(param, variable);
 
   late AllLeaguesApps? allLeaguesApps;
   late List<Edges>? applicantsList;
@@ -39,25 +41,34 @@ class _MyLeagueListState extends State<MyLeagueList> {
   Map<String, dynamic> param = {};
   Map<String, dynamic> paramType = {};
   Map<String, dynamic> passVariable = {};
+
   late String? dropDownValue = null;
+  bool? isParams = false;
+
+  final streamController = StreamController<Map<String, dynamic>>();
 
   @override
   void initState() {
     _scrollController = ScrollController();
 
-    param = {
-      '\$applicant_UserId': 'UUID',
-    };
-    paramType = {
-      'applicant_UserId': '\$applicant_UserId',
-    };
-    passVariable = {'applicant_UserId': '021c2515-e12e-49bd-bc08-744dc64a508c'};
+    getUserId().then((value) {
+      param = {
+        '\$applicant_UserId': 'UUID',
+      };
+      paramType = {
+        'applicant_UserId': '\$applicant_UserId',
+      };
+      passVariable = {'applicant_UserId': '$value'};
+
+      streamController.sink.add(passVariable);
+    });
 
     super.initState();
   }
 
   @override
   void dispose() {
+    streamController.close();
     _scrollController!.dispose();
     super.dispose();
   }
@@ -72,139 +83,138 @@ class _MyLeagueListState extends State<MyLeagueList> {
       ),
       body: Container(
         color: aWhite,
-        child: Query(
-          options: QueryOptions(
-            document: gql(Constants.allLeagueApplicationsQuery(param, paramType).toString()),
-            variables: passVariable,
-            pollInterval: Duration(seconds: 100),
-          ),
-          builder: (result, {fetchMore, refetch}) {
-            if (result.hasException) {
-              return Text(result.exception.toString());
-            }
+        child: StreamBuilder<Map<String, dynamic>>(
+          stream: streamController.stream,
+          builder: (context, streamSnapshot) {
+            if (streamSnapshot.hasError) return Text('Error in Stream');
 
-            if (result.isLoading) {
-              return Center(child: CupertinoActivityIndicator());
-            }
+            print('$param -- $paramType -- $passVariable');
+            print('${streamSnapshot.data} ***');
 
-            allLeaguesApps = AllLeaguesApps.fromJson(result.data!);
-
-            applicantsList = [];
-            for (var data in allLeaguesApps!.allLeagueApplications!.edges!) {
-              if (data.node!.status!.toLowerCase() == 'approved')
-                applicantsList = allLeaguesApps!.allLeagueApplications!.edges;
-            }
-
-            return CustomScrollView(
-              controller: _scrollController,
-              physics: const BouncingScrollPhysics(),
-              shrinkWrap: true,
-              slivers: <Widget>[
-                SliverPersistentHeader(
-                  delegate: SilverDelegates(
-                    child: Container(
-                      width: double.infinity,
-                      color: aWhite,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: DropDownView(
-                          cityList: [
-                            'Portland, Oregon',
-                            'Los Angeles, California',
-                            'Atlanta, Georgia'
-                          ],
-                          hint: joinLeagueByCity,
-                          dropdownValue: dropDownValue,
-                          onValueChange: (value) {
-                            dropDownValue = value;
-                            final split = value.split(',');
-                            selectedCity = split![0].toString().trim();
-                            selectedState = split![1].toString().trim();
-
-                            setState(() {
-                              param = {
-                                '\$league_State': 'String!',
-                                '\$league_City': 'String!'
-                              };
-                              paramType = {
-                                'league_State': '\$league_State',
-                                'league_City': '\$league_City'
-                              };
-                              passVariable = {
-                                'league_State': selectedState ?? '',
-                                'league_City': selectedCity ?? '',
-                              };
-                            });
-                          },
-                        ),
-                      ),
-                    ),
-                  ),
-                  floating: false,
-                  pinned: true,
+            if (streamSnapshot.hasData) {
+              return Query(
+                options: QueryOptions(
+                  document: gql(
+                      Constants.allLeagueApplicationsQuery(param, paramType)
+                          .toString()),
+                  variables: passVariable,
+                  pollInterval: Duration(seconds: 100),
                 ),
-                (applicantsList!.length <= 0)
-                    ? SliverToBoxAdapter(
-                        child: MyLeagueNoDataListTile(
-                        onTileClick: () {},
-                      ))
-                    : SliverList(
-                        delegate: SliverChildBuilderDelegate(
-                          (context, index) => MyLeagueListTile(
-                            leagueStatus:
-                                applicantsList![index].node!.league!.status,
-                            profileImg: 'assets/winner_cup.png',
-                            leagueLocation:
-                                '${applicantsList![index].node!.league!.city}, ${applicantsList![index].node!.league!.state}, ${applicantsList![index].node!.league!.country}',
-                            leagueDate: convertDate(
-                                applicantsList?[index].node?.league?.startDate,
-                                applicantsList?[index].node?.league?.endDate),
-                            leagueTitle:
-                                applicantsList![index].node!.league!.name,
-                            onTileClick: () {
-                              Navigator.pushNamed(context, LeagueDetails.path,
-                                  arguments: applicantsList![index].node);
-                            },
-                            onProfileClick: () {},
+                builder: (result, {fetchMore, refetch}) {
+                  if (result.hasException) {
+                    return Text(result.exception.toString());
+                  }
+
+                  if (result.isLoading && result.data == null) {
+                    return const Center(child: CupertinoActivityIndicator());
+                  }
+
+                  allLeaguesApps = AllLeaguesApps.fromJson(result.data!);
+
+                  applicantsList = [];
+                  for (var data
+                      in allLeaguesApps!.allLeagueApplications!.edges!) {
+                    if (data.node!.status!.toLowerCase() == 'approved') {
+                      applicantsList!.add(data);
+                    }
+                  }
+
+                  return CustomScrollView(
+                    controller: _scrollController,
+                    physics: const BouncingScrollPhysics(),
+                    shrinkWrap: true,
+                    slivers: <Widget>[
+                      SliverPersistentHeader(
+                        delegate: SilverDelegates(
+                          child: Container(
+                            width: double.infinity,
+                            color: aWhite,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: DropDownView(
+                                cityList: [
+                                  'Portland, Oregon',
+                                  'Los Angeles, California',
+                                  'Atlanta, Georgia'
+                                ],
+                                hint: joinLeagueByCity,
+                                dropdownValue: dropDownValue,
+                                onValueChange: (value) {
+                                  dropDownValue = value;
+                                  final split = value.split(',');
+                                  selectedCity = split![0].toString().trim();
+                                  selectedState = split![1].toString().trim();
+
+                                  // setState(() {
+                                  param = {
+                                    '\$league_State': 'String!',
+                                    '\$league_City': 'String!'
+                                  };
+                                  paramType = {
+                                    'league_State': '\$league_State',
+                                    'league_City': '\$league_City'
+                                  };
+                                  passVariable = {
+                                    'league_State': selectedState ?? '',
+                                    'league_City': selectedCity ?? '',
+                                  };
+
+                                  streamController.sink.add(passVariable);
+                                  // });
+                                },
+                              ),
+                            ),
                           ),
-                          childCount: applicantsList?.length,
                         ),
-                      )
-              ],
-            );
+                        floating: false,
+                        pinned: true,
+                      ),
+                      (applicantsList!.length <= 0)
+                          ? SliverToBoxAdapter(
+                              child: MyLeagueNoDataListTile(
+                              onTileClick: () {},
+                            ))
+                          : SliverList(
+                              delegate: SliverChildBuilderDelegate(
+                                (context, index) => MyLeagueListTile(
+                                  leagueStatus: applicantsList![index]
+                                      .node!
+                                      .league!
+                                      .status,
+                                  profileImg: 'assets/winner_cup.png',
+                                  leagueLocation:
+                                      '${applicantsList![index].node!.league!.city}, ${applicantsList![index].node!.league!.state}, ${applicantsList![index].node!.league!.country}',
+                                  leagueDate: convertDate(
+                                      applicantsList?[index]
+                                          .node
+                                          ?.league
+                                          ?.startDate,
+                                      applicantsList?[index]
+                                          .node
+                                          ?.league
+                                          ?.endDate),
+                                  leagueTitle:
+                                      applicantsList![index].node!.league!.name,
+                                  onTileClick: () {
+                                    Provider.of<LeagueIdProvider>(context, listen: false).setLeagueId(applicantsList![index].node!.league!.leagueId);
+                                    Navigator.pushNamed(
+                                        context, LeagueDetails.path,
+                                        /*arguments: applicantsList![index].node*/);
+                                  },
+                                  onProfileClick: () {},
+                                ),
+                                childCount: applicantsList?.length,
+                              ),
+                            )
+                    ],
+                  );
+                },
+              );
+            }
+            return Center(child: CupertinoActivityIndicator());
           },
         ),
       ),
     );
   }
 }
-
-
-////Query For City and State
-// Query(
-//   options: QueryOptions(
-//     document: gql(fetchAllLeagueCities),
-//     variables: {
-//       'league_State': 'Oregon',
-//       'league_City': 'Portland'
-//     },
-//     pollInterval: Duration(seconds: 100),
-//   ),
-//   builder: (result, {fetchMore, refetch}) {
-//     print('CITY');
-//     if (result.hasException) {
-//       return Text(result.exception.toString());
-//     }
-//
-//     if (result.isLoading) {
-//       return Center(child: CupertinoActivityIndicator());
-//     }
-//
-//     allLeaguesApps = AllLeaguesApps.fromJson(result.data!);
-//     for (var data
-//         in allLeaguesApps!.allLeagueApplications!.edges!) {
-//       print('${data.node!.id} -- ${data.node!.status}');
-//     }
-//     return Text('${result.data}');
-//   },
-// ),

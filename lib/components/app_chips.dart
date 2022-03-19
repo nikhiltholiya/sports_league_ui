@@ -5,15 +5,15 @@ import '../utils/app_colors.dart';
 class AppChip extends StatefulWidget {
   final String? Label;
   final Function? onChipTap;
-  final bool? isChipSelected;
+  final bool? isChipActive;
   final bool? isAvatar;
   final IconData? iconData;
 
   const AppChip({
     Key? key,
-    this.Label,
-    this.onChipTap,
-    this.isChipSelected,
+    required this.Label,
+    required this.onChipTap,
+    required this.isChipActive,
     this.isAvatar = false,
     this.iconData,
   }) : super(key: key);
@@ -26,18 +26,18 @@ class _AppChipState extends State<AppChip> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: () => widget.onChipTap!(),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 2.0),
         child: Chip(
           label: Text(
             widget.Label!,
             style: TextStyle(
-                color: widget.isChipSelected! ? aWhite : aLightGray,
+                color: widget.isChipActive! ? aWhite : aLightGray,
                 fontSize: 14.0),
           ),
-          padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
-          backgroundColor: widget.isAvatar!? aWhite : widget.isChipSelected! ? aGreen : aPartGray10,
+          padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: widget.isAvatar!? 10.0 : 8.0),
+          backgroundColor: widget.isAvatar!? aWhite : widget.isChipActive! ? aGreen : aPartGray10,
           avatar: widget.isAvatar!
               ? Icon(
                   widget.iconData,
@@ -47,7 +47,7 @@ class _AppChipState extends State<AppChip> {
               : null,
           elevation: 0.5,
           shape: RoundedRectangleBorder(
-              side:  widget.isAvatar!? BorderSide(color: aLightGray) : BorderSide.none,
+              side:  widget.isAvatar!? BorderSide(color: aPartGray30,width: 0.5) : BorderSide.none,
               borderRadius: BorderRadius.circular(20.0)),
         ),
       ),

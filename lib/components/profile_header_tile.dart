@@ -10,6 +10,8 @@ class ProfileHeaderTile extends StatefulWidget {
   final String? playerImg;
   final String? playerLocation;
   final int? playerAge;
+  final Function? onChatClick;
+  final Function? onInviteToPlay;
 
   final GlobalKey? stackKey;
   final GlobalKey? profileImgKey;
@@ -27,7 +29,7 @@ class ProfileHeaderTile extends StatefulWidget {
     required this.profileImgKey,
     required this.playerNameKey,
     required this.imgLocationKey,
-    required this.btnKey,
+    required this.btnKey, this.onChatClick, this.onInviteToPlay,
   }) : super(key: key);
 
   @override
@@ -128,7 +130,7 @@ class _ProfileHeaderTileState extends State<ProfileHeaderTile> {
                               child: ElevatedButtons(
                                 fontSize: 15,
                                 label: 'Chat',
-                                onClick: () {},
+                                onClick: () => widget.onChatClick!(),
                               ),
                             ),
                           ),
@@ -140,7 +142,7 @@ class _ProfileHeaderTileState extends State<ProfileHeaderTile> {
                               child: ElevatedButtons(
                                 fontSize: 15,
                                 label: 'Invite to play',
-                                onClick: () {},
+                                onClick: () => widget.onInviteToPlay!(),
                                 primary: true,
                               ),
                             ),
