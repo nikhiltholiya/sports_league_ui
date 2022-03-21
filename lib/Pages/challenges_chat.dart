@@ -5,9 +5,11 @@ import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:tenniston/Pages/other_player_profile_page.dart';
 import 'package:tenniston/Pages/submit_score_details.dart';
+import 'package:tenniston/bean/all_users/all_users.dart';
 import 'package:tenniston/bean/league_stat/league_stat.dart';
 import 'package:tenniston/bean/user_profiles/user_profiles.dart';
 import 'package:tenniston/providers/user_id_provider.dart';
+import 'package:tenniston/utils/Constants.dart';
 import 'package:tenniston/utils/shared_preferences_utils.dart';
 
 import '../Pages/profile_page.dart';
@@ -19,9 +21,9 @@ import '../components/chatting_list_header_tile.dart';
 import '../components/edit_text_form_field.dart';
 import '../components/rate_badges.dart';
 import '../utils/app_colors.dart';
-import '../utils/Constants.dart' as Constants;
 
 //Created on 20220223
+//20220321
 class ChallengesChat extends StatefulWidget {
   static const String path = 'challengesChat';
 
@@ -56,9 +58,9 @@ class _ChallengesChatState extends State<ChallengesChat> with SharedPrefUtils{
   // String? userName = '';
   String? userRate = '';
   String? userImage = '';
-  // UserStat? _userStat;
-  String readRepositories = Constants.homepageQuery;
+
   bool? isBuildWidgets = false;
+  late AllUsersData _allUsersData;
 
   double? _getHeight(GlobalKey? gKey) {
     try {
@@ -149,7 +151,6 @@ class _ChallengesChatState extends State<ChallengesChat> with SharedPrefUtils{
     super.dispose();
   }
 
-  //TODO Change AppBar
   @override
   Widget build(BuildContext context) {
     // _userStat = ModalRoute.of(context)?.settings.arguments as UserStat;
@@ -168,17 +169,23 @@ class _ChallengesChatState extends State<ChallengesChat> with SharedPrefUtils{
         color: aWhite,
         child: Consumer<UserIdProvider>(
           builder: (context, value, child) {
+
+            Map<String, dynamic> param = {
+              '\$userId': 'UUID',
+            };
+            Map<String, dynamic> paramType = {
+              'userId': '\$userId',
+            };
+            Map<String, dynamic> passVariable = {'userId': '${value.getUserId}'};
+
             return Query(
               options: QueryOptions(
-                document: gql(readRepositories),
+                document: gql(allUsers(param, paramType)),
                 // this is the query string you just created
-                variables: {
-                  'userId': value.getUserId,
-                },
+                variables:passVariable,
                 pollInterval: Duration(seconds: 100),
               ),
               builder: (userResult, {fetchMore, refetch}) {
-                late UserProfiles? profile;
                 if (userResult.hasException) {
                   return Text(userResult.exception.toString());
                 }
@@ -188,10 +195,7 @@ class _ChallengesChatState extends State<ChallengesChat> with SharedPrefUtils{
                 }
 
                 try {
-
-                  profile =
-                  UserProfileData.fromJson(userResult.data!)
-                      .userProfiles!;
+                  _allUsersData = AllUsersData.fromJson(userResult.data!);
 
                   if (!isBuildWidgets!) {
                     isBuildWidgets = true;
@@ -248,15 +252,12 @@ class _ChallengesChatState extends State<ChallengesChat> with SharedPrefUtils{
                                   titlePadding: EdgeInsets.zero,
                                   centerTitle: true,
                                   background: ChattingListHeaderTile(
-                                    playerName: '${profile?.firstName} ${profile?.lastName}',
-                                    playerLocation: '${profile?.city}, ${profile?.state}',
-                                    playerImg: 'assets/Ellipse 1.png',// NOT RECEIVED
-                                    playerRate: '4.5',// NOT RECEIVED
+                                    playerName: '${_allUsersData.allUsers?.edges?.first.node?.firstName} ${_allUsersData.allUsers?.edges?.first.node?.lastName}',
+                                    playerLocation: '${_allUsersData.allUsers?.edges?.first.node?.city}, ${_allUsersData.allUsers?.edges?.first.node?.state}',
+                                    playerImg: _allUsersData.allUsers?.edges?.first.node?.picture,// NOT RECEIVED
+                                    playerRate: '${_allUsersData.allUsers?.edges?.first.node?.rating}',// NOT RECEIVED
                                     onViewProfile: () {
-                                      // Navigator.pushNamedAndRemoveUntil(context, ProfilePage.path, (route) => false);
-
-                                      Navigator.pushNamed(context, OtherPlayerProfilePage.path);
-                                      // Navigator.popAndPushNamed(context, ProfilePage.path);
+                                      Navigator.pushNamed(context, ProfilePage.path);
                                     },
                                     onSubmitScore: () {
                                       Navigator.pushNamed(context, SubmitScoreDetails.path);
@@ -279,8 +280,7 @@ class _ChallengesChatState extends State<ChallengesChat> with SharedPrefUtils{
                                             backgroundColor: aLightGray,
                                             radius: 20,
                                             child: CircleAvatar(
-                                              backgroundImage: AssetImage(
-                                                  'assets/Ellipse 1.png'),
+                                              backgroundImage: NetworkImage('${_allUsersData.allUsers?.edges?.first.node?.picture}'),
                                               //'assets/Ellipse 1.png'
                                               radius: 19,
                                             ),
@@ -289,7 +289,7 @@ class _ChallengesChatState extends State<ChallengesChat> with SharedPrefUtils{
                                         Expanded(
                                           flex: 1,
                                           child: Text(
-                                            '${profile?.firstName} ${profile?.lastName}',
+                                            '${_allUsersData.allUsers?.edges?.first.node?.firstName} ${_allUsersData.allUsers?.edges?.first.node?.lastName}',
                                             maxLines: 1,
                                             style: TextStyle(
                                               fontSize: 18,
@@ -301,7 +301,7 @@ class _ChallengesChatState extends State<ChallengesChat> with SharedPrefUtils{
                                           padding:
                                           const EdgeInsets.only(right: 10.0),
                                           child: RateBadges(
-                                            rate: '4.5',
+                                            rate: '${_allUsersData.allUsers?.edges?.first.node?.rating}',
                                             textSize: 16.0,
                                           ),
                                         )

@@ -1,7 +1,13 @@
+import 'dart:convert';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:tenniston/bean/all_users/all_users.dart';
 import 'package:tenniston/providers/user_id_provider.dart';
+import 'package:tenniston/utils/Constants.dart';
 
 import '../utils/shared_preferences_utils.dart';
 import '../Pages/my_league_list.dart';
@@ -74,62 +80,94 @@ class _DashboardPageState extends State<DashboardPage> with SharedPrefUtils {
           path: ''),
     ];
 
+    Map<String, dynamic> param = {
+      '\$userId': 'UUID',
+    };
+    Map<String, dynamic> paramType = {
+      'userId': '\$userId',
+    };
+    Map<String, dynamic> passVariable = {'userId': '021c2515-e12e-49bd-bc08-744dc64a508c'};
+
+
     return BaseWidget(
       scaffoldKey: scKey,
       appbar: AppBar(),
       appbarHeight: 0.0,
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          dashboardHeader(),
-          Padding(
-            padding: const EdgeInsets.only(top: 10, left: 10),
-            child: Text(
-              explore,
-              style: TextStyle(color: aLightGray, fontSize: 16),
-            ),
-          ),
-          Flexible(
-            fit: FlexFit.loose,
-            flex: 1,
-            child: Container(
-              color: aWhite,
-              child: GridView.builder(
-                physics: BouncingScrollPhysics(),
-                padding: EdgeInsets.all(10.0),
-                gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                    maxCrossAxisExtent: 200,
-                    childAspectRatio: 2,
-                    crossAxisSpacing: 10,
-                    mainAxisSpacing: 10),
-                itemCount: dashBoardMenuItems.length,
-                itemBuilder: (BuildContext ctx, index) {
-                  return DashboardMenuItem(
-                    menu_color: dashBoardMenuItems[index].color,
-                    menu_image: dashBoardMenuItems[index].image,
-                    subtitle: dashBoardMenuItems[index].subtitle,
-                    title: dashBoardMenuItems[index].title,
-                    onMenuClick: () {
-                      getUserId().then((value) => Provider.of<UserIdProvider>(context,listen: false).setUserId(value));
+      body: Query(
+        options: QueryOptions(
+          document: gql(allUsers(param, paramType)),
+          // this is the query string you just created
+          variables:passVariable,
+          pollInterval: Duration(seconds: 100),
+        ),
+        builder: (result, {fetchMore, refetch}) {
+          if (result.hasException) {
+            return Text(result.exception.toString());
+          }
 
-                      if (dashBoardMenuItems[index].path!.isNotEmpty)
-                        Navigator.pushNamed(
-                            context, dashBoardMenuItems[index].path ?? '');
-                    },
-                  );
-                },
+          if (result.isLoading && result.data == null) {
+            return const Center(child: CupertinoActivityIndicator());
+          }
+
+          // setLoggedUser(AllUsersData.fromJson(result.data!).allUsers?.edges?.first.node?.toJson().toString());
+          setLoggedUser(jsonEncode(AllUsersData.fromJson(result.data!)));
+
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              dashboardHeader(name: AllUsersData.fromJson(result.data!).allUsers?.edges?.first.node?.firstName,),
+              Padding(
+                padding: const EdgeInsets.only(top: 10, left: 10),
+                child: Text(
+                  explore,
+                  style: TextStyle(color: aLightGray, fontSize: 16),
+                ),
               ),
-            ),
-          ),
-        ],
+              Flexible(
+                fit: FlexFit.loose,
+                flex: 1,
+                child: Container(
+                  color: aWhite,
+                  child: GridView.builder(
+                    physics: BouncingScrollPhysics(),
+                    padding: EdgeInsets.all(10.0),
+                    gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                        maxCrossAxisExtent: 200,
+                        childAspectRatio: 2,
+                        crossAxisSpacing: 10,
+                        mainAxisSpacing: 10),
+                    itemCount: dashBoardMenuItems.length,
+                    itemBuilder: (BuildContext ctx, index) {
+                      return DashboardMenuItem(
+                        menu_color: dashBoardMenuItems[index].color,
+                        menu_image: dashBoardMenuItems[index].image,
+                        subtitle: dashBoardMenuItems[index].subtitle,
+                        title: dashBoardMenuItems[index].title,
+                        onMenuClick: () {
+                          getUserId().then((value) => Provider.of<UserIdProvider>(context,listen: false).setUserId(value));
+
+                          if (dashBoardMenuItems[index].path!.isNotEmpty)
+                            Navigator.pushNamed(
+                                context, dashBoardMenuItems[index].path ?? '');
+                        },
+                      );
+                    },
+                  ),
+                ),
+              ),
+            ],
+          );
+        },
       ),
     );
   }
 }
 
 class dashboardHeader extends StatelessWidget {
-  const dashboardHeader({Key? key}) : super(key: key);
+  final String? name;
+  final String? userImage;
+  const dashboardHeader({Key? key, this.name, this.userImage}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -149,7 +187,7 @@ class dashboardHeader extends StatelessWidget {
               ),
             ),
             TextSpan(
-              text: "Kalpesh\n",
+              text: name,
               style: GoogleFonts.poppins(
                 fontSize: 26,
                 color: aWhite,

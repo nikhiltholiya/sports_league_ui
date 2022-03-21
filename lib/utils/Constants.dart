@@ -1,5 +1,3 @@
-import 'package:gql/language.dart';
-
 const String SUCCESS_MESSAGE = " You will be contacted by us very soon.";
 
 const String leaque = """
@@ -44,23 +42,25 @@ query (\$userId : String!) {
 }
 
 """;
-const String homepageQuery = """
-  query (\$userId: String!) {
-    userProfiles(userId:\$userId){
-    matchesCount
-    drawCount
-    lostCount
-    city
-    dob
-    state
-    firstName
-    lastName
-    userId
-    wonCount
-    age
-    }
-  }
-""";
+
+// const String homepageQuery = """
+//   query (\$userId: String!) {
+//     userProfiles(userId:\$userId){
+//     matchesCount
+//     drawCount
+//     lostCount
+//     city
+//     dob
+//     state
+//     firstName
+//     lastName
+//     userId
+//     wonCount
+//     age
+//     }
+//   }
+// """;
+
 const String matchesQuery = """
   query (\$userSearch: String!) {
     allMatches(userSearch:\$userSearch){
@@ -93,7 +93,7 @@ const String matchesQuery = """
   }
 """;
 
-final leagueStatus = /*parseString(*/ '''
+final leagueStatus = '''
 
 query (\$leagueId: String!) {
   leagueStat(leagueId: \$leagueId) {
@@ -119,15 +119,14 @@ query (\$leagueId: String!) {
     }
   }
 }
-''' /*)*/
-    ;
-
+''';
 
 //20220315
-String? allLeagueApplicationsQuery(Map<String, dynamic>? param, Map<String, dynamic>? paramType) {
+String allLeagueApplicationsQuery(
+    Map<String, dynamic>? param, Map<String, dynamic>? paramType) {
   return '''
-query(${param.toString().replaceAll('{',' ').replaceAll('}', ' ')}) {
-  allLeagueApplications(${paramType.toString().replaceAll('{',' ').replaceAll('}', ' ')}) {
+query(${param.toString().replaceAll('{', ' ').replaceAll('}', ' ')}) {
+  allLeagueApplications(${paramType.toString().replaceAll('{', ' ').replaceAll('}', ' ')}) {
       edges {
         node {
          id
@@ -157,42 +156,22 @@ query(${param.toString().replaceAll('{',' ').replaceAll('}', ' ')}) {
 ''';
 }
 
-
-//20220313
-final allLeagueApplications = '''
-query (
-\$applicant_UserId: UUID,
-\$league_City: String!, 
-\$league_State: String!) {
-
-  allLeagueApplications(
-    applicant_UserId: \$applicant_UserId,
-    league_City: \$league_City,
-    league_State: \$league_State) {
+String allUsers(Map<String, dynamic>? param, Map<String, dynamic>? paramType) {
+  return '''
+query(${param.toString().replaceAll('{', ' ').replaceAll('}', ' ')}) {
+  allUsers(${paramType.toString().replaceAll('{', ' ').replaceAll('}', ' ')}) {
       edges {
         node {
-         id
-          league {
-          id
-          city
-          endDate
-          leagueId
-          name
-          startDate
-          state
-          status
-          country
-          createdAt
-          description
-          level
-          updatedAt
-        }
-        applicant {
-          userId
-        }
-        status
+        rating
+        userId
+        firstName
+        lastName
+        city
+        state
+        picture
       }
     }
   }
 }
 ''';
+}

@@ -112,9 +112,6 @@ class MyApp extends StatelessWidget {
           } else if (settings.name == SubmitScoreDetails.path) {
             return CupertinoPageRoute(
                 builder: (context) => SubmitScoreDetails(), settings: settings);
-          } else if (settings.name == OtherPlayerProfilePage.path) {
-            return CupertinoPageRoute(
-                builder: (context) => OtherPlayerProfilePage(), settings: settings);
           } else {
             return null;
           }

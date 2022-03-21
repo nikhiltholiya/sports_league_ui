@@ -1,15 +1,17 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:tenniston/providers/user_id_provider.dart';
+import 'package:tenniston/utils/shared_preferences_utils.dart';
 import '../Pages/base_activity.dart';
 import '../Pages/profile_detail_page.dart';
-import '../Pages/schedule_page.dart';
-import '../utils/Constants.dart' as Constants;
-import '../utils/app_colors.dart';
-
 
 
 //Updated on 20220307
 class ProfilePage extends StatefulWidget {
   static const String path = 'profilePage';
+  static const String profileUser = 'user';
+  static const String profileMe = 'me';
 
   const ProfilePage({Key? key}) : super(key: key);
 
@@ -17,78 +19,47 @@ class ProfilePage extends StatefulWidget {
   _ProfilePageState createState() => _ProfilePageState();
 }
 
-class _ProfilePageState extends State<ProfilePage> {
-  // String readRepositories = Constants.homepageQuery;
-  int curent_index = 1;
-  var dataRecent;
+class _ProfilePageState extends State<ProfilePage> with SharedPrefUtils {
+  late Future<String?> _futureUserId;
 
+  Future<String?> getUserIds() async {
+    return await getUserId().then((value) {
+      return value;
+    });
+  }
+
+  @override
+  void initState() {
+    _futureUserId = getUserId();
+    super.initState();
+  }
+
+  var dataRecent;
 
   @override
   Widget build(BuildContext context) {
-
     return BaseWidget(
       appbar: AppBar(
         centerTitle: true,
         title: Text(''),
         toolbarHeight: 0,
       ),
-      body: curent_index == 0
-          ? SchedulePage()
-          : ProfileDetailPage(from: ProfilePage.path,),
-      fab: FloatingActionButton(
-        backgroundColor: aGreen,
-        onPressed: () {},
-        child: Image.asset(
-          "assets/Geolocation.png",
-          fit: BoxFit.cover,
-        ),
-      ),
-      bottomBar: SizedBox(
-        height: kToolbarHeight,
-        child: Align(
-          alignment: Alignment.center,
-          child: BottomNavigationBar(
-              selectedItemColor: aGreen,
-              unselectedItemColor: aLightGray,
-              selectedFontSize: 10,
-              unselectedFontSize: 10,
-              onTap: (d) {
-                setState(() {
-                  curent_index = d;
-                });
-              },
-              showUnselectedLabels: true,
-              currentIndex: curent_index,
-              showSelectedLabels: true,
-              type: BottomNavigationBarType.fixed,
-              items: [
-                BottomNavigationBarItem(
-                    label: ("Schedule"),
-                    icon: Padding(
-                      padding: const EdgeInsets.only(bottom: 5.0),
-                      child: Image.asset(
-                        "assets/Vector (2).png",
-                        height: 18,
-                        width: 18,
-                        color: curent_index == 0 ? Colors.green : Colors.grey,
-                        fit: BoxFit.cover,
-                      ),
-                    )),
-                BottomNavigationBarItem(
-                  label: ("Profile"),
-                  icon: Padding(
-                    padding: const EdgeInsets.only(bottom: 5.0),
-                    child: Image.asset(
-                      "assets/Active (3).png",
-                      height: 18,
-                      width: 18,
-                      color: curent_index == 1 ? Colors.green : Colors.grey,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                )
-              ]),
-        ),
+      body: Consumer<UserIdProvider>(
+        builder: (context, userId, child) {
+          return FutureBuilder<String?>(
+            future: _futureUserId,
+            builder: (context, snapshot) {
+
+              if(snapshot.hasData) {
+                print('${userId.getUserId} == ${snapshot.data}');
+                return ProfileDetailPage(
+                  from: userId.getUserId == snapshot.data ? ProfilePage.profileMe : ProfilePage.profileUser,
+                );
+              }
+              return const Center(child: CupertinoActivityIndicator());
+            },
+          );
+        },
       ),
     );
   }

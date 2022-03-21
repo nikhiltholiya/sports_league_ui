@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../components/edit_text_form_field.dart';
 import '../utils/app_colors.dart';
 
@@ -10,6 +11,10 @@ class SetDetailsListTile extends StatefulWidget {
   final Function? player2Score;
   final Function? tieBreak1;
   final Function? tieBreak2;
+  final TextEditingController? player1Controller;
+  final TextEditingController? player2Controller;
+  final TextEditingController? tie1Controller;
+  final TextEditingController? tie2Controller;
 
   const SetDetailsListTile(
       {Key? key,
@@ -19,7 +24,11 @@ class SetDetailsListTile extends StatefulWidget {
       required this.player1Score,
       required this.player2Score,
       required this.tieBreak1,
-      required this.tieBreak2})
+      required this.tieBreak2,
+      required this.player1Controller,
+      required this.player2Controller,
+      required this.tie1Controller,
+      required this.tie2Controller})
       : super(key: key);
 
   @override
@@ -61,6 +70,13 @@ class _SetDetailsListTileState extends State<SetDetailsListTile> {
               TableRow(
                 children: [
                   EditTextFormField(
+                    maxLength: 3,
+                    inputFormatter: [
+                      FilteringTextInputFormatter.allow(
+                        RegExp(r'^\d+?\d*'),
+                      )
+                    ],
+                    textController: widget.player1Controller,
                     textInputType: TextInputType.number,
                     textAlign: TextAlign.center,
                     onTap: () {},
@@ -68,6 +84,13 @@ class _SetDetailsListTileState extends State<SetDetailsListTile> {
                         widget.player1Score!(score),
                   ),
                   EditTextFormField(
+                    maxLength: 3,
+                    inputFormatter: [
+                      FilteringTextInputFormatter.allow(
+                        RegExp(r'^\d+?\d*'),
+                      )
+                    ],
+                    textController: widget.player2Controller,
                     textInputType: TextInputType.number,
                     textAlign: TextAlign.center,
                     onTap: () {},
@@ -80,6 +103,13 @@ class _SetDetailsListTileState extends State<SetDetailsListTile> {
                     children: [
                       Flexible(
                         child: EditTextFormField(
+                          maxLength: 3,
+                          inputFormatter: [
+                            FilteringTextInputFormatter.allow(
+                              RegExp(r'^\d+?\d*'),
+                            )
+                          ],
+                          textController: widget.tie1Controller,
                           textInputType: TextInputType.number,
                           textAlign: TextAlign.center,
                           onTap: () {},
@@ -91,6 +121,13 @@ class _SetDetailsListTileState extends State<SetDetailsListTile> {
                       ),
                       Flexible(
                         child: EditTextFormField(
+                          maxLength: 3,
+                          inputFormatter: [
+                            FilteringTextInputFormatter.allow(
+                              RegExp(r'^\d+?\d*'),
+                            )
+                          ],
+                          textController: widget.tie2Controller,
                           textInputType: TextInputType.number,
                           textAlign: TextAlign.center,
                           onTap: () {},

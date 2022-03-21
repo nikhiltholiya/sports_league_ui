@@ -5,20 +5,19 @@ import 'package:provider/provider.dart';
 import 'package:tenniston/providers/league_id_provider.dart';
 import 'package:tenniston/providers/user_id_provider.dart';
 
-import '../utils/shared_preferences_utils.dart';
-import '../bean/all_league_Applications/all_leagues_applications.dart';
 import '../Pages/base_activity.dart';
 import '../Pages/challenges_chat.dart';
-import '../bean/user_profiles/user_profiles.dart';
 import '../bean/league_stat/league_stat.dart';
+import '../bean/user_profiles/user_profiles.dart';
 import '../components/elevated_buttons.dart';
 import '../components/league_detail_tile.dart';
 import '../components/league_details_header_tile.dart';
 import '../components/league_details_winner_tile.dart';
 import '../utils/Constants.dart' as Constants;
-import '../utils/common.dart';
 import '../utils/app_colors.dart';
 import '../utils/app_labels.dart';
+import '../utils/common.dart';
+import '../utils/shared_preferences_utils.dart';
 
 //Created on 20220222
 class LeagueDetails extends StatefulWidget {

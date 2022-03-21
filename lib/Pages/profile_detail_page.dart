@@ -4,9 +4,14 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:tenniston/Pages/challenges_chat.dart';
+import 'package:tenniston/Pages/league_details.dart';
+import 'package:tenniston/Pages/profile_page.dart';
+import 'package:tenniston/Pages/submit_score_details.dart';
 import 'package:tenniston/bean/user_profiles/user_profiles.dart';
 import 'package:tenniston/providers/user_id_provider.dart';
+import 'package:tenniston/utils/app_labels.dart';
 import 'package:tenniston/utils/shared_preferences_utils.dart';
+
 import '../Pages/head_to_head_page.dart';
 import '../Pages/recent_matches_pages.dart';
 import '../components/head_to_head_details_list_tile.dart';
@@ -15,7 +20,6 @@ import '../components/profile_header_tile.dart';
 import '../components/stats_tile.dart';
 import '../utils/Constants.dart' as Constants;
 import '../utils/app_colors.dart';
-import 'other_player_profile_page.dart';
 
 //Updated on 20220308
 class ProfileDetailPage extends StatefulWidget {
@@ -27,7 +31,7 @@ class ProfileDetailPage extends StatefulWidget {
 }
 
 class _ProfileDetailPageState extends State<ProfileDetailPage> with SharedPrefUtils{
-  String readRepositories = Constants.homepageQuery;
+  String readRepositories = Constants.fetchUserProfiles;
   var dataRecent;
 
   ScrollController? _scrollController;
@@ -42,11 +46,6 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> with SharedPrefUt
   bool? isLoaded = false;
   String? userId;
 
-  Future<String?> getUserIds() async{
-    return await getUserId().then((value) {
-      return value;
-    });
-  }
 
   @override
   void initState() {
@@ -57,7 +56,7 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> with SharedPrefUt
 
   double _getWidgetHeight(GlobalKey? key) {
     final RenderBox renderBoxRed =
-        key?.currentContext?.findRenderObject() as RenderBox;
+    key?.currentContext?.findRenderObject() as RenderBox;
     return renderBoxRed.size.height;
   }
 
@@ -97,6 +96,8 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> with SharedPrefUt
     var size = MediaQuery.of(context).size;
     double? height = (size.height / 2) - 56;
     var scrollPosition;
+
+    print('FROM ${widget.from}');
 
 
     // if(ModalRoute.of(context)?.settings.arguments != null) {
@@ -184,14 +185,17 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> with SharedPrefUt
                               imgLocationKey: _imgLocationKey,
                               playerNameKey: _playerNameKey,
                               profileImgKey: _profileImgKey,
-                              onChatClick: (){
-                                // dataRecent == null ?  Navigator.pushNamed(
-                                //     context, ChallengesChat.path) : Navigator.of(context).pop();
-                                widget.from! == OtherPlayerProfilePage.path ? Navigator.pop(context)
-                                :Navigator.pushNamed(
-                                    context, ChallengesChat.path);
+                              btnLeft: widget.from! == ProfilePage.profileMe ? editProfile : chat,
+                              btnRight: widget.from! == ProfilePage.profileMe ? messages : submitScore,
+                              onLeftBtnClick: (){
+                                widget.from! == ProfilePage.profileMe ? print('EDIT PROFILE')
+                                    :Navigator.pushNamedAndRemoveUntil(context,ChallengesChat.path,ModalRoute.withName(LeagueDetails.path));
                               },
-                              onInviteToPlay: (){},
+                              onRightBtnClick: (){
+                                widget.from! == ProfilePage.profileMe ? print('MESSAGES') :
+                                // Navigator.pushNamedAndRemoveUntil(context,LeagueDetails.path,ModalRoute.withName(DashboardPage.path));
+                                Navigator.pushNamed(context, SubmitScoreDetails.path);
+                              },
                             ),
                             centerTitle: true,
                             // title: size.height / 2 <= constraints.scrollOffset ? Text('Participating Players') : SizedBox(),

@@ -21,3 +21,6 @@ const String setDetails = 'Set Details';
 const String addMoreSets = 'Add more sets';
 const String submit = 'Submit';
 const String viewProfile = 'View Profile';
+const String editProfile = 'Edit Profile';
+const String chat = 'Chat';
+const String messages = 'Messages';

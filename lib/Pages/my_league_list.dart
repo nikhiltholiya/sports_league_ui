@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:tenniston/providers/league_id_provider.dart';
+import 'package:tenniston/utils/Constants.dart';
 import 'package:tenniston/utils/shared_preferences_utils.dart';
 
 import '../bean/all_league_Applications/all_leagues_applications.dart';
@@ -13,7 +14,6 @@ import '../components/my_league_list_tile.dart';
 import '../components/my_league_no_data_list_tile.dart';
 import '../Pages/base_activity.dart';
 import '../Pages/league_details.dart';
-import '../utils/Constants.dart' as Constants;
 import '../utils/app_colors.dart';
 import '../utils/app_labels.dart';
 import '../utils/common.dart';
@@ -30,8 +30,6 @@ class MyLeagueList extends StatefulWidget {
 
 class _MyLeagueListState extends State<MyLeagueList> with SharedPrefUtils {
   ScrollController? _scrollController;
-
-  String fetchAllLeagueApplicants = Constants.allLeagueApplications;
 
   late AllLeaguesApps? allLeaguesApps;
   late List<Edges>? applicantsList;
@@ -94,9 +92,7 @@ class _MyLeagueListState extends State<MyLeagueList> with SharedPrefUtils {
             if (streamSnapshot.hasData) {
               return Query(
                 options: QueryOptions(
-                  document: gql(
-                      Constants.allLeagueApplicationsQuery(param, paramType)
-                          .toString()),
+                  document: gql(allLeagueApplicationsQuery(param, paramType)),
                   variables: passVariable,
                   pollInterval: Duration(seconds: 100),
                 ),
@@ -196,10 +192,17 @@ class _MyLeagueListState extends State<MyLeagueList> with SharedPrefUtils {
                                   leagueTitle:
                                       applicantsList![index].node!.league!.name,
                                   onTileClick: () {
-                                    Provider.of<LeagueIdProvider>(context, listen: false).setLeagueId(applicantsList![index].node!.league!.leagueId);
+                                    Provider.of<LeagueIdProvider>(context,
+                                            listen: false)
+                                        .setLeagueId(applicantsList![index]
+                                            .node!
+                                            .league!
+                                            .leagueId);
                                     Navigator.pushNamed(
-                                        context, LeagueDetails.path,
-                                        /*arguments: applicantsList![index].node*/);
+                                      context,
+                                      LeagueDetails
+                                          .path, /*arguments: applicantsList![index].node*/
+                                    );
                                   },
                                   onProfileClick: () {},
                                 ),

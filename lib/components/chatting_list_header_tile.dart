@@ -67,7 +67,7 @@ class _ChattingListHeaderTileState extends State<ChattingListHeaderTile> {
                               backgroundColor: aLightGray,
                               radius: 30,
                               child: CircleAvatar(
-                                backgroundImage: AssetImage(widget.playerImg!),
+                                backgroundImage: AssetImage('assets/Ellipse 1.png'),
                                 //'assets/Ellipse 1.png'
                                 radius: 29,
                               ),
