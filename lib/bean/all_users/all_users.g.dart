@@ -20,7 +20,7 @@ Map<String, dynamic> _$$_AllUsersDataToJson(_$_AllUsersData instance) =>
 
 _$_AllUsers _$$_AllUsersFromJson(Map<String, dynamic> json) => _$_AllUsers(
       edges: (json['edges'] as List<dynamic>?)
-          ?.map((e) => Edges.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => UserEdges.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
@@ -29,17 +29,18 @@ Map<String, dynamic> _$$_AllUsersToJson(_$_AllUsers instance) =>
       'edges': instance.edges,
     };
 
-_$_Edges _$$_EdgesFromJson(Map<String, dynamic> json) => _$_Edges(
+_$_UserEdges _$$_UserEdgesFromJson(Map<String, dynamic> json) => _$_UserEdges(
       node: json['node'] == null
           ? null
-          : Node.fromJson(json['node'] as Map<String, dynamic>),
+          : UserNode.fromJson(json['node'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$$_EdgesToJson(_$_Edges instance) => <String, dynamic>{
+Map<String, dynamic> _$$_UserEdgesToJson(_$_UserEdges instance) =>
+    <String, dynamic>{
       'node': instance.node,
     };
 
-_$_Node _$$_NodeFromJson(Map<String, dynamic> json) => _$_Node(
+_$_UserNode _$$_UserNodeFromJson(Map<String, dynamic> json) => _$_UserNode(
       city: json['city'] as String?,
       active: json['active'] as bool?,
       country: json['country'] as String?,
@@ -65,7 +66,8 @@ _$_Node _$$_NodeFromJson(Map<String, dynamic> json) => _$_Node(
       aboutMe: json['aboutMe'] as String?,
     );
 
-Map<String, dynamic> _$$_NodeToJson(_$_Node instance) => <String, dynamic>{
+Map<String, dynamic> _$$_UserNodeToJson(_$_UserNode instance) =>
+    <String, dynamic>{
       'city': instance.city,
       'active': instance.active,
       'country': instance.country,

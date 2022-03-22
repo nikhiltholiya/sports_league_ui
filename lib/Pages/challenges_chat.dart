@@ -3,24 +3,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:tenniston/Pages/other_player_profile_page.dart';
-import 'package:tenniston/Pages/submit_score_details.dart';
-import 'package:tenniston/bean/all_users/all_users.dart';
-import 'package:tenniston/bean/league_stat/league_stat.dart';
-import 'package:tenniston/bean/user_profiles/user_profiles.dart';
-import 'package:tenniston/providers/user_id_provider.dart';
-import 'package:tenniston/utils/Constants.dart';
-import 'package:tenniston/utils/shared_preferences_utils.dart';
+import '../components/bordered_circle_avatar.dart';
 
-import '../Pages/profile_page.dart';
-import '../Pages/submit_score_list.dart';
 import '../Pages/base_activity.dart';
+import '../Pages/profile_page.dart';
+import '../Pages/submit_score_details.dart';
+import '../bean/all_users/all_users.dart';
 import '../bean/chat_dto.dart';
-import '../components/chatting_list_tile.dart';
 import '../components/chatting_list_header_tile.dart';
+import '../components/chatting_list_tile.dart';
 import '../components/edit_text_form_field.dart';
 import '../components/rate_badges.dart';
+import '../providers/user_id_provider.dart';
+import '../utils/Constants.dart';
 import '../utils/app_colors.dart';
+import '../utils/shared_preferences_utils.dart';
 
 //Created on 20220223
 //20220321
@@ -276,15 +273,7 @@ class _ChallengesChatState extends State<ChallengesChat> with SharedPrefUtils{
                                         ),
                                         Padding(
                                           padding: const EdgeInsets.all(5.0),
-                                          child: CircleAvatar(
-                                            backgroundColor: aLightGray,
-                                            radius: 20,
-                                            child: CircleAvatar(
-                                              backgroundImage: NetworkImage('${_allUsersData.allUsers?.edges?.first.node?.picture}'),
-                                              //'assets/Ellipse 1.png'
-                                              radius: 19,
-                                            ),
-                                          ),
+                                            child: BorderedCircleAvatar(radius: 20, path: 'assets/Ellipse 5.png'),
                                         ),
                                         Expanded(
                                           flex: 1,

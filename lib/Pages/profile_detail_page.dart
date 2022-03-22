@@ -3,23 +3,23 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:tenniston/Pages/challenges_chat.dart';
-import 'package:tenniston/Pages/league_details.dart';
-import 'package:tenniston/Pages/profile_page.dart';
-import 'package:tenniston/Pages/submit_score_details.dart';
-import 'package:tenniston/bean/user_profiles/user_profiles.dart';
-import 'package:tenniston/providers/user_id_provider.dart';
-import 'package:tenniston/utils/app_labels.dart';
-import 'package:tenniston/utils/shared_preferences_utils.dart';
 
+import '../Pages/challenges_chat.dart';
 import '../Pages/head_to_head_page.dart';
+import '../Pages/league_details.dart';
+import '../Pages/profile_page.dart';
 import '../Pages/recent_matches_pages.dart';
+import '../Pages/submit_score_details.dart';
+import '../bean/user_profiles/user_profiles.dart';
 import '../components/head_to_head_details_list_tile.dart';
 import '../components/head_to_head_list_tile.dart';
 import '../components/profile_header_tile.dart';
 import '../components/stats_tile.dart';
+import '../providers/user_id_provider.dart';
 import '../utils/Constants.dart' as Constants;
 import '../utils/app_colors.dart';
+import '../utils/app_labels.dart';
+import '../utils/shared_preferences_utils.dart';
 
 //Updated on 20220308
 class ProfileDetailPage extends StatefulWidget {

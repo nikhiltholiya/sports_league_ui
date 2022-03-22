@@ -14,7 +14,7 @@ class AllUsersData with _$AllUsersData {
 
 @Freezed()
 class AllUsers with _$AllUsers {
-  const factory AllUsers({required List<Edges>? edges}) = _AllUsers;
+  const factory AllUsers({required List<UserEdges>? edges}) = _AllUsers;
 
   factory AllUsers.fromJson(Map<String, dynamic> userMap) =>
       _$AllUsersFromJson(userMap);
@@ -23,18 +23,18 @@ class AllUsers with _$AllUsers {
 }
 
 @Freezed()
-class Edges with _$Edges {
-  const factory Edges({
-    required Node? node,
-  }) = _Edges;
+class UserEdges with _$UserEdges {
+  const factory UserEdges({
+    required UserNode? node,
+  }) = _UserEdges;
 
-  factory Edges.fromJson(Map<String, dynamic> edgesMap) =>
-      _$EdgesFromJson(edgesMap);
+  factory UserEdges.fromJson(Map<String, dynamic> UserEdgesMap) =>
+      _$UserEdgesFromJson(UserEdgesMap);
 }
 
 @Freezed()
-class Node with _$Node {
-  const factory Node({
+class UserNode with _$UserNode {
+  const factory UserNode({
     required String? city,
     required bool? active,
     required String? country,
@@ -58,9 +58,9 @@ class Node with _$Node {
     required String? state,
     required String? userId,
     required String? aboutMe,
-  }) = _Node;
+  }) = _UserNode;
 
-  factory Node.fromJson(Map<String, dynamic> nodeMap) =>
-      _$NodeFromJson(nodeMap);
+  factory UserNode.fromJson(Map<String, dynamic> UserNodeMap) =>
+      _$UserNodeFromJson(UserNodeMap);
 
 }

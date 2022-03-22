@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tenniston/providers/user_id_provider.dart';
-import 'package:tenniston/utils/shared_preferences_utils.dart';
+
 import '../Pages/base_activity.dart';
 import '../Pages/profile_detail_page.dart';
+import '../providers/user_id_provider.dart';
+import '../utils/shared_preferences_utils.dart';
 
 
 //Updated on 20220307

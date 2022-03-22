@@ -185,7 +185,7 @@ AllUsers _$AllUsersFromJson(Map<String, dynamic> json) {
 class _$AllUsersTearOff {
   const _$AllUsersTearOff();
 
-  _AllUsers call({required List<Edges>? edges}) {
+  _AllUsers call({required List<UserEdges>? edges}) {
     return _AllUsers(
       edges: edges,
     );
@@ -201,7 +201,7 @@ const $AllUsers = _$AllUsersTearOff();
 
 /// @nodoc
 mixin _$AllUsers {
-  List<Edges>? get edges => throw _privateConstructorUsedError;
+  List<UserEdges>? get edges => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -213,7 +213,7 @@ mixin _$AllUsers {
 abstract class $AllUsersCopyWith<$Res> {
   factory $AllUsersCopyWith(AllUsers value, $Res Function(AllUsers) then) =
       _$AllUsersCopyWithImpl<$Res>;
-  $Res call({List<Edges>? edges});
+  $Res call({List<UserEdges>? edges});
 }
 
 /// @nodoc
@@ -232,7 +232,7 @@ class _$AllUsersCopyWithImpl<$Res> implements $AllUsersCopyWith<$Res> {
       edges: edges == freezed
           ? _value.edges
           : edges // ignore: cast_nullable_to_non_nullable
-              as List<Edges>?,
+              as List<UserEdges>?,
     ));
   }
 }
@@ -242,7 +242,7 @@ abstract class _$AllUsersCopyWith<$Res> implements $AllUsersCopyWith<$Res> {
   factory _$AllUsersCopyWith(_AllUsers value, $Res Function(_AllUsers) then) =
       __$AllUsersCopyWithImpl<$Res>;
   @override
-  $Res call({List<Edges>? edges});
+  $Res call({List<UserEdges>? edges});
 }
 
 /// @nodoc
@@ -262,7 +262,7 @@ class __$AllUsersCopyWithImpl<$Res> extends _$AllUsersCopyWithImpl<$Res>
       edges: edges == freezed
           ? _value.edges
           : edges // ignore: cast_nullable_to_non_nullable
-              as List<Edges>?,
+              as List<UserEdges>?,
     ));
   }
 }
@@ -276,7 +276,7 @@ class _$_AllUsers implements _AllUsers {
       _$$_AllUsersFromJson(json);
 
   @override
-  final List<Edges>? edges;
+  final List<UserEdges>? edges;
 
   @override
   String toString() {
@@ -307,65 +307,66 @@ class _$_AllUsers implements _AllUsers {
 }
 
 abstract class _AllUsers implements AllUsers {
-  const factory _AllUsers({required List<Edges>? edges}) = _$_AllUsers;
+  const factory _AllUsers({required List<UserEdges>? edges}) = _$_AllUsers;
 
   factory _AllUsers.fromJson(Map<String, dynamic> json) = _$_AllUsers.fromJson;
 
   @override
-  List<Edges>? get edges;
+  List<UserEdges>? get edges;
   @override
   @JsonKey(ignore: true)
   _$AllUsersCopyWith<_AllUsers> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
-Edges _$EdgesFromJson(Map<String, dynamic> json) {
-  return _Edges.fromJson(json);
+UserEdges _$UserEdgesFromJson(Map<String, dynamic> json) {
+  return _UserEdges.fromJson(json);
 }
 
 /// @nodoc
-class _$EdgesTearOff {
-  const _$EdgesTearOff();
+class _$UserEdgesTearOff {
+  const _$UserEdgesTearOff();
 
-  _Edges call({required Node? node}) {
-    return _Edges(
+  _UserEdges call({required UserNode? node}) {
+    return _UserEdges(
       node: node,
     );
   }
 
-  Edges fromJson(Map<String, Object?> json) {
-    return Edges.fromJson(json);
+  UserEdges fromJson(Map<String, Object?> json) {
+    return UserEdges.fromJson(json);
   }
 }
 
 /// @nodoc
-const $Edges = _$EdgesTearOff();
+const $UserEdges = _$UserEdgesTearOff();
 
 /// @nodoc
-mixin _$Edges {
-  Node? get node => throw _privateConstructorUsedError;
+mixin _$UserEdges {
+  UserNode? get node => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $EdgesCopyWith<Edges> get copyWith => throw _privateConstructorUsedError;
+  $UserEdgesCopyWith<UserEdges> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $EdgesCopyWith<$Res> {
-  factory $EdgesCopyWith(Edges value, $Res Function(Edges) then) =
-      _$EdgesCopyWithImpl<$Res>;
-  $Res call({Node? node});
+abstract class $UserEdgesCopyWith<$Res> {
+  factory $UserEdgesCopyWith(UserEdges value, $Res Function(UserEdges) then) =
+      _$UserEdgesCopyWithImpl<$Res>;
+  $Res call({UserNode? node});
 
-  $NodeCopyWith<$Res>? get node;
+  $UserNodeCopyWith<$Res>? get node;
 }
 
 /// @nodoc
-class _$EdgesCopyWithImpl<$Res> implements $EdgesCopyWith<$Res> {
-  _$EdgesCopyWithImpl(this._value, this._then);
+class _$UserEdgesCopyWithImpl<$Res> implements $UserEdgesCopyWith<$Res> {
+  _$UserEdgesCopyWithImpl(this._value, this._then);
 
-  final Edges _value;
+  final UserEdges _value;
   // ignore: unused_field
-  final $Res Function(Edges) _then;
+  final $Res Function(UserEdges) _then;
 
   @override
   $Res call({
@@ -375,76 +376,77 @@ class _$EdgesCopyWithImpl<$Res> implements $EdgesCopyWith<$Res> {
       node: node == freezed
           ? _value.node
           : node // ignore: cast_nullable_to_non_nullable
-              as Node?,
+              as UserNode?,
     ));
   }
 
   @override
-  $NodeCopyWith<$Res>? get node {
+  $UserNodeCopyWith<$Res>? get node {
     if (_value.node == null) {
       return null;
     }
 
-    return $NodeCopyWith<$Res>(_value.node!, (value) {
+    return $UserNodeCopyWith<$Res>(_value.node!, (value) {
       return _then(_value.copyWith(node: value));
     });
   }
 }
 
 /// @nodoc
-abstract class _$EdgesCopyWith<$Res> implements $EdgesCopyWith<$Res> {
-  factory _$EdgesCopyWith(_Edges value, $Res Function(_Edges) then) =
-      __$EdgesCopyWithImpl<$Res>;
+abstract class _$UserEdgesCopyWith<$Res> implements $UserEdgesCopyWith<$Res> {
+  factory _$UserEdgesCopyWith(
+          _UserEdges value, $Res Function(_UserEdges) then) =
+      __$UserEdgesCopyWithImpl<$Res>;
   @override
-  $Res call({Node? node});
+  $Res call({UserNode? node});
 
   @override
-  $NodeCopyWith<$Res>? get node;
+  $UserNodeCopyWith<$Res>? get node;
 }
 
 /// @nodoc
-class __$EdgesCopyWithImpl<$Res> extends _$EdgesCopyWithImpl<$Res>
-    implements _$EdgesCopyWith<$Res> {
-  __$EdgesCopyWithImpl(_Edges _value, $Res Function(_Edges) _then)
-      : super(_value, (v) => _then(v as _Edges));
+class __$UserEdgesCopyWithImpl<$Res> extends _$UserEdgesCopyWithImpl<$Res>
+    implements _$UserEdgesCopyWith<$Res> {
+  __$UserEdgesCopyWithImpl(_UserEdges _value, $Res Function(_UserEdges) _then)
+      : super(_value, (v) => _then(v as _UserEdges));
 
   @override
-  _Edges get _value => super._value as _Edges;
+  _UserEdges get _value => super._value as _UserEdges;
 
   @override
   $Res call({
     Object? node = freezed,
   }) {
-    return _then(_Edges(
+    return _then(_UserEdges(
       node: node == freezed
           ? _value.node
           : node // ignore: cast_nullable_to_non_nullable
-              as Node?,
+              as UserNode?,
     ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$_Edges implements _Edges {
-  const _$_Edges({required this.node});
+class _$_UserEdges implements _UserEdges {
+  const _$_UserEdges({required this.node});
 
-  factory _$_Edges.fromJson(Map<String, dynamic> json) =>
-      _$$_EdgesFromJson(json);
+  factory _$_UserEdges.fromJson(Map<String, dynamic> json) =>
+      _$$_UserEdgesFromJson(json);
 
   @override
-  final Node? node;
+  final UserNode? node;
 
   @override
   String toString() {
-    return 'Edges(node: $node)';
+    return 'UserEdges(node: $node)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _Edges &&
+            other is _UserEdges &&
             const DeepCollectionEquality().equals(other.node, node));
   }
 
@@ -454,36 +456,38 @@ class _$_Edges implements _Edges {
 
   @JsonKey(ignore: true)
   @override
-  _$EdgesCopyWith<_Edges> get copyWith =>
-      __$EdgesCopyWithImpl<_Edges>(this, _$identity);
+  _$UserEdgesCopyWith<_UserEdges> get copyWith =>
+      __$UserEdgesCopyWithImpl<_UserEdges>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_EdgesToJson(this);
+    return _$$_UserEdgesToJson(this);
   }
 }
 
-abstract class _Edges implements Edges {
-  const factory _Edges({required Node? node}) = _$_Edges;
+abstract class _UserEdges implements UserEdges {
+  const factory _UserEdges({required UserNode? node}) = _$_UserEdges;
 
-  factory _Edges.fromJson(Map<String, dynamic> json) = _$_Edges.fromJson;
+  factory _UserEdges.fromJson(Map<String, dynamic> json) =
+      _$_UserEdges.fromJson;
 
   @override
-  Node? get node;
+  UserNode? get node;
   @override
   @JsonKey(ignore: true)
-  _$EdgesCopyWith<_Edges> get copyWith => throw _privateConstructorUsedError;
+  _$UserEdgesCopyWith<_UserEdges> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
-Node _$NodeFromJson(Map<String, dynamic> json) {
-  return _Node.fromJson(json);
+UserNode _$UserNodeFromJson(Map<String, dynamic> json) {
+  return _UserNode.fromJson(json);
 }
 
 /// @nodoc
-class _$NodeTearOff {
-  const _$NodeTearOff();
+class _$UserNodeTearOff {
+  const _$UserNodeTearOff();
 
-  _Node call(
+  _UserNode call(
       {required String? city,
       required bool? active,
       required String? country,
@@ -507,7 +511,7 @@ class _$NodeTearOff {
       required String? state,
       required String? userId,
       required String? aboutMe}) {
-    return _Node(
+    return _UserNode(
       city: city,
       active: active,
       country: country,
@@ -534,16 +538,16 @@ class _$NodeTearOff {
     );
   }
 
-  Node fromJson(Map<String, Object?> json) {
-    return Node.fromJson(json);
+  UserNode fromJson(Map<String, Object?> json) {
+    return UserNode.fromJson(json);
   }
 }
 
 /// @nodoc
-const $Node = _$NodeTearOff();
+const $UserNode = _$UserNodeTearOff();
 
 /// @nodoc
-mixin _$Node {
+mixin _$UserNode {
   String? get city => throw _privateConstructorUsedError;
   bool? get active => throw _privateConstructorUsedError;
   String? get country => throw _privateConstructorUsedError;
@@ -570,13 +574,14 @@ mixin _$Node {
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $NodeCopyWith<Node> get copyWith => throw _privateConstructorUsedError;
+  $UserNodeCopyWith<UserNode> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $NodeCopyWith<$Res> {
-  factory $NodeCopyWith(Node value, $Res Function(Node) then) =
-      _$NodeCopyWithImpl<$Res>;
+abstract class $UserNodeCopyWith<$Res> {
+  factory $UserNodeCopyWith(UserNode value, $Res Function(UserNode) then) =
+      _$UserNodeCopyWithImpl<$Res>;
   $Res call(
       {String? city,
       bool? active,
@@ -604,12 +609,12 @@ abstract class $NodeCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$NodeCopyWithImpl<$Res> implements $NodeCopyWith<$Res> {
-  _$NodeCopyWithImpl(this._value, this._then);
+class _$UserNodeCopyWithImpl<$Res> implements $UserNodeCopyWith<$Res> {
+  _$UserNodeCopyWithImpl(this._value, this._then);
 
-  final Node _value;
+  final UserNode _value;
   // ignore: unused_field
-  final $Res Function(Node) _then;
+  final $Res Function(UserNode) _then;
 
   @override
   $Res call({
@@ -735,9 +740,9 @@ class _$NodeCopyWithImpl<$Res> implements $NodeCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$NodeCopyWith<$Res> implements $NodeCopyWith<$Res> {
-  factory _$NodeCopyWith(_Node value, $Res Function(_Node) then) =
-      __$NodeCopyWithImpl<$Res>;
+abstract class _$UserNodeCopyWith<$Res> implements $UserNodeCopyWith<$Res> {
+  factory _$UserNodeCopyWith(_UserNode value, $Res Function(_UserNode) then) =
+      __$UserNodeCopyWithImpl<$Res>;
   @override
   $Res call(
       {String? city,
@@ -766,13 +771,13 @@ abstract class _$NodeCopyWith<$Res> implements $NodeCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$NodeCopyWithImpl<$Res> extends _$NodeCopyWithImpl<$Res>
-    implements _$NodeCopyWith<$Res> {
-  __$NodeCopyWithImpl(_Node _value, $Res Function(_Node) _then)
-      : super(_value, (v) => _then(v as _Node));
+class __$UserNodeCopyWithImpl<$Res> extends _$UserNodeCopyWithImpl<$Res>
+    implements _$UserNodeCopyWith<$Res> {
+  __$UserNodeCopyWithImpl(_UserNode _value, $Res Function(_UserNode) _then)
+      : super(_value, (v) => _then(v as _UserNode));
 
   @override
-  _Node get _value => super._value as _Node;
+  _UserNode get _value => super._value as _UserNode;
 
   @override
   $Res call({
@@ -800,7 +805,7 @@ class __$NodeCopyWithImpl<$Res> extends _$NodeCopyWithImpl<$Res>
     Object? userId = freezed,
     Object? aboutMe = freezed,
   }) {
-    return _then(_Node(
+    return _then(_UserNode(
       city: city == freezed
           ? _value.city
           : city // ignore: cast_nullable_to_non_nullable
@@ -899,8 +904,8 @@ class __$NodeCopyWithImpl<$Res> extends _$NodeCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_Node implements _Node {
-  const _$_Node(
+class _$_UserNode implements _UserNode {
+  const _$_UserNode(
       {required this.city,
       required this.active,
       required this.country,
@@ -925,7 +930,8 @@ class _$_Node implements _Node {
       required this.userId,
       required this.aboutMe});
 
-  factory _$_Node.fromJson(Map<String, dynamic> json) => _$$_NodeFromJson(json);
+  factory _$_UserNode.fromJson(Map<String, dynamic> json) =>
+      _$$_UserNodeFromJson(json);
 
   @override
   final String? city;
@@ -976,14 +982,14 @@ class _$_Node implements _Node {
 
   @override
   String toString() {
-    return 'Node(city: $city, active: $active, country: $country, dateJoined: $dateJoined, dob: $dob, email: $email, firstName: $firstName, gender: $gender, height: $height, id: $id, age: $age, isActive: $isActive, isStaff: $isStaff, isSuperuser: $isSuperuser, lastLogin: $lastLogin, lastName: $lastName, level: $level, phone: $phone, picture: $picture, rating: $rating, state: $state, userId: $userId, aboutMe: $aboutMe)';
+    return 'UserNode(city: $city, active: $active, country: $country, dateJoined: $dateJoined, dob: $dob, email: $email, firstName: $firstName, gender: $gender, height: $height, id: $id, age: $age, isActive: $isActive, isStaff: $isStaff, isSuperuser: $isSuperuser, lastLogin: $lastLogin, lastName: $lastName, level: $level, phone: $phone, picture: $picture, rating: $rating, state: $state, userId: $userId, aboutMe: $aboutMe)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _Node &&
+            other is _UserNode &&
             const DeepCollectionEquality().equals(other.city, city) &&
             const DeepCollectionEquality().equals(other.active, active) &&
             const DeepCollectionEquality().equals(other.country, country) &&
@@ -1041,17 +1047,17 @@ class _$_Node implements _Node {
 
   @JsonKey(ignore: true)
   @override
-  _$NodeCopyWith<_Node> get copyWith =>
-      __$NodeCopyWithImpl<_Node>(this, _$identity);
+  _$UserNodeCopyWith<_UserNode> get copyWith =>
+      __$UserNodeCopyWithImpl<_UserNode>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_NodeToJson(this);
+    return _$$_UserNodeToJson(this);
   }
 }
 
-abstract class _Node implements Node {
-  const factory _Node(
+abstract class _UserNode implements UserNode {
+  const factory _UserNode(
       {required String? city,
       required bool? active,
       required String? country,
@@ -1074,9 +1080,9 @@ abstract class _Node implements Node {
       required double? rating,
       required String? state,
       required String? userId,
-      required String? aboutMe}) = _$_Node;
+      required String? aboutMe}) = _$_UserNode;
 
-  factory _Node.fromJson(Map<String, dynamic> json) = _$_Node.fromJson;
+  factory _UserNode.fromJson(Map<String, dynamic> json) = _$_UserNode.fromJson;
 
   @override
   String? get city;
@@ -1126,5 +1132,6 @@ abstract class _Node implements Node {
   String? get aboutMe;
   @override
   @JsonKey(ignore: true)
-  _$NodeCopyWith<_Node> get copyWith => throw _privateConstructorUsedError;
+  _$UserNodeCopyWith<_UserNode> get copyWith =>
+      throw _privateConstructorUsedError;
 }

@@ -4,19 +4,19 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:tenniston/providers/league_id_provider.dart';
-import 'package:tenniston/utils/Constants.dart';
-import 'package:tenniston/utils/shared_preferences_utils.dart';
 
+import '../Pages/base_activity.dart';
+import '../Pages/league_details.dart';
 import '../bean/all_league_Applications/all_leagues_applications.dart';
 import '../components/drop_down_view.dart';
 import '../components/my_league_list_tile.dart';
 import '../components/my_league_no_data_list_tile.dart';
-import '../Pages/base_activity.dart';
-import '../Pages/league_details.dart';
+import '../providers/league_id_provider.dart';
+import '../utils/Constants.dart';
 import '../utils/app_colors.dart';
 import '../utils/app_labels.dart';
 import '../utils/common.dart';
+import '../utils/shared_preferences_utils.dart';
 
 //Created on 20220312
 class MyLeagueList extends StatefulWidget {

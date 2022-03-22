@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../components/bordered_circle_avatar.dart';
 import '../components/decorated_app_header_tile.dart';
 import '../components/elevated_buttons.dart';
 import '../components/iconic_text_view.dart';
@@ -69,13 +70,9 @@ class _ProfileHeaderTileState extends State<ProfileHeaderTile> {
                     children: [
                       Padding(
                         padding: const EdgeInsets.all(5.0),
-                        child: CircleAvatar(
+                        child: BorderedCircleAvatar(
                           key: widget.profileImgKey,
-                          child: CircleAvatar(
-                            backgroundImage: AssetImage(widget.playerImg!),
-                            radius: 40,
-                          ),
-                          backgroundColor: aLightGray,
+                          path: widget.playerImg!,
                           radius: 41,
                         ),
                       ),

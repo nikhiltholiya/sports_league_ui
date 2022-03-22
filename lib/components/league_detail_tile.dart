@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../components/bordered_circle_avatar.dart';
 import '../utils/app_colors.dart';
 
 //Created on 20220222
@@ -103,13 +104,9 @@ class _LeagueDetailTileState extends State<LeagueDetailTile> {
                   Expanded(
                     child: GestureDetector(
                       onTap: () => widget.onProfileClick!(),
-                      child: CircleAvatar(
-                        backgroundColor: aLightGray,
+                      child: BorderedCircleAvatar(
                         radius: 30,
-                        child: CircleAvatar(
-                          backgroundImage: AssetImage(widget.profileImg!),
-                          radius: 29,
-                        ),
+                        path: widget.profileImg!,
                       ),
                     ),
                     flex: 1,

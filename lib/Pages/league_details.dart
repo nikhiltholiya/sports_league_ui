@@ -2,8 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:tenniston/providers/league_id_provider.dart';
-import 'package:tenniston/providers/user_id_provider.dart';
 
 import '../Pages/base_activity.dart';
 import '../Pages/challenges_chat.dart';
@@ -13,6 +11,8 @@ import '../components/elevated_buttons.dart';
 import '../components/league_detail_tile.dart';
 import '../components/league_details_header_tile.dart';
 import '../components/league_details_winner_tile.dart';
+import '../providers/league_id_provider.dart';
+import '../providers/user_id_provider.dart';
 import '../utils/Constants.dart' as Constants;
 import '../utils/app_colors.dart';
 import '../utils/app_labels.dart';

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../components/bordered_circle_avatar.dart';
 import '../components/decorated_app_header_tile.dart';
 import '../utils/app_labels.dart';
 import '../components/elevated_buttons.dart';
@@ -63,15 +64,7 @@ class _ChattingListHeaderTileState extends State<ChattingListHeaderTile> {
                         children: [
                           Padding(
                             padding: const EdgeInsets.all(5.0),
-                            child: CircleAvatar(
-                              backgroundColor: aLightGray,
-                              radius: 30,
-                              child: CircleAvatar(
-                                backgroundImage: AssetImage('assets/Ellipse 1.png'),
-                                //'assets/Ellipse 1.png'
-                                radius: 29,
-                              ),
-                            ),
+                            child: BorderedCircleAvatar(radius: 30, path: 'assets/Ellipse 1.png'),
                           ),
                           Text(
                             widget.playerName!,

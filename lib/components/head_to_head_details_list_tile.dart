@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../components/bordered_circle_avatar.dart';
 
 import '../utils/app_colors.dart';
 
@@ -158,58 +159,55 @@ class _UserStatsState extends State<UserStats> {
           ),
           Expanded(
             flex: 1,
-            child:
-          Padding(
-            padding: const EdgeInsets.all(5.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Expanded(
-                  child: GestureDetector(
-                    onTap: () => widget.onProfileClick!(widget.userName!),
-                    child: CircleAvatar(
-                      backgroundColor: aLightGray,
-                      radius: 25,
-                      // backgroundImage: NetworkImage('https://www.baps.org/Data/Sites/1/Media/dailysatsang/2022/03-03-clifton-nj.jpg'),
-                      child: CircleAvatar(
-                        backgroundImage: AssetImage(widget.profileImg!),
-                        radius: 24,
+            child: Padding(
+              padding: const EdgeInsets.all(5.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () => widget.onProfileClick!(widget.userName!),
+                      child: BorderedCircleAvatar(
+                        radius: 25,
+                        path: widget.profileImg!,
                       ),
                     ),
+                    flex: 1,
                   ),
-                  flex: 1,
-                ),
-                Expanded(
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 10.0),
-                    child: Text(
-                      widget.userName!,
-                      textAlign: TextAlign.start,
-                      style: TextStyle(
-                        color: aBlack,
-                        fontSize: 15,
-                        fontWeight: widget.isActive!
-                            ? (FontWeight.bold)
-                            : (FontWeight.normal),
+                  Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 10.0),
+                      child: Text(
+                        widget.userName!,
+                        textAlign: TextAlign.start,
+                        style: TextStyle(
+                          color: aBlack,
+                          fontSize: 15,
+                          fontWeight: widget.isActive!
+                              ? (FontWeight.bold)
+                              : (FontWeight.normal),
+                        ),
                       ),
                     ),
+                    flex: 4,
                   ),
-                  flex: 4,
-                ),
-                for (var data in widget.matchScore!)
-                  Padding(
-                    padding: const EdgeInsets.all(5.0),
-                    child: Text(
-                      '$data',
-                      maxLines: 1,
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: widget.isActive!? FontWeight.bold : FontWeight.normal),
-                    ),
-                  )
-              ],
+                  for (var data in widget.matchScore!)
+                    Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: Text(
+                        '$data',
+                        maxLines: 1,
+                        style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: widget.isActive!
+                                ? FontWeight.bold
+                                : FontWeight.normal),
+                      ),
+                    )
+                ],
+              ),
             ),
-          ),
           ),
         ]);
   }

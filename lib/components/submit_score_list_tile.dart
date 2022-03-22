@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../components/bordered_circle_avatar.dart';
 import '../components/iconic_text_view.dart';
 import '../components/rate_badges.dart';
 import '../utils/app_colors.dart';
@@ -60,14 +61,9 @@ class _SubmitScoreListTileState extends State<SubmitScoreListTile> {
                       children: [
                         GestureDetector(
                           onTap: () => widget.onProfileClick!(),
-                          child: CircleAvatar(
-                            backgroundColor: aLightGray,
+                          child: BorderedCircleAvatar(
+                            path: widget.profileImg!,
                             radius: 20,
-                            // backgroundImage: NetworkImage('https://www.baps.org/Data/Sites/1/Media/dailysatsang/2022/03-03-clifton-nj.jpg'),
-                            child: CircleAvatar(
-                              backgroundImage: AssetImage(widget.profileImg!),
-                              radius: 19,
-                            ),
                           ),
                         ),
                         Expanded(

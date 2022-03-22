@@ -5,19 +5,20 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:tenniston/bean/all_users/all_users.dart';
-import 'package:tenniston/providers/user_id_provider.dart';
-import 'package:tenniston/utils/Constants.dart';
+import '../components/bordered_circle_avatar.dart';
 
-import '../utils/shared_preferences_utils.dart';
-import '../Pages/my_league_list.dart';
-import '../Pages/submit_score_list.dart';
 import '../Pages/base_activity.dart';
+import '../Pages/my_league_list.dart';
 import '../Pages/profile_page.dart';
+import '../Pages/submit_score_list.dart';
+import '../bean/all_users/all_users.dart';
 import '../components/dashboard_menu_item.dart';
 import '../components/decorated_app_header_tile.dart';
+import '../providers/user_id_provider.dart';
+import '../utils/Constants.dart';
 import '../utils/app_colors.dart';
 import '../utils/app_labels.dart';
+import '../utils/shared_preferences_utils.dart';
 
 //Changes on 20220225
 class DashboardPage extends StatefulWidget {
@@ -198,11 +199,7 @@ class dashboardHeader extends StatelessWidget {
         Positioned(
           top: 50,
           right: 20,
-          child: CircleAvatar(
-              radius: 40, child: Image.asset('assets/Ellipse 5.png')
-              // backgroundImage: NetworkImage(
-              //     'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'),
-              ),
+          child: BorderedCircleAvatar(radius: 40, path: 'assets/Ellipse 5.png'),
         )
       ],
     );

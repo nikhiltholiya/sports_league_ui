@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+
 import '../Pages/base_activity.dart';
 import '../components/elevated_buttons.dart';
 import '../components/head_to_head_details_list_tile.dart';

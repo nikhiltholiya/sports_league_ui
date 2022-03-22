@@ -5,27 +5,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:tenniston/bean/all_users/all_users.dart';
-import 'package:tenniston/providers/user_id_provider.dart';
-import 'package:tenniston/utils/Constants.dart';
-import 'package:tenniston/utils/shared_preferences_utils.dart';
-import '../components/date_picker.dart';
-import '../components/edit_text_form_field.dart';
-import '../utils/common.dart';
 
 import '../Pages/base_activity.dart';
+import '../bean/all_users/all_users.dart';
 import '../components/app_chips.dart';
-import '../components/drop_down_view.dart';
+import '../components/edit_text_form_field.dart';
 import '../components/elevated_buttons.dart';
 import '../components/set_details_list_tile.dart';
 import '../components/submit_score_details_header_tile.dart';
+import '../providers/user_id_provider.dart';
+import '../utils/Constants.dart';
 import '../utils/app_colors.dart';
 import '../utils/app_labels.dart';
+import '../utils/common.dart';
+import '../utils/shared_preferences_utils.dart';
 
 //Created on 20220315
 class SubmitScoreDetails extends StatefulWidget {
   static const String path = 'submitScoreDetails';
 
+  // {court: "Gabriel Park", endDate: "2022-03-20", format: "single", startDate: "2022-03-20", league: "6b32b9ee-4fc4-4bea-a996-f383071e4fa6", matchStatus: "completed", playerOneId: "1211d15f-5147-4394-812e-47c801d567c5", playerTwoId: "0510839e-5f3e-427e-8344-0dff6bf5aabd", set1: {playerOneScore: 6, playerOneTbScore: 0, playerTwoScore: 6, playerTwoTbScore: 7}, winnerOne: "0510839e-5f3e-427e-8344-0dff6bf5aabd"}
   const SubmitScoreDetails({Key? key}) : super(key: key);
 
   @override
@@ -57,6 +56,8 @@ class _SubmitScoreDetailsState extends State<SubmitScoreDetails>
 
   List<String?> matchStatus = ['Completed', 'Retire', 'Tie'];
   List<bool?> selectedMatchStatus = [];
+
+  late List<Map<String, dynamic>>? passingParam = [];
 
   late Future<AllUsersData> _userData;
   late AllUsersData player1;
@@ -115,6 +116,13 @@ class _SubmitScoreDetailsState extends State<SubmitScoreDetails>
       tie1.add('0');
       tie2.add('0');
     }
+
+
+    // {court: "Gabriel Park", endDate: "2022-03-20", format: "single", startDate: "2022-03-20",
+    // league: "6b32b9ee-4fc4-4bea-a996-f383071e4fa6", matchStatus: "completed",
+    // playerOneId: "1211d15f-5147-4394-812e-47c801d567c5", playerTwoId: "0510839e-5f3e-427e-8344-0dff6bf5aabd",
+    // set1: {playerOneScore: 6, playerOneTbScore: 0, playerTwoScore: 6, playerTwoTbScore: 7},
+    // winnerOne: "0510839e-5f3e-427e-8344-0dff6bf5aabd"}
 
     super.initState();
   }
@@ -274,6 +282,7 @@ class _SubmitScoreDetailsState extends State<SubmitScoreDetails>
                                     ),
                                   ),
                                   chips(players, selectedPlayer),
+
                                   Padding(
                                     padding: const EdgeInsets.only(
                                         top: 20, bottom: 5),
@@ -538,8 +547,29 @@ class _SubmitScoreDetailsState extends State<SubmitScoreDetails>
                                   fontSize: 16,
                                   primary: true,
                                   onClick: () {
+                                    passingParam = [];
+                                    passingParam!.add({'court' : 'Gabriel Park'});
+                                    passingParam!.add({'endDate' : '2022-03-20'});
+                                    passingParam!.add({'format' : 'single'});
+                                    passingParam!.add({'startDate' : '2022-03-20'});
+                                    passingParam!.add({'league' : '6b32b9ee-4fc4-4bea-a996-f383071e4fa6'});
+                                    passingParam!.add({'matchStatus' : 'completed'});
+                                    passingParam!.add({'playerOneId' : '1211d15f-5147-4394-812e-47c801d567c5'});
+                                    passingParam!.add({'playerTwoId' : '0510839e-5f3e-427e-8344-0dff6bf5aabd'});
+                                    // passingParam!.add({'set1' : {'playerOneScore': 6,'playerOneTbScore' : 0, 'playerTwoScore': 6, 'playerTwoTbScore' : 7}});
+                                    // passingParam!.add({'winnerOne' : '0510839e-5f3e-427e-8344-0dff6bf5aabd'});
+
+
+                                    for(int i = 0; i<player1Sets.length;i ++){
+                                      passingParam!.add({'set${i+1}' : {'playerOneScore': player1Sets[i],'playerOneTbScore' : tie1[i], 'playerTwoScore': player2Sets[i], 'playerTwoTbScore' : tie2[i]}});
+                                    }
+
+                                    passingParam!.add({'winnerOne' : '${players[selectedPlayer.indexOf(true)]}'});
+
                                     print(
                                         'player1Sets $player1Sets ** player2Sets $player2Sets ** tie1 $tie1 ** tie2 $tie2');
+
+                                    print(jsonEncode(passingParam));
                                   },
                                   label: submit,
                                   width: double.infinity,

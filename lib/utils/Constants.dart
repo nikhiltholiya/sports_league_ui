@@ -175,3 +175,68 @@ query(${param.toString().replaceAll('{', ' ').replaceAll('}', ' ')}) {
 }
 ''';
 }
+
+
+String allMessaging(Map<String, dynamic>? param, Map<String, dynamic>? paramType) {
+  return '''
+query(${param.toString().replaceAll('{', ' ').replaceAll('}', ' ')}) {
+  allMessaging(${paramType.toString().replaceAll('{', ' ').replaceAll('}', ' ')}) {
+      edges {
+      node {
+        createdAt
+        id
+        message
+        messageId
+        updatedAt
+        recipient {
+          city
+          country
+          firstName
+          id
+          lastName
+          picture
+          rating
+          userId
+          state
+          active
+        }
+        sender {
+          city
+          country
+          firstName
+          id
+          lastName
+          picture
+          rating
+          userId
+          state
+          active
+        }
+      }
+    } 
+  }
+}
+''';
+}
+
+
+
+String SubmitScore(List<Map<String, dynamic>> map){
+  return '''
+  mutation MyMutation {
+  __typename
+  submitScore(submitScore: '$map') {
+    submitScore {
+      court
+      createdAt
+      endDate
+      format
+      id
+      matchId
+      matchStatus
+      startDate
+      updatedAt
+    }
+  }
+} ''';
+}

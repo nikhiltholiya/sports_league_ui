@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../components/bordered_circle_avatar.dart';
 import '../components/decorated_app_header_tile.dart';
 import '../components/rate_badges.dart';
 import '../utils/app_colors.dart';
@@ -76,7 +77,7 @@ class _HeadToHeadDetailsHeaderTileState
                             imgUrl: widget.player1Img ?? '',
                             //'assets/Ellipse 1.png',
                             userRate: widget.player1Score ?? '' //'4.5',
-                        ),
+                            ),
                       ),
                       Expanded(
                         flex: 3,
@@ -88,7 +89,7 @@ class _HeadToHeadDetailsHeaderTileState
                           // },
                           defaultColumnWidth: IntrinsicColumnWidth(),
                           defaultVerticalAlignment:
-                          TableCellVerticalAlignment.middle,
+                              TableCellVerticalAlignment.middle,
                           children: [
                             TableRow(
                               children: [
@@ -141,7 +142,7 @@ class _HeadToHeadDetailsHeaderTileState
                             imgUrl: widget.player2Img ?? '',
                             //'assets/Ellipse 5.png',
                             userRate: widget.player2Score ?? '' //'4.5',
-                        ),
+                            ),
                       ),
                     ],
                   )
@@ -215,14 +216,7 @@ class _HeadUsersState extends State<HeadUsers> {
       children: [
         Padding(
           padding: const EdgeInsets.all(5.0),
-          child: CircleAvatar(
-            child: CircleAvatar(
-              backgroundImage: AssetImage(widget.imgUrl!),
-              radius: 30,
-            ),
-            backgroundColor: aLightGray,
-            radius: 31,
-          ),
+          child: BorderedCircleAvatar(radius: 31, path: widget.imgUrl!),
         ),
         Padding(
           padding: const EdgeInsets.only(top: 3.0, bottom: 8.0),

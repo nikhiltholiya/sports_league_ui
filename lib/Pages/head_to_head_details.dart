@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../Pages/base_activity.dart';
 import '../components/head_to_head_details_header_tile.dart';
 import '../components/head_to_head_details_list_tile.dart';

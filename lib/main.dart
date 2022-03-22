@@ -5,7 +5,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:provider/provider.dart';
 
-import '../Pages/other_player_profile_page.dart';
 import '../providers/league_id_provider.dart';
 import '../providers/user_id_provider.dart';
 import '../Pages/submit_score_details.dart';

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../components/bordered_circle_avatar.dart';
 import '../components/decorated_app_header_tile.dart';
 import '../utils/app_colors.dart';
 
@@ -100,12 +101,8 @@ class _UserDetailsState extends State<UserDetails> {
       children: [
         Padding(
           padding: const EdgeInsets.all(5.0),
-          child: CircleAvatar(
-            child: CircleAvatar(
-              backgroundImage: AssetImage(widget.imgUrl!),
-              radius: 30,
-            ),
-            backgroundColor: aLightGray,
+          child: BorderedCircleAvatar(
+            path: widget.imgUrl!,
             radius: 31,
           ),
         ),
