@@ -43,6 +43,7 @@ class UserStat with _$UserStat {
     required int? loss,
     required int? total,
     required String? userId,
+    required String? userName,
     required int? won
   }) = _UserStat;
 

@@ -1,11 +1,10 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:tenniston/components/decorated_app_header_tile.dart';
-import 'package:tenniston/components/edit_text_form_field.dart';
-import 'package:tenniston/components/upcomming_match_list_tile.dart';
-import 'package:tenniston/utils/app_colors.dart';
+
+import '../components/decorated_app_header_tile.dart';
+import '../components/edit_text_form_field.dart';
+import '../components/upcomming_match_list_tile.dart';
+import '../utils/app_colors.dart';
 
 //Edited on 20220308
 class SchedulePage extends StatefulWidget {
@@ -24,12 +23,14 @@ class _SchedulePageState extends State<SchedulePage> {
 
   @override
   void initState() {
+    // _chatNode = FocusNode();
     // _scrollController = ScrollController();
     super.initState();
   }
 
   @override
   void dispose() {
+    _chatNode?.dispose();
     // _scrollController!.dispose();
     super.dispose();
   }
@@ -109,7 +110,13 @@ class _SchedulePageState extends State<SchedulePage> {
                           onTap: () {},
                           focusNode: _chatNode,
                           hint: 'Search Here',
-                          onTextChange: (dynamic value) {},
+                          onTextChange: (dynamic value) {
+
+                            // _textController?.text = value;
+                            // _textController?.selection = TextSelection.fromPosition(
+                            //     TextPosition(offset: _textController!.text.length));
+
+                          },
                           prefixIcon: Icon(
                             Icons.search,
                             color: aLightGray,

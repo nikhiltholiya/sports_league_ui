@@ -1,9 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:tenniston/components/decorated_app_header_tile.dart';
-import 'package:tenniston/components/iconic_text_view.dart';
-import 'package:tenniston/components/stats_tile.dart';
-import 'package:tenniston/utils/app_colors.dart';
+import '../components/bordered_circle_avatar.dart';
+
+import '../components/iconic_text_view.dart';
+import '../components/stats_tile.dart';
+import '../utils/app_colors.dart';
 
 class LeagueDetailsWinnerTile extends StatefulWidget {
   final String? winnerName;
@@ -76,14 +76,9 @@ class _LeagueDetailsWinnerTileState extends State<LeagueDetailsWinnerTile> {
                     children: [
                       Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: CircleAvatar(
-                          child: CircleAvatar(
-                            child: Image.asset('assets/Ellipse 1.png'),
-                            backgroundColor: aWhite,
-                            radius: 38,
-                          ),
-                          backgroundColor: aWhite,
+                        child: BorderedCircleAvatar(
                           radius: 40,
+                          path: 'assets/Ellipse 1.png',
                         ),
                       ),
                       Text(

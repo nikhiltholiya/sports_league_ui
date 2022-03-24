@@ -32,6 +32,7 @@ class _BaseWidgetState extends State<BaseWidget> {
       key: widget.key,
       body: SafeArea(top: true, right: true, left: true, child: widget.body!),
       appBar: AppBar(
+        elevation: 0.0,
         centerTitle: true,
         toolbarHeight: widget.appbarHeight ?? 0.0,
         iconTheme: IconThemeData(color: Colors.black),

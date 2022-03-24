@@ -1,26 +1,34 @@
 import 'package:flutter/material.dart';
-import 'package:tenniston/components/elevated_buttons.dart';
-import 'package:tenniston/components/iconic_text_view.dart';
-import 'package:tenniston/components/rate_badges.dart';
-import 'package:tenniston/utils/app_colors.dart';
+import '../components/bordered_circle_avatar.dart';
+import '../components/decorated_app_header_tile.dart';
+import '../utils/app_labels.dart';
+import '../components/elevated_buttons.dart';
+import '../components/iconic_text_view.dart';
+import '../components/rate_badges.dart';
+import '../utils/app_colors.dart';
 
 class ChattingListHeaderTile extends StatefulWidget {
-  final bool? isSilverCollapsed;
   final String? playerName;
   final String? playerImg;
   final String? playerLocation;
   final String? playerRate;
   final Function? onViewProfile;
+  final Function? onSubmitScore;
 
-  const ChattingListHeaderTile(
-      {Key? key,
-      this.isSilverCollapsed = false,
-      this.playerName = 'appName',
-      this.playerImg = 'assets/Ellipse 1.png',
-      this.playerLocation = '',
-      this.playerRate = '0.0',
-        this.onViewProfile})
-      : super(key: key);
+  final GlobalKey? stackKey;
+  final GlobalKey? textTitleKey;
+
+  const ChattingListHeaderTile({
+    Key? key,
+    this.playerName = 'appName',
+    this.playerImg = 'assets/Ellipse 1.png',
+    this.playerLocation = '',
+    this.playerRate = '0.0',
+    this.onViewProfile,
+    this.onSubmitScore,
+    required this.stackKey,
+    required this.textTitleKey,
+  }) : super(key: key);
 
   @override
   State<ChattingListHeaderTile> createState() => _ChattingListHeaderTileState();
@@ -29,86 +37,99 @@ class ChattingListHeaderTile extends StatefulWidget {
 class _ChattingListHeaderTileState extends State<ChattingListHeaderTile> {
   @override
   Widget build(BuildContext context) {
-    return Card(
-      margin: EdgeInsets.symmetric(
-          horizontal: widget.isSilverCollapsed! ? 0.0 : 10,
-          vertical: widget.isSilverCollapsed! ? 0.0 : 10),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12.0),
-      ),
-      elevation: widget.isSilverCollapsed! ? 0.0 : 3.0,
-      child: Padding(
-        padding: EdgeInsets.all(5),
-        child: Wrap(
-          direction: Axis.horizontal,
-          crossAxisAlignment: WrapCrossAlignment.start,
-          alignment: WrapAlignment.start,
-          children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(
-                  width: widget.isSilverCollapsed! ? 35.0 : 0.0,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(5.0),
-                  child: CircleAvatar(
-                    backgroundColor: aLightGray,
-                    radius: 20,
-                    child: CircleAvatar(
-                      backgroundImage: AssetImage(widget.playerImg!),
-                      //'assets/Ellipse 1.png'
-                      radius: 19,
-                    ),
-                  ),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+    return Stack(
+      children: [
+        Container(
+          key: widget.stackKey,
+          child: DecoratedAppHeader(),
+        ),
+        Align(
+          alignment: Alignment.bottomCenter,
+          child: Card(
+            margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12.0),
+            ),
+            elevation: 3.0,
+            child: Padding(
+              padding: EdgeInsets.all(5),
+              child: Wrap(
+                children: [
+                  Stack(
                     children: [
-                      Text(
-                        widget.playerName!,
-                        maxLines: 1,
-                        style: TextStyle(
-                          fontSize: widget.isSilverCollapsed! ? 15 : 18,
-                          fontWeight: FontWeight.bold,
+                      Column(
+                        key: widget.textTitleKey,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(5.0),
+                            child: BorderedCircleAvatar(radius: 30, path: 'assets/Ellipse 1.png'),
+                          ),
+                          Text(
+                            widget.playerName!,
+                            maxLines: 1,
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          IconicTextView(
+                              align: MainAxisAlignment.center,
+                              icon: Icons.location_pin,
+                              label: widget.playerLocation!),
+
+
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Flexible(
+                                  flex: 1,
+                                  fit: FlexFit.loose,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: ElevatedButtons(
+                                      fontSize: 15,
+                                      label: viewProfile,
+                                      onClick: () => widget.onViewProfile!(),
+                                    ),
+                                  ),
+                                ),
+                                Flexible(
+                                  flex: 1,
+                                  fit: FlexFit.loose,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: ElevatedButtons(
+                                      fontSize: 15,
+                                      onClick: () => widget.onSubmitScore!(),
+                                      primary: true,
+                                      label: submitScore,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+
+                        ],
+                      ),
+                      Positioned(
+                        top: 10,
+                        right: 15,
+                        child: RateBadges(
+                          rate: widget.playerRate!,
+                          textSize: 16.0,
                         ),
                       ),
-                      if (widget.isSilverCollapsed!)
-                        IconicTextView(
-                          icon: Icons.location_pin,
-                          label: widget.playerLocation!,
-                          labelTextSize: 12.0,
-                        )
                     ],
-                  ),
-                ),
-                RateBadges(
-                  rate: widget.playerRate!,
-                  textSize: 16.0,
-                )
-              ],
+                  )
+                ],
+              ),
             ),
-            if (!widget.isSilverCollapsed!)
-
-                IconicTextView(
-                    icon: Icons.location_pin,
-                    iconSize: 16.0,
-                    labelTextSize: 10.0,
-                    label: widget.playerLocation!),
-
-            if (!widget.isSilverCollapsed!)
-              Center(
-                child: ElevatedButtons(height: 30.0,label: 'View Profile',fontSize: 10.0,
-                onClick: ()=> widget.onViewProfile!(),),
-              )
-
-          ],
-        ),
-      ),
+          ),
+        )
+      ],
     );
   }
 }

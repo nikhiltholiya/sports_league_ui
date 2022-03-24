@@ -1,6 +1,4 @@
-import 'package:gql/language.dart';
 const String SUCCESS_MESSAGE = " You will be contacted by us very soon.";
-
 
 const String leaque = """
 query MyQuery {
@@ -26,7 +24,7 @@ won
 }
 """;
 
-const temp = """
+const fetchUserProfiles = """
 query (\$userId : String!) {
   userProfiles(userId:\$userId) {
     userId
@@ -44,23 +42,25 @@ query (\$userId : String!) {
 }
 
 """;
-const String homepageQuery = """
-  query (\$userId: String!) {
-    userProfiles(userId:\$userId){
-    matchesCount
-    drawCount
-    lostCount
-    city
-    dob
-    state
-    firstName
-    lastName
-    userId
-    wonCount
-    age
-    }
-  }
-""";
+
+// const String homepageQuery = """
+//   query (\$userId: String!) {
+//     userProfiles(userId:\$userId){
+//     matchesCount
+//     drawCount
+//     lostCount
+//     city
+//     dob
+//     state
+//     firstName
+//     lastName
+//     userId
+//     wonCount
+//     age
+//     }
+//   }
+// """;
+
 const String matchesQuery = """
   query (\$userSearch: String!) {
     allMatches(userSearch:\$userSearch){
@@ -93,7 +93,7 @@ const String matchesQuery = """
   }
 """;
 
-final leagueStatus = /*parseString(*/'''
+final leagueStatus = '''
 
 query (\$leagueId: String!) {
   leagueStat(leagueId: \$leagueId) {
@@ -111,6 +111,7 @@ query (\$leagueId: String!) {
     winnerOneId
     winnerTwoId
     userStat {
+      userName
       loss
       total
       userId
@@ -118,5 +119,124 @@ query (\$leagueId: String!) {
     }
   }
 }
-'''/*)*/;
+''';
 
+//20220315
+String allLeagueApplicationsQuery(
+    Map<String, dynamic>? param, Map<String, dynamic>? paramType) {
+  return '''
+query(${param.toString().replaceAll('{', ' ').replaceAll('}', ' ')}) {
+  allLeagueApplications(${paramType.toString().replaceAll('{', ' ').replaceAll('}', ' ')}) {
+      edges {
+        node {
+         id
+          league {
+          id
+          city
+          endDate
+          leagueId
+          name
+          startDate
+          state
+          status
+          country
+          createdAt
+          description
+          level
+          updatedAt
+        }
+        applicant {
+          userId
+        }
+        status
+      }
+    }
+  }
+}
+''';
+}
+
+String allUsers(Map<String, dynamic>? param, Map<String, dynamic>? paramType) {
+  return '''
+query(${param.toString().replaceAll('{', ' ').replaceAll('}', ' ')}) {
+  allUsers(${paramType.toString().replaceAll('{', ' ').replaceAll('}', ' ')}) {
+      edges {
+        node {
+        rating
+        userId
+        firstName
+        lastName
+        city
+        state
+        picture
+      }
+    }
+  }
+}
+''';
+}
+
+
+String allMessaging(Map<String, dynamic>? param, Map<String, dynamic>? paramType) {
+  return '''
+query(${param.toString().replaceAll('{', ' ').replaceAll('}', ' ')}) {
+  allMessaging(${paramType.toString().replaceAll('{', ' ').replaceAll('}', ' ')}) {
+      edges {
+      node {
+        createdAt
+        id
+        message
+        messageId
+        updatedAt
+        recipient {
+          city
+          country
+          firstName
+          id
+          lastName
+          picture
+          rating
+          userId
+          state
+          active
+        }
+        sender {
+          city
+          country
+          firstName
+          id
+          lastName
+          picture
+          rating
+          userId
+          state
+          active
+        }
+      }
+    } 
+  }
+}
+''';
+}
+
+
+
+String SubmitScore(List<Map<String, dynamic>> map){
+  return '''
+  mutation MyMutation {
+  __typename
+  submitScore(submitScore: '$map') {
+    submitScore {
+      court
+      createdAt
+      endDate
+      format
+      id
+      matchId
+      matchStatus
+      startDate
+      updatedAt
+    }
+  }
+} ''';
+}

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:tenniston/components/rate_badges.dart';
-import 'package:tenniston/utils/app_colors.dart';
+import '../components/bordered_circle_avatar.dart';
+import '../components/rate_badges.dart';
+import '../utils/app_colors.dart';
 
 //created on 20220303
 class HeadToHeadListTile extends StatefulWidget {
@@ -93,14 +94,9 @@ class _HeadToHeadListTileState extends State<HeadToHeadListTile> {
                   Expanded(
                     child: GestureDetector(
                       onTap: () => widget.onProfileClick!(),
-                      child: CircleAvatar(
-                        backgroundColor: aLightGray,
+                      child: BorderedCircleAvatar(
                         radius: 25,
-                        // backgroundImage: NetworkImage('https://www.baps.org/Data/Sites/1/Media/dailysatsang/2022/03-03-clifton-nj.jpg'),
-                        child: CircleAvatar(
-                          backgroundImage: AssetImage(widget.profileImg!),
-                          radius: 24,
-                        ),
+                        path: widget.profileImg!,
                       ),
                     ),
                     flex: 1,

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:tenniston/Pages/base_activity.dart';
-import 'package:tenniston/components/decorated_app_header_tile.dart';
-import 'package:tenniston/components/head_to_head_details_header_tile.dart';
-import 'package:tenniston/components/head_to_head_details_list_tile.dart';
+
+import '../Pages/base_activity.dart';
+import '../components/head_to_head_details_header_tile.dart';
+import '../components/head_to_head_details_list_tile.dart';
 
 //Edited on 20220307- Redesign with scroll
 class HeadToHeadDetails extends StatefulWidget {
-  final String path = 'headToHeadDetails';
+  static const String path = 'headToHeadDetails';
 
   const HeadToHeadDetails({Key? key}) : super(key: key);
 
@@ -14,13 +14,17 @@ class HeadToHeadDetails extends StatefulWidget {
   _HeadToHeadDetailsState createState() => _HeadToHeadDetailsState();
 }
 
-
-
 class _HeadToHeadDetailsState extends State<HeadToHeadDetails> {
   ScrollController? _scrollController;
-  var _headerContentSize = GlobalKey();
-  var _headerBackSize = GlobalKey();
-  double? _totalHeight;
+
+  GlobalKey? _stackKey = GlobalKey();
+  GlobalKey? _usersKey = GlobalKey();
+  double? _dynamicTotalHeight;
+  List<double>? _childWidgetHeights = [];
+
+  // var _headerContentSize = GlobalKey();
+  // var _headerBackSize = GlobalKey();
+  // double? _totalHeight;
   bool? _visibility = true;
   bool? _isSilverCollapsed = false;
   FocusNode? _chatNode;
@@ -28,23 +32,22 @@ class _HeadToHeadDetailsState extends State<HeadToHeadDetails> {
   double? _getHeight(GlobalKey? gKey) {
     try {
       final RenderBox? rBox =
-      gKey?.currentContext?.findRenderObject() as RenderBox;
+          gKey?.currentContext?.findRenderObject() as RenderBox;
       return rBox?.size.height;
     } catch (e) {}
   }
 
   void _getTotalHeight(_) {
-    _totalHeight = 0;
-    double? content = _getHeight(_headerContentSize);
-    double? box = _getHeight(_headerBackSize);
+    _dynamicTotalHeight = 0;
+    double? content = _getHeight(_stackKey);
+    double? box = _getHeight(_usersKey);
 
     setState(() {
       _visibility = false;
     });
 
-    _totalHeight = (content ?? 0.0) + (box ?? 0.0) + 56;
+    _dynamicTotalHeight = (content ?? 0.0) + (box ?? 0.0) + kToolbarHeight;
   }
-
 
   @override
   void initState() {
@@ -54,9 +57,9 @@ class _HeadToHeadDetailsState extends State<HeadToHeadDetails> {
     _scrollController!.addListener(() {
       // collapsing
       if (_scrollController!.offset >
-          100 /*&&
+              100 /*&&
           !_scrollController!.position.outOfRange*/
-      ) {
+          ) {
         _isSilverCollapsed = true;
       } else {
         _isSilverCollapsed = false;
@@ -74,16 +77,15 @@ class _HeadToHeadDetailsState extends State<HeadToHeadDetails> {
     super.dispose();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return BaseWidget(
       appbar: AppBar(
         centerTitle: true,
-        title: SizedBox(
-          child: HeadToHeadDetailsHeaderTile(),
-          key: _headerContentSize,
-        ), // This is used for getting dynamic height of contents!!!
+        // title: SizedBox(
+        //   child: HeadToHeadDetailsHeaderTile(),
+        //   key: _headerContentSize,
+        // ), // This is used for getting dynamic height of contents!!!
         toolbarHeight: 0,
       ),
       body: Column(
@@ -128,14 +130,9 @@ class _HeadToHeadDetailsState extends State<HeadToHeadDetails> {
                                 ? Colors.black
                                 : Colors.white),*/
                     flexibleSpace: FlexibleSpaceBar(
-                      titlePadding: EdgeInsets.zero,
-                      centerTitle: true,
-                      background: Stack(
-                        key: _headerBackSize,
-                        children: [DecoratedAppHeader()],
-                      ),
-                      title: HeadToHeadDetailsHeaderTile(
-
+                      background: HeadToHeadDetailsHeaderTile(
+                        stackKey: _stackKey,
+                        usersKey: _usersKey,
                         player1Name: 'John s.',
                         player1Img: 'assets/Ellipse 1.png',
                         player1win: '0',
@@ -147,8 +144,12 @@ class _HeadToHeadDetailsState extends State<HeadToHeadDetails> {
                         player2Score: '11',
                         player2Loss: '0',
                       ),
+                      centerTitle: true,
+                      title: _isSilverCollapsed!
+                          ? Text('Head to Head')
+                          : SizedBox(),
                     ),
-                    expandedHeight: _totalHeight,
+                    expandedHeight: _dynamicTotalHeight,
                     backgroundColor: Colors.white,
                   ),
 
@@ -175,7 +176,7 @@ class _HeadToHeadDetailsState extends State<HeadToHeadDetails> {
                         player2Name: 'Kalpesh T.',
                         player2Active: false,
                       ),
-                      childCount: 3,
+                      childCount: 10,
                     ),
                   )
                 ], //<Widget>[]
@@ -184,6 +185,5 @@ class _HeadToHeadDetailsState extends State<HeadToHeadDetails> {
         ],
       ),
     );
-
   }
 }

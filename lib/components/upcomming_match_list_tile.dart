@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:tenniston/components/iconic_text_view.dart';
-import 'package:tenniston/utils/app_colors.dart';
+import '../components/bordered_circle_avatar.dart';
+import '../components/iconic_text_view.dart';
+import '../utils/app_colors.dart';
 
 //Created on 20220304
 class UpcommingMatchListTile extends StatefulWidget {
@@ -60,13 +61,9 @@ class _UpcommingMatchListTileState extends State<UpcommingMatchListTile> {
                 children: [
                   GestureDetector(
                     onTap: () => widget.onProfileClick!(),
-                    child: CircleAvatar(
-                      backgroundColor: aLightGray,
+                    child: BorderedCircleAvatar(
+                      path: widget.profileImg!,
                       radius: 20,
-                      child: CircleAvatar(
-                        backgroundImage: AssetImage(widget.profileImg!),
-                        radius: 19,
-                      ),
                     ),
                   ),
                   Padding(

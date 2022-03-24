@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tenniston/utils/app_colors.dart';
+import 'package:flutter/services.dart';
+import '../utils/app_colors.dart';
 
 class EditTextFormField extends StatefulWidget {
   final FocusNode? focusNode;
@@ -9,6 +10,10 @@ class EditTextFormField extends StatefulWidget {
   final String? hint;
   final Widget? suffixIcon;
   final Widget? prefixIcon;
+  final TextInputType? textInputType;
+  final TextAlign? textAlign;
+  final List<TextInputFormatter>? inputFormatter;
+  final int? maxLength;
 
   const EditTextFormField(
       {Key? key,
@@ -18,7 +23,11 @@ class EditTextFormField extends StatefulWidget {
       this.onTap,
       this.hint,
       this.suffixIcon,
-      this.prefixIcon})
+      this.prefixIcon,
+      this.textInputType = TextInputType.name,
+      this.textAlign = TextAlign.justify,
+      this.inputFormatter,
+      this.maxLength = 999})
       : super(key: key);
 
   @override
@@ -30,16 +39,32 @@ class _EditTextFormFieldState extends State<EditTextFormField> {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: 50.0,
+      height: kToolbarHeight,
       alignment: Alignment.center,
-      margin: EdgeInsets.all(10),
+      margin: EdgeInsets.all(5),
       child: TextFormField(
+        inputFormatters: widget.inputFormatter,
+        // inputFormatters: <TextInputFormatter>[
+        //     /*widget.isPercentage!
+        //         ? FilteringTextInputFormatter.allow(
+        //         RegExp(r'^[1-9][0-9]?$|^100$'))
+        //         : */FilteringTextInputFormatter.allow(
+        //       RegExp(r'^\d+?\d*'),
+        //     )
+        // ],
+        maxLength: widget.maxLength,
+        keyboardType: widget.textInputType,
         focusNode: widget.focusNode,
         controller: widget.textController,
         onTap: () => widget.onTap!(),
         onChanged: (value) => widget.onTextChange!(value),
-        textAlign: TextAlign.justify,
+        textAlign: widget.textAlign!,
         decoration: InputDecoration(
+            counter: SizedBox(
+              height: 0.0,
+              width: 0.0,
+            ),
+            contentPadding: EdgeInsets.symmetric(horizontal: 10.0,vertical: 0.0),
             hintText: widget.hint,
             focusColor: Colors.black,
             fillColor: aWhite,
@@ -47,14 +72,14 @@ class _EditTextFormFieldState extends State<EditTextFormField> {
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(100.0),
               borderSide: const BorderSide(
-                color: aLightGray,
+                color: aPartGray30,
                 width: 1.0,
               ),
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(100.0),
               borderSide: const BorderSide(
-                color: aLightGray,
+                color: aPartGray30,
                 width: 1.0,
               ),
             ),
