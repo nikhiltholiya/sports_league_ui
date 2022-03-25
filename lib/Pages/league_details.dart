@@ -337,7 +337,9 @@ class _LeagueDetailsState extends State<LeagueDetails> with SharedPrefUtils {
                               fontSize: 25,
                               radius: 0.0,
                               onClick: () {},
-                              primary: true,
+                              borderColor: aGreen,
+                              buttonColor: aGreen,
+                              labelColor: aWhite,
                             );
                           } else{
                             return SizedBox(height: 0.0,);

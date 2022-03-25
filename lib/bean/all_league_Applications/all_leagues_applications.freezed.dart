@@ -194,7 +194,7 @@ AllLeagueApplications _$AllLeagueApplicationsFromJson(
 class _$AllLeagueApplicationsTearOff {
   const _$AllLeagueApplicationsTearOff();
 
-  _AllLeagueApplications call({required List<Edges>? edges}) {
+  _AllLeagueApplications call({required List<LeagueEdges>? edges}) {
     return _AllLeagueApplications(
       edges: edges,
     );
@@ -210,7 +210,7 @@ const $AllLeagueApplications = _$AllLeagueApplicationsTearOff();
 
 /// @nodoc
 mixin _$AllLeagueApplications {
-  List<Edges>? get edges => throw _privateConstructorUsedError;
+  List<LeagueEdges>? get edges => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -223,7 +223,7 @@ abstract class $AllLeagueApplicationsCopyWith<$Res> {
   factory $AllLeagueApplicationsCopyWith(AllLeagueApplications value,
           $Res Function(AllLeagueApplications) then) =
       _$AllLeagueApplicationsCopyWithImpl<$Res>;
-  $Res call({List<Edges>? edges});
+  $Res call({List<LeagueEdges>? edges});
 }
 
 /// @nodoc
@@ -243,7 +243,7 @@ class _$AllLeagueApplicationsCopyWithImpl<$Res>
       edges: edges == freezed
           ? _value.edges
           : edges // ignore: cast_nullable_to_non_nullable
-              as List<Edges>?,
+              as List<LeagueEdges>?,
     ));
   }
 }
@@ -255,7 +255,7 @@ abstract class _$AllLeagueApplicationsCopyWith<$Res>
           $Res Function(_AllLeagueApplications) then) =
       __$AllLeagueApplicationsCopyWithImpl<$Res>;
   @override
-  $Res call({List<Edges>? edges});
+  $Res call({List<LeagueEdges>? edges});
 }
 
 /// @nodoc
@@ -277,7 +277,7 @@ class __$AllLeagueApplicationsCopyWithImpl<$Res>
       edges: edges == freezed
           ? _value.edges
           : edges // ignore: cast_nullable_to_non_nullable
-              as List<Edges>?,
+              as List<LeagueEdges>?,
     ));
   }
 }
@@ -291,7 +291,7 @@ class _$_AllLeagueApplications implements _AllLeagueApplications {
       _$$_AllLeagueApplicationsFromJson(json);
 
   @override
-  final List<Edges>? edges;
+  final List<LeagueEdges>? edges;
 
   @override
   String toString() {
@@ -323,67 +323,69 @@ class _$_AllLeagueApplications implements _AllLeagueApplications {
 }
 
 abstract class _AllLeagueApplications implements AllLeagueApplications {
-  const factory _AllLeagueApplications({required List<Edges>? edges}) =
+  const factory _AllLeagueApplications({required List<LeagueEdges>? edges}) =
       _$_AllLeagueApplications;
 
   factory _AllLeagueApplications.fromJson(Map<String, dynamic> json) =
       _$_AllLeagueApplications.fromJson;
 
   @override
-  List<Edges>? get edges;
+  List<LeagueEdges>? get edges;
   @override
   @JsonKey(ignore: true)
   _$AllLeagueApplicationsCopyWith<_AllLeagueApplications> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
-Edges _$EdgesFromJson(Map<String, dynamic> json) {
-  return _Edges.fromJson(json);
+LeagueEdges _$LeagueEdgesFromJson(Map<String, dynamic> json) {
+  return _LeagueEdges.fromJson(json);
 }
 
 /// @nodoc
-class _$EdgesTearOff {
-  const _$EdgesTearOff();
+class _$LeagueEdgesTearOff {
+  const _$LeagueEdgesTearOff();
 
-  _Edges call({required Node? node}) {
-    return _Edges(
+  _LeagueEdges call({required LeagueNode? node}) {
+    return _LeagueEdges(
       node: node,
     );
   }
 
-  Edges fromJson(Map<String, Object?> json) {
-    return Edges.fromJson(json);
+  LeagueEdges fromJson(Map<String, Object?> json) {
+    return LeagueEdges.fromJson(json);
   }
 }
 
 /// @nodoc
-const $Edges = _$EdgesTearOff();
+const $LeagueEdges = _$LeagueEdgesTearOff();
 
 /// @nodoc
-mixin _$Edges {
-  Node? get node => throw _privateConstructorUsedError;
+mixin _$LeagueEdges {
+  LeagueNode? get node => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $EdgesCopyWith<Edges> get copyWith => throw _privateConstructorUsedError;
+  $LeagueEdgesCopyWith<LeagueEdges> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $EdgesCopyWith<$Res> {
-  factory $EdgesCopyWith(Edges value, $Res Function(Edges) then) =
-      _$EdgesCopyWithImpl<$Res>;
-  $Res call({Node? node});
+abstract class $LeagueEdgesCopyWith<$Res> {
+  factory $LeagueEdgesCopyWith(
+          LeagueEdges value, $Res Function(LeagueEdges) then) =
+      _$LeagueEdgesCopyWithImpl<$Res>;
+  $Res call({LeagueNode? node});
 
-  $NodeCopyWith<$Res>? get node;
+  $LeagueNodeCopyWith<$Res>? get node;
 }
 
 /// @nodoc
-class _$EdgesCopyWithImpl<$Res> implements $EdgesCopyWith<$Res> {
-  _$EdgesCopyWithImpl(this._value, this._then);
+class _$LeagueEdgesCopyWithImpl<$Res> implements $LeagueEdgesCopyWith<$Res> {
+  _$LeagueEdgesCopyWithImpl(this._value, this._then);
 
-  final Edges _value;
+  final LeagueEdges _value;
   // ignore: unused_field
-  final $Res Function(Edges) _then;
+  final $Res Function(LeagueEdges) _then;
 
   @override
   $Res call({
@@ -393,76 +395,79 @@ class _$EdgesCopyWithImpl<$Res> implements $EdgesCopyWith<$Res> {
       node: node == freezed
           ? _value.node
           : node // ignore: cast_nullable_to_non_nullable
-              as Node?,
+              as LeagueNode?,
     ));
   }
 
   @override
-  $NodeCopyWith<$Res>? get node {
+  $LeagueNodeCopyWith<$Res>? get node {
     if (_value.node == null) {
       return null;
     }
 
-    return $NodeCopyWith<$Res>(_value.node!, (value) {
+    return $LeagueNodeCopyWith<$Res>(_value.node!, (value) {
       return _then(_value.copyWith(node: value));
     });
   }
 }
 
 /// @nodoc
-abstract class _$EdgesCopyWith<$Res> implements $EdgesCopyWith<$Res> {
-  factory _$EdgesCopyWith(_Edges value, $Res Function(_Edges) then) =
-      __$EdgesCopyWithImpl<$Res>;
+abstract class _$LeagueEdgesCopyWith<$Res>
+    implements $LeagueEdgesCopyWith<$Res> {
+  factory _$LeagueEdgesCopyWith(
+          _LeagueEdges value, $Res Function(_LeagueEdges) then) =
+      __$LeagueEdgesCopyWithImpl<$Res>;
   @override
-  $Res call({Node? node});
+  $Res call({LeagueNode? node});
 
   @override
-  $NodeCopyWith<$Res>? get node;
+  $LeagueNodeCopyWith<$Res>? get node;
 }
 
 /// @nodoc
-class __$EdgesCopyWithImpl<$Res> extends _$EdgesCopyWithImpl<$Res>
-    implements _$EdgesCopyWith<$Res> {
-  __$EdgesCopyWithImpl(_Edges _value, $Res Function(_Edges) _then)
-      : super(_value, (v) => _then(v as _Edges));
+class __$LeagueEdgesCopyWithImpl<$Res> extends _$LeagueEdgesCopyWithImpl<$Res>
+    implements _$LeagueEdgesCopyWith<$Res> {
+  __$LeagueEdgesCopyWithImpl(
+      _LeagueEdges _value, $Res Function(_LeagueEdges) _then)
+      : super(_value, (v) => _then(v as _LeagueEdges));
 
   @override
-  _Edges get _value => super._value as _Edges;
+  _LeagueEdges get _value => super._value as _LeagueEdges;
 
   @override
   $Res call({
     Object? node = freezed,
   }) {
-    return _then(_Edges(
+    return _then(_LeagueEdges(
       node: node == freezed
           ? _value.node
           : node // ignore: cast_nullable_to_non_nullable
-              as Node?,
+              as LeagueNode?,
     ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$_Edges implements _Edges {
-  const _$_Edges({required this.node});
+class _$_LeagueEdges implements _LeagueEdges {
+  const _$_LeagueEdges({required this.node});
 
-  factory _$_Edges.fromJson(Map<String, dynamic> json) =>
-      _$$_EdgesFromJson(json);
+  factory _$_LeagueEdges.fromJson(Map<String, dynamic> json) =>
+      _$$_LeagueEdgesFromJson(json);
 
   @override
-  final Node? node;
+  final LeagueNode? node;
 
   @override
   String toString() {
-    return 'Edges(node: $node)';
+    return 'LeagueEdges(node: $node)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _Edges &&
+            other is _LeagueEdges &&
             const DeepCollectionEquality().equals(other.node, node));
   }
 
@@ -472,41 +477,43 @@ class _$_Edges implements _Edges {
 
   @JsonKey(ignore: true)
   @override
-  _$EdgesCopyWith<_Edges> get copyWith =>
-      __$EdgesCopyWithImpl<_Edges>(this, _$identity);
+  _$LeagueEdgesCopyWith<_LeagueEdges> get copyWith =>
+      __$LeagueEdgesCopyWithImpl<_LeagueEdges>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_EdgesToJson(this);
+    return _$$_LeagueEdgesToJson(this);
   }
 }
 
-abstract class _Edges implements Edges {
-  const factory _Edges({required Node? node}) = _$_Edges;
+abstract class _LeagueEdges implements LeagueEdges {
+  const factory _LeagueEdges({required LeagueNode? node}) = _$_LeagueEdges;
 
-  factory _Edges.fromJson(Map<String, dynamic> json) = _$_Edges.fromJson;
+  factory _LeagueEdges.fromJson(Map<String, dynamic> json) =
+      _$_LeagueEdges.fromJson;
 
   @override
-  Node? get node;
+  LeagueNode? get node;
   @override
   @JsonKey(ignore: true)
-  _$EdgesCopyWith<_Edges> get copyWith => throw _privateConstructorUsedError;
+  _$LeagueEdgesCopyWith<_LeagueEdges> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
-Node _$NodeFromJson(Map<String, dynamic> json) {
-  return _Node.fromJson(json);
+LeagueNode _$LeagueNodeFromJson(Map<String, dynamic> json) {
+  return _LeagueNode.fromJson(json);
 }
 
 /// @nodoc
-class _$NodeTearOff {
-  const _$NodeTearOff();
+class _$LeagueNodeTearOff {
+  const _$LeagueNodeTearOff();
 
-  _Node call(
+  _LeagueNode call(
       {required String? id,
       required League? league,
       required String? status,
       required Applicant? applicant}) {
-    return _Node(
+    return _LeagueNode(
       id: id,
       league: league,
       status: status,
@@ -514,16 +521,16 @@ class _$NodeTearOff {
     );
   }
 
-  Node fromJson(Map<String, Object?> json) {
-    return Node.fromJson(json);
+  LeagueNode fromJson(Map<String, Object?> json) {
+    return LeagueNode.fromJson(json);
   }
 }
 
 /// @nodoc
-const $Node = _$NodeTearOff();
+const $LeagueNode = _$LeagueNodeTearOff();
 
 /// @nodoc
-mixin _$Node {
+mixin _$LeagueNode {
   String? get id => throw _privateConstructorUsedError;
   League? get league => throw _privateConstructorUsedError;
   String? get status => throw _privateConstructorUsedError;
@@ -531,13 +538,15 @@ mixin _$Node {
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $NodeCopyWith<Node> get copyWith => throw _privateConstructorUsedError;
+  $LeagueNodeCopyWith<LeagueNode> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $NodeCopyWith<$Res> {
-  factory $NodeCopyWith(Node value, $Res Function(Node) then) =
-      _$NodeCopyWithImpl<$Res>;
+abstract class $LeagueNodeCopyWith<$Res> {
+  factory $LeagueNodeCopyWith(
+          LeagueNode value, $Res Function(LeagueNode) then) =
+      _$LeagueNodeCopyWithImpl<$Res>;
   $Res call({String? id, League? league, String? status, Applicant? applicant});
 
   $LeagueCopyWith<$Res>? get league;
@@ -545,12 +554,12 @@ abstract class $NodeCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$NodeCopyWithImpl<$Res> implements $NodeCopyWith<$Res> {
-  _$NodeCopyWithImpl(this._value, this._then);
+class _$LeagueNodeCopyWithImpl<$Res> implements $LeagueNodeCopyWith<$Res> {
+  _$LeagueNodeCopyWithImpl(this._value, this._then);
 
-  final Node _value;
+  final LeagueNode _value;
   // ignore: unused_field
-  final $Res Function(Node) _then;
+  final $Res Function(LeagueNode) _then;
 
   @override
   $Res call({
@@ -603,9 +612,10 @@ class _$NodeCopyWithImpl<$Res> implements $NodeCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$NodeCopyWith<$Res> implements $NodeCopyWith<$Res> {
-  factory _$NodeCopyWith(_Node value, $Res Function(_Node) then) =
-      __$NodeCopyWithImpl<$Res>;
+abstract class _$LeagueNodeCopyWith<$Res> implements $LeagueNodeCopyWith<$Res> {
+  factory _$LeagueNodeCopyWith(
+          _LeagueNode value, $Res Function(_LeagueNode) then) =
+      __$LeagueNodeCopyWithImpl<$Res>;
   @override
   $Res call({String? id, League? league, String? status, Applicant? applicant});
 
@@ -616,13 +626,14 @@ abstract class _$NodeCopyWith<$Res> implements $NodeCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$NodeCopyWithImpl<$Res> extends _$NodeCopyWithImpl<$Res>
-    implements _$NodeCopyWith<$Res> {
-  __$NodeCopyWithImpl(_Node _value, $Res Function(_Node) _then)
-      : super(_value, (v) => _then(v as _Node));
+class __$LeagueNodeCopyWithImpl<$Res> extends _$LeagueNodeCopyWithImpl<$Res>
+    implements _$LeagueNodeCopyWith<$Res> {
+  __$LeagueNodeCopyWithImpl(
+      _LeagueNode _value, $Res Function(_LeagueNode) _then)
+      : super(_value, (v) => _then(v as _LeagueNode));
 
   @override
-  _Node get _value => super._value as _Node;
+  _LeagueNode get _value => super._value as _LeagueNode;
 
   @override
   $Res call({
@@ -631,7 +642,7 @@ class __$NodeCopyWithImpl<$Res> extends _$NodeCopyWithImpl<$Res>
     Object? status = freezed,
     Object? applicant = freezed,
   }) {
-    return _then(_Node(
+    return _then(_LeagueNode(
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -654,14 +665,15 @@ class __$NodeCopyWithImpl<$Res> extends _$NodeCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_Node implements _Node {
-  const _$_Node(
+class _$_LeagueNode implements _LeagueNode {
+  const _$_LeagueNode(
       {required this.id,
       required this.league,
       required this.status,
       required this.applicant});
 
-  factory _$_Node.fromJson(Map<String, dynamic> json) => _$$_NodeFromJson(json);
+  factory _$_LeagueNode.fromJson(Map<String, dynamic> json) =>
+      _$$_LeagueNodeFromJson(json);
 
   @override
   final String? id;
@@ -674,14 +686,14 @@ class _$_Node implements _Node {
 
   @override
   String toString() {
-    return 'Node(id: $id, league: $league, status: $status, applicant: $applicant)';
+    return 'LeagueNode(id: $id, league: $league, status: $status, applicant: $applicant)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _Node &&
+            other is _LeagueNode &&
             const DeepCollectionEquality().equals(other.id, id) &&
             const DeepCollectionEquality().equals(other.league, league) &&
             const DeepCollectionEquality().equals(other.status, status) &&
@@ -698,23 +710,24 @@ class _$_Node implements _Node {
 
   @JsonKey(ignore: true)
   @override
-  _$NodeCopyWith<_Node> get copyWith =>
-      __$NodeCopyWithImpl<_Node>(this, _$identity);
+  _$LeagueNodeCopyWith<_LeagueNode> get copyWith =>
+      __$LeagueNodeCopyWithImpl<_LeagueNode>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_NodeToJson(this);
+    return _$$_LeagueNodeToJson(this);
   }
 }
 
-abstract class _Node implements Node {
-  const factory _Node(
+abstract class _LeagueNode implements LeagueNode {
+  const factory _LeagueNode(
       {required String? id,
       required League? league,
       required String? status,
-      required Applicant? applicant}) = _$_Node;
+      required Applicant? applicant}) = _$_LeagueNode;
 
-  factory _Node.fromJson(Map<String, dynamic> json) = _$_Node.fromJson;
+  factory _LeagueNode.fromJson(Map<String, dynamic> json) =
+      _$_LeagueNode.fromJson;
 
   @override
   String? get id;
@@ -726,7 +739,8 @@ abstract class _Node implements Node {
   Applicant? get applicant;
   @override
   @JsonKey(ignore: true)
-  _$NodeCopyWith<_Node> get copyWith => throw _privateConstructorUsedError;
+  _$LeagueNodeCopyWith<_LeagueNode> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 League _$LeagueFromJson(Map<String, dynamic> json) {

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:provider/provider.dart';
+import '../providers/league_id_provider.dart';
 import '../components/bordered_circle_avatar.dart';
 
 import '../Pages/base_activity.dart';
@@ -102,6 +103,7 @@ class _DashboardPageState extends State<DashboardPage> with SharedPrefUtils {
           pollInterval: Duration(seconds: 100),
         ),
         builder: (result, {fetchMore, refetch}) {
+
           if (result.hasException) {
             return Text(result.exception.toString());
           }
@@ -109,6 +111,7 @@ class _DashboardPageState extends State<DashboardPage> with SharedPrefUtils {
           if (result.isLoading && result.data == null) {
             return const Center(child: CupertinoActivityIndicator());
           }
+
 
           // setLoggedUser(AllUsersData.fromJson(result.data!).allUsers?.edges?.first.node?.toJson().toString());
           setLoggedUser(jsonEncode(AllUsersData.fromJson(result.data!)));
@@ -147,6 +150,8 @@ class _DashboardPageState extends State<DashboardPage> with SharedPrefUtils {
                         title: dashBoardMenuItems[index].title,
                         onMenuClick: () {
                           getUserId().then((value) => Provider.of<UserIdProvider>(context,listen: false).setUserId(value));
+
+                          Provider.of<LeagueIdProvider>(context,listen: false).setLeagueId('');
 
                           if (dashBoardMenuItems[index].path!.isNotEmpty)
                             Navigator.pushNamed(

@@ -326,7 +326,6 @@ class _ChallengesChatState extends State<ChallengesChat> with SharedPrefUtils{
                               TextPosition(offset: _textController!.text.length));
                         });
                       },
-                      prefixIcon: SizedBox(),
                       suffixIcon: _textController!.text.trim().isNotEmpty
                           ? IconButton(
                         onPressed: () {

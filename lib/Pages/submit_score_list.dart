@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:provider/provider.dart';
+import '../providers/league_id_provider.dart';
 
 import '../Pages/base_activity.dart';
 import '../Pages/submit_score_details.dart';
@@ -223,6 +224,8 @@ class _SubmitScoreListState extends State<SubmitScoreList>
                                       .setUserId(snapshot.data![index].userId);
                                   Navigator.pushNamed(
                                       context, SubmitScoreDetails.path);
+
+                                  Provider.of<LeagueIdProvider>(context,listen: false).setLeagueId('');
 
                                   _chatNode?.enclosingScope;
                                 },

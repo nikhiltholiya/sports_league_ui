@@ -5,6 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:provider/provider.dart';
+import '../bean/all_leagues/all_leagues.dart';
+import '../components/auto_complete_text_form_field.dart';
+import '../providers/league_id_provider.dart';
 
 import '../Pages/base_activity.dart';
 import '../bean/all_users/all_users.dart';
@@ -24,7 +27,6 @@ import '../utils/shared_preferences_utils.dart';
 class SubmitScoreDetails extends StatefulWidget {
   static const String path = 'submitScoreDetails';
 
-  // {court: "Gabriel Park", endDate: "2022-03-20", format: "single", startDate: "2022-03-20", league: "6b32b9ee-4fc4-4bea-a996-f383071e4fa6", matchStatus: "completed", playerOneId: "1211d15f-5147-4394-812e-47c801d567c5", playerTwoId: "0510839e-5f3e-427e-8344-0dff6bf5aabd", set1: {playerOneScore: 6, playerOneTbScore: 0, playerTwoScore: 6, playerTwoTbScore: 7}, winnerOne: "0510839e-5f3e-427e-8344-0dff6bf5aabd"}
   const SubmitScoreDetails({Key? key}) : super(key: key);
 
   @override
@@ -37,6 +39,8 @@ class _SubmitScoreDetailsState extends State<SubmitScoreDetails>
   GlobalKey? _stackKey = GlobalKey();
   GlobalKey? _userKey = GlobalKey();
 
+  // var _scKey = GlobalKey<ScaffoldState>();
+
   double? _dynamicTotalHeight = 0;
   List<double>? _childWidgetHeights = [];
   var scrollPosition;
@@ -48,13 +52,14 @@ class _SubmitScoreDetailsState extends State<SubmitScoreDetails>
   late List<String?> tie1;
   late List<String?> tie2;
 
-  List<String?> players = [];
+  List<AllUsersData?> players = [];
   List<bool?> selectedPlayer = [];
+  List<String?> displayPlayer = [];
 
   List<String?> matchTypes = ['Single', 'Double'];
   List<bool?> selectedMatchType = [];
 
-  List<String?> matchStatus = ['Completed', 'Retire', 'Tie'];
+  List<String?> matchStatus = ['Completed', 'Retire', 'Draw'];
   List<bool?> selectedMatchStatus = [];
 
   late List<Map<String, dynamic>>? passingParam = [];
@@ -64,6 +69,11 @@ class _SubmitScoreDetailsState extends State<SubmitScoreDetails>
   late AllUsersData player2;
   String? matchDate;
   String? matchTime;
+  String? matchCourtName = '';
+  String? LeagueId = '';
+  String? LeagueName = '';
+
+  List<LeagueEdges>? _leaguesList;
 
   FocusNode? _chatNode;
   late String? dropDownValue = null;
@@ -117,13 +127,6 @@ class _SubmitScoreDetailsState extends State<SubmitScoreDetails>
       tie2.add('0');
     }
 
-
-    // {court: "Gabriel Park", endDate: "2022-03-20", format: "single", startDate: "2022-03-20",
-    // league: "6b32b9ee-4fc4-4bea-a996-f383071e4fa6", matchStatus: "completed",
-    // playerOneId: "1211d15f-5147-4394-812e-47c801d567c5", playerTwoId: "0510839e-5f3e-427e-8344-0dff6bf5aabd",
-    // set1: {playerOneScore: 6, playerOneTbScore: 0, playerTwoScore: 6, playerTwoTbScore: 7},
-    // winnerOne: "0510839e-5f3e-427e-8344-0dff6bf5aabd"}
-
     super.initState();
   }
 
@@ -137,6 +140,7 @@ class _SubmitScoreDetailsState extends State<SubmitScoreDetails>
   @override
   Widget build(BuildContext context) {
     return BaseWidget(
+      // key: _scKey,
       appbarHeight: 0,
       appbar: Text(
         submitScore,
@@ -161,6 +165,7 @@ class _SubmitScoreDetailsState extends State<SubmitScoreDetails>
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   player1 = snapshot.data!;
+
                   return Query(
                     options: QueryOptions(
                       document: gql(allUsers(param, paramType)),
@@ -187,10 +192,18 @@ class _SubmitScoreDetailsState extends State<SubmitScoreDetails>
 
                         players = [];
                         selectedPlayer = [];
-                        players.add(
-                            player1.allUsers?.edges?.first.node?.firstName);
-                        players.add(
-                            player2.allUsers?.edges?.first.node?.firstName);
+                        displayPlayer = [];
+                        players.add(player1);
+                        players.add(player2);
+
+                        for (var data in players)
+                          displayPlayer.add(
+                              data?.allUsers?.edges?.first.node?.firstName);
+
+                        // players.add(
+                        //     player1.allUsers?.edges?.first.node?.firstName);
+                        // players.add(
+                        //     player2.allUsers?.edges?.first.node?.firstName);
                         for (int i = 0; i < players.length; i++)
                           selectedPlayer.add(false);
 
@@ -281,7 +294,8 @@ class _SubmitScoreDetailsState extends State<SubmitScoreDetails>
                                           fontWeight: FontWeight.bold),
                                     ),
                                   ),
-                                  chips(players, selectedPlayer),
+
+                                  chips(displayPlayer, selectedPlayer),
 
                                   Padding(
                                     padding: const EdgeInsets.only(
@@ -399,9 +413,11 @@ class _SubmitScoreDetailsState extends State<SubmitScoreDetails>
                                     onTap: () {},
                                     hint: matchCourt,
                                     onTextChange: (value) {
+                                      matchCourtName = value;
+                                      setState(() {});
                                     },
-
-                                    suffixIcon: Icon(Icons.arrow_drop_down_sharp),
+                                    suffixIcon:
+                                        Icon(Icons.arrow_drop_down_sharp),
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.only(
@@ -451,15 +467,72 @@ class _SubmitScoreDetailsState extends State<SubmitScoreDetails>
                                   //   },
                                   // ),
 
-                                  EditTextFormField(
+                                  Query(
+                                    options: QueryOptions(
+                                      document: gql(fetChCourts),
+                                      pollInterval: Duration(seconds: 100),
+                                    ),
+                                    builder: (resultLeague,
+                                        {fetchMore, refetch}) {
+                                      if (resultLeague.hasException) {
+                                        return Text(
+                                            resultLeague.exception.toString());
+                                      }
 
-                                    onTap: () {},
-                                    hint: leagueOpt,
-                                    onTextChange: (value) {
+                                      if (resultLeague.isLoading &&
+                                          resultLeague.data == null) {
+                                        return const Center(
+                                            child:
+                                                CupertinoActivityIndicator());
+                                      }
+                                      print(resultLeague.data!);
+
+                                      AllLeaguesData leagueData =
+                                          AllLeaguesData.fromJson(
+                                              resultLeague.data!);
+
+                                      _leaguesList = [];
+                                      _leaguesList =
+                                          leagueData.allLeagues!.edges!;
+
+                                      List<String>? leagueListTemp = [];
+                                      for (var data in _leaguesList!) {
+                                        leagueListTemp.add(data.node!.name!);
+                                      }
+
+                                      var exist = _leaguesList!.where(
+                                          (LeagueEdges) =>
+                                              _leaguesList
+                                                  ?.first.node?.leagueId! ==
+                                              Provider.of<LeagueIdProvider>(
+                                                      context,
+                                                      listen: false)
+                                                  .getLeagueId);
+
+                                      // print('exist --$exist');
+                                      return AutoCompleteEditField(
+                                        listOptions: leagueListTemp,
+                                        hint: exist.isEmpty
+                                            ? leagueOptHint
+                                            : exist.first.node!.name,
+                                        onSelection: (value, pos) {
+                                          Provider.of<LeagueIdProvider>(context,
+                                                  listen: false)
+                                              .setLeagueId(_leaguesList![pos]
+                                                  .node!
+                                                  .leagueId);
+                                        },
+                                      );
                                     },
-
-                                    suffixIcon: Icon(Icons.arrow_drop_down_sharp),
                                   ),
+
+                                  // EditTextFormField(
+                                  //   onTap: () {},
+                                  //   hint: leagueOpt,
+                                  //   onTextChange: (value) {},
+                                  //   suffixIcon:
+                                  //       Icon(Icons.arrow_drop_down_sharp),
+                                  // ),
                                   Padding(
                                     padding: const EdgeInsets.only(
                                         top: 30, bottom: 10),
@@ -482,33 +555,31 @@ class _SubmitScoreDetailsState extends State<SubmitScoreDetails>
                               delegate: SliverChildBuilderDelegate(
                                 (context, index) => SetDetailsListTile(
                                   setName: 'Set ${index + 1}',
-                                  player1Name: player1.allUsers?.edges?.first.node?.firstName,
-                                  player2Name: player2.allUsers?.edges?.first.node?.firstName,
+                                  player1Name: player1
+                                      .allUsers?.edges?.first.node?.firstName,
+                                  player2Name: player2
+                                      .allUsers?.edges?.first.node?.firstName,
                                   player1Score: (value) {
                                     player1Sets.setAll(index, [value]);
-                                    print('$index - $value');
+                                    // print('$index - $value');
                                   },
                                   player1Controller: TextEditingController(
                                       text: player1Sets[index]),
-
-
                                   player2Score: (value) {
                                     player2Sets.setAll(index, [value]);
-                                    print('$index - $value');
+                                    // print('$index - $value');
                                   },
                                   player2Controller: TextEditingController(
                                       text: player2Sets[index]),
-
-
                                   tieBreak1: (value) {
                                     tie1.setAll(index, [value]);
-                                    print('$index - $value');
+                                    // print('$index - $value');
                                   },
                                   tie1Controller:
                                       TextEditingController(text: tie1[index]),
                                   tieBreak2: (value) {
                                     tie2.setAll(index, [value]);
-                                    print('$index - $value');
+                                    // print('$index - $value');
                                   },
                                   tie2Controller:
                                       TextEditingController(text: tie2[index]),
@@ -527,7 +598,9 @@ class _SubmitScoreDetailsState extends State<SubmitScoreDetails>
                                         padding: const EdgeInsets.all(8.0),
                                         child: ElevatedButtons(
                                           fontSize: 14,
-                                          primary: false,
+                                          borderColor: aLightGray,
+                                          buttonColor: aWhite,
+                                          labelColor: aLightGray,
                                           onClick: () {
                                             if (player1Sets.length < 5) {
                                               setState(() {
@@ -543,38 +616,132 @@ class _SubmitScoreDetailsState extends State<SubmitScoreDetails>
                                         ),
                                       )
                                     : SizedBox(),
-                                ElevatedButtons(
-                                  fontSize: 16,
-                                  primary: true,
-                                  onClick: () {
-                                    passingParam = [];
-                                    passingParam!.add({'court' : 'Gabriel Park'});
-                                    passingParam!.add({'endDate' : '2022-03-20'});
-                                    passingParam!.add({'format' : 'single'});
-                                    passingParam!.add({'startDate' : '2022-03-20'});
-                                    passingParam!.add({'league' : '6b32b9ee-4fc4-4bea-a996-f383071e4fa6'});
-                                    passingParam!.add({'matchStatus' : 'completed'});
-                                    passingParam!.add({'playerOneId' : '1211d15f-5147-4394-812e-47c801d567c5'});
-                                    passingParam!.add({'playerTwoId' : '0510839e-5f3e-427e-8344-0dff6bf5aabd'});
-                                    // passingParam!.add({'set1' : {'playerOneScore': 6,'playerOneTbScore' : 0, 'playerTwoScore': 6, 'playerTwoTbScore' : 7}});
-                                    // passingParam!.add({'winnerOne' : '0510839e-5f3e-427e-8344-0dff6bf5aabd'});
+                                Mutation(
+                                  options: MutationOptions(
+                                    document: gql(SubmitScore),
+                                    // update: update,
+                                    onError: (OperationException? error) {
+                                      print('erroR -- $error');
+                                      // Text('$error');
+                                    },
+                                    // _simpleAlert(context, error.toString()),
+                                    onCompleted: (dynamic resultData) {
+                                      // Text('Thanks for your star!');
+                                      print('**** $resultData');
 
+                                      _showMyDialog(submitSuccess);
+                                    },
+                                    // 'Sorry you changed your mind!',
+                                  ),
+                                  builder: (RunMutation _submitScore,
+                                      QueryResult? addResult) {
+                                    final submitScore = (result) {
+                                      _submitScore(result);
+                                    };
 
-                                    for(int i = 0; i<player1Sets.length;i ++){
-                                      passingParam!.add({'set${i+1}' : {'playerOneScore': player1Sets[i],'playerOneTbScore' : tie1[i], 'playerTwoScore': player2Sets[i], 'playerTwoTbScore' : tie2[i]}});
-                                    }
+                                    final anyLoading = addResult!.isLoading;
 
-                                    passingParam!.add({'winnerOne' : '${players[selectedPlayer.indexOf(true)]}'});
+                                    return ElevatedButtons(
+                                      borderColor: aGreen,
+                                      buttonColor: aGreen,
+                                      labelColor: aWhite,
+                                      fontSize: 16,
+                                      onClick: () {
+                                        if (!selectedPlayer.contains(true))
+                                          return ScaffoldMessenger.of(context)
+                                              .showSnackBar(SnackBar(
+                                            content: Text(errPlayer),
+                                          ));
 
-                                    print(
-                                        'player1Sets $player1Sets ** player2Sets $player2Sets ** tie1 $tie1 ** tie2 $tie2');
+                                        if (!selectedMatchType.contains(true))
+                                          return ScaffoldMessenger.of(context)
+                                              .showSnackBar(SnackBar(
+                                            content: Text(errGame),
+                                          ));
 
-                                    print(jsonEncode(passingParam));
+                                        if (!selectedMatchStatus.contains(true))
+                                          return ScaffoldMessenger.of(context)
+                                              .showSnackBar(SnackBar(
+                                            content: Text(errStatus),
+                                          ));
+
+                                        if (Provider.of<LeagueIdProvider>(
+                                                    context,
+                                                    listen: false)
+                                                .getLeagueId! ==
+                                            '')
+                                          return ScaffoldMessenger.of(context)
+                                              .showSnackBar(SnackBar(
+                                            content: Text(errLeague),
+                                          ));
+
+                                        Map<String, dynamic> passMap = {
+                                          'court': matchCourtName ?? '',
+                                          'endDate': convertDateYYYYMMDD(
+                                              matchDate ??
+                                                  DateTime.now().toString(),
+                                              null),
+                                          'startDate': convertDateYYYYMMDD(
+                                              matchDate ??
+                                                  DateTime.now().toString(),
+                                              null),
+                                          'league':
+                                              Provider.of<LeagueIdProvider>(
+                                                      context,
+                                                      listen: false)
+                                                  .getLeagueId,
+                                          'matchStatus': matchStatus[
+                                                      selectedMatchStatus
+                                                          .indexOf(true)]
+                                                  ?.toLowerCase()
+                                                  .trim() ??
+                                              '',
+                                          'format': matchTypes[selectedMatchType
+                                                      .indexOf(true)]
+                                                  ?.toLowerCase()
+                                                  .trim() ??
+                                              '',
+                                          'playerOneId': player1.allUsers?.edges
+                                                  ?.first.node?.userId ??
+                                              '',
+                                          'playerTwoId': player2.allUsers?.edges
+                                                  ?.first.node?.userId ??
+                                              '',
+                                          'winnerOne': players[selectedPlayer
+                                                      .indexOf(true)]
+                                                  ?.allUsers
+                                                  ?.edges
+                                                  ?.first
+                                                  .node
+                                                  ?.userId ??
+                                              '',
+                                          for (int i = 0;
+                                              i < player1Sets.length;
+                                              i++)
+                                            'set${i + 1}': {
+                                              'playerOneScore': int.parse(
+                                                  player1Sets[i] ?? '0'),
+                                              'playerOneTbScore':
+                                                  int.parse(tie1[i] ?? '0'),
+                                              'playerTwoScore': int.parse(
+                                                  player2Sets[i] ?? '0'),
+                                              'playerTwoTbScore':
+                                                  int.parse(tie2[i] ?? '0')
+                                            }
+                                        };
+
+                                        // var resBody = {};
+                                        // resBody['passParam'] = passMap;
+
+                                        print(passMap);
+                                        submitScore({"passParam": passMap});
+                                      },
+                                      label: anyLoading ? 'wait' : submit,
+                                      width: double.infinity,
+                                      radius: 0.0,
+                                    );
                                   },
-                                  label: submit,
-                                  width: double.infinity,
-                                  radius: 0.0,
-                                )
+                                ),
                               ],
                             ),
                           ),
@@ -611,6 +778,35 @@ class _SubmitScoreDetailsState extends State<SubmitScoreDetails>
             },
           ),
       ],
+    );
+  }
+
+  Future<void> _showMyDialog(String? content) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text(submitScore),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text(content!),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text(submitLabel),
+              onPressed: () {
+                Navigator.of(context).pop();
+                Navigator.pop(context);
+                // Navigator.pushNamedAndRemoveUntil(context, newRouteName, (route) => false)
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }

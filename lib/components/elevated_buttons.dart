@@ -3,23 +3,32 @@ import '../utils/app_colors.dart';
 
 //Created on 20220304
 class ElevatedButtons extends StatefulWidget {
-  final bool? primary;
   final String? label;
   final Function? onClick;
   final double? width;
   final double? height;
   final double? radius;
   final double? fontSize;
+  final bool? isIcon;
+  final Widget? icon;
+  final Color? labelColor;
+  final Color? buttonColor;
+  final Color? borderColor;
 
-  const ElevatedButtons(
-      {Key? key,
-      this.primary = false,
-      this.label,
-      this.onClick,
-      this.width = 120,
-      this.height = 50.0,
-      this.radius = 100.0,
-      this.fontSize = 16})
+
+  const ElevatedButtons({Key? key,
+    required this.label,
+    required this.onClick,
+    required this.labelColor,
+    required this.buttonColor,
+    required this.borderColor,
+    this.width = 120,
+    this.height = 50.0,
+    this.radius = 100.0,
+    this.fontSize = 15,
+    this.isIcon = false,
+    this.icon,
+  })
       : super(key: key);
 
   @override
@@ -34,14 +43,27 @@ class _ElevatedButtonsState extends State<ElevatedButtons> {
       child: SizedBox(
         width: widget.width!,
         height: widget.height,
-        child: Center(
-          child: Text(
-            widget.label!,
-            textAlign: TextAlign.center,
-            maxLines: 1,
-            style: TextStyle(
-                fontSize: widget.fontSize!, color: widget.primary! ? aWhite : aLightGray,),
-          ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            if (widget.isIcon!)
+              widget.icon!,
+            Flexible(
+                flex: 1,
+                fit: FlexFit.tight,
+                child: Center(
+                  child: Text(
+                    widget.label!,
+                    textAlign: TextAlign.center,
+                    maxLines: 1,
+                    style: TextStyle(
+                      fontSize: widget.fontSize!,
+                      color: widget.labelColor,
+                    ),
+                  ),
+                ))
+          ],
         ),
       ),
       style: ButtonStyle(
@@ -49,13 +71,13 @@ class _ElevatedButtonsState extends State<ElevatedButtons> {
           RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(widget.radius!),
               side: BorderSide(
-                  color: widget.primary! ? aGreen : aLightGray,
+                  color: widget.borderColor!,
                   width: 1.0,
                   style: BorderStyle.solid)),
         ),
 
         backgroundColor:
-            MaterialStateProperty.all(widget.primary! ? aGreen : aWhite),
+        MaterialStateProperty.all(widget.buttonColor),
         elevation: MaterialStateProperty.all(2.0),
         // textStyle: MaterialStateProperty.all(TextStyle(backgroundColor: Colors.black,))
       ),

@@ -19,32 +19,32 @@ class AllLeaguesApps with _$AllLeaguesApps{
 @Freezed()
 class AllLeagueApplications with _$AllLeagueApplications{
 
-  const factory AllLeagueApplications({ required List<Edges>? edges}
+  const factory AllLeagueApplications({ required List<LeagueEdges>? edges}
   ) = _AllLeagueApplications;
 
   factory AllLeagueApplications.fromJson(Map<String,dynamic> leagueJson) => _$AllLeagueApplicationsFromJson(leagueJson);
 }
 
 @Freezed()
-class Edges with _$Edges{
+class LeagueEdges with _$LeagueEdges{
 
-  const factory Edges({required Node? node}
-  ) = _Edges;
+  const factory LeagueEdges({required LeagueNode? node}
+  ) = _LeagueEdges;
 
-  factory Edges.fromJson(Map<String,dynamic> edgeJson) => _$EdgesFromJson(edgeJson);
+  factory LeagueEdges.fromJson(Map<String,dynamic> edgeJson) => _$LeagueEdgesFromJson(edgeJson);
 }
 
 @Freezed()
-class Node with _$Node{
+class LeagueNode with _$LeagueNode{
 
-  const factory Node({
+  const factory LeagueNode({
     required String? id,
     required League? league,
     required String? status,
     required Applicant? applicant,
-  }) = _Node;
+  }) = _LeagueNode;
 
-  factory Node.fromJson(Map<String,dynamic> nodeJson) => _$NodeFromJson(nodeJson);
+  factory LeagueNode.fromJson(Map<String,dynamic> LeagueNodeJson) => _$LeagueNodeFromJson(LeagueNodeJson);
 }
 
 @Freezed()

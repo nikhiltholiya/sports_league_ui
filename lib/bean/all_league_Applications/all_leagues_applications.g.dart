@@ -23,7 +23,7 @@ _$_AllLeagueApplications _$$_AllLeagueApplicationsFromJson(
         Map<String, dynamic> json) =>
     _$_AllLeagueApplications(
       edges: (json['edges'] as List<dynamic>?)
-          ?.map((e) => Edges.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => LeagueEdges.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
@@ -33,17 +33,20 @@ Map<String, dynamic> _$$_AllLeagueApplicationsToJson(
       'edges': instance.edges,
     };
 
-_$_Edges _$$_EdgesFromJson(Map<String, dynamic> json) => _$_Edges(
+_$_LeagueEdges _$$_LeagueEdgesFromJson(Map<String, dynamic> json) =>
+    _$_LeagueEdges(
       node: json['node'] == null
           ? null
-          : Node.fromJson(json['node'] as Map<String, dynamic>),
+          : LeagueNode.fromJson(json['node'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$$_EdgesToJson(_$_Edges instance) => <String, dynamic>{
+Map<String, dynamic> _$$_LeagueEdgesToJson(_$_LeagueEdges instance) =>
+    <String, dynamic>{
       'node': instance.node,
     };
 
-_$_Node _$$_NodeFromJson(Map<String, dynamic> json) => _$_Node(
+_$_LeagueNode _$$_LeagueNodeFromJson(Map<String, dynamic> json) =>
+    _$_LeagueNode(
       id: json['id'] as String?,
       league: json['league'] == null
           ? null
@@ -54,7 +57,8 @@ _$_Node _$$_NodeFromJson(Map<String, dynamic> json) => _$_Node(
           : Applicant.fromJson(json['applicant'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$$_NodeToJson(_$_Node instance) => <String, dynamic>{
+Map<String, dynamic> _$$_LeagueNodeToJson(_$_LeagueNode instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'league': instance.league,
       'status': instance.status,

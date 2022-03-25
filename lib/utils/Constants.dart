@@ -221,11 +221,11 @@ query(${param.toString().replaceAll('{', ' ').replaceAll('}', ' ')}) {
 
 
 
-String SubmitScore(List<Map<String, dynamic>> map){
-  return '''
-  mutation MyMutation {
-  __typename
-  submitScore(submitScore: '$map') {
+
+
+String SubmitScore = '''
+mutation MyMutation(\$passParam : MatchInput!) {
+  submitScore(submitScore: \$passParam) {
     submitScore {
       court
       createdAt
@@ -238,5 +238,20 @@ String SubmitScore(List<Map<String, dynamic>> map){
       updatedAt
     }
   }
-} ''';
 }
+''';
+
+String fetChCourts = '''
+query MyQuery {
+  allLeagues(status: "ongoing") {
+    edges {
+      node {
+        leagueId
+        name
+      }
+    }
+  }
+}
+''';
+
+

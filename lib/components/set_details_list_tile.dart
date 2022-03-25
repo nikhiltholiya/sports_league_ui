@@ -52,13 +52,19 @@ class _SetDetailsListTileState extends State<SetDetailsListTile> {
             children: [
               TableRow(
                 children: [
-                  Text(
-                    widget.player1Name!,
-                    style: TextStyle(color: aLightGray, fontSize: 14.0),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10.0),
+                    child: Text(
+                      widget.player1Name!,
+                      style: TextStyle(color: aLightGray, fontSize: 14.0),
+                    ),
                   ),
-                  Text(
-                    widget.player2Name!,
-                    style: TextStyle(color: aLightGray, fontSize: 14.0),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10.0),
+                    child: Text(
+                      widget.player2Name!,
+                      style: TextStyle(color: aLightGray, fontSize: 14.0),
+                    ),
                   ),
                   Center(
                       child: Text(
@@ -143,12 +149,13 @@ class _SetDetailsListTileState extends State<SetDetailsListTile> {
               ),
             ],
           ),
-          Divider(
-            height: 1,
-            color: aPartGray10,
-            thickness: 1,
-            indent: 5,
-            endIndent: 5,
+          Padding(
+            padding: const EdgeInsets.all(5.0),
+            child: Divider(
+              height: 1,
+              color: aPartGray10,
+              thickness: 1,
+            ),
           )
         ],
       ),

@@ -90,7 +90,9 @@ class _ChattingListHeaderTileState extends State<ChattingListHeaderTile> {
                                   child: Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: ElevatedButtons(
-                                      fontSize: 15,
+                                      borderColor: aLightGray,
+                                      buttonColor: aWhite,
+                                      labelColor: aLightGray,
                                       label: viewProfile,
                                       onClick: () => widget.onViewProfile!(),
                                     ),
@@ -102,9 +104,10 @@ class _ChattingListHeaderTileState extends State<ChattingListHeaderTile> {
                                   child: Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: ElevatedButtons(
-                                      fontSize: 15,
+                                      borderColor: aGreen,
+                                      buttonColor: aGreen,
+                                      labelColor: aWhite,
                                       onClick: () => widget.onSubmitScore!(),
-                                      primary: true,
                                       label: submitScore,
                                     ),
                                   ),
