@@ -128,7 +128,7 @@ class _MyLeagueListState extends State<MyLeagueList> with SharedPrefUtils {
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: DropDownView(
-                                cityList: [
+                                dropList: [
                                   'Portland, Oregon',
                                   'Los Angeles, California',
                                   'Atlanta, Georgia'

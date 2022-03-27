@@ -125,8 +125,8 @@ query (\$leagueId: String!) {
 String allLeagueApplicationsQuery(
     Map<String, dynamic>? param, Map<String, dynamic>? paramType) {
   return '''
-query(${param.toString().replaceAll('{', ' ').replaceAll('}', ' ')}) {
-  allLeagueApplications(${paramType.toString().replaceAll('{', ' ').replaceAll('}', ' ')}) {
+query(${param.toString().trim().substring(1, param.toString().trim().length - 1)}) {
+  allLeagueApplications(${paramType.toString().trim().substring(1, paramType.toString().trim().length - 1)}) {
       edges {
         node {
          id
@@ -158,8 +158,8 @@ query(${param.toString().replaceAll('{', ' ').replaceAll('}', ' ')}) {
 
 String allUsers(Map<String, dynamic>? param, Map<String, dynamic>? paramType) {
   return '''
-query(${param.toString().replaceAll('{', ' ').replaceAll('}', ' ')}) {
-  allUsers(${paramType.toString().replaceAll('{', ' ').replaceAll('}', ' ')}) {
+  query(${param.toString().trim().substring(1, param.toString().trim().length - 1)}) {
+  allUsers(${paramType.toString().trim().substring(1, paramType.toString().trim().length - 1)}) {
       edges {
         node {
         rating
@@ -176,11 +176,13 @@ query(${param.toString().replaceAll('{', ' ').replaceAll('}', ' ')}) {
 ''';
 }
 
-
-String allMessaging(Map<String, dynamic>? param, Map<String, dynamic>? paramType) {
+// query(${param.toString().replaceAll('{', ' ').replaceAll('}', ' ')}) {
+// allMessaging(${paramType.toString().replaceAll('{', ' ').replaceAll('}', ' ')})
+String allMessaging(
+    Map<String, dynamic>? param, Map<String, dynamic>? paramType) {
   return '''
-query(${param.toString().replaceAll('{', ' ').replaceAll('}', ' ')}) {
-  allMessaging(${paramType.toString().replaceAll('{', ' ').replaceAll('}', ' ')}) {
+  query(${param.toString().trim().substring(1, param.toString().trim().length - 1)}) {
+  allMessaging(${paramType.toString().trim().substring(1, paramType.toString().trim().length - 1)}) {
       edges {
       node {
         createdAt
@@ -219,27 +221,26 @@ query(${param.toString().replaceAll('{', ' ').replaceAll('}', ' ')}) {
 ''';
 }
 
-
-
-
-
-String SubmitScore = '''
-mutation MyMutation(\$passParam : MatchInput!) {
-  submitScore(submitScore: \$passParam) {
-    submitScore {
-      court
-      createdAt
-      endDate
-      format
-      id
-      matchId
-      matchStatus
-      startDate
-      updatedAt
+String SubmitScore(
+    Map<String, dynamic>? param, Map<String, dynamic>? paramType) {
+  return '''
+    mutation (${param.toString().trim().substring(1, param.toString().trim().length - 1)}) {
+      submitScore(${paramType.toString().trim().substring(1, paramType.toString().trim().length - 1)}) {
+        submitScore {
+          court
+          createdAt
+          endDate
+          format
+          id
+          matchId
+          matchStatus
+          startDate
+          updatedAt
+        }
+      }
     }
-  }
+  ''';
 }
-''';
 
 String fetChCourts = '''
 query MyQuery {
@@ -254,4 +255,15 @@ query MyQuery {
 }
 ''';
 
-
+String RegisterPlayer(Map<String, dynamic>? param, Map<String, dynamic>? paramType) {
+  return '''
+      mutation Register(${param.toString().trim().substring(1, param.toString().trim().length - 1)}) {
+          register(${paramType.toString().trim().substring(1, paramType.toString().trim().length - 1)}) {
+                success
+                errors
+                refreshToken
+                token
+          }
+      }
+''';
+}

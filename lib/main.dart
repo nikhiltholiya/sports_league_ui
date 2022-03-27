@@ -6,6 +6,7 @@ import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:provider/provider.dart';
 
 import '../Pages/challenges_chat.dart';
+import '../Pages/create_profile_page.dart';
 import '../Pages/dashboard.dart';
 import '../Pages/head_to_head_details.dart';
 import '../Pages/head_to_head_page.dart';
@@ -17,6 +18,7 @@ import '../Pages/recent_matches_pages.dart';
 import '../Pages/sign_up_page.dart';
 import '../Pages/submit_score_details.dart';
 import '../Pages/submit_score_list.dart';
+import '../Pages/verify_email_page.dart';
 import '../providers/league_id_provider.dart';
 import '../providers/user_id_provider.dart';
 
@@ -90,6 +92,12 @@ class MyApp extends StatelessWidget {
           } else if (settings.name == SignUpPage.path) {
             return CupertinoPageRoute(
                 builder: (context) => SignUpPage(), settings: settings);
+          } else if (settings.name == VerifyEmailPage.path) {
+            return CupertinoPageRoute(
+                builder: (context) => VerifyEmailPage(), settings: settings);
+          }else if (settings.name == CreateProfilePage.path) {
+            return CupertinoPageRoute(
+                builder: (context) => CreateProfilePage(), settings: settings);
           } else if (settings.name == DashboardPage.path) {
             return CupertinoPageRoute(
                 builder: (context) => DashboardPage(), settings: settings);

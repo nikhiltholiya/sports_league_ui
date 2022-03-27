@@ -10,32 +10,33 @@ class EditTextFormField extends StatefulWidget {
   final String? hint;
   final Widget? suffixIcon;
   final Widget? prefixIcon;
-  final TextInputType? textInputType;
   final TextAlign? textAlign;
+  final TextInputType? textInputType;
   final List<TextInputFormatter>? inputFormatter;
   final int? maxLength;
   final bool? isObscure;
-
   final FormFieldValidator<String>? validator;
   final TextInputAction? textInputAction;
+  final bool? isEnable;
 
-  const EditTextFormField({
-    Key? key,
-    this.focusNode,
-    this.textController,
-    required this.onTextChange,
-    required this.onTap,
-    this.hint,
-    this.suffixIcon,
-    this.prefixIcon,
-    this.textInputType = TextInputType.name,
-    this.textAlign = TextAlign.justify,
-    this.inputFormatter,
-    this.maxLength = 999,
-    this.isObscure = false,
-    this.validator = null,
-    this.textInputAction = TextInputAction.none,
-  }) : super(key: key);
+  const EditTextFormField(
+      {Key? key,
+      this.focusNode,
+      this.textController,
+      required this.onTextChange,
+      required this.onTap,
+      this.hint,
+      this.suffixIcon,
+      this.prefixIcon,
+      this.textInputType = TextInputType.name,
+      this.textAlign = TextAlign.justify,
+      this.inputFormatter,
+      this.maxLength = 999,
+      this.isObscure = false,
+      this.validator = null,
+      this.textInputAction = TextInputAction.none,
+      this.isEnable = true})
+      : super(key: key);
 
   @override
   State<EditTextFormField> createState() => _EditTextFormFieldState();
@@ -47,7 +48,7 @@ class _EditTextFormFieldState extends State<EditTextFormField> {
     return Container(
       width: double.infinity,
       alignment: Alignment.center,
-      margin: EdgeInsets.all(5),
+      margin: EdgeInsets.symmetric(vertical: 2, horizontal: 5),
       child: TextFormField(
         validator: widget.validator,
         obscureText: widget.isObscure!,
@@ -65,9 +66,10 @@ class _EditTextFormFieldState extends State<EditTextFormField> {
         keyboardType: widget.textInputType,
         focusNode: widget.focusNode,
         controller: widget.textController,
-        onTap: () => widget.onTap!(),
+        onTap: () => widget.onTap ?? null,
         onChanged: (value) => widget.onTextChange!(value),
         textAlign: widget.textAlign!,
+        enabled: widget.isEnable,
         decoration: InputDecoration(
             counterStyle: TextStyle(height: 0.0),
             counterText: '',
@@ -79,7 +81,10 @@ class _EditTextFormFieldState extends State<EditTextFormField> {
             fillColor: aWhite,
             filled: true,
             errorText: null,
-            errorStyle: TextStyle(fontSize: 10, color: aRed),
+            errorStyle: TextStyle(
+              fontSize: 10,
+              color: aRed,
+            ),
             errorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(100.0),
               borderSide: const BorderSide(
