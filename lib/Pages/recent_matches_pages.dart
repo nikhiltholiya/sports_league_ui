@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../utils/app_colors.dart';
 
 import '../Pages/base_activity.dart';
 import '../components/elevated_buttons.dart';
@@ -55,7 +56,9 @@ class _RecentMatchesPageState extends State<RecentMatchesPage> {
         width: double.infinity,
         fontSize: 18.0,
         onClick: () {},
-        primary: true,
+        borderColor: aGreen,
+        buttonColor: aGreen,
+        labelColor: aWhite,
         label: 'Invite To Play',
         radius: 0.0,),);
     // return Scaffold(

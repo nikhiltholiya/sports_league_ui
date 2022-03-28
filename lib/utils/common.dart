@@ -55,6 +55,39 @@ String? convertTime(String? fromTime, String? toTime) {
     return '$sTime';
 }
 
+//Used for convert Date as 2022-03-23
+String? convertDateYYYYMMDD(String? startDate, String? endDate) {
+  String? sDate = '';
+  String? eDate = '';
+  try {
+    if (startDate != null)
+      sDate = '${formatDate(DateTime.parse(startDate), [
+        yyyy,
+        '-',
+        mm,
+        '-',
+        dd,
+      ])}';
+
+    if (endDate != null)
+      eDate = '${formatDate(DateTime.parse(endDate), [
+        yyyy,
+        '-',
+        mm,
+        '-',
+        dd,
+      ])}';
+  } catch (e) {
+    debugPrint(e.toString());
+  }
+  if (endDate != null)
+    return '$sDate - $eDate';
+  else
+    return '$sDate';
+}
+
+
+
 //Used for convert Date as sat 12th Mar 2022
 String? convertDate(String? startDate, String? endDate) {
   String? sDate = '';

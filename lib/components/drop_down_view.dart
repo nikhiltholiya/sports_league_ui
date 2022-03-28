@@ -5,7 +5,7 @@ import '../utils/app_labels.dart';
 
 //Created on 20220312
 class DropDownView extends StatefulWidget {
-  final List<String>? cityList;
+  final List<String>? dropList;
   final Function? onValueChange;
   final String? dropdownValue;
   final String? hint;
@@ -13,7 +13,7 @@ class DropDownView extends StatefulWidget {
   const DropDownView(
       {Key? key,
       this.dropdownValue,
-      this.cityList,
+      this.dropList,
       this.onValueChange,
       this.hint})
       : super(key: key);
@@ -45,7 +45,7 @@ class _DropDownViewState extends State<DropDownView> {
         dropdownColor: aWhite,
         value: widget.dropdownValue ?? null,
         onChanged: (value) => widget.onValueChange!(value),
-        items: widget.cityList!.map<DropdownMenuItem<String>>((String value) {
+        items: widget.dropList!.map<DropdownMenuItem<String>>((String value) {
           return DropdownMenuItem<String>(
             value: value,
             child: Text(

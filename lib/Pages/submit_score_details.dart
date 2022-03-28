@@ -5,14 +5,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:provider/provider.dart';
+import '../bean/all_league_Applications/all_leagues_applications.dart';
+import '../components/drop_down_view.dart';
 
 import '../Pages/base_activity.dart';
+import '../bean/all_leagues/all_leagues.dart';
 import '../bean/all_users/all_users.dart';
 import '../components/app_chips.dart';
+import '../components/auto_complete_text_form_field.dart';
 import '../components/edit_text_form_field.dart';
 import '../components/elevated_buttons.dart';
 import '../components/set_details_list_tile.dart';
 import '../components/submit_score_details_header_tile.dart';
+import '../providers/league_id_provider.dart';
 import '../providers/user_id_provider.dart';
 import '../utils/Constants.dart';
 import '../utils/app_colors.dart';
@@ -24,7 +29,6 @@ import '../utils/shared_preferences_utils.dart';
 class SubmitScoreDetails extends StatefulWidget {
   static const String path = 'submitScoreDetails';
 
-  // {court: "Gabriel Park", endDate: "2022-03-20", format: "single", startDate: "2022-03-20", league: "6b32b9ee-4fc4-4bea-a996-f383071e4fa6", matchStatus: "completed", playerOneId: "1211d15f-5147-4394-812e-47c801d567c5", playerTwoId: "0510839e-5f3e-427e-8344-0dff6bf5aabd", set1: {playerOneScore: 6, playerOneTbScore: 0, playerTwoScore: 6, playerTwoTbScore: 7}, winnerOne: "0510839e-5f3e-427e-8344-0dff6bf5aabd"}
   const SubmitScoreDetails({Key? key}) : super(key: key);
 
   @override
@@ -37,6 +41,8 @@ class _SubmitScoreDetailsState extends State<SubmitScoreDetails>
   GlobalKey? _stackKey = GlobalKey();
   GlobalKey? _userKey = GlobalKey();
 
+  // var _scKey = GlobalKey<ScaffoldState>();
+
   double? _dynamicTotalHeight = 0;
   List<double>? _childWidgetHeights = [];
   var scrollPosition;
@@ -48,13 +54,14 @@ class _SubmitScoreDetailsState extends State<SubmitScoreDetails>
   late List<String?> tie1;
   late List<String?> tie2;
 
-  List<String?> players = [];
+  List<AllUsersData?> players = [];
   List<bool?> selectedPlayer = [];
+  List<String?> displayPlayer = [];
 
-  List<String?> matchTypes = ['Single', 'Double'];
-  List<bool?> selectedMatchType = [];
+  List<String?> gameType = ['Single', 'Double'];
+  List<bool?> selectedGameType = [];
 
-  List<String?> matchStatus = ['Completed', 'Retire', 'Tie'];
+  List<String?> matchStatus = ['Completed', 'Retire', 'Draw'];
   List<bool?> selectedMatchStatus = [];
 
   late List<Map<String, dynamic>>? passingParam = [];
@@ -64,6 +71,15 @@ class _SubmitScoreDetailsState extends State<SubmitScoreDetails>
   late AllUsersData player2;
   String? matchDate;
   String? matchTime;
+  String? matchCourtName = '';
+  String? LeagueId = '';
+  String? LeagueName = '';
+  String? matchWinnerName = '';
+  String? matchWinnerId = '';
+  String? matchGameType = '';
+  String? matchGameStatus = '';
+
+  List<LeagueEdges>? _leaguesList;
 
   FocusNode? _chatNode;
   late String? dropDownValue = null;
@@ -100,6 +116,14 @@ class _SubmitScoreDetailsState extends State<SubmitScoreDetails>
     return _dynamicTotalHeight;
   }
 
+  Map<String, dynamic> paramSubmitScore = {
+    '\$passParam': 'MatchInput!',
+  };
+  Map<String, dynamic> paramTypeSubmitScore = {
+    'submitScore': '\$passParam',
+  };
+  Map<String, dynamic> passVariableSubmitScore = {};
+
   @override
   void initState() {
     _userData = getAllUserData();
@@ -117,13 +141,6 @@ class _SubmitScoreDetailsState extends State<SubmitScoreDetails>
       tie2.add('0');
     }
 
-
-    // {court: "Gabriel Park", endDate: "2022-03-20", format: "single", startDate: "2022-03-20",
-    // league: "6b32b9ee-4fc4-4bea-a996-f383071e4fa6", matchStatus: "completed",
-    // playerOneId: "1211d15f-5147-4394-812e-47c801d567c5", playerTwoId: "0510839e-5f3e-427e-8344-0dff6bf5aabd",
-    // set1: {playerOneScore: 6, playerOneTbScore: 0, playerTwoScore: 6, playerTwoTbScore: 7},
-    // winnerOne: "0510839e-5f3e-427e-8344-0dff6bf5aabd"}
-
     super.initState();
   }
 
@@ -136,7 +153,10 @@ class _SubmitScoreDetailsState extends State<SubmitScoreDetails>
 
   @override
   Widget build(BuildContext context) {
+
+    print('matchGameType -- ${matchGameType} -- $selectedGameType');
     return BaseWidget(
+      // key: _scKey,
       appbarHeight: 0,
       appbar: Text(
         submitScore,
@@ -161,6 +181,7 @@ class _SubmitScoreDetailsState extends State<SubmitScoreDetails>
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   player1 = snapshot.data!;
+
                   return Query(
                     options: QueryOptions(
                       document: gql(allUsers(param, paramType)),
@@ -187,16 +208,24 @@ class _SubmitScoreDetailsState extends State<SubmitScoreDetails>
 
                         players = [];
                         selectedPlayer = [];
-                        players.add(
-                            player1.allUsers?.edges?.first.node?.firstName);
-                        players.add(
-                            player2.allUsers?.edges?.first.node?.firstName);
+                        displayPlayer = [];
+                        players.add(player1);
+                        players.add(player2);
+
+                        for (var data in players)
+                          displayPlayer.add(
+                              data?.allUsers?.edges?.first.node?.firstName);
+
+                        // players.add(
+                        //     player1.allUsers?.edges?.first.node?.firstName);
+                        // players.add(
+                        //     player2.allUsers?.edges?.first.node?.firstName);
                         for (int i = 0; i < players.length; i++)
                           selectedPlayer.add(false);
 
-                        selectedMatchType = [];
-                        for (int i = 0; i < matchTypes.length; i++)
-                          selectedMatchType.add(false);
+                        selectedGameType = [];
+                        for (int i = 0; i < gameType.length; i++)
+                          selectedGameType.add(false);
 
                         selectedMatchStatus = [];
                         for (int i = 0; i < matchStatus.length; i++)
@@ -281,7 +310,8 @@ class _SubmitScoreDetailsState extends State<SubmitScoreDetails>
                                           fontWeight: FontWeight.bold),
                                     ),
                                   ),
-                                  chips(players, selectedPlayer),
+
+                                  chips(displayPlayer, selectedPlayer),
 
                                   Padding(
                                     padding: const EdgeInsets.only(
@@ -399,22 +429,23 @@ class _SubmitScoreDetailsState extends State<SubmitScoreDetails>
                                     onTap: () {},
                                     hint: matchCourt,
                                     onTextChange: (value) {
+                                      matchCourtName = value;
                                     },
-
-                                    suffixIcon: Icon(Icons.arrow_drop_down_sharp),
+                                    suffixIcon:
+                                        Icon(Icons.arrow_drop_down_sharp),
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.only(
                                         top: 20, bottom: 5),
                                     child: Text(
-                                      gameType,
+                                      gameTypeLabel,
                                       style: TextStyle(
                                           color: aLightGray,
                                           fontSize: 12.0,
                                           fontWeight: FontWeight.bold),
                                     ),
                                   ),
-                                  chips(matchTypes, selectedMatchType),
+                                  chips(gameType, selectedGameType),
                                   Padding(
                                     padding: const EdgeInsets.only(
                                         top: 20, bottom: 5),
@@ -451,15 +482,190 @@ class _SubmitScoreDetailsState extends State<SubmitScoreDetails>
                                   //   },
                                   // ),
 
-                                  EditTextFormField(
+                                  Query(
+                                    options: QueryOptions(
+                                      document: gql(
+                                        allLeagueApplicationsQuery({
+                                          '\$applicant_UserId': 'UUID',
+                                          '\$status': 'String!',
+                                          '\$league_Status': 'String!',
+                                        }, {
+                                          'applicant_UserId':
+                                              '\$applicant_UserId',
+                                          'status': '\$status',
+                                          'league_Status': '\$league_Status',
+                                        }),
+                                      ),
+                                      variables: {
+                                        'applicant_UserId':
+                                            '${player1.allUsers?.edges?.first.node?.userId}',
+                                        'status': 'approved',
+                                        'league_Status': 'ongoing',
+                                      },
+                                      pollInterval: Duration(seconds: 100),
+                                    ),
+                                    builder: (result, {fetchMore, refetch}) {
+                                      if (result.hasException) {
+                                        return Text(
+                                            result.exception.toString());
+                                      }
 
-                                    onTap: () {},
-                                    hint: leagueOpt,
-                                    onTextChange: (value) {
+                                      if (result.isLoading &&
+                                          result.data == null) {
+                                        return const Center(
+                                            child:
+                                                CupertinoActivityIndicator());
+                                      }
+
+                                      AllLeaguesApps allLeaguesApps =
+                                          AllLeaguesApps.fromJson(result.data!);
+
+                                      _leaguesList = [];
+                                      _leaguesList = allLeaguesApps
+                                          .allLeagueApplications?.edges;
+
+                                      List<String>? leagueListTemp = [];
+                                      for (var data in _leaguesList!) {
+                                        leagueListTemp
+                                            .add(data.node!.league!.name!);
+                                      }
+
+                                      var exist = _leaguesList!.where(
+                                          (LeagueEdges) =>
+                                              _leaguesList?.first.node?.league
+                                                  ?.leagueId! ==
+                                              Provider.of<LeagueIdProvider>(
+                                                      context,
+                                                      listen: false)
+                                                  .getLeagueId);
+
+                                      return Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 5),
+                                        child: DropDownView(
+                                          dropList: leagueListTemp,
+                                          hint: exist.isEmpty
+                                              ? leagueOptHint
+                                              : exist.first.node!.league!.name!,
+                                          dropdownValue: dropDownValue,
+                                          onValueChange: (value) {
+                                            dropDownValue = value;
+
+                                            var data = _leaguesList!.where(
+                                                (element) =>
+                                                    element
+                                                        .node?.league?.name ==
+                                                    value);
+                                            print('Selected -- $data');
+                                            print(
+                                                'Selected -- ${data.first.node?.league?.leagueId}');
+
+                                            Provider.of<LeagueIdProvider>(
+                                                    context,
+                                                    listen: false)
+                                                .setLeagueId(data.first.node
+                                                    ?.league?.leagueId);
+
+                                            // final split = value.split(',');
+                                            // selectedCity = split![0].toString().trim();
+                                            // selectedState = split![1].toString().trim();
+                                          },
+                                        ),
+                                      );
                                     },
-
-                                    suffixIcon: Icon(Icons.arrow_drop_down_sharp),
                                   ),
+
+                                  // Query(
+                                  //   options: QueryOptions(
+                                  //     document: gql(fetChCourts),
+                                  //     pollInterval: Duration(seconds: 100),
+                                  //   ),
+                                  //   builder: (resultLeague,
+                                  //       {fetchMore, refetch}) {
+                                  //     if (resultLeague.hasException) {
+                                  //       return Text(
+                                  //           resultLeague.exception.toString());
+                                  //     }
+                                  //
+                                  //     if (resultLeague.isLoading &&
+                                  //         resultLeague.data == null) {
+                                  //       return const Center(
+                                  //           child:
+                                  //               CupertinoActivityIndicator());
+                                  //     }
+                                  //     print(resultLeague.data!);
+                                  //
+                                  //     AllLeaguesData leagueData =
+                                  //         AllLeaguesData.fromJson(
+                                  //             resultLeague.data!);
+                                  //
+                                  //     _leaguesList = [];
+                                  //     _leaguesList =
+                                  //         leagueData.allLeagues!.edges!;
+                                  //
+                                  //     List<String>? leagueListTemp = [];
+                                  //     for (var data in _leaguesList!) {
+                                  //       leagueListTemp.add(data.node!.name!);
+                                  //     }
+                                  //
+                                  //     var exist = _leaguesList!.where(
+                                  //         (LeagueEdges) =>
+                                  //             _leaguesList
+                                  //                 ?.first.node?.leagueId! ==
+                                  //             Provider.of<LeagueIdProvider>(
+                                  //                     context,
+                                  //                     listen: false)
+                                  //                 .getLeagueId);
+                                  //
+                                  //     return Padding(
+                                  //       padding: const EdgeInsets.symmetric(
+                                  //           horizontal: 5),
+                                  //       child: DropDownView(
+                                  //         dropList: leagueListTemp,
+                                  //         hint: exist.isEmpty
+                                  //             ? leagueOptHint
+                                  //             : exist.first.node!.name,
+                                  //         dropdownValue: dropDownValue,
+                                  //         onValueChange: (value) {
+                                  //           dropDownValue = value;
+                                  //
+                                  //           var data = _leaguesList!.where(
+                                  //               (element) =>
+                                  //                   element.node?.name ==
+                                  //                   value);
+                                  //           print('Selected -- $data');
+                                  //           print(
+                                  //               'Selected -- ${data.first.node?.leagueId}');
+                                  //
+                                  //           Provider.of<LeagueIdProvider>(
+                                  //                   context,
+                                  //                   listen: false)
+                                  //               .setLeagueId(
+                                  //                   data.first.node?.leagueId);
+                                  //
+                                  //           // final split = value.split(',');
+                                  //           // selectedCity = split![0].toString().trim();
+                                  //           // selectedState = split![1].toString().trim();
+                                  //         },
+                                  //       ),
+                                  //     );
+                                  //
+                                  //     // return AutoCompleteEditField(
+                                  //     //   listOptions: leagueListTemp,
+                                  //     //   hint: exist.isEmpty
+                                  //     //       ? leagueOptHint
+                                  //     //       : exist.first.node!.name,
+                                  //     //   onSelection: (value, pos) {
+                                  //     //     Provider.of<LeagueIdProvider>(context,
+                                  //     //             listen: false)
+                                  //     //         .setLeagueId(_leaguesList![pos]
+                                  //     //             .node!
+                                  //     //             .leagueId);
+                                  //     //   },
+                                  //     // );
+                                  //   },
+                                  // ),
+
                                   Padding(
                                     padding: const EdgeInsets.only(
                                         top: 30, bottom: 10),
@@ -482,33 +688,31 @@ class _SubmitScoreDetailsState extends State<SubmitScoreDetails>
                               delegate: SliverChildBuilderDelegate(
                                 (context, index) => SetDetailsListTile(
                                   setName: 'Set ${index + 1}',
-                                  player1Name: player1.allUsers?.edges?.first.node?.firstName,
-                                  player2Name: player2.allUsers?.edges?.first.node?.firstName,
+                                  player1Name: player1
+                                      .allUsers?.edges?.first.node?.firstName,
+                                  player2Name: player2
+                                      .allUsers?.edges?.first.node?.firstName,
                                   player1Score: (value) {
                                     player1Sets.setAll(index, [value]);
-                                    print('$index - $value');
+                                    // print('$index - $value');
                                   },
                                   player1Controller: TextEditingController(
                                       text: player1Sets[index]),
-
-
                                   player2Score: (value) {
                                     player2Sets.setAll(index, [value]);
-                                    print('$index - $value');
+                                    // print('$index - $value');
                                   },
                                   player2Controller: TextEditingController(
                                       text: player2Sets[index]),
-
-
                                   tieBreak1: (value) {
                                     tie1.setAll(index, [value]);
-                                    print('$index - $value');
+                                    // print('$index - $value');
                                   },
                                   tie1Controller:
                                       TextEditingController(text: tie1[index]),
                                   tieBreak2: (value) {
                                     tie2.setAll(index, [value]);
-                                    print('$index - $value');
+                                    // print('$index - $value');
                                   },
                                   tie2Controller:
                                       TextEditingController(text: tie2[index]),
@@ -527,7 +731,9 @@ class _SubmitScoreDetailsState extends State<SubmitScoreDetails>
                                         padding: const EdgeInsets.all(8.0),
                                         child: ElevatedButtons(
                                           fontSize: 14,
-                                          primary: false,
+                                          borderColor: aLightGray,
+                                          buttonColor: aWhite,
+                                          labelColor: aLightGray,
                                           onClick: () {
                                             if (player1Sets.length < 5) {
                                               setState(() {
@@ -543,38 +749,148 @@ class _SubmitScoreDetailsState extends State<SubmitScoreDetails>
                                         ),
                                       )
                                     : SizedBox(),
-                                ElevatedButtons(
-                                  fontSize: 16,
-                                  primary: true,
-                                  onClick: () {
-                                    passingParam = [];
-                                    passingParam!.add({'court' : 'Gabriel Park'});
-                                    passingParam!.add({'endDate' : '2022-03-20'});
-                                    passingParam!.add({'format' : 'single'});
-                                    passingParam!.add({'startDate' : '2022-03-20'});
-                                    passingParam!.add({'league' : '6b32b9ee-4fc4-4bea-a996-f383071e4fa6'});
-                                    passingParam!.add({'matchStatus' : 'completed'});
-                                    passingParam!.add({'playerOneId' : '1211d15f-5147-4394-812e-47c801d567c5'});
-                                    passingParam!.add({'playerTwoId' : '0510839e-5f3e-427e-8344-0dff6bf5aabd'});
-                                    // passingParam!.add({'set1' : {'playerOneScore': 6,'playerOneTbScore' : 0, 'playerTwoScore': 6, 'playerTwoTbScore' : 7}});
-                                    // passingParam!.add({'winnerOne' : '0510839e-5f3e-427e-8344-0dff6bf5aabd'});
+
+                                // Map<String, dynamic> param = {
+                                //   '\$submitScore': 'MatchInput!',
+                                // };
+                                // Map<String, dynamic> paramType = {
+                                //   '$submitScore': '\$passParam',
+                                // };
+                                // Map<String, dynamic> passVariable = {'passParam': passMap};
+                                Mutation(
+                                  options: MutationOptions(
+                                    document: gql(SubmitScore(paramSubmitScore,
+                                        paramTypeSubmitScore)),
+                                    // update: update,
+                                    onError: (OperationException? error) {
+                                      print('erroR -- $error');
+                                      // Text('$error');
+                                    },
+                                    // _simpleAlert(context, error.toString()),
+                                    onCompleted: (dynamic resultData) {
+                                      // Text('Thanks for your star!');
+                                      print('**** $resultData');
+
+                                      _showMyDialog(submitSuccess);
+                                    },
+                                    // 'Sorry you changed your mind!',
+                                  ),
+                                  builder: (RunMutation _submitScore,
+                                      QueryResult? addResult) {
+                                    final submitScoreApi = (result) {
+                                      _submitScore(result);
+                                    };
+
+                                    final anyLoading = addResult!.isLoading;
+
+                                    return ElevatedButtons(
+                                      borderColor: aGreen,
+                                      buttonColor: aGreen,
+                                      labelColor: aWhite,
+                                      fontSize: 16,
+                                      onClick: () {
+
+                                        matchGameStatus = selectedMatchStatus.contains(true) ? matchStatus[selectedMatchStatus.indexOf(true)].toString().trim().toLowerCase() :'';
+                                        matchWinnerName = selectedPlayer.contains(true) ?  displayPlayer[selectedPlayer.indexOf(true)].toString().trim().toLowerCase(): '';
+                                        matchGameType = selectedGameType.contains(true) ?  gameType[selectedGameType.indexOf(true)].toString().trim().toLowerCase(): '';
+
+                                        print('matchGameStatus : $matchGameStatus ** matchWinnerName : $matchWinnerName ** matchGameType : $matchGameType');
+
+                                        if (matchGameStatus!.isEmpty)
+                                          return ScaffoldMessenger.of(context)
+                                              .showSnackBar(SnackBar(
+                                            content: Text(errStatus),
+                                          ));
+
+                                        if (matchGameStatus != 'draw' && matchWinnerName!.isEmpty) {
+                                            return ScaffoldMessenger.of(context)
+                                                .showSnackBar(SnackBar(
+                                              content: Text(errPlayer),
+                                            ));
+                                        }
 
 
-                                    for(int i = 0; i<player1Sets.length;i ++){
-                                      passingParam!.add({'set${i+1}' : {'playerOneScore': player1Sets[i],'playerOneTbScore' : tie1[i], 'playerTwoScore': player2Sets[i], 'playerTwoTbScore' : tie2[i]}});
-                                    }
+                                        if (matchGameType!.isEmpty)
+                                          return ScaffoldMessenger.of(context)
+                                              .showSnackBar(SnackBar(
+                                            content: Text(errGame),
+                                          ));
 
-                                    passingParam!.add({'winnerOne' : '${players[selectedPlayer.indexOf(true)]}'});
 
-                                    print(
-                                        'player1Sets $player1Sets ** player2Sets $player2Sets ** tie1 $tie1 ** tie2 $tie2');
 
-                                    print(jsonEncode(passingParam));
+
+                                        if (Provider.of<LeagueIdProvider>(
+                                                    context,
+                                                    listen: false)
+                                                .getLeagueId! ==
+                                            '')
+                                          return ScaffoldMessenger.of(context)
+                                              .showSnackBar(SnackBar(
+                                            content: Text(errLeague),
+                                          ));
+
+                                        Map<String, dynamic> passMap = {
+                                          'court': matchCourtName ?? '',
+                                          'endDate': convertDateYYYYMMDD(
+                                              matchDate ??
+                                                  DateTime.now().toString(),
+                                              null),
+                                          'startDate': convertDateYYYYMMDD(
+                                              matchDate ??
+                                                  DateTime.now().toString(),
+                                              null),
+                                          'league':
+                                              Provider.of<LeagueIdProvider>(
+                                                      context,
+                                                      listen: false)
+                                                  .getLeagueId,
+                                          'matchStatus': matchGameStatus,
+                                          'format': matchGameType,
+                                          'playerOneId': player1.allUsers?.edges
+                                                  ?.first.node?.userId ??
+                                              '',
+                                          'playerTwoId': player2.allUsers?.edges
+                                                  ?.first.node?.userId ??
+                                              '',
+                                          'winnerOne': matchGameStatus != 'draw'
+                                              ? players[selectedPlayer
+                                                          .indexOf(true)]
+                                                      ?.allUsers
+                                                      ?.edges
+                                                      ?.first
+                                                      .node
+                                                      ?.userId : '',
+                                          for (int i = 0;
+                                              i < player1Sets.length;
+                                              i++)
+                                            'set${i + 1}': {
+                                              'playerOneScore': int.parse(
+                                                  player1Sets[i] ?? '0'),
+                                              'playerOneTbScore':
+                                                  int.parse(tie1[i] ?? '0'),
+                                              'playerTwoScore': int.parse(
+                                                  player2Sets[i] ?? '0'),
+                                              'playerTwoTbScore':
+                                                  int.parse(tie2[i] ?? '0')
+                                            }
+                                        };
+
+                                        // var resBody = {};
+                                        // resBody['passParam'] = passMap;
+
+                                        passVariableSubmitScore = {
+                                          'passParam': passMap
+                                        };
+
+                                        print(passMap);
+                                        submitScoreApi(passVariableSubmitScore);
+                                      },
+                                      label: anyLoading ? 'wait' : submit,
+                                      width: double.infinity,
+                                      radius: 0.0,
+                                    );
                                   },
-                                  label: submit,
-                                  width: double.infinity,
-                                  radius: 0.0,
-                                )
+                                ),
                               ],
                             ),
                           ),
@@ -607,10 +923,41 @@ class _SubmitScoreDetailsState extends State<SubmitScoreDetails>
                 isChipSelected.setAll(j, [false]);
 
               isChipSelected.setAll(i, [true]);
-              setState(() {});
+              setState(() {
+
+              });
             },
           ),
       ],
+    );
+  }
+
+  Future<void> _showMyDialog(String? content) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text(submitScore),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text(content!),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text(submitLabel),
+              onPressed: () {
+                Navigator.of(context).pop();
+                Navigator.pop(context);
+                // Navigator.pushNamedAndRemoveUntil(context, newRouteName, (route) => false)
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }

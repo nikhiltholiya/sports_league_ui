@@ -128,7 +128,9 @@ class _ProfileHeaderTileState extends State<ProfileHeaderTile> {
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: ElevatedButtons(
-                                  fontSize: 15,
+                                  borderColor: aLightGray,
+                                  buttonColor: aWhite,
+                                  labelColor: aLightGray,
                                   label: widget.btnLeft,
                                   onClick: () => widget.onLeftBtnClick!(),
                                 ),
@@ -140,10 +142,11 @@ class _ProfileHeaderTileState extends State<ProfileHeaderTile> {
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: ElevatedButtons(
-                                  fontSize: 15,
+                                  borderColor: aGreen,
+                                  buttonColor: aGreen,
+                                  labelColor: aWhite,
                                   label: widget.btnRight,
                                   onClick: () => widget.onRightBtnClick!(),
-                                  primary: true,
                                 ),
                               ),
                             ),

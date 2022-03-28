@@ -32,7 +32,7 @@ class _MyLeagueListState extends State<MyLeagueList> with SharedPrefUtils {
   ScrollController? _scrollController;
 
   late AllLeaguesApps? allLeaguesApps;
-  late List<Edges>? applicantsList;
+  late List<LeagueEdges>? applicantsList;
   late String? selectedCity = '';
   late String? selectedState = '';
 
@@ -128,7 +128,7 @@ class _MyLeagueListState extends State<MyLeagueList> with SharedPrefUtils {
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: DropDownView(
-                                cityList: [
+                                dropList: [
                                   'Portland, Oregon',
                                   'Los Angeles, California',
                                   'Atlanta, Georgia'

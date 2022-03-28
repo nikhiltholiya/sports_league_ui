@@ -14,7 +14,7 @@ class BaseWidget extends StatefulWidget {
       {Key? key,
       this.scaffoldKey,
       required this.body,
-        required this.appbar,
+      required this.appbar,
       this.appbarHeight = 0.0,
       this.bottomBar,
       this.drawer,
