@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:provider/provider.dart';
+import '../Pages/home_page.dart';
 import '../providers/league_id_provider.dart';
 import '../components/bordered_circle_avatar.dart';
 
@@ -80,6 +81,20 @@ class _DashboardPageState extends State<DashboardPage> with SharedPrefUtils {
           subtitle: 'Contact support team',
           color: Color(0xff263238),
           path: ''),
+
+      MenuItems(
+          title: 'Messages',
+          image: 'transperent_tennis_ball_icon_green.png',
+          subtitle: 'Check latest messages',
+          color: Color(0xff31a05f),
+          path: ''),
+
+      MenuItems(
+          title: 'Signup',
+          image: 'transperent_tennis_ball_icon_red.png',
+          subtitle: 'This is temp for check signup',
+          color: Color(0xffeb5945),
+          path: HomePage.path),
     ];
 
     Map<String, dynamic> param = {
@@ -111,7 +126,6 @@ class _DashboardPageState extends State<DashboardPage> with SharedPrefUtils {
           if (result.isLoading && result.data == null) {
             return const Center(child: CupertinoActivityIndicator());
           }
-
 
           // setLoggedUser(AllUsersData.fromJson(result.data!).allUsers?.edges?.first.node?.toJson().toString());
           setLoggedUser(jsonEncode(AllUsersData.fromJson(result.data!)));

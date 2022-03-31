@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
-import 'package:graphql_flutter/graphql_flutter.dart';
+
+import '../Pages/base_activity.dart';
 import '../Pages/verify_email_page.dart';
 import '../bean/register/register.dart';
-import '../utils/Constants.dart';
-import '../utils/shared_preferences_utils.dart';
-import '../Pages/base_activity.dart';
 import '../components/edit_text_form_field.dart';
 import '../components/elevated_buttons.dart';
 import '../utils/app_colors.dart';
 import '../utils/app_labels.dart';
+import '../utils/shared_preferences_utils.dart';
 import '../utils/validators.dart';
 
 //Created on 20220325
@@ -23,10 +22,7 @@ class SignUpPage extends StatefulWidget {
   State<SignUpPage> createState() => _SignUpPageState();
 }
 
-
-
 class _SignUpPageState extends State<SignUpPage> with SharedPrefUtils {
-
   bool? obSecure = true;
   bool? obSecureRetype = true;
   String? email = '';
@@ -40,6 +36,7 @@ class _SignUpPageState extends State<SignUpPage> with SharedPrefUtils {
   late RegisterData _registerData;
 
   late List<String?> errorList = [];
+
   @override
   void initState() {
     paramRegister = {
@@ -160,8 +157,16 @@ class _SignUpPageState extends State<SignUpPage> with SharedPrefUtils {
           fontSize: 25,
           radius: 0.0,
           onClick: () {
-            setEmailId('abc@gmail.com');
-            Navigator.pushNamed(context, VerifyEmailPage.path);
+            if (_formKey.currentState!.validate()) {
+              Map<String, dynamic> passVariable = {
+                'email': email,
+                'pass1': password,
+                'pass2': rePassword
+              };
+
+              setEmailId(email);
+              Navigator.pushNamed(context, VerifyEmailPage.path);
+            }
           },
           borderColor: aGreen,
           buttonColor: aGreen,

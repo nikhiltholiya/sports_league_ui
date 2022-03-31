@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 
 import '../Pages/challenges_chat.dart';
 import '../Pages/create_profile_page.dart';
+import '../Pages/create_profile_picture_page.dart';
 import '../Pages/dashboard.dart';
 import '../Pages/head_to_head_details.dart';
 import '../Pages/head_to_head_page.dart';
@@ -20,9 +21,11 @@ import '../Pages/submit_score_details.dart';
 import '../Pages/submit_score_list.dart';
 import '../Pages/verify_email_page.dart';
 import '../providers/league_id_provider.dart';
+import '../providers/profile_pic_provider.dart';
 import '../providers/user_id_provider.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await initHiveForFlutter();
 
   final HttpLink httpLink = HttpLink(
@@ -52,6 +55,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider<LeagueIdProvider>(
           create: (context) => LeagueIdProvider(),
+        ),
+        ChangeNotifierProvider<ProfilePicProvider>(
+          create: (context) => ProfilePicProvider(),
         )
       ],
       child: MaterialApp(
@@ -84,7 +90,6 @@ class MyApp extends StatelessWidget {
         //20220223
         // initialRoute: LeagueDetails.path,
         initialRoute: DashboardPage.path,
-        // initialRoute: HomePage.path,
         onGenerateRoute: (settings) {
           if (settings.name == HomePage.path) {
             return CupertinoPageRoute(
@@ -95,9 +100,13 @@ class MyApp extends StatelessWidget {
           } else if (settings.name == VerifyEmailPage.path) {
             return CupertinoPageRoute(
                 builder: (context) => VerifyEmailPage(), settings: settings);
-          }else if (settings.name == CreateProfilePage.path) {
+          } else if (settings.name == CreateProfilePage.path) {
             return CupertinoPageRoute(
                 builder: (context) => CreateProfilePage(), settings: settings);
+          } else if (settings.name == CreateProfilePicturePage.path) {
+            return CupertinoPageRoute(
+                builder: (context) => CreateProfilePicturePage(),
+                settings: settings);
           } else if (settings.name == DashboardPage.path) {
             return CupertinoPageRoute(
                 builder: (context) => DashboardPage(), settings: settings);
