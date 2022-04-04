@@ -2,9 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
-import 'package:tenniston/bean/resend_activation_mail/resend_activation_mail.dart';
-import 'package:tenniston/components/app_dialog.dart';
-import 'package:tenniston/utils/Constants.dart';
+import '../bean/resend_activation_mail/resend_activation_mail.dart';
+import '../components/app_dialog.dart';
+import '../utils/Constants.dart';
 
 import '../Pages/base_activity.dart';
 import '../Pages/verify_email_page.dart';

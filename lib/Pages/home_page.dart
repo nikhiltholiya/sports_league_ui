@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:tenniston/Pages/sign_in_page.dart';
+import '../Pages/sign_in_page.dart';
 import '../Pages/base_activity.dart';
 import '../Pages/sign_up_page.dart';
 import '../components/app_chips.dart';

@@ -5,16 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:form_field_validator/form_field_validator.dart';
-import 'package:graphql_flutter/graphql_flutter.dart';
-import 'package:provider/provider.dart';
-import 'package:tenniston/bean/token_auth/token_auth.dart';
-import 'package:tenniston/components/app_dialog.dart';
-import 'package:tenniston/utils/Constants.dart';
-import '../Pages/create_profile_picture_page.dart';
-import '../components/drop_down_view.dart';
-import '../providers/profile_pic_provider.dart';
 
 import '../Pages/base_activity.dart';
+import '../bean/token_auth/token_auth.dart';
+import '../components/app_dialog.dart';
+import '../components/drop_down_view.dart';
 import '../components/edit_text_form_field.dart';
 import '../components/elevated_buttons.dart';
 import '../utils/app_colors.dart';
@@ -92,7 +87,6 @@ class _CreateProfilePageState extends State<CreateProfilePage> with SharedPrefUt
       'userId': '\$uId'
     };
 
-
     super.initState();
   }
 
@@ -101,7 +95,7 @@ class _CreateProfilePageState extends State<CreateProfilePage> with SharedPrefUt
     return FutureBuilder<User>(
       future: _getUserData(),
       builder: (context, snapshot) {
-        if(snapshot.hasData){
+        if (snapshot.hasData) {
           return Form(
             key: _formKey,
             child: BaseWidget(
@@ -310,7 +304,6 @@ class _CreateProfilePageState extends State<CreateProfilePage> with SharedPrefUt
                       ));
                     }
 
-
                     Map<String, dynamic> passVariable = {
                       'city': cityValue,
                       'dob': bDate,
@@ -334,7 +327,9 @@ class _CreateProfilePageState extends State<CreateProfilePage> with SharedPrefUt
             ),
           );
         }
-        return Center(child: CupertinoActivityIndicator(),);
+        return Center(
+          child: CupertinoActivityIndicator(),
+        );
       },
     );
   }
