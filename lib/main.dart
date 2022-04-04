@@ -16,6 +16,7 @@ import '../Pages/league_details.dart';
 import '../Pages/my_league_list.dart';
 import '../Pages/profile_page.dart';
 import '../Pages/recent_matches_pages.dart';
+import '../Pages/sign_in_page.dart';
 import '../Pages/sign_up_page.dart';
 import '../Pages/submit_score_details.dart';
 import '../Pages/submit_score_list.dart';
@@ -74,10 +75,8 @@ class MyApp extends StatelessWidget {
             // Notice that the counter didn't reset back to zero; the application
             // is not restarted.
             primarySwatch: Colors.blue,
-            textTheme:
-                GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme),
-            primaryTextTheme:
-                GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme),
+            textTheme: GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme),
+            primaryTextTheme: GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme),
             appBarTheme: AppBarTheme(
                 systemOverlayStyle: SystemUiOverlayStyle.dark,
                 backgroundColor: Colors.white,
@@ -92,51 +91,37 @@ class MyApp extends StatelessWidget {
         initialRoute: DashboardPage.path,
         onGenerateRoute: (settings) {
           if (settings.name == HomePage.path) {
-            return CupertinoPageRoute(
-                builder: (context) => HomePage(), settings: settings);
+            return CupertinoPageRoute(builder: (context) => HomePage(), settings: settings);
           } else if (settings.name == SignUpPage.path) {
-            return CupertinoPageRoute(
-                builder: (context) => SignUpPage(), settings: settings);
+            return CupertinoPageRoute(builder: (context) => SignUpPage(), settings: settings);
+          } else if (settings.name == SignInPage.path) {
+            return CupertinoPageRoute(builder: (context) => SignInPage(), settings: settings);
           } else if (settings.name == VerifyEmailPage.path) {
-            return CupertinoPageRoute(
-                builder: (context) => VerifyEmailPage(), settings: settings);
+            return CupertinoPageRoute(builder: (context) => VerifyEmailPage(), settings: settings);
           } else if (settings.name == CreateProfilePage.path) {
-            return CupertinoPageRoute(
-                builder: (context) => CreateProfilePage(), settings: settings);
+            return CupertinoPageRoute(builder: (context) => CreateProfilePage(), settings: settings);
           } else if (settings.name == CreateProfilePicturePage.path) {
-            return CupertinoPageRoute(
-                builder: (context) => CreateProfilePicturePage(),
-                settings: settings);
+            return CupertinoPageRoute(builder: (context) => CreateProfilePicturePage(), settings: settings);
           } else if (settings.name == DashboardPage.path) {
-            return CupertinoPageRoute(
-                builder: (context) => DashboardPage(), settings: settings);
+            return CupertinoPageRoute(builder: (context) => DashboardPage(), settings: settings);
           } else if (settings.name == LeagueDetails.path) {
-            return CupertinoPageRoute(
-                builder: (context) => LeagueDetails(), settings: settings);
+            return CupertinoPageRoute(builder: (context) => LeagueDetails(), settings: settings);
           } else if (settings.name == ChallengesChat.path) {
-            return CupertinoPageRoute(
-                builder: (context) => ChallengesChat(), settings: settings);
+            return CupertinoPageRoute(builder: (context) => ChallengesChat(), settings: settings);
           } else if (settings.name == ProfilePage.path) {
-            return CupertinoPageRoute(
-                builder: (context) => ProfilePage(), settings: settings);
+            return CupertinoPageRoute(builder: (context) => ProfilePage(), settings: settings);
           } else if (settings.name == HeadToHeadDetails.path) {
-            return CupertinoPageRoute(
-                builder: (context) => HeadToHeadDetails(), settings: settings);
+            return CupertinoPageRoute(builder: (context) => HeadToHeadDetails(), settings: settings);
           } else if (settings.name == HeadtoHeadpage.path) {
-            return CupertinoPageRoute(
-                builder: (context) => HeadtoHeadpage(), settings: settings);
+            return CupertinoPageRoute(builder: (context) => HeadtoHeadpage(), settings: settings);
           } else if (settings.name == RecentMatchesPage.path) {
-            return CupertinoPageRoute(
-                builder: (context) => RecentMatchesPage(), settings: settings);
+            return CupertinoPageRoute(builder: (context) => RecentMatchesPage(), settings: settings);
           } else if (settings.name == MyLeagueList.path) {
-            return CupertinoPageRoute(
-                builder: (context) => MyLeagueList(), settings: settings);
+            return CupertinoPageRoute(builder: (context) => MyLeagueList(), settings: settings);
           } else if (settings.name == SubmitScoreList.path) {
-            return CupertinoPageRoute(
-                builder: (context) => SubmitScoreList(), settings: settings);
+            return CupertinoPageRoute(builder: (context) => SubmitScoreList(), settings: settings);
           } else if (settings.name == SubmitScoreDetails.path) {
-            return CupertinoPageRoute(
-                builder: (context) => SubmitScoreDetails(), settings: settings);
+            return CupertinoPageRoute(builder: (context) => SubmitScoreDetails(), settings: settings);
           } else {
             return null;
           }

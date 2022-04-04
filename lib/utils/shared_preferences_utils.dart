@@ -13,15 +13,26 @@ mixin SharedPrefUtils {
         .then((value) => value.getString('userId'));
   }
 
-  setLoggedUser(String? userId) async {
+  setLoggedUser(String? userData) async {
     await SharedPreferences.getInstance().then((value) {
-      value.setString('user', userId ?? '');
+      value.setString('user', userData ?? '');
     });
   }
 
   Future<String?> getLoggedUser() async {
     return await SharedPreferences.getInstance()
         .then((value) => value.getString('user'));
+  }
+
+ setLoggedUserData(String? userData) async {
+    await SharedPreferences.getInstance().then((value) {
+      value.setString('userData', userData ?? '');
+    });
+  }
+
+  Future<String?> getLoggedUserData() async {
+    return await SharedPreferences.getInstance()
+        .then((value) => value.getString('userData'));
   }
 
   setToken(String? token) async {
