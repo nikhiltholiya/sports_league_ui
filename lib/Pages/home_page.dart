@@ -1,10 +1,10 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import '../Pages/sign_in_page.dart';
+
 import '../Pages/base_activity.dart';
+import '../Pages/sign_in_page.dart';
 import '../Pages/sign_up_page.dart';
-import '../components/app_chips.dart';
 import '../components/elevated_buttons.dart';
 import '../utils/app_colors.dart';
 import '../utils/app_labels.dart';
@@ -57,7 +57,11 @@ class HomePage extends StatelessWidget {
               width: double.infinity,
               fontSize: 14,
               isIcon: true,
-              icon: Icon(Icons.mail_rounded, color: aGreen, size: 30,),
+              icon: Icon(
+                Icons.mail_rounded,
+                color: aGreen,
+                size: 30,
+              ),
               label: signUpBtn,
               labelColor: aBlack,
               buttonColor: aWhite,
@@ -76,13 +80,15 @@ class HomePage extends StatelessWidget {
             children: [
               Text(alreadySignup),
               GestureDetector(
-                onTap: (){
+                onTap: () {
                   Navigator.pushNamed(context, SignInPage.path);
                 },
                 child: Padding(
                   padding: const EdgeInsets.all(5.0),
-                  child: Text(loginBtn, style: TextStyle(
-                      fontWeight: FontWeight.bold, color: aGreen,decoration: TextDecoration.underline),),
+                  child: Text(
+                    loginBtn,
+                    style: TextStyle(fontWeight: FontWeight.bold, color: aGreen, decoration: TextDecoration.underline),
+                  ),
                 ),
               )
             ],

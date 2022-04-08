@@ -324,5 +324,6 @@ String updateAccount(Map<String, dynamic>? param, Map<String, dynamic>? paramTyp
             errors
             success   
       }
+     }
 ''';
 }

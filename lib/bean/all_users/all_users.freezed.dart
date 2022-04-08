@@ -507,7 +507,7 @@ class _$UserNodeTearOff {
       required int? level,
       required String? phone,
       required String? picture,
-      required double? rating,
+      required String? rating,
       required String? state,
       required String? userId,
       required String? aboutMe}) {
@@ -567,7 +567,7 @@ mixin _$UserNode {
   int? get level => throw _privateConstructorUsedError;
   String? get phone => throw _privateConstructorUsedError;
   String? get picture => throw _privateConstructorUsedError;
-  double? get rating => throw _privateConstructorUsedError;
+  String? get rating => throw _privateConstructorUsedError;
   String? get state => throw _privateConstructorUsedError;
   String? get userId => throw _privateConstructorUsedError;
   String? get aboutMe => throw _privateConstructorUsedError;
@@ -602,7 +602,7 @@ abstract class $UserNodeCopyWith<$Res> {
       int? level,
       String? phone,
       String? picture,
-      double? rating,
+      String? rating,
       String? state,
       String? userId,
       String? aboutMe});
@@ -722,7 +722,7 @@ class _$UserNodeCopyWithImpl<$Res> implements $UserNodeCopyWith<$Res> {
       rating: rating == freezed
           ? _value.rating
           : rating // ignore: cast_nullable_to_non_nullable
-              as double?,
+              as String?,
       state: state == freezed
           ? _value.state
           : state // ignore: cast_nullable_to_non_nullable
@@ -764,7 +764,7 @@ abstract class _$UserNodeCopyWith<$Res> implements $UserNodeCopyWith<$Res> {
       int? level,
       String? phone,
       String? picture,
-      double? rating,
+      String? rating,
       String? state,
       String? userId,
       String? aboutMe});
@@ -885,7 +885,7 @@ class __$UserNodeCopyWithImpl<$Res> extends _$UserNodeCopyWithImpl<$Res>
       rating: rating == freezed
           ? _value.rating
           : rating // ignore: cast_nullable_to_non_nullable
-              as double?,
+              as String?,
       state: state == freezed
           ? _value.state
           : state // ignore: cast_nullable_to_non_nullable
@@ -972,7 +972,7 @@ class _$_UserNode implements _UserNode {
   @override
   final String? picture;
   @override
-  final double? rating;
+  final String? rating;
   @override
   final String? state;
   @override
@@ -1077,7 +1077,7 @@ abstract class _UserNode implements UserNode {
       required int? level,
       required String? phone,
       required String? picture,
-      required double? rating,
+      required String? rating,
       required String? state,
       required String? userId,
       required String? aboutMe}) = _$_UserNode;
@@ -1123,7 +1123,7 @@ abstract class _UserNode implements UserNode {
   @override
   String? get picture;
   @override
-  double? get rating;
+  String? get rating;
   @override
   String? get state;
   @override

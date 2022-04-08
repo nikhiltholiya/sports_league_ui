@@ -60,7 +60,7 @@ _$_UserNode _$$_UserNodeFromJson(Map<String, dynamic> json) => _$_UserNode(
       level: json['level'] as int?,
       phone: json['phone'] as String?,
       picture: json['picture'] as String?,
-      rating: (json['rating'] as num?)?.toDouble(),
+      rating: json['rating'] as String?,
       state: json['state'] as String?,
       userId: json['userId'] as String?,
       aboutMe: json['aboutMe'] as String?,

@@ -28,7 +28,7 @@ class MyLeagueList extends StatefulWidget {
   _MyLeagueListState createState() => _MyLeagueListState();
 }
 
-class _MyLeagueListState extends State<MyLeagueList> with SharedPrefUtils {
+class _MyLeagueListState extends State<MyLeagueList> {
   ScrollController? _scrollController;
 
   late AllLeaguesApps? allLeaguesApps;
@@ -49,17 +49,17 @@ class _MyLeagueListState extends State<MyLeagueList> with SharedPrefUtils {
   void initState() {
     _scrollController = ScrollController();
 
-    getUserId().then((value) {
-      param = {
-        '\$applicant_UserId': 'UUID',
-      };
-      paramType = {
-        'applicant_UserId': '\$applicant_UserId',
-      };
-      passVariable = {'applicant_UserId': '$value'};
+    // getUserId().then((value) {
+    param = {
+      '\$applicant_UserId': 'UUID',
+    };
+    paramType = {
+      'applicant_UserId': '\$applicant_UserId',
+    };
+    passVariable = {'applicant_UserId': '${SharedPreferencesUtils.getUserId}'};
 
-      streamController.sink.add(passVariable);
-    });
+    streamController.sink.add(passVariable);
+    // });
 
     super.initState();
   }
@@ -108,8 +108,7 @@ class _MyLeagueListState extends State<MyLeagueList> with SharedPrefUtils {
                   allLeaguesApps = AllLeaguesApps.fromJson(result.data!);
 
                   applicantsList = [];
-                  for (var data
-                      in allLeaguesApps!.allLeagueApplications!.edges!) {
+                  for (var data in allLeaguesApps!.allLeagueApplications!.edges!) {
                     if (data.node!.status!.toLowerCase() == 'approved') {
                       applicantsList!.add(data);
                     }
@@ -128,11 +127,7 @@ class _MyLeagueListState extends State<MyLeagueList> with SharedPrefUtils {
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: DropDownView(
-                                dropList: [
-                                  'Portland, Oregon',
-                                  'Los Angeles, California',
-                                  'Atlanta, Georgia'
-                                ],
+                                dropList: ['Portland, Oregon', 'Los Angeles, California', 'Atlanta, Georgia'],
                                 hint: joinLeagueByCity,
                                 dropdownValue: dropDownValue,
                                 onValueChange: (value) {
@@ -142,14 +137,8 @@ class _MyLeagueListState extends State<MyLeagueList> with SharedPrefUtils {
                                   selectedState = split![1].toString().trim();
 
                                   // setState(() {
-                                  param = {
-                                    '\$league_State': 'String!',
-                                    '\$league_City': 'String!'
-                                  };
-                                  paramType = {
-                                    'league_State': '\$league_State',
-                                    'league_City': '\$league_City'
-                                  };
+                                  param = {'\$league_State': 'String!', '\$league_City': 'String!'};
+                                  paramType = {'league_State': '\$league_State', 'league_City': '\$league_City'};
                                   passVariable = {
                                     'league_State': selectedState ?? '',
                                     'league_City': selectedCity ?? '',
@@ -173,35 +162,19 @@ class _MyLeagueListState extends State<MyLeagueList> with SharedPrefUtils {
                           : SliverList(
                               delegate: SliverChildBuilderDelegate(
                                 (context, index) => MyLeagueListTile(
-                                  leagueStatus: applicantsList![index]
-                                      .node!
-                                      .league!
-                                      .status,
+                                  leagueStatus: applicantsList![index].node!.league!.status,
                                   profileImg: 'assets/winner_cup.png',
                                   leagueLocation:
                                       '${applicantsList![index].node!.league!.city}, ${applicantsList![index].node!.league!.state}, ${applicantsList![index].node!.league!.country}',
-                                  leagueDate: convertDate(
-                                      applicantsList?[index]
-                                          .node
-                                          ?.league
-                                          ?.startDate,
-                                      applicantsList?[index]
-                                          .node
-                                          ?.league
-                                          ?.endDate),
-                                  leagueTitle:
-                                      applicantsList![index].node!.league!.name,
+                                  leagueDate: convertDate(applicantsList?[index].node?.league?.startDate,
+                                      applicantsList?[index].node?.league?.endDate),
+                                  leagueTitle: applicantsList![index].node!.league!.name,
                                   onTileClick: () {
-                                    Provider.of<LeagueIdProvider>(context,
-                                            listen: false)
-                                        .setLeagueId(applicantsList![index]
-                                            .node!
-                                            .league!
-                                            .leagueId);
+                                    Provider.of<LeagueIdProvider>(context, listen: false)
+                                        .setLeagueId(applicantsList![index].node!.league!.leagueId);
                                     Navigator.pushNamed(
                                       context,
-                                      LeagueDetails
-                                          .path, /*arguments: applicantsList![index].node*/
+                                      LeagueDetails.path, /*arguments: applicantsList![index].node*/
                                     );
                                   },
                                   onProfileClick: () {},

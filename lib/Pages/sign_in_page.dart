@@ -27,7 +27,7 @@ class SignInPage extends StatefulWidget {
   State<SignInPage> createState() => _SignInPageState();
 }
 
-class _SignInPageState extends State<SignInPage> with SharedPrefUtils {
+class _SignInPageState extends State<SignInPage> {
   late TokenAuthData? _tokenAuthData;
   bool? obSecure = true;
   String? email = '';
@@ -44,6 +44,7 @@ class _SignInPageState extends State<SignInPage> with SharedPrefUtils {
 
   @override
   void initState() {
+    SharedPreferencesUtils.setToken('');
     paramSignIn = {'\$email': 'String!', '\$pass': 'String!'};
     paramTypeSignIn = {'email': '\$email', 'password': '\$pass'};
 
@@ -135,14 +136,20 @@ class _SignInPageState extends State<SignInPage> with SharedPrefUtils {
               print('SUCCESS -- ${_tokenAuthData?.tokenAuth?.success}');
               errorList = [];
               if (_tokenAuthData!.tokenAuth!.success!) {
-                setEmailId(_tokenAuthData?.tokenAuth?.user?.email);
-                setToken(_tokenAuthData?.tokenAuth?.token);
-                setRefreshToken(_tokenAuthData?.tokenAuth?.refreshToken);
-                // setLoggedUser(_tokenAuthData?.tokenAut!);
-                setLoggedUserData(jsonEncode(_tokenAuthData!.tokenAuth?.user));
+                SharedPreferencesUtils.setEmail(_tokenAuthData?.tokenAuth?.user?.email);
+                SharedPreferencesUtils.setToken(_tokenAuthData?.tokenAuth?.token);
+                SharedPreferencesUtils.setRefreshToken(_tokenAuthData?.tokenAuth?.refreshToken);
+                SharedPreferencesUtils.setUserData(jsonEncode(_tokenAuthData!.tokenAuth?.user));
+                SharedPreferencesUtils.setUserId(_tokenAuthData?.tokenAuth?.user?.userId);
+
+                // Provider.of<TokenProvider>(context, listen: false).setToken(_tokenAuthData?.tokenAuth?.token);
 
                 Navigator.pushNamed(
-                    context, _tokenAuthData!.tokenAuth!.user!.firstName.toString().isNotEmpty ? DashboardPage.path : CreateProfilePage.path);
+                    context,
+                    _tokenAuthData!.tokenAuth!.user!.firstName.toString().isNotEmpty
+                        ? DashboardPage.path
+                        : CreateProfilePage.path);
+                // Navigator.pushNamed(context, CreateProfilePage.path);
               } else {
                 for (var errData in _tokenAuthData!.tokenAuth!.errors!.nonFieldErrors!) {
                   if (errData.message != null) errorList!.add(errData.message);
@@ -153,9 +160,9 @@ class _SignInPageState extends State<SignInPage> with SharedPrefUtils {
             },
             // 'Sorry you changed your mind!',
           ),
-          builder: (RunMutation _register, QueryResult? addResult) {
-            final doRegister = (result) {
-              _register(result);
+          builder: (RunMutation _signIn, QueryResult? addResult) {
+            final doSignIn = (result) {
+              _signIn(result);
             };
 
             bool? anyLoading = addResult!.isLoading;
@@ -169,7 +176,7 @@ class _SignInPageState extends State<SignInPage> with SharedPrefUtils {
                 if (_formKey.currentState!.validate()) {
                   Map<String, dynamic> passVariable = {'email': email, 'pass': password};
 
-                  doRegister(passVariable);
+                  doSignIn(passVariable);
                   isEnable = false;
                   setState(() {});
                 }

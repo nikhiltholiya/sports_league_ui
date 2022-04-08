@@ -54,8 +54,23 @@ String? convertTime(String? fromTime, String? toTime) {
   else
     return '$sTime';
 }
+//mm/dd/yyyy
+String? convertDateMMDDYYYY(String? startDate) {
+  String? sDate = '';
+  try {
+    if (startDate != null)
+      sDate = '${formatDate(DateTime.parse(startDate), [
+        mm, '/',
+        dd, '/',
+        yyyy,
+      ])}';
+  }catch(e){
+    print('Exception in convertDateMMDDYYYY -- $e');
+  }
+    return '$sDate';
+}
 
-//Used for convert Date as 2022-03-23
+//Used for convert Date as 2022-03-23 YYYY-MM-DD
 String? convertDateYYYYMMDD(String? startDate, String? endDate) {
   String? sDate = '';
   String? eDate = '';

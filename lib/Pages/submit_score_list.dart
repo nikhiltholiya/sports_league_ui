@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:provider/provider.dart';
-import '../providers/league_id_provider.dart';
 
 import '../Pages/base_activity.dart';
 import '../Pages/submit_score_details.dart';
@@ -12,12 +11,12 @@ import '../bean/all_messaging/all_messaging.dart';
 import '../bean/all_users/all_users.dart';
 import '../components/edit_text_form_field.dart';
 import '../components/submit_score_list_tile.dart';
+import '../providers/league_id_provider.dart';
 import '../providers/user_id_provider.dart';
 import '../utils/Constants.dart';
 import '../utils/app_colors.dart';
 import '../utils/app_labels.dart';
 import '../utils/common.dart';
-import '../utils/shared_preferences_utils.dart';
 
 //Created on 20220315
 class SubmitScoreList extends StatefulWidget {
@@ -29,8 +28,7 @@ class SubmitScoreList extends StatefulWidget {
   _SubmitScoreListState createState() => _SubmitScoreListState();
 }
 
-class _SubmitScoreListState extends State<SubmitScoreList>
-    with SharedPrefUtils {
+class _SubmitScoreListState extends State<SubmitScoreList> {
   ScrollController? _scrollController;
 
   String? Search = '';
@@ -72,9 +70,7 @@ class _SubmitScoreListState extends State<SubmitScoreList>
     paramTypeForMsg = {
       'senderReceipientSearch': '\$senderReceipientSearch',
     };
-    variableForMsg = {
-      'senderReceipientSearch': '1211d15f-5147-4394-812e-47c801d567c5'
-    };
+    variableForMsg = {'senderReceipientSearch': '1211d15f-5147-4394-812e-47c801d567c5'};
     _streamController.sink.add([]);
     super.initState();
   }
@@ -115,15 +111,13 @@ class _SubmitScoreListState extends State<SubmitScoreList>
                       }
 
                       if (msgresult.isLoading && msgresult.data == null) {
-                        return const Center(
-                            child: CupertinoActivityIndicator());
+                        return const Center(child: CupertinoActivityIndicator());
                       }
 
                       if (!isLoaded!) {
                         isLoaded = true;
                         try {
-                          _allMessagingData =
-                              AllMessagingData.fromJson(msgresult.data!);
+                          _allMessagingData = AllMessagingData.fromJson(msgresult.data!);
                           _listAllUsers = [];
 
                           // for (var data in _allMessagingData.allMessaging!.edges!){
@@ -131,12 +125,10 @@ class _SubmitScoreListState extends State<SubmitScoreList>
                           //   print('data  -S-${data.node?.recipient?.firstName}');
                           // }
 
-                          for (var data
-                              in _allMessagingData.allMessaging!.edges!)
-                            _listAllUsers?.add(
-                                data.node?.recipient?.userId != UserId.getUserId
-                                    ? data.node!.recipient!
-                                    : data.node!.sender!);
+                          for (var data in _allMessagingData.allMessaging!.edges!)
+                            _listAllUsers?.add(data.node?.recipient?.userId != UserId.getUserId
+                                ? data.node!.recipient!
+                                : data.node!.sender!);
 
                           _streamController.sink.add(_listAllUsers ?? []);
                           // _foundUsers = _listAllUsers;
@@ -178,8 +170,7 @@ class _SubmitScoreListState extends State<SubmitScoreList>
                                     } else {
                                       // _foundUsers = [];
                                       // _foundUsers = _listAllUsers;
-                                      _streamController.sink
-                                          .add(_listAllUsers ?? []);
+                                      _streamController.sink.add(_listAllUsers ?? []);
                                       flagSearch = false;
                                     }
 
@@ -201,31 +192,25 @@ class _SubmitScoreListState extends State<SubmitScoreList>
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
                                 submitMatchScore,
-                                style: TextStyle(
-                                    color: aLightGray,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16.0),
+                                style: TextStyle(color: aLightGray, fontWeight: FontWeight.bold, fontSize: 16.0),
                               ),
                             ),
                           ),
                           SliverList(
                             delegate: SliverChildBuilderDelegate(
                               (context, index) => SubmitScoreListTile(
-                                userName:
-                                    '${snapshot.data![index].firstName} ${snapshot.data![index].lastName}',
+                                userName: '${snapshot.data![index].firstName} ${snapshot.data![index].lastName}',
                                 // profileImg: _foundUsers![index].node?.picture,
                                 profileImg: 'assets/Ellipse 1.png',
                                 rating: '${snapshot.data![index].rating}',
                                 playerLocation:
                                     '${snapshot.data![index].city}, ${snapshot.data![index].state}, ${snapshot.data![index].country}',
                                 onTileClick: () {
-                                  Provider.of<UserIdProvider>(context,
-                                          listen: false)
+                                  Provider.of<UserIdProvider>(context, listen: false)
                                       .setUserId(snapshot.data![index].userId);
-                                  Navigator.pushNamed(
-                                      context, SubmitScoreDetails.path);
+                                  Navigator.pushNamed(context, SubmitScoreDetails.path);
 
-                                  Provider.of<LeagueIdProvider>(context,listen: false).setLeagueId('');
+                                  Provider.of<LeagueIdProvider>(context, listen: false).setLeagueId('');
 
                                   _chatNode?.enclosingScope;
                                 },
@@ -249,19 +234,15 @@ class _SubmitScoreListState extends State<SubmitScoreList>
                                       return Text(result.exception.toString());
                                     }
 
-                                    if (result.isLoading &&
-                                        result.data == null) {
-                                      return const Center(
-                                          child: CupertinoActivityIndicator());
+                                    if (result.isLoading && result.data == null) {
+                                      return const Center(child: CupertinoActivityIndicator());
                                     }
 
-                                    _allUsersData =
-                                        AllUsersData.fromJson(result.data!);
+                                    _allUsersData = AllUsersData.fromJson(result.data!);
 
                                     List<dynamic>? temp = [];
                                     // _foundUsers = [];
-                                    for (var data
-                                        in _allUsersData.allUsers!.edges!) {
+                                    for (var data in _allUsersData.allUsers!.edges!) {
                                       temp.add(data.node);
                                     }
 

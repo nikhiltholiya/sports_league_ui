@@ -193,7 +193,7 @@ class _$TokenAuthTearOff {
       required bool? success,
       required String? token,
       required bool? unarchiving,
-      required User? user,
+      required LoggedUser? user,
       required TokenError? errors}) {
     return _TokenAuth(
       refreshToken: refreshToken,
@@ -219,7 +219,7 @@ mixin _$TokenAuth {
   bool? get success => throw _privateConstructorUsedError;
   String? get token => throw _privateConstructorUsedError;
   bool? get unarchiving => throw _privateConstructorUsedError;
-  User? get user => throw _privateConstructorUsedError;
+  LoggedUser? get user => throw _privateConstructorUsedError;
   TokenError? get errors => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -237,10 +237,10 @@ abstract class $TokenAuthCopyWith<$Res> {
       bool? success,
       String? token,
       bool? unarchiving,
-      User? user,
+      LoggedUser? user,
       TokenError? errors});
 
-  $UserCopyWith<$Res>? get user;
+  $LoggedUserCopyWith<$Res>? get user;
   $TokenErrorCopyWith<$Res>? get errors;
 }
 
@@ -281,7 +281,7 @@ class _$TokenAuthCopyWithImpl<$Res> implements $TokenAuthCopyWith<$Res> {
       user: user == freezed
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
-              as User?,
+              as LoggedUser?,
       errors: errors == freezed
           ? _value.errors
           : errors // ignore: cast_nullable_to_non_nullable
@@ -290,12 +290,12 @@ class _$TokenAuthCopyWithImpl<$Res> implements $TokenAuthCopyWith<$Res> {
   }
 
   @override
-  $UserCopyWith<$Res>? get user {
+  $LoggedUserCopyWith<$Res>? get user {
     if (_value.user == null) {
       return null;
     }
 
-    return $UserCopyWith<$Res>(_value.user!, (value) {
+    return $LoggedUserCopyWith<$Res>(_value.user!, (value) {
       return _then(_value.copyWith(user: value));
     });
   }
@@ -323,11 +323,11 @@ abstract class _$TokenAuthCopyWith<$Res> implements $TokenAuthCopyWith<$Res> {
       bool? success,
       String? token,
       bool? unarchiving,
-      User? user,
+      LoggedUser? user,
       TokenError? errors});
 
   @override
-  $UserCopyWith<$Res>? get user;
+  $LoggedUserCopyWith<$Res>? get user;
   @override
   $TokenErrorCopyWith<$Res>? get errors;
 }
@@ -370,7 +370,7 @@ class __$TokenAuthCopyWithImpl<$Res> extends _$TokenAuthCopyWithImpl<$Res>
       user: user == freezed
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
-              as User?,
+              as LoggedUser?,
       errors: errors == freezed
           ? _value.errors
           : errors // ignore: cast_nullable_to_non_nullable
@@ -402,7 +402,7 @@ class _$_TokenAuth implements _TokenAuth {
   @override
   final bool? unarchiving;
   @override
-  final User? user;
+  final LoggedUser? user;
   @override
   final TokenError? errors;
 
@@ -453,7 +453,7 @@ abstract class _TokenAuth implements TokenAuth {
       required bool? success,
       required String? token,
       required bool? unarchiving,
-      required User? user,
+      required LoggedUser? user,
       required TokenError? errors}) = _$_TokenAuth;
 
   factory _TokenAuth.fromJson(Map<String, dynamic> json) =
@@ -468,7 +468,7 @@ abstract class _TokenAuth implements TokenAuth {
   @override
   bool? get unarchiving;
   @override
-  User? get user;
+  LoggedUser? get user;
   @override
   TokenError? get errors;
   @override
@@ -477,15 +477,15 @@ abstract class _TokenAuth implements TokenAuth {
       throw _privateConstructorUsedError;
 }
 
-User _$UserFromJson(Map<String, dynamic> json) {
-  return _User.fromJson(json);
+LoggedUser _$LoggedUserFromJson(Map<String, dynamic> json) {
+  return _LoggedUser.fromJson(json);
 }
 
 /// @nodoc
-class _$UserTearOff {
-  const _$UserTearOff();
+class _$LoggedUserTearOff {
+  const _$LoggedUserTearOff();
 
-  _User call(
+  _LoggedUser call(
       {required String? aboutMe,
       required bool? active,
       required bool? archived,
@@ -511,7 +511,7 @@ class _$UserTearOff {
       required String? secondaryEmail,
       required String? userId,
       required bool? verified}) {
-    return _User(
+    return _LoggedUser(
       aboutMe: aboutMe,
       active: active,
       archived: archived,
@@ -540,16 +540,16 @@ class _$UserTearOff {
     );
   }
 
-  User fromJson(Map<String, Object?> json) {
-    return User.fromJson(json);
+  LoggedUser fromJson(Map<String, Object?> json) {
+    return LoggedUser.fromJson(json);
   }
 }
 
 /// @nodoc
-const $User = _$UserTearOff();
+const $LoggedUser = _$LoggedUserTearOff();
 
 /// @nodoc
-mixin _$User {
+mixin _$LoggedUser {
   String? get aboutMe => throw _privateConstructorUsedError;
   bool? get active => throw _privateConstructorUsedError;
   bool? get archived => throw _privateConstructorUsedError;
@@ -578,13 +578,15 @@ mixin _$User {
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $UserCopyWith<User> get copyWith => throw _privateConstructorUsedError;
+  $LoggedUserCopyWith<LoggedUser> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $UserCopyWith<$Res> {
-  factory $UserCopyWith(User value, $Res Function(User) then) =
-      _$UserCopyWithImpl<$Res>;
+abstract class $LoggedUserCopyWith<$Res> {
+  factory $LoggedUserCopyWith(
+          LoggedUser value, $Res Function(LoggedUser) then) =
+      _$LoggedUserCopyWithImpl<$Res>;
   $Res call(
       {String? aboutMe,
       bool? active,
@@ -614,12 +616,12 @@ abstract class $UserCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
-  _$UserCopyWithImpl(this._value, this._then);
+class _$LoggedUserCopyWithImpl<$Res> implements $LoggedUserCopyWith<$Res> {
+  _$LoggedUserCopyWithImpl(this._value, this._then);
 
-  final User _value;
+  final LoggedUser _value;
   // ignore: unused_field
-  final $Res Function(User) _then;
+  final $Res Function(LoggedUser) _then;
 
   @override
   $Res call({
@@ -755,9 +757,10 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$UserCopyWith<$Res> implements $UserCopyWith<$Res> {
-  factory _$UserCopyWith(_User value, $Res Function(_User) then) =
-      __$UserCopyWithImpl<$Res>;
+abstract class _$LoggedUserCopyWith<$Res> implements $LoggedUserCopyWith<$Res> {
+  factory _$LoggedUserCopyWith(
+          _LoggedUser value, $Res Function(_LoggedUser) then) =
+      __$LoggedUserCopyWithImpl<$Res>;
   @override
   $Res call(
       {String? aboutMe,
@@ -788,13 +791,14 @@ abstract class _$UserCopyWith<$Res> implements $UserCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
-    implements _$UserCopyWith<$Res> {
-  __$UserCopyWithImpl(_User _value, $Res Function(_User) _then)
-      : super(_value, (v) => _then(v as _User));
+class __$LoggedUserCopyWithImpl<$Res> extends _$LoggedUserCopyWithImpl<$Res>
+    implements _$LoggedUserCopyWith<$Res> {
+  __$LoggedUserCopyWithImpl(
+      _LoggedUser _value, $Res Function(_LoggedUser) _then)
+      : super(_value, (v) => _then(v as _LoggedUser));
 
   @override
-  _User get _value => super._value as _User;
+  _LoggedUser get _value => super._value as _LoggedUser;
 
   @override
   $Res call({
@@ -824,7 +828,7 @@ class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
     Object? userId = freezed,
     Object? verified = freezed,
   }) {
-    return _then(_User(
+    return _then(_LoggedUser(
       aboutMe: aboutMe == freezed
           ? _value.aboutMe
           : aboutMe // ignore: cast_nullable_to_non_nullable
@@ -931,8 +935,8 @@ class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_User implements _User {
-  const _$_User(
+class _$_LoggedUser implements _LoggedUser {
+  const _$_LoggedUser(
       {required this.aboutMe,
       required this.active,
       required this.archived,
@@ -959,7 +963,8 @@ class _$_User implements _User {
       required this.userId,
       required this.verified});
 
-  factory _$_User.fromJson(Map<String, dynamic> json) => _$$_UserFromJson(json);
+  factory _$_LoggedUser.fromJson(Map<String, dynamic> json) =>
+      _$$_LoggedUserFromJson(json);
 
   @override
   final String? aboutMe;
@@ -1014,14 +1019,14 @@ class _$_User implements _User {
 
   @override
   String toString() {
-    return 'User(aboutMe: $aboutMe, active: $active, archived: $archived, city: $city, country: $country, dateJoined: $dateJoined, deleted: $deleted, email: $email, dob: $dob, firstName: $firstName, gender: $gender, height: $height, isActive: $isActive, id: $id, isStaff: $isStaff, lastLogin: $lastLogin, lastName: $lastName, phone: $phone, picture: $picture, rating: $rating, pk: $pk, state: $state, secondaryEmail: $secondaryEmail, userId: $userId, verified: $verified)';
+    return 'LoggedUser(aboutMe: $aboutMe, active: $active, archived: $archived, city: $city, country: $country, dateJoined: $dateJoined, deleted: $deleted, email: $email, dob: $dob, firstName: $firstName, gender: $gender, height: $height, isActive: $isActive, id: $id, isStaff: $isStaff, lastLogin: $lastLogin, lastName: $lastName, phone: $phone, picture: $picture, rating: $rating, pk: $pk, state: $state, secondaryEmail: $secondaryEmail, userId: $userId, verified: $verified)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _User &&
+            other is _LoggedUser &&
             const DeepCollectionEquality().equals(other.aboutMe, aboutMe) &&
             const DeepCollectionEquality().equals(other.active, active) &&
             const DeepCollectionEquality().equals(other.archived, archived) &&
@@ -1083,17 +1088,17 @@ class _$_User implements _User {
 
   @JsonKey(ignore: true)
   @override
-  _$UserCopyWith<_User> get copyWith =>
-      __$UserCopyWithImpl<_User>(this, _$identity);
+  _$LoggedUserCopyWith<_LoggedUser> get copyWith =>
+      __$LoggedUserCopyWithImpl<_LoggedUser>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_UserToJson(this);
+    return _$$_LoggedUserToJson(this);
   }
 }
 
-abstract class _User implements User {
-  const factory _User(
+abstract class _LoggedUser implements LoggedUser {
+  const factory _LoggedUser(
       {required String? aboutMe,
       required bool? active,
       required bool? archived,
@@ -1118,9 +1123,10 @@ abstract class _User implements User {
       required String? state,
       required String? secondaryEmail,
       required String? userId,
-      required bool? verified}) = _$_User;
+      required bool? verified}) = _$_LoggedUser;
 
-  factory _User.fromJson(Map<String, dynamic> json) = _$_User.fromJson;
+  factory _LoggedUser.fromJson(Map<String, dynamic> json) =
+      _$_LoggedUser.fromJson;
 
   @override
   String? get aboutMe;
@@ -1174,7 +1180,8 @@ abstract class _User implements User {
   bool? get verified;
   @override
   @JsonKey(ignore: true)
-  _$UserCopyWith<_User> get copyWith => throw _privateConstructorUsedError;
+  _$LoggedUserCopyWith<_LoggedUser> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 TokenError _$TokenErrorFromJson(Map<String, dynamic> json) {

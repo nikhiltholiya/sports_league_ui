@@ -24,7 +24,7 @@ class TokenAuth with _$TokenAuth{
     required bool? success,
     required String? token,
     required bool? unarchiving,
-    required User? user,
+    required LoggedUser? user,
     required TokenError? errors
 
 }) = _TokenAuth;
@@ -33,9 +33,9 @@ class TokenAuth with _$TokenAuth{
 }
 
 @Freezed()
-class User with _$User{
+class LoggedUser with _$LoggedUser{
 
-  const factory User({
+  const factory LoggedUser({
 
     required String? aboutMe,
     required bool? active,
@@ -63,9 +63,9 @@ class User with _$User{
     required String? userId,
     required bool? verified,
 
-}) = _User;
+}) = _LoggedUser;
 
-  factory User.fromJson(Map<String,dynamic> userMap) => _$UserFromJson(userMap);
+  factory LoggedUser.fromJson(Map<String,dynamic> loggedUserMap) => _$LoggedUserFromJson(loggedUserMap);
 }
 
 

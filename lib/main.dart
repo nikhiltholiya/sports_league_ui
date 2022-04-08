@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:provider/provider.dart';
 
+import '../Pages/all_messaging_list_page.dart';
 import '../Pages/challenges_chat.dart';
 import '../Pages/create_profile_page.dart';
 import '../Pages/create_profile_picture_page.dart';
@@ -21,30 +22,46 @@ import '../Pages/sign_up_page.dart';
 import '../Pages/submit_score_details.dart';
 import '../Pages/submit_score_list.dart';
 import '../Pages/verify_email_page.dart';
+import '../graphql/graphql_view.dart';
 import '../providers/league_id_provider.dart';
 import '../providers/profile_pic_provider.dart';
 import '../providers/user_id_provider.dart';
+import '../utils/shared_preferences_utils.dart';
+
+// final HttpLink httpLink = HttpLink('http://52.144.47.85:8000/graphql/',);
+final graphqlEndpoint = 'http://52.144.47.85:8000/graphql/';
+final subscriptionEndpoint = '';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  SharedPreferencesUtils.init();
   await initHiveForFlutter();
 
-  final HttpLink httpLink = HttpLink(
-    'http://52.144.47.85:8000/graphql/',
-  );
-  final AuthLink authLink = AuthLink(
-    getToken: () async => '',
-  );
-  final Link link = authLink.concat(httpLink);
-
-  ValueNotifier<GraphQLClient> client = ValueNotifier(
-    GraphQLClient(link: link, cache: GraphQLCache()),
-  );
-  runApp(GraphQLProvider(client: client, child: const MyApp()));
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return ClientProvider(
+      uri: graphqlEndpoint,
+      subscriptionUri: subscriptionEndpoint,
+      authLink: AuthLink(
+        // getToken: () async => Provider.of<TokenProvider>(context, listen: false).getToken != null
+        //     ? 'JWT ${Provider.of<TokenProvider>(context, listen: false).getToken}'
+        //     : '',
+
+        getToken: () async =>
+            SharedPreferencesUtils.getToken != null ? '''JWT ${SharedPreferencesUtils.getToken}''' : '',
+      ),
+      child: AppBody(),
+    );
+  }
+}
+
+class AppBody extends StatelessWidget {
+  const AppBody({Key? key}) : super(key: key);
 
   // This widget is the root of your application.
   @override
@@ -59,7 +76,7 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider<ProfilePicProvider>(
           create: (context) => ProfilePicProvider(),
-        )
+        ),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
@@ -110,6 +127,8 @@ class MyApp extends StatelessWidget {
             return CupertinoPageRoute(builder: (context) => ChallengesChat(), settings: settings);
           } else if (settings.name == ProfilePage.path) {
             return CupertinoPageRoute(builder: (context) => ProfilePage(), settings: settings);
+          } else if (settings.name == AllMessagesListPage.path) {
+            return CupertinoPageRoute(builder: (context) => AllMessagesListPage(), settings: settings);
           } else if (settings.name == HeadToHeadDetails.path) {
             return CupertinoPageRoute(builder: (context) => HeadToHeadDetails(), settings: settings);
           } else if (settings.name == HeadtoHeadpage.path) {

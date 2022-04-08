@@ -817,7 +817,7 @@ class _$MsgRecipientTearOff {
       required String? id,
       required String? lastName,
       required String? picture,
-      required double? rating,
+      required String? rating,
       required String? userId,
       required String? state,
       required bool? active}) {
@@ -851,7 +851,7 @@ mixin _$MsgRecipient {
   String? get id => throw _privateConstructorUsedError;
   String? get lastName => throw _privateConstructorUsedError;
   String? get picture => throw _privateConstructorUsedError;
-  double? get rating => throw _privateConstructorUsedError;
+  String? get rating => throw _privateConstructorUsedError;
   String? get userId => throw _privateConstructorUsedError;
   String? get state => throw _privateConstructorUsedError;
   bool? get active => throw _privateConstructorUsedError;
@@ -874,7 +874,7 @@ abstract class $MsgRecipientCopyWith<$Res> {
       String? id,
       String? lastName,
       String? picture,
-      double? rating,
+      String? rating,
       String? userId,
       String? state,
       bool? active});
@@ -929,7 +929,7 @@ class _$MsgRecipientCopyWithImpl<$Res> implements $MsgRecipientCopyWith<$Res> {
       rating: rating == freezed
           ? _value.rating
           : rating // ignore: cast_nullable_to_non_nullable
-              as double?,
+              as String?,
       userId: userId == freezed
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
@@ -960,7 +960,7 @@ abstract class _$MsgRecipientCopyWith<$Res>
       String? id,
       String? lastName,
       String? picture,
-      double? rating,
+      String? rating,
       String? userId,
       String? state,
       bool? active});
@@ -1017,7 +1017,7 @@ class __$MsgRecipientCopyWithImpl<$Res> extends _$MsgRecipientCopyWithImpl<$Res>
       rating: rating == freezed
           ? _value.rating
           : rating // ignore: cast_nullable_to_non_nullable
-              as double?,
+              as String?,
       userId: userId == freezed
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
@@ -1065,7 +1065,7 @@ class _$_MsgRecipient implements _MsgRecipient {
   @override
   final String? picture;
   @override
-  final double? rating;
+  final String? rating;
   @override
   final String? userId;
   @override
@@ -1128,7 +1128,7 @@ abstract class _MsgRecipient implements MsgRecipient {
       required String? id,
       required String? lastName,
       required String? picture,
-      required double? rating,
+      required String? rating,
       required String? userId,
       required String? state,
       required bool? active}) = _$_MsgRecipient;
@@ -1149,7 +1149,7 @@ abstract class _MsgRecipient implements MsgRecipient {
   @override
   String? get picture;
   @override
-  double? get rating;
+  String? get rating;
   @override
   String? get userId;
   @override

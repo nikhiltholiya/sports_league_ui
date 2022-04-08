@@ -53,7 +53,7 @@ class MsgRecipient with _$MsgRecipient{
     required String? id,
     required String? lastName,
     required String? picture,
-    required double? rating,
+    required String? rating,
     required String? userId,
     required String? state,
     required bool? active,

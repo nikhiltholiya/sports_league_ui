@@ -54,7 +54,7 @@ class UserNode with _$UserNode {
     required int? level,
     required String? phone,
     required String? picture,
-    required double? rating,
+    required String? rating,
     required String? state,
     required String? userId,
     required String? aboutMe,

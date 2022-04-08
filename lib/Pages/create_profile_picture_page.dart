@@ -5,13 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
-import '../providers/profile_pic_provider.dart';
 
 import '../Pages/base_activity.dart';
+import '../bean/create_profile/create_profile_data.dart';
+import '../components/app_dialog.dart';
 import '../components/elevated_buttons.dart';
+import '../providers/profile_pic_provider.dart';
 import '../utils/app_colors.dart';
 import '../utils/app_labels.dart';
-import '../utils/shared_preferences_utils.dart';
 
 //Created on 20220330
 class CreateProfilePicturePage extends StatefulWidget {
@@ -20,12 +21,10 @@ class CreateProfilePicturePage extends StatefulWidget {
   const CreateProfilePicturePage({Key? key}) : super(key: key);
 
   @override
-  State<CreateProfilePicturePage> createState() =>
-      _CreateProfilePicturePageState();
+  State<CreateProfilePicturePage> createState() => _CreateProfilePicturePageState();
 }
 
-class _CreateProfilePicturePageState extends State<CreateProfilePicturePage>
-    with SharedPrefUtils {
+class _CreateProfilePicturePageState extends State<CreateProfilePicturePage> {
   // List<XFile>? _imageFileList;
   // File? imageFile;
 
@@ -35,11 +34,11 @@ class _CreateProfilePicturePageState extends State<CreateProfilePicturePage>
 
   dynamic _pickImageError;
   String? _retrieveDataError;
+  late String? _finalPath = null;
 
   final ImagePicker _picker = ImagePicker();
 
-  Future<void> _onImageButtonPressed(ImageSource source,
-      {BuildContext? context, bool isMultiImage = false}) async {
+  Future<void> _onImageButtonPressed(ImageSource source, {BuildContext? context, bool isMultiImage = false}) async {
     try {
       final XFile? pickedFile = await _picker.pickImage(
         source: source,
@@ -48,8 +47,7 @@ class _CreateProfilePicturePageState extends State<CreateProfilePicturePage>
         imageQuality: 100,
       );
 
-      Provider.of<ProfilePicProvider>(context!, listen: false)
-          .setXFile(pickedFile);
+      Provider.of<ProfilePicProvider>(context!, listen: false).setXFile(pickedFile);
 
       // setState(() {
       //   _imageFile = pickedFile;
@@ -62,12 +60,29 @@ class _CreateProfilePicturePageState extends State<CreateProfilePicturePage>
   }
 
   List<int?> selectedAvatar = [0];
+  late List<String?>? errorList = [];
+  late CreateProfileData _createProfileData;
+  bool? isEnable = true;
+  Map<String, dynamic> paramUpdateProfile = {};
+  Map<String, dynamic> paramTypeUpdateProfile = {};
 
   @override
   void initState() {
     // print('Hi');
     // clearXFile();
     // print('Hi1');
+
+    paramUpdateProfile = {
+      '\$userId': 'String',
+      '\$picture': 'String',
+    };
+
+    // '\$uId': 'UUID'
+
+    paramTypeUpdateProfile = {
+      'userId': '\$userId',
+      'picture': ' \$picture',
+    };
     super.initState();
   }
 
@@ -79,8 +94,7 @@ class _CreateProfilePicturePageState extends State<CreateProfilePicturePage>
   Future<String?> _cropImage(BuildContext context) async {
     print('CropImage');
 
-    File imageFile =
-        File(Provider.of<ProfilePicProvider>(context).getXFile!.path);
+    File imageFile = File(Provider.of<ProfilePicProvider>(context).getXFile!.path);
 
     // selectedAvatar = imageFile.path != null ? [] : [0];
 
@@ -125,6 +139,8 @@ class _CreateProfilePicturePageState extends State<CreateProfilePicturePage>
   }
 
   Widget _previewImages(String path) {
+    _finalPath = path;
+
     final Text? retrieveError = _getRetrieveErrorWidget();
     if (retrieveError != null) {
       return retrieveError;
@@ -156,8 +172,7 @@ class _CreateProfilePicturePageState extends State<CreateProfilePicturePage>
   // }
 
   Widget _handlePreview(BuildContext context) {
-    String? webPath =
-        Provider.of<ProfilePicProvider>(context).getXFile?.path ?? null;
+    String? webPath = Provider.of<ProfilePicProvider>(context).getXFile?.path ?? null;
     return kIsWeb
         ? webPath != null
             ? _previewImages(webPath)
@@ -171,8 +186,7 @@ class _CreateProfilePicturePageState extends State<CreateProfilePicturePage>
 
               //TODO CHANGE HERE
               return CircleAvatar(
-                backgroundImage:
-                    AssetImage('assets/avatar${selectedAvatar.first}.png'),
+                backgroundImage: AssetImage('assets/avatar${selectedAvatar.first}.png'),
                 radius: 100,
               );
             },
@@ -185,8 +199,7 @@ class _CreateProfilePicturePageState extends State<CreateProfilePicturePage>
       return;
     }
     if (response.file != null) {
-      Provider.of<ProfilePicProvider>(context, listen: false)
-          .setXFile(response.file);
+      Provider.of<ProfilePicProvider>(context, listen: false).setXFile(response.file);
 
       // print('retrieveLostData -- ${Provider.of<ProfilePicProvider>(context,listen: false).getXFile}');
       // setState(() {
@@ -226,8 +239,7 @@ class _CreateProfilePicturePageState extends State<CreateProfilePicturePage>
                   softWrap: true,
                   maxLines: 3,
                   overflow: TextOverflow.ellipsis,
-                  style:
-                      TextStyle(fontSize: 14.0, fontWeight: FontWeight.normal),
+                  style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.normal),
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(
@@ -239,20 +251,17 @@ class _CreateProfilePicturePageState extends State<CreateProfilePicturePage>
                   children: [
                     // selectedAvatar.isNotEmpty
                     CircleAvatar(
-                      backgroundImage: AssetImage(
-                          'assets/avatar${selectedAvatar.first}.png'),
+                      backgroundImage: AssetImage('assets/avatar${selectedAvatar.first}.png'),
                       radius: 100,
                     ),
 
                     // if(selectedAvatar.isEmpty)
                     if (value.getXFile != null)
                       Center(
-                        child: !kIsWeb &&
-                                defaultTargetPlatform == TargetPlatform.android
+                        child: !kIsWeb && defaultTargetPlatform == TargetPlatform.android
                             ? FutureBuilder<void>(
                                 future: retrieveLostData(),
-                                builder: (BuildContext context,
-                                    AsyncSnapshot<void> snapshot) {
+                                builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
                                   switch (snapshot.connectionState) {
                                     case ConnectionState.none:
                                     case ConnectionState.waiting:
@@ -289,8 +298,7 @@ class _CreateProfilePicturePageState extends State<CreateProfilePicturePage>
                           radius: 20,
                           child: IconButton(
                             onPressed: () {
-                              _onImageButtonPressed(ImageSource.gallery,
-                                  context: context);
+                              _onImageButtonPressed(ImageSource.gallery, context: context);
                             },
                             icon: Icon(
                               Icons.add_photo_alternate,
@@ -303,8 +311,7 @@ class _CreateProfilePicturePageState extends State<CreateProfilePicturePage>
                           radius: 20,
                           child: IconButton(
                             onPressed: () {
-                              _onImageButtonPressed(ImageSource.camera,
-                                  context: context);
+                              _onImageButtonPressed(ImageSource.camera, context: context);
                             },
                             icon: Icon(
                               Icons.camera_alt_rounded,
@@ -323,8 +330,7 @@ class _CreateProfilePicturePageState extends State<CreateProfilePicturePage>
                     softWrap: true,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                        fontSize: 14.0, fontWeight: FontWeight.normal),
+                    style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.normal),
                     textAlign: TextAlign.center,
                   ),
                 ),
@@ -333,8 +339,7 @@ class _CreateProfilePicturePageState extends State<CreateProfilePicturePage>
                   softWrap: true,
                   maxLines: 3,
                   overflow: TextOverflow.ellipsis,
-                  style:
-                      TextStyle(fontSize: 14.0, fontWeight: FontWeight.normal),
+                  style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.normal),
                   textAlign: TextAlign.start,
                 ),
                 GridView.builder(
@@ -370,8 +375,7 @@ class _CreateProfilePicturePageState extends State<CreateProfilePicturePage>
                                 Container(
                                   alignment: Alignment.center,
                                   color: aGreen20,
-                                  child: Icon(Icons.check_outlined,
-                                      color: aGreen, size: 30),
+                                  child: Icon(Icons.check_outlined, color: aGreen, size: 30),
                                 ),
                             ],
                           ),
@@ -390,11 +394,112 @@ class _CreateProfilePicturePageState extends State<CreateProfilePicturePage>
         label: next,
         fontSize: 25,
         radius: 0.0,
-        onClick: () {},
+        onClick: () async {
+          // mutation($files: [Upload!]!) {
+          //   multipleUpload(files: $files) {
+          //     id
+          //     filename
+          //     mimetype
+          //     path
+          //   }
+          // }
+
+          // final myFile = MultipartFile.fromPath(
+          //   "",
+          //   "just plain text",
+          //   filename: "sample_upload.txt",
+          //   contentType: MediaType("text", "plain"),
+          // );
+          //
+          // final result = await graphQLClient.mutate(
+          //     MutationOptions(
+          //       document: gql(uploadMutation),
+          //       variables: {
+          //         'files': [myFile],
+          //       },
+          //     )
+          // );
+
+          print('finalPath -- $_finalPath');
+        },
         borderColor: aGreen,
         buttonColor: aGreen,
         labelColor: aWhite,
       ),
+      // bottomBar: Mutation(
+      //   options: MutationOptions(
+      //     document: gql(
+      //       updateAccount(paramUpdateProfile, paramTypeUpdateProfile),
+      //     ),
+      //     onError: (OperationException? error) {
+      //       print('erroR -- $error');
+      //       errorList = [];
+      //       errorList!.add('$error');
+      //
+      //       isEnable = true;
+      //       setState(() {});
+      //
+      //       if (errorList!.isNotEmpty) _showAlert();
+      //       // Text('$error');
+      //     },
+      //     // _simpleAlert(context, error.toString()),
+      //     onCompleted: (dynamic resultData) {
+      //       // Text('Thanks for your star!');
+      //
+      //       isEnable = true;
+      //       setState(() {});
+      //       print('**** RESULT * $resultData');
+      //
+      //       if (resultData != null) {
+      //         _createProfileData = CreateProfileData.fromJson(resultData);
+      //         errorList = [];
+      //         if (_createProfileData.updateAccount!.success!) {
+      //           // errorList!.add('DONE');
+      //           Navigator.pushNamed(context, CreateProfilePicturePage.path);
+      //         } else {
+      //           if (_createProfileData.updateAccount!.errors!.nonFieldErrors != null)
+      //             errorList!.add(_createProfileData.updateAccount!.errors?.nonFieldErrors?.first.message);
+      //
+      //           if (_createProfileData.updateAccount!.errors!.dob != null)
+      //             errorList!.add(_createProfileData.updateAccount!.errors?.dob?.first.message);
+      //         }
+      //
+      //         if (errorList!.isNotEmpty) _showAlert();
+      //       }
+      //     },
+      //     // 'Sorry you changed your mind!',
+      //   ),
+      //   builder: (RunMutation _updateProfile, QueryResult? addResult) {
+      //     final doUpdateProfile = (result) {
+      //       _updateProfile(result);
+      //     };
+      //
+      //     final anyLoading = addResult!.isLoading;
+      //
+      //     return ElevatedButtons(
+      //       width: double.infinity,
+      //       label: anyLoading ? 'wait' : next,
+      //       fontSize: 25,
+      //       radius: 0.0,
+      //       onClick: () {
+      //
+      //         var data = LoggedUser.fromJson(jsonDecode(SharedPreferencesUtils.getUserData.toString()));
+      //
+      //         Map<String, dynamic> passVariable = {
+      //           'userId': '${data.userId}',
+      //           'picture': 'imagePath',
+      //         };
+      //
+      //         doUpdateProfile(passVariable);
+      //         isEnable = false;
+      //         setState(() {});
+      //       },
+      //       borderColor: aGreen,
+      //       buttonColor: aGreen,
+      //       labelColor: aWhite,
+      //     );
+      //   },
+      // ),
     );
   }
 
@@ -405,5 +510,37 @@ class _CreateProfilePicturePageState extends State<CreateProfilePicturePage>
       return result;
     }
     return null;
+  }
+
+  Future<Widget> _showAlert() async {
+    return await showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AppDialog(
+            title: 'Profile',
+            body: [
+              ListView.builder(
+                shrinkWrap: true,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(errorList![index].toString()),
+                  );
+                },
+                itemCount: errorList!.length,
+              )
+            ],
+            isBtnPositiveAvail: false,
+            btnPositiveText: '',
+            btnNegativeText: 'Dismiss',
+            onNegativeClick: () {
+              Navigator.pop(context);
+            },
+            onPositiveClick: () {
+              Navigator.of(context).pop();
+            },
+          );
+        });
   }
 }

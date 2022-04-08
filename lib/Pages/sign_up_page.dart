@@ -1,16 +1,15 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
-import '../bean/resend_activation_mail/resend_activation_mail.dart';
-import '../components/app_dialog.dart';
-import '../utils/Constants.dart';
 
 import '../Pages/base_activity.dart';
 import '../Pages/verify_email_page.dart';
 import '../bean/register/register.dart';
+import '../bean/resend_activation_mail/resend_activation_mail.dart';
+import '../components/app_dialog.dart';
 import '../components/edit_text_form_field.dart';
 import '../components/elevated_buttons.dart';
+import '../utils/Constants.dart';
 import '../utils/app_colors.dart';
 import '../utils/app_labels.dart';
 import '../utils/shared_preferences_utils.dart';
@@ -27,7 +26,7 @@ class SignUpPage extends StatefulWidget {
   State<SignUpPage> createState() => _SignUpPageState();
 }
 
-class _SignUpPageState extends State<SignUpPage> with SharedPrefUtils {
+class _SignUpPageState extends State<SignUpPage> {
   bool? obSecure = true;
   bool? obSecureRetype = true;
   String? email = '';
@@ -161,7 +160,6 @@ class _SignUpPageState extends State<SignUpPage> with SharedPrefUtils {
                     if (data.resendActivationEmail!.success!) {
                       Navigator.pushNamed(context, VerifyEmailPage.path);
                     } else {
-
                       if (data.resendActivationEmail?.errors?.email?.first.message != null)
                         errorList!.add(data.resendActivationEmail?.errors?.email?.first.message);
 
@@ -208,17 +206,17 @@ class _SignUpPageState extends State<SignUpPage> with SharedPrefUtils {
               print('SUCCESS -- ${_registerData.register?.success}');
               errorList = [];
               if (_registerData.register!.success!) {
-                setEmailId(email);
-                setToken(_registerData.register?.token);
-                setRefreshToken(_registerData.register?.refreshToken);
+                SharedPreferencesUtils.setEmail(email);
+                SharedPreferencesUtils.setToken(_registerData.register?.token);
+                SharedPreferencesUtils.setRefreshToken(_registerData.register?.refreshToken);
+
+                // Provider.of<TokenProvider>(context,listen: false).setToken(_registerData.register?.token);
 
                 // send email
                 Map<String, dynamic> passEmail = {
                   'email': email,
                 };
                 mutationSendMail.currentState?.runMutation(passEmail);
-
-
               } else {
                 if (_registerData.register?.errors?.email?.first.message != null)
                   errorList!.add(_registerData.register?.errors?.email?.first.message);
@@ -264,7 +262,6 @@ class _SignUpPageState extends State<SignUpPage> with SharedPrefUtils {
       ),
     );
   }
-
 
   Future<Widget> _showAlert() async {
     return await showDialog(

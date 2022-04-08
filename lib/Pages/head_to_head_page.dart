@@ -7,6 +7,7 @@ import '../components/head_to_head_list_tile.dart';
 //Updated on 20220307
 class HeadtoHeadpage extends StatefulWidget {
   static const String path = 'headToHeadPage';
+
   const HeadtoHeadpage({Key? key}) : super(key: key);
 
   @override
@@ -25,8 +26,7 @@ class _HeadtoHeadpageState extends State<HeadtoHeadpage> {
         iconTheme: IconThemeData(color: Colors.black),
         title: Text(
           "Head to Head",
-          style: GoogleFonts.poppins(
-              color: Colors.black, fontSize: 20, fontWeight: FontWeight.w600),
+          style: GoogleFonts.poppins(color: Colors.black, fontSize: 20, fontWeight: FontWeight.w600),
         ),
       ),
       body: Container(
@@ -34,28 +34,27 @@ class _HeadtoHeadpageState extends State<HeadtoHeadpage> {
           children: [
             Text(
               "Played with 23 Players",
-              style: GoogleFonts.poppins(
-                  color: Colors.black,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 16),
+              style: GoogleFonts.poppins(color: Colors.black, fontWeight: FontWeight.w500, fontSize: 16),
             ),
             for (int i = 0; i < 10; i++)
               Padding(
                 padding: const EdgeInsets.only(top: 12),
                 child: InkWell(
-                    onTap: () {
+                  onTap: () {
+                    Navigator.pushNamed(context, HeadToHeadDetails.path);
+                  },
+                  //Added on 20220304
+                  child: HeadToHeadListTile(
+                    title: 'CBS Arena, Los Angeles, CA',
+                    onProfileClick: () {},
+                    onTileClick: () {
                       Navigator.pushNamed(context, HeadToHeadDetails.path);
                     },
-                  //Added on 20220304
-                    child: HeadToHeadListTile(title: 'CBS Arena, Los Angeles, CA',
-                      onProfileClick: (){},
-                      onTileClick: (){
-                      Navigator.pushNamed(context, HeadToHeadDetails.path);
-                      },
-                      profileImg: 'assets/Ellipse 5.png',
-                      date: 'Dec 31st 2021',
-                      rating: '4.5',
-                      userName: 'kalpesh',),
+                    profileImg: 'assets/Ellipse 5.png',
+                    date: 'Dec 31st 2021',
+                    rating: '4.5',
+                    userName: 'kalpesh',
+                  ),
                 ),
               )
           ],

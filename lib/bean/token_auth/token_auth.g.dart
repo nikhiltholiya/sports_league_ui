@@ -25,7 +25,7 @@ _$_TokenAuth _$$_TokenAuthFromJson(Map<String, dynamic> json) => _$_TokenAuth(
       unarchiving: json['unarchiving'] as bool?,
       user: json['user'] == null
           ? null
-          : User.fromJson(json['user'] as Map<String, dynamic>),
+          : LoggedUser.fromJson(json['user'] as Map<String, dynamic>),
       errors: json['errors'] == null
           ? null
           : TokenError.fromJson(json['errors'] as Map<String, dynamic>),
@@ -41,7 +41,8 @@ Map<String, dynamic> _$$_TokenAuthToJson(_$_TokenAuth instance) =>
       'errors': instance.errors,
     };
 
-_$_User _$$_UserFromJson(Map<String, dynamic> json) => _$_User(
+_$_LoggedUser _$$_LoggedUserFromJson(Map<String, dynamic> json) =>
+    _$_LoggedUser(
       aboutMe: json['aboutMe'] as String?,
       active: json['active'] as bool?,
       archived: json['archived'] as bool?,
@@ -69,7 +70,8 @@ _$_User _$$_UserFromJson(Map<String, dynamic> json) => _$_User(
       verified: json['verified'] as bool?,
     );
 
-Map<String, dynamic> _$$_UserToJson(_$_User instance) => <String, dynamic>{
+Map<String, dynamic> _$$_LoggedUserToJson(_$_LoggedUser instance) =>
+    <String, dynamic>{
       'aboutMe': instance.aboutMe,
       'active': instance.active,
       'archived': instance.archived,
