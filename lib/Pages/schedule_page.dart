@@ -62,13 +62,8 @@ class _SchedulePageState extends State<SchedulePage> {
                     Navigator.pop(context);
                   },
                   icon: Icon(Icons.arrow_back)),
-              titleTextStyle: TextStyle(
-                  color: height <= scrollPosition
-                      ? Colors.black
-                      : Colors.transparent),
-              iconTheme: IconThemeData(
-                  color:
-                      height <= scrollPosition ? Colors.black : Colors.white),
+              titleTextStyle: TextStyle(color: height <= scrollPosition ? Colors.black : Colors.transparent),
+              iconTheme: IconThemeData(color: height <= scrollPosition ? Colors.black : Colors.white),
               flexibleSpace: FlexibleSpaceBar(
                 background: Stack(children: [
                   DecoratedAppHeader(
@@ -88,20 +83,14 @@ class _SchedulePageState extends State<SchedulePage> {
                           padding: const EdgeInsets.symmetric(horizontal: 4.0),
                           child: Text(
                             'Hello',
-                            style: TextStyle(
-                                color: aWhite,
-                                fontSize: 20.0,
-                                fontWeight: FontWeight.bold),
+                            style: TextStyle(color: aWhite, fontSize: 20.0, fontWeight: FontWeight.bold),
                           ),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(4.0),
                           child: Text(
                             'Look for someone who is up for \nchallenge',
-                            style: TextStyle(
-                                color: aWhite,
-                                fontSize: 14.0,
-                                fontWeight: FontWeight.normal),
+                            style: TextStyle(color: aWhite, fontSize: 14.0, fontWeight: FontWeight.normal),
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -111,11 +100,9 @@ class _SchedulePageState extends State<SchedulePage> {
                           focusNode: _chatNode,
                           hint: 'Search Here',
                           onTextChange: (dynamic value) {
-
                             // _textController?.text = value;
                             // _textController?.selection = TextSelection.fromPosition(
                             //     TextPosition(offset: _textController!.text.length));
-
                           },
                           prefixIcon: Icon(
                             Icons.search,
@@ -173,17 +160,17 @@ class _SchedulePageState extends State<SchedulePage> {
 
         SliverList(
           delegate: SliverChildBuilderDelegate(
-                (context, index) => UpcommingMatchListTile(
-                  playerName: 'John K.',
-                  rivalName: 'Novak J.',
-                  location: 'CBS Arena, Los Angeles, CA',
-                  profileImg: 'assets/Ellipse 5.png',
-                  date: 'Saturday 21st Jan',
-                  time: '08:00 - 10:00',
-                  gameType: 'Single',
-                  matchStatus: 'open',
-                  onTileClick: () {},
-                  onProfileClick: () {},
+            (context, index) => UpcommingMatchListTile(
+              playerName: 'John K.',
+              rivalName: 'Novak J.',
+              location: 'CBS Arena, Los Angeles, CA',
+              profileImg: 'assets/Ellipse 5.png',
+              date: 'Saturday 21st Jan',
+              time: '08:00 - 10:00',
+              gameType: 'Single',
+              matchStatus: 'open',
+              onTileClick: () {},
+              onProfileClick: () {},
             ),
             childCount: 10,
           ),
@@ -199,8 +186,7 @@ class Delegate extends SliverPersistentHeaderDelegate {
   Delegate({this.child});
 
   @override
-  Widget build(
-      BuildContext context, double shrinkOffset, bool overlapsContent) {
+  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
     return child!;
   }
 

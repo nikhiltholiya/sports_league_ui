@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
+
+import '../Pages/base_activity.dart';
 import '../Pages/verify_email_page.dart';
 import '../bean/register/register.dart';
-import '../utils/Constants.dart';
-import '../utils/shared_preferences_utils.dart';
-import '../Pages/base_activity.dart';
+import '../bean/resend_activation_mail/resend_activation_mail.dart';
+import '../components/app_dialog.dart';
 import '../components/edit_text_form_field.dart';
 import '../components/elevated_buttons.dart';
+import '../utils/Constants.dart';
 import '../utils/app_colors.dart';
 import '../utils/app_labels.dart';
+import '../utils/shared_preferences_utils.dart';
 import '../utils/validators.dart';
 
 //Created on 20220325
@@ -23,10 +26,7 @@ class SignUpPage extends StatefulWidget {
   State<SignUpPage> createState() => _SignUpPageState();
 }
 
-
-
-class _SignUpPageState extends State<SignUpPage> with SharedPrefUtils {
-
+class _SignUpPageState extends State<SignUpPage> {
   bool? obSecure = true;
   bool? obSecureRetype = true;
   String? email = '';
@@ -37,21 +37,22 @@ class _SignUpPageState extends State<SignUpPage> with SharedPrefUtils {
   final keyEmail = GlobalKey();
   Map<String, dynamic> paramRegister = {};
   Map<String, dynamic> paramTypeRegister = {};
+
+  Map<String, dynamic> paramSendMail = {};
+  Map<String, dynamic> paramTypeSendMail = {};
   late RegisterData _registerData;
 
-  late List<String?> errorList = [];
+  late List<String?>? errorList = [];
+  bool? isEnable = true;
+  final mutationSendMail = GlobalKey<MutationState>();
+
   @override
   void initState() {
-    paramRegister = {
-      '\$email': 'String!',
-      '\$pass1': 'String!',
-      '\$pass2': 'String!'
-    };
-    paramTypeRegister = {
-      'email': '\$email',
-      'password1': '\$pass1',
-      'password2': '\$pass2'
-    };
+    paramRegister = {'\$email': 'String!', '\$pass1': 'String!', '\$pass2': 'String!'};
+    paramTypeRegister = {'email': '\$email', 'password1': '\$pass1', 'password2': '\$pass2'};
+
+    paramSendMail = {'\$email': 'String!'};
+    paramTypeSendMail = {'email': '\$email'};
     super.initState();
   }
 
@@ -80,6 +81,7 @@ class _SignUpPageState extends State<SignUpPage> with SharedPrefUtils {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 5),
                 child: EditTextFormField(
+                  isEnable: isEnable!,
                   key: keyEmail,
                   textInputType: TextInputType.emailAddress,
                   validator: emailValidator,
@@ -94,6 +96,7 @@ class _SignUpPageState extends State<SignUpPage> with SharedPrefUtils {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 5),
                 child: EditTextFormField(
+                  isEnable: isEnable!,
                   textInputAction: TextInputAction.next,
                   onTextChange: (value) {
                     password = value;
@@ -104,9 +107,7 @@ class _SignUpPageState extends State<SignUpPage> with SharedPrefUtils {
                   hint: passwordLabel,
                   suffixIcon: IconButton(
                       icon: Icon(
-                        obSecure!
-                            ? Icons.remove_red_eye_rounded
-                            : Icons.visibility_off_rounded,
+                        obSecure! ? Icons.remove_red_eye_rounded : Icons.visibility_off_rounded,
                         color: aGreen,
                       ),
                       onPressed: () {
@@ -118,21 +119,18 @@ class _SignUpPageState extends State<SignUpPage> with SharedPrefUtils {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 5),
                 child: EditTextFormField(
+                  isEnable: isEnable!,
                   textInputAction: TextInputAction.send,
                   onTextChange: (value) {
                     rePassword = value;
                   },
                   onTap: () {},
                   isObscure: obSecureRetype,
-                  validator: (val) =>
-                      MatchValidator(errorText: 'Password do not match')
-                          .validateMatch(val!, password!),
+                  validator: (val) => MatchValidator(errorText: 'Password do not match').validateMatch(val!, password!),
                   hint: rePasswordLabel,
                   suffixIcon: IconButton(
                       icon: Icon(
-                        obSecureRetype!
-                            ? Icons.remove_red_eye_rounded
-                            : Icons.visibility_off_rounded,
+                        obSecureRetype! ? Icons.remove_red_eye_rounded : Icons.visibility_off_rounded,
                         color: aGreen,
                       ),
                       onPressed: () {
@@ -141,97 +139,159 @@ class _SignUpPageState extends State<SignUpPage> with SharedPrefUtils {
                       }),
                 ),
               ),
-              if (errorList.length > 0)
-                ListView.builder(
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Text(errorList[index]!),
-                    );
+
+              // Mutation for sendmail
+              Mutation(
+                key: mutationSendMail,
+                options: MutationOptions(
+                  document: gql(resendActivationEmail(paramSendMail, paramTypeSendMail)),
+                  // update: update,
+                  onError: (OperationException? error) {
+                    print('**Maill -- erroR*** -- $error');
+                    // Text('$error');
                   },
-                  shrinkWrap: true,
-                )
+
+                  // _simpleAlert(context, error.toString()),
+                  onCompleted: (dynamic resultData) async {
+                    print('**Maill** $resultData');
+
+                    ResendActivationMailData data = ResendActivationMailData.fromJson(resultData);
+                    errorList = [];
+                    if (data.resendActivationEmail!.success!) {
+                      Navigator.pushNamed(context, VerifyEmailPage.path);
+                    } else {
+                      if (data.resendActivationEmail?.errors?.email?.first.message != null)
+                        errorList!.add(data.resendActivationEmail?.errors?.email?.first.message);
+
+                      if (data.resendActivationEmail?.errors?.password1?.first.message != null)
+                        errorList!.add(data.resendActivationEmail?.errors?.password1?.first.message);
+
+                      if (data.resendActivationEmail?.errors?.password2?.first.message != null)
+                        errorList!.add(data.resendActivationEmail?.errors?.password2?.first.message);
+
+                      _showAlert();
+                    }
+                  },
+                ),
+                builder: (RunMutation _sendMail, QueryResult? addResult) {
+                  final doSendmail = (result) {
+                    _sendMail(result);
+                  };
+                  // Future.delayed(const Duration(milliseconds: 200)).then((value) => doSendmail(passVariable));
+                  return SizedBox();
+                },
+              ),
             ],
           ),
         ),
-        bottomBar: ElevatedButtons(
-          width: double.infinity,
-          label: next,
-          fontSize: 25,
-          radius: 0.0,
-          onClick: () {
-            setEmailId('abc@gmail.com');
-            Navigator.pushNamed(context, VerifyEmailPage.path);
+        bottomBar: Mutation(
+          options: MutationOptions(
+            document: gql(RegisterPlayer(paramRegister, paramTypeRegister)),
+            // update: update,
+            onError: (OperationException? error) {
+              print('erroR -- $error');
+              isEnable = true;
+              setState(() {});
+              // Text('$error');
+            },
+            // _simpleAlert(context, error.toString()),
+            onCompleted: (dynamic resultData) async {
+              // Text('Thanks for your star!');
+
+              isEnable = true;
+              setState(() {});
+              print('**** $resultData');
+
+              _registerData = RegisterData.fromJson(resultData);
+              print('SUCCESS -- ${_registerData.register?.success}');
+              errorList = [];
+              if (_registerData.register!.success!) {
+                SharedPreferencesUtils.setEmail(email);
+                SharedPreferencesUtils.setToken(_registerData.register?.token);
+                SharedPreferencesUtils.setRefreshToken(_registerData.register?.refreshToken);
+
+                // Provider.of<TokenProvider>(context,listen: false).setToken(_registerData.register?.token);
+
+                // send email
+                Map<String, dynamic> passEmail = {
+                  'email': email,
+                };
+                mutationSendMail.currentState?.runMutation(passEmail);
+              } else {
+                if (_registerData.register?.errors?.email?.first.message != null)
+                  errorList!.add(_registerData.register?.errors?.email?.first.message);
+
+                if (_registerData.register?.errors?.password1?.first.message != null)
+                  errorList!.add(_registerData.register?.errors?.password1?.first.message);
+
+                if (_registerData.register?.errors?.password2?.first.message != null)
+                  errorList!.add(_registerData.register?.errors?.password2?.first.message);
+
+                _showAlert();
+              }
+            },
+            // 'Sorry you changed your mind!',
+          ),
+          builder: (RunMutation _register, QueryResult? addResult) {
+            final doRegister = (result) {
+              _register(result);
+            };
+
+            bool? anyLoading = addResult!.isLoading;
+
+            return ElevatedButtons(
+              width: double.infinity,
+              label: anyLoading ? 'wait' : next,
+              fontSize: 25,
+              radius: 0.0,
+              onClick: () {
+                if (_formKey.currentState!.validate()) {
+                  Map<String, dynamic> passVariable = {'email': email, 'pass1': password, 'pass2': rePassword};
+
+                  doRegister(passVariable);
+                  isEnable = false;
+                  setState(() {});
+                }
+              },
+              borderColor: aGreen,
+              buttonColor: aGreen,
+              labelColor: aWhite,
+            );
           },
-          borderColor: aGreen,
-          buttonColor: aGreen,
-          labelColor: aWhite,
         ),
-        // bottomBar: Mutation(
-        //   options: MutationOptions(
-        //     document: gql(RegisterPlayer(paramRegister, paramTypeRegister)),
-        //     // update: update,
-        //     onError: (OperationException? error) {
-        //       print('erroR -- $error');
-        //       // Text('$error');
-        //     },
-        //     // _simpleAlert(context, error.toString()),
-        //     onCompleted: (dynamic resultData) {
-        //       // Text('Thanks for your star!');
-        //       print('**** $resultData');
-        //
-        //       _registerData = RegisterData.fromJson(resultData);
-        //       print('SUCCESS -- ${_registerData.register?.success}');
-        //       errorList = [];
-        //       if (_registerData.register!.success!) {
-        //
-        //         setEmailId(email);
-        //         setToken(_registerData.register?.token);
-        //         setRefreshToken(_registerData.register?.refreshToken);
-        //         Navigator.pushNamed(context, VerifyEmailPage.path);
-        //
-        //
-        //       } else {
-        //         errorList
-        //             .add(_registerData.register?.errors?.email?.first.message);
-        //         errorList.add(
-        //             _registerData.register?.errors?.password1?.first.message);
-        //         errorList.add(
-        //             _registerData.register?.errors?.password2?.first.message);
-        //       }
-        //     },
-        //     // 'Sorry you changed your mind!',
-        //   ),
-        //   builder: (RunMutation _register, QueryResult? addResult) {
-        //     final doRegister = (result) {
-        //       _register(result);
-        //     };
-        //
-        //     bool? anyLoading = addResult!.isLoading;
-        //
-        //     return ElevatedButtons(
-        //       width: double.infinity,
-        //       label: anyLoading ? 'wait' : next,
-        //       fontSize: 25,
-        //       radius: 0.0,
-        //       onClick: () {
-        //         if (_formKey.currentState!.validate()) {
-        //           Map<String, dynamic> passVariable = {
-        //             'email': email,
-        //             'pass1': password,
-        //             'pass2': rePassword
-        //           };
-        //
-        //           doRegister(passVariable);
-        //         }
-        //       },
-        //       borderColor: aGreen,
-        //       buttonColor: aGreen,
-        //       labelColor: aWhite,
-        //     );
-        //   },
-        // ),
       ),
     );
+  }
+
+  Future<Widget> _showAlert() async {
+    return await showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AppDialog(
+            title: 'Signup',
+            body: [
+              ListView.builder(
+                shrinkWrap: true,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(errorList![index].toString()),
+                  );
+                },
+                itemCount: errorList!.length,
+              )
+            ],
+            isBtnPositiveAvail: false,
+            btnPositiveText: '',
+            btnNegativeText: 'Dismiss',
+            onNegativeClick: () {
+              Navigator.pop(context);
+            },
+            onPositiveClick: () {
+              Navigator.of(context).pop();
+            },
+          );
+        });
   }
 }

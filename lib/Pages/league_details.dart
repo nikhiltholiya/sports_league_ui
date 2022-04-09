@@ -29,7 +29,7 @@ class LeagueDetails extends StatefulWidget {
   _LeagueDetailsState createState() => _LeagueDetailsState();
 }
 
-class _LeagueDetailsState extends State<LeagueDetails> with SharedPrefUtils {
+class _LeagueDetailsState extends State<LeagueDetails> {
   ScrollController? _scrollController;
   GlobalKey? _stackKey = GlobalKey();
   GlobalKey? _textTitleKey = GlobalKey();
@@ -56,19 +56,19 @@ class _LeagueDetailsState extends State<LeagueDetails> with SharedPrefUtils {
 
   // late Future<bool?> isJoin;
 
-  Future<dynamic> isJoined() async{
+  Future<dynamic> isJoined() async {
     var contain = null;
-    await getUserId().then((value) {
-      contain = userStat?.where((element) => element.userId == value);
-      // isContain = contain!.length > 1 ;
-      // print('$isContain  -${contain.length}-#- $contain');
-    });
+
+    // await getUserId().then((value) {
+    contain = userStat?.where((element) => element.userId == SharedPreferencesUtils.getUserId);
+    // isContain = contain!.length > 1 ;
+    // print('$isContain  -${contain.length}-#- $contain');
+    // });
     return contain;
   }
 
   double _getWidgetHeight(GlobalKey? key) {
-    final RenderBox renderBoxRed =
-        key?.currentContext?.findRenderObject() as RenderBox;
+    final RenderBox renderBoxRed = key?.currentContext?.findRenderObject() as RenderBox;
     return renderBoxRed.size.height;
   }
 
@@ -151,11 +151,9 @@ class _LeagueDetailsState extends State<LeagueDetails> with SharedPrefUtils {
                     isBuildWidgets = true;
                     WidgetsBinding.instance?.addPostFrameCallback(_getTotalHeight);
                   }
-
                 } catch (e) {
                   debugPrint('Exception -- $e');
                 }
-
 
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -169,8 +167,7 @@ class _LeagueDetailsState extends State<LeagueDetails> with SharedPrefUtils {
                           slivers: <Widget>[
                             SliverLayoutBuilder(
                               builder: (context, constraints) {
-                                scrollPosition =
-                                    constraints.scrollOffset + kToolbarHeight;
+                                scrollPosition = constraints.scrollOffset + kToolbarHeight;
                                 return SliverAppBar(
                                   elevation: 0,
                                   snap: false,
@@ -183,25 +180,19 @@ class _LeagueDetailsState extends State<LeagueDetails> with SharedPrefUtils {
                                         Navigator.pop(context);
                                       },
                                       icon: Icon(Icons.arrow_back)),
-                                  titleTextStyle: TextStyle(
-                                      color: height <= scrollPosition
-                                          ? Colors.black
-                                          : Colors.transparent),
-                                  iconTheme: IconThemeData(
-                                      color: height <= scrollPosition
-                                          ? Colors.black
-                                          : Colors.white),
+                                  titleTextStyle:
+                                      TextStyle(color: height <= scrollPosition ? Colors.black : Colors.transparent),
+                                  iconTheme:
+                                      IconThemeData(color: height <= scrollPosition ? Colors.black : Colors.white),
                                   flexibleSpace: FlexibleSpaceBar(
                                     background: LeagueDetailsHeaderTile(
                                       playerName: LeagueData!.leagueStat!.name,
                                       leagueStatus: LeagueData?.leagueStat?.status,
                                       leagueDate: convertDate(
-                                          LeagueData?.leagueStat?.startDate,
-                                          LeagueData?.leagueStat?.endDate),
-                                      leagueDesc:
-                                      LeagueData?.leagueStat?.description,
+                                          LeagueData?.leagueStat?.startDate, LeagueData?.leagueStat?.endDate),
+                                      leagueDesc: LeagueData?.leagueStat?.description,
                                       leagueLocation:
-                                      '${LeagueData?.leagueStat?.city}, ${LeagueData?.leagueStat?.state}, ${LeagueData?.leagueStat?.country}',
+                                          '${LeagueData?.leagueStat?.city}, ${LeagueData?.leagueStat?.state}, ${LeagueData?.leagueStat?.country}',
                                       stackKey: _stackKey,
                                       textTitleKey: _textTitleKey,
                                       imgLocationKey: _imgLocationKey,
@@ -211,9 +202,7 @@ class _LeagueDetailsState extends State<LeagueDetails> with SharedPrefUtils {
                                     ),
                                     centerTitle: true,
                                     // title: size.height / 2 <= constraints.scrollOffset ? Text('Participating Players') : SizedBox(),
-                                    title: height <= scrollPosition
-                                        ? Text(participatingPlayer)
-                                        : SizedBox(),
+                                    title: height <= scrollPosition ? Text(participatingPlayer) : SizedBox(),
                                   ),
                                   expandedHeight: _dynamicTotalHeight,
                                   backgroundColor: Colors.white,
@@ -221,16 +210,14 @@ class _LeagueDetailsState extends State<LeagueDetails> with SharedPrefUtils {
                               },
                             ),
                             if (LeagueData!.leagueStat!.status != null &&
-                                LeagueData!.leagueStat!.status!.toString() !=
-                                    'ongoing')
+                                LeagueData!.leagueStat!.status!.toString() != 'ongoing')
                               SliverToBoxAdapter(
                                 child: Query(
                                   options: QueryOptions(
                                     document: gql(fetchUsers),
                                     // this is the query string you just created
                                     variables: {
-                                      'userId':
-                                      '${LeagueData!.leagueStat!.winnerOneId}',
+                                      'userId': '${LeagueData!.leagueStat!.winnerOneId}',
                                       // 'userId': '${LeagueData!.leagueStat!.winnerOneId}',
                                     },
                                     pollInterval: Duration(seconds: 100),
@@ -238,18 +225,14 @@ class _LeagueDetailsState extends State<LeagueDetails> with SharedPrefUtils {
                                   builder: (winnerResult, {fetchMore, refetch}) {
                                     late UserProfiles? profile;
                                     if (winnerResult.hasException) {
-                                      return Text(
-                                          winnerResult.exception.toString());
+                                      return Text(winnerResult.exception.toString());
                                     }
 
                                     if (winnerResult.isLoading) {
-                                      return Center(
-                                          child: CupertinoActivityIndicator());
+                                      return Center(child: CupertinoActivityIndicator());
                                     }
 
-                                    profile =
-                                    UserProfileData.fromJson(winnerResult.data!)
-                                        .userProfiles!;
+                                    profile = UserProfileData.fromJson(winnerResult.data!).userProfiles!;
 
                                     return Column(
                                       mainAxisAlignment: MainAxisAlignment.center,
@@ -261,10 +244,8 @@ class _LeagueDetailsState extends State<LeagueDetails> with SharedPrefUtils {
                                         ),
 
                                         LeagueDetailsWinnerTile(
-                                          winnerName:
-                                          '${profile.firstName} ${profile.lastName} ',
-                                          winnerLocation:
-                                          '${profile.city}, ${profile.state}',
+                                          winnerName: '${profile.firstName} ${profile.lastName} ',
+                                          winnerLocation: '${profile.city}, ${profile.state}',
                                           winnerAge: profile.age,
                                           drawCount: profile.drawCount,
                                           wonCount: profile.wonCount,
@@ -293,7 +274,7 @@ class _LeagueDetailsState extends State<LeagueDetails> with SharedPrefUtils {
                             ),
                             SliverList(
                               delegate: SliverChildBuilderDelegate(
-                                    (context, index) {
+                                (context, index) {
                                   return LeagueDetailTile(
                                     name: userStat![index].userName,
                                     games: userStat![index].total,
@@ -301,13 +282,10 @@ class _LeagueDetailsState extends State<LeagueDetails> with SharedPrefUtils {
                                     win: userStat![index].won,
                                     profileImg: 'assets/Ellipse 3.png',
                                     onTileClick: () {
-                                      if (LeagueData!.leagueStat!.status!
-                                          .toLowerCase() ==
-                                          'ongoing') {
-
-                                        Provider.of<UserIdProvider>(context, listen: false).setUserId(userStat![index].userId);
-                                        Navigator.pushNamed(
-                                            context, ChallengesChat.path);
+                                      if (LeagueData!.leagueStat!.status!.toLowerCase() == 'ongoing') {
+                                        Provider.of<UserIdProvider>(context, listen: false)
+                                            .setUserId(userStat![index].userId);
+                                        Navigator.pushNamed(context, ChallengesChat.path);
                                       }
                                     },
                                     onProfileClick: () {},
@@ -319,18 +297,14 @@ class _LeagueDetailsState extends State<LeagueDetails> with SharedPrefUtils {
                           ],
                         ),
                         flex: 1),
-
-
-
                     FutureBuilder<dynamic>(
                       future: isJoined(),
                       builder: (context, snapshot) {
-
-                        if(snapshot.hasData){
+                        if (snapshot.hasData) {
                           // print('snapshot.data - ${snapshot.data} -- ${snapshot.data.length}');
                           if (LeagueData!.leagueStat!.status != null &&
-                              LeagueData!.leagueStat!.status!.toString() == 'ongoing' && snapshot.data.length == 0) {
-
+                              LeagueData!.leagueStat!.status!.toString() == 'ongoing' &&
+                              snapshot.data.length == 0) {
                             return ElevatedButtons(
                               width: double.infinity,
                               label: joinNow,
@@ -341,13 +315,15 @@ class _LeagueDetailsState extends State<LeagueDetails> with SharedPrefUtils {
                               buttonColor: aGreen,
                               labelColor: aWhite,
                             );
-                          } else{
-                            return SizedBox(height: 0.0,);
+                          } else {
+                            return SizedBox(
+                              height: 0.0,
+                            );
                           }
                         }
                         return CupertinoActivityIndicator();
-                      },)
-
+                      },
+                    )
                   ],
                 );
               },

@@ -74,7 +74,7 @@ _$_MsgRecipient _$$_MsgRecipientFromJson(Map<String, dynamic> json) =>
       id: json['id'] as String?,
       lastName: json['lastName'] as String?,
       picture: json['picture'] as String?,
-      rating: (json['rating'] as num?)?.toDouble(),
+      rating: json['rating'] as String?,
       userId: json['userId'] as String?,
       state: json['state'] as String?,
       active: json['active'] as bool?,

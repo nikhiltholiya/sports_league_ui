@@ -1,16 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:form_field_validator/form_field_validator.dart';
-import 'package:graphql_flutter/graphql_flutter.dart';
-import '../Pages/create_profile_page.dart';
-import '../bean/register/register.dart';
-import '../utils/Constants.dart';
-import '../utils/shared_preferences_utils.dart';
+
 import '../Pages/base_activity.dart';
-import '../components/edit_text_form_field.dart';
+import '../Pages/sign_in_page.dart';
 import '../components/elevated_buttons.dart';
 import '../utils/app_colors.dart';
 import '../utils/app_labels.dart';
-import '../utils/validators.dart';
 
 //Created on 20220326
 class VerifyEmailPage extends StatefulWidget {
@@ -22,8 +16,7 @@ class VerifyEmailPage extends StatefulWidget {
   State<VerifyEmailPage> createState() => _VerifyEmailPageState();
 }
 
-class _VerifyEmailPageState extends State<VerifyEmailPage>
-    with SharedPrefUtils {
+class _VerifyEmailPageState extends State<VerifyEmailPage> {
   @override
   void initState() {
     super.initState();
@@ -74,7 +67,7 @@ class _VerifyEmailPageState extends State<VerifyEmailPage>
         fontSize: 25,
         radius: 0.0,
         onClick: () {
-          Navigator.pushNamed(context, CreateProfilePage.path);
+          Navigator.pushNamed(context, SignInPage.path);
         },
         borderColor: aGreen,
         buttonColor: aGreen,

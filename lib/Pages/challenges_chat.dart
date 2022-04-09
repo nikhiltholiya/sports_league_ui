@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:provider/provider.dart';
-import '../components/bordered_circle_avatar.dart';
 
 import '../Pages/base_activity.dart';
 import '../Pages/profile_page.dart';
 import '../Pages/submit_score_details.dart';
 import '../bean/all_users/all_users.dart';
 import '../bean/chat_dto.dart';
+import '../components/bordered_circle_avatar.dart';
 import '../components/chatting_list_header_tile.dart';
 import '../components/chatting_list_tile.dart';
 import '../components/edit_text_form_field.dart';
@@ -17,7 +17,6 @@ import '../components/rate_badges.dart';
 import '../providers/user_id_provider.dart';
 import '../utils/Constants.dart';
 import '../utils/app_colors.dart';
-import '../utils/shared_preferences_utils.dart';
 
 //Created on 20220223
 //20220321
@@ -30,12 +29,9 @@ class ChallengesChat extends StatefulWidget {
   _ChallengesChatState createState() => _ChallengesChatState();
 }
 
-class _ChallengesChatState extends State<ChallengesChat> with SharedPrefUtils{
+class _ChallengesChatState extends State<ChallengesChat> {
   List<Chat>? chatList = [
-    Chat(
-        message: 'Are you up for a challenge?',
-        dateTime: '3:27 PM',
-        isMe: false),
+    Chat(message: 'Are you up for a challenge?', dateTime: '3:27 PM', isMe: false),
     Chat(message: 'Yes, count me in', dateTime: '3:28 PM', isMe: true),
     Chat(message: 'No, I am not available', dateTime: '3:28 PM', isMe: true),
     Chat(message: 'Yes, count me in', dateTime: '3:28 PM', isMe: false)
@@ -61,8 +57,7 @@ class _ChallengesChatState extends State<ChallengesChat> with SharedPrefUtils{
 
   double? _getHeight(GlobalKey? gKey) {
     try {
-      final RenderBox? rBox =
-          gKey?.currentContext?.findRenderObject() as RenderBox;
+      final RenderBox? rBox = gKey?.currentContext?.findRenderObject() as RenderBox;
       return rBox?.size.height;
     } catch (e) {}
   }
@@ -78,9 +73,7 @@ class _ChallengesChatState extends State<ChallengesChat> with SharedPrefUtils{
       _visibility = false;
     });
 
-    _totalHeight = (stack ?? 0.0) +
-        (title ?? 0.0) /*+ (location ?? 0.0) + (btn ?? 0.0)*/ +
-        kToolbarHeight;
+    _totalHeight = (stack ?? 0.0) + (title ?? 0.0) /*+ (location ?? 0.0) + (btn ?? 0.0)*/ + kToolbarHeight;
 
     // print('Height == $_totalHeight');
   }
@@ -99,8 +92,7 @@ class _ChallengesChatState extends State<ChallengesChat> with SharedPrefUtils{
     setState(() {
       try {
         if (_scrollController!.offset >
-                _totalHeight! -
-                    kToolbarHeight /*&&
+                _totalHeight! - kToolbarHeight /*&&
           !_scrollController!.position.outOfRange*/
             //100
             ) {
@@ -117,8 +109,7 @@ class _ChallengesChatState extends State<ChallengesChat> with SharedPrefUtils{
       // print(_scrollController!.offset);
       // collapsing
       if (_scrollController!.offset >
-              _totalHeight! -
-                  kToolbarHeight /*&&
+              _totalHeight! - kToolbarHeight /*&&
           !_scrollController!.position.outOfRange*/
           //100
           ) {
@@ -161,12 +152,10 @@ class _ChallengesChatState extends State<ChallengesChat> with SharedPrefUtils{
         // ), // This is used for getting dynamic height of contents!!!
         toolbarHeight: 0,
       ),
-
-      body :Container(
+      body: Container(
         color: aWhite,
         child: Consumer<UserIdProvider>(
           builder: (context, value, child) {
-
             Map<String, dynamic> param = {
               '\$userId': 'UUID',
             };
@@ -179,7 +168,7 @@ class _ChallengesChatState extends State<ChallengesChat> with SharedPrefUtils{
               options: QueryOptions(
                 document: gql(allUsers(param, paramType)),
                 // this is the query string you just created
-                variables:passVariable,
+                variables: passVariable,
                 pollInterval: Duration(seconds: 100),
               ),
               builder: (userResult, {fetchMore, refetch}) {
@@ -198,8 +187,6 @@ class _ChallengesChatState extends State<ChallengesChat> with SharedPrefUtils{
                     isBuildWidgets = true;
                     WidgetsBinding.instance?.addPostFrameCallback(_getTotalHeight);
                   }
-
-
                 } catch (e) {
                   debugPrint('Exception -- $e');
                 }
@@ -211,8 +198,7 @@ class _ChallengesChatState extends State<ChallengesChat> with SharedPrefUtils{
                     Expanded(
                         child: CustomScrollView(
                           controller: _scrollController,
-                          keyboardDismissBehavior:
-                          ScrollViewKeyboardDismissBehavior.onDrag,
+                          keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
                           physics: const BouncingScrollPhysics(),
                           shrinkWrap: true,
                           slivers: <Widget>[
@@ -229,13 +215,9 @@ class _ChallengesChatState extends State<ChallengesChat> with SharedPrefUtils{
                                     Navigator.pop(context);
                                   },
                                   icon: Icon(Icons.arrow_back)),
-                              titleTextStyle: TextStyle(
-                                  fontSize: 10,
-                                  color:
-                                  _isSilverCollapsed! ? Colors.black : Colors.white),
-                              iconTheme: IconThemeData(
-                                  color:
-                                  _isSilverCollapsed! ? Colors.black : Colors.white),
+                              titleTextStyle:
+                                  TextStyle(fontSize: 10, color: _isSilverCollapsed! ? Colors.black : Colors.white),
+                              iconTheme: IconThemeData(color: _isSilverCollapsed! ? Colors.black : Colors.white),
                               // titleTextStyle: TextStyle(
                               //        fontSize: 10.0,
                               //        color: scrollPosition >= _totalHeight
@@ -249,12 +231,16 @@ class _ChallengesChatState extends State<ChallengesChat> with SharedPrefUtils{
                                   titlePadding: EdgeInsets.zero,
                                   centerTitle: true,
                                   background: ChattingListHeaderTile(
-                                    playerName: '${_allUsersData.allUsers?.edges?.first.node?.firstName} ${_allUsersData.allUsers?.edges?.first.node?.lastName}',
-                                    playerLocation: '${_allUsersData.allUsers?.edges?.first.node?.city}, ${_allUsersData.allUsers?.edges?.first.node?.state}',
-                                    playerImg: _allUsersData.allUsers?.edges?.first.node?.picture,// NOT RECEIVED
-                                    playerRate: '${_allUsersData.allUsers?.edges?.first.node?.rating}',// NOT RECEIVED
+                                    playerName:
+                                        '${_allUsersData.allUsers?.edges?.first.node?.firstName} ${_allUsersData.allUsers?.edges?.first.node?.lastName}',
+                                    playerLocation:
+                                        '${_allUsersData.allUsers?.edges?.first.node?.city}, ${_allUsersData.allUsers?.edges?.first.node?.state}',
+                                    playerImg: _allUsersData.allUsers?.edges?.first.node?.picture,
+                                    // NOT RECEIVED
+                                    playerRate: '${_allUsersData.allUsers?.edges?.first.node?.rating}',
+                                    // NOT RECEIVED
                                     onViewProfile: () {
-                                      Navigator.pushNamed(context, ProfilePage.path);
+                                      Navigator.pushReplacementNamed(context, ProfilePage.path);
                                     },
                                     onSubmitScore: () {
                                       Navigator.pushNamed(context, SubmitScoreDetails.path);
@@ -264,46 +250,45 @@ class _ChallengesChatState extends State<ChallengesChat> with SharedPrefUtils{
                                   ),
                                   title: _isSilverCollapsed!
                                       ? Center(
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      children: [
-                                        SizedBox(
-                                          width: 40,
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.all(5.0),
-                                            child: BorderedCircleAvatar(radius: 20, path: 'assets/Ellipse 5.png'),
-                                        ),
-                                        Expanded(
-                                          flex: 1,
-                                          child: Text(
-                                            '${_allUsersData.allUsers?.edges?.first.node?.firstName} ${_allUsersData.allUsers?.edges?.first.node?.lastName}',
-                                            maxLines: 1,
-                                            style: TextStyle(
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding:
-                                          const EdgeInsets.only(right: 10.0),
-                                          child: RateBadges(
-                                            rate: '${_allUsersData.allUsers?.edges?.first.node?.rating}',
-                                            textSize: 16.0,
+                                          child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            children: [
+                                              SizedBox(
+                                                width: 40,
+                                              ),
+                                              Padding(
+                                                padding: const EdgeInsets.all(5.0),
+                                                child: BorderedCircleAvatar(radius: 20, path: 'assets/Ellipse 5.png'),
+                                              ),
+                                              Expanded(
+                                                flex: 1,
+                                                child: Text(
+                                                  '${_allUsersData.allUsers?.edges?.first.node?.firstName} ${_allUsersData.allUsers?.edges?.first.node?.lastName}',
+                                                  maxLines: 1,
+                                                  style: TextStyle(
+                                                    fontSize: 18,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding: const EdgeInsets.only(right: 10.0),
+                                                child: RateBadges(
+                                                  rate: '${_allUsersData.allUsers?.edges?.first.node?.rating}',
+                                                  textSize: 16.0,
+                                                ),
+                                              )
+                                            ],
                                           ),
                                         )
-                                      ],
-                                    ),
-                                  )
                                       : SizedBox()),
                               expandedHeight: _totalHeight,
                               backgroundColor: Colors.white,
                             ),
                             SliverList(
                               delegate: SliverChildBuilderDelegate(
-                                    (context, index) => ChattingListTile(
+                                (context, index) => ChattingListTile(
                                   key: ValueKey(index),
                                   isMe: chatList![index].isMe,
                                   msg: chatList![index].message,
@@ -322,46 +307,43 @@ class _ChallengesChatState extends State<ChallengesChat> with SharedPrefUtils{
                       onTextChange: (dynamic value) {
                         setState(() {
                           _textController?.text = value;
-                          _textController?.selection = TextSelection.fromPosition(
-                              TextPosition(offset: _textController!.text.length));
+                          _textController?.selection =
+                              TextSelection.fromPosition(TextPosition(offset: _textController!.text.length));
                         });
                       },
                       suffixIcon: _textController!.text.trim().isNotEmpty
                           ? IconButton(
-                        onPressed: () {
-                          if (_textController!.text.trim().isNotEmpty) {
-                            setState(() {
-                              chatList!.add(
-                                Chat(
-                                    message: _textController?.text,
-                                    dateTime: '3:27 PM',
-                                    isMe: true),
-                              );
-                            });
-                            _textController!.text = '';
+                              onPressed: () {
+                                if (_textController!.text.trim().isNotEmpty) {
+                                  setState(() {
+                                    chatList!.add(
+                                      Chat(message: _textController?.text, dateTime: '3:27 PM', isMe: true),
+                                    );
+                                  });
+                                  _textController!.text = '';
 
-                            // _getListItems();
+                                  // _getListItems();
 
-                            // Timer(
-                            //     Duration(milliseconds: 300),
-                            //         () => _scrollController!.jumpTo(
-                            //         _scrollController!
-                            //             .position.minScrollExtent));
-                            // Timer(
-                            //     Duration(milliseconds: 300),
-                            //         () => _scrollController!.jumpTo(
-                            //         _scrollController!
-                            //             .position.maxScrollExtent));
-                            //
-                            // print(_scrollController!
-                            //     .position.maxScrollExtent);
-                          }
-                        },
-                        icon: Icon(
-                          Icons.send,
-                          color: Color(0XFF808080),
-                        ),
-                      )
+                                  // Timer(
+                                  //     Duration(milliseconds: 300),
+                                  //         () => _scrollController!.jumpTo(
+                                  //         _scrollController!
+                                  //             .position.minScrollExtent));
+                                  // Timer(
+                                  //     Duration(milliseconds: 300),
+                                  //         () => _scrollController!.jumpTo(
+                                  //         _scrollController!
+                                  //             .position.maxScrollExtent));
+                                  //
+                                  // print(_scrollController!
+                                  //     .position.maxScrollExtent);
+                                }
+                              },
+                              icon: Icon(
+                                Icons.send,
+                                color: Color(0XFF808080),
+                              ),
+                            )
                           : SizedBox(),
                       textController: _textController,
                     )

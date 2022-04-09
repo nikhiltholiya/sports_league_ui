@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../utils/app_colors.dart';
 
 import '../Pages/base_activity.dart';
 import '../components/elevated_buttons.dart';
 import '../components/head_to_head_details_list_tile.dart';
+import '../utils/app_colors.dart';
 
 //Updated on 20220308
 class RecentMatchesPage extends StatefulWidget {
@@ -21,37 +21,36 @@ class _RecentMatchesPageState extends State<RecentMatchesPage> {
   Widget build(BuildContext context) {
     return BaseWidget(
       appbarHeight: kToolbarHeight,
-      appbar:Text(
+      appbar: Text(
         "Recent Matches",
-        style: GoogleFonts.poppins(
-            color: Colors.black, fontSize: 20, fontWeight: FontWeight.w600),
+        style: GoogleFonts.poppins(color: Colors.black, fontSize: 20, fontWeight: FontWeight.w600),
       ),
-      body: ListView.builder(itemBuilder: (context, index) {
-        return
-          index == 0 ? Text(
-            "Showing 10 Matches",
-            style: GoogleFonts.poppins(
-                color: Colors.black,
-                fontWeight: FontWeight.w500,
-                fontSize: 16),
-          ) :
-          HeadToHeadDetailsListTile(
-            title: 'CBS Arena',
-            date: 'Dec 31st 2021',
-            onProfileClick: () {},
-            onTileClick: () {},
-            player1matchScore: [5, 4, 3, 2, 1],
-            player1Img: 'assets/Ellipse 5.png',
-            player1Name: 'Novak J.',
-            player1Active: true,
-            player2matchScore: [1, 2, 3, 4, 5],
-            player2Img: 'assets/Ellipse 2.png',
-            player2Name: 'Kalpesh T.',
-            player2Active: false,
-          );
-      }, shrinkWrap: true,
+      body: ListView.builder(
+        itemBuilder: (context, index) {
+          return index == 0
+              ? Text(
+                  "Showing 10 Matches",
+                  style: GoogleFonts.poppins(color: Colors.black, fontWeight: FontWeight.w500, fontSize: 16),
+                )
+              : HeadToHeadDetailsListTile(
+                  title: 'CBS Arena',
+                  date: 'Dec 31st 2021',
+                  onProfileClick: () {},
+                  onTileClick: () {},
+                  player1matchScore: [5, 4, 3, 2, 1],
+                  player1Img: 'assets/Ellipse 5.png',
+                  player1Name: 'Novak J.',
+                  player1Active: true,
+                  player2matchScore: [1, 2, 3, 4, 5],
+                  player2Img: 'assets/Ellipse 2.png',
+                  player2Name: 'Kalpesh T.',
+                  player2Active: false,
+                );
+        },
+        shrinkWrap: true,
         physics: BouncingScrollPhysics(),
-        itemCount: 10,),
+        itemCount: 10,
+      ),
       bottomBar: ElevatedButtons(
         width: double.infinity,
         fontSize: 18.0,
@@ -60,7 +59,9 @@ class _RecentMatchesPageState extends State<RecentMatchesPage> {
         buttonColor: aGreen,
         labelColor: aWhite,
         label: 'Invite To Play',
-        radius: 0.0,),);
+        radius: 0.0,
+      ),
+    );
     // return Scaffold(
     //   backgroundColor: Colors.white,
     //   bottomSheet: Container(

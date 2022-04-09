@@ -5,16 +5,18 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:provider/provider.dart';
-import '../providers/league_id_provider.dart';
-import '../components/bordered_circle_avatar.dart';
 
+import '../Pages/all_messaging_list_page.dart';
 import '../Pages/base_activity.dart';
+import '../Pages/home_page.dart';
 import '../Pages/my_league_list.dart';
 import '../Pages/profile_page.dart';
 import '../Pages/submit_score_list.dart';
 import '../bean/all_users/all_users.dart';
+import '../components/bordered_circle_avatar.dart';
 import '../components/dashboard_menu_item.dart';
 import '../components/decorated_app_header_tile.dart';
+import '../providers/league_id_provider.dart';
 import '../providers/user_id_provider.dart';
 import '../utils/Constants.dart';
 import '../utils/app_colors.dart';
@@ -31,17 +33,18 @@ class DashboardPage extends StatefulWidget {
   State<DashboardPage> createState() => _DashboardPageState();
 }
 
-class _DashboardPageState extends State<DashboardPage> with SharedPrefUtils {
+class _DashboardPageState extends State<DashboardPage> {
   var scKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
-    setUserId('021c2515-e12e-49bd-bc08-744dc64a508c');
+    SharedPreferencesUtils.setUserId('021c2515-e12e-49bd-bc08-744dc64a508c');
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+
     List<MenuItems>? dashBoardMenuItems = [
       MenuItems(
           title: 'My Leagues',
@@ -80,6 +83,20 @@ class _DashboardPageState extends State<DashboardPage> with SharedPrefUtils {
           subtitle: 'Contact support team',
           color: Color(0xff263238),
           path: ''),
+
+      MenuItems(
+          title: 'Messages',
+          image: 'transperent_tennis_ball_icon_green.png',
+          subtitle: 'Check latest messages',
+          color: Color(0xff31a05f),
+          path: AllMessagesListPage.path),
+
+      MenuItems(
+          title: 'Signup',
+          image: 'transperent_tennis_ball_icon_red.png',
+          subtitle: 'This is temp for check signup',
+          color: Color(0xffeb5945),
+          path: HomePage.path),
     ];
 
     Map<String, dynamic> param = {
@@ -88,8 +105,8 @@ class _DashboardPageState extends State<DashboardPage> with SharedPrefUtils {
     Map<String, dynamic> paramType = {
       'userId': '\$userId',
     };
-    Map<String, dynamic> passVariable = {'userId': '021c2515-e12e-49bd-bc08-744dc64a508c'};
-
+    // Map<String, dynamic> passVariable = {'userId': '021c2515-e12e-49bd-bc08-744dc64a508c'};
+    Map<String, dynamic> passVariable = {'userId': '${SharedPreferencesUtils.getUserId!}'};
 
     return BaseWidget(
       scaffoldKey: scKey,
@@ -99,11 +116,11 @@ class _DashboardPageState extends State<DashboardPage> with SharedPrefUtils {
         options: QueryOptions(
           document: gql(allUsers(param, paramType)),
           // this is the query string you just created
-          variables:passVariable,
+          variables: passVariable,
           pollInterval: Duration(seconds: 100),
         ),
         builder: (result, {fetchMore, refetch}) {
-
+          print(passVariable);
           if (result.hasException) {
             return Text(result.exception.toString());
           }
@@ -112,15 +129,20 @@ class _DashboardPageState extends State<DashboardPage> with SharedPrefUtils {
             return const Center(child: CupertinoActivityIndicator());
           }
 
-
           // setLoggedUser(AllUsersData.fromJson(result.data!).allUsers?.edges?.first.node?.toJson().toString());
-          setLoggedUser(jsonEncode(AllUsersData.fromJson(result.data!)));
+          // setLoggedUser(jsonEncode(AllUsersData.fromJson(result.data!).allUsers.));
 
+          SharedPreferencesUtils.setUserData(
+              jsonEncode(AllUsersData.fromJson(result.data!).allUsers?.edges?.first.node));
+
+          // print('USER DATA ${SharedPreferencesUtils.getUserData}');
           return Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              dashboardHeader(name: AllUsersData.fromJson(result.data!).allUsers?.edges?.first.node?.firstName,),
+              dashboardHeader(
+                name: AllUsersData.fromJson(result.data!).allUsers?.edges?.first.node?.firstName,
+              ),
               Padding(
                 padding: const EdgeInsets.only(top: 10, left: 10),
                 child: Text(
@@ -137,10 +159,7 @@ class _DashboardPageState extends State<DashboardPage> with SharedPrefUtils {
                     physics: BouncingScrollPhysics(),
                     padding: EdgeInsets.all(10.0),
                     gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                        maxCrossAxisExtent: 200,
-                        childAspectRatio: 2,
-                        crossAxisSpacing: 10,
-                        mainAxisSpacing: 10),
+                        maxCrossAxisExtent: 200, childAspectRatio: 2, crossAxisSpacing: 10, mainAxisSpacing: 10),
                     itemCount: dashBoardMenuItems.length,
                     itemBuilder: (BuildContext ctx, index) {
                       return DashboardMenuItem(
@@ -149,13 +168,12 @@ class _DashboardPageState extends State<DashboardPage> with SharedPrefUtils {
                         subtitle: dashBoardMenuItems[index].subtitle,
                         title: dashBoardMenuItems[index].title,
                         onMenuClick: () {
-                          getUserId().then((value) => Provider.of<UserIdProvider>(context,listen: false).setUserId(value));
-
-                          Provider.of<LeagueIdProvider>(context,listen: false).setLeagueId('');
+                          Provider.of<UserIdProvider>(context, listen: false)
+                              .setUserId(SharedPreferencesUtils.getUserId);
+                          Provider.of<LeagueIdProvider>(context, listen: false).setLeagueId('');
 
                           if (dashBoardMenuItems[index].path!.isNotEmpty)
-                            Navigator.pushNamed(
-                                context, dashBoardMenuItems[index].path ?? '');
+                            Navigator.pushNamed(context, dashBoardMenuItems[index].path ?? '');
                         },
                       );
                     },
@@ -173,7 +191,8 @@ class _DashboardPageState extends State<DashboardPage> with SharedPrefUtils {
 class dashboardHeader extends StatelessWidget {
   final String? name;
   final String? userImage;
-  const dashboardHeader({Key? key, this.name, this.userImage}) : super(key: key);
+
+  const dashboardHeader({Key? key, this.name = 'user', this.userImage}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

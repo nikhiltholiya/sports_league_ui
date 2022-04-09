@@ -7,7 +7,6 @@ import '../Pages/profile_detail_page.dart';
 import '../providers/user_id_provider.dart';
 import '../utils/shared_preferences_utils.dart';
 
-
 //Updated on 20220307
 class ProfilePage extends StatefulWidget {
   static const String path = 'profilePage';
@@ -20,18 +19,18 @@ class ProfilePage extends StatefulWidget {
   _ProfilePageState createState() => _ProfilePageState();
 }
 
-class _ProfilePageState extends State<ProfilePage> with SharedPrefUtils {
-  late Future<String?> _futureUserId;
+class _ProfilePageState extends State<ProfilePage> {
+  // late Future<String?> _futureUserId;
 
-  Future<String?> getUserIds() async {
-    return await getUserId().then((value) {
-      return value;
-    });
-  }
+  // Future<String?> getUserIds() async {
+  //   return await getUserId().then((value) {
+  //     return value;
+  //   });
+  // }
 
   @override
   void initState() {
-    _futureUserId = getUserId();
+    // _futureUserId = getUserId();
     super.initState();
   }
 
@@ -47,18 +46,9 @@ class _ProfilePageState extends State<ProfilePage> with SharedPrefUtils {
       ),
       body: Consumer<UserIdProvider>(
         builder: (context, userId, child) {
-          return FutureBuilder<String?>(
-            future: _futureUserId,
-            builder: (context, snapshot) {
-
-              if(snapshot.hasData) {
-                print('${userId.getUserId} == ${snapshot.data}');
-                return ProfileDetailPage(
-                  from: userId.getUserId == snapshot.data ? ProfilePage.profileMe : ProfilePage.profileUser,
-                );
-              }
-              return const Center(child: CupertinoActivityIndicator());
-            },
+          return ProfileDetailPage(
+            from:
+                userId.getUserId == SharedPreferencesUtils.getUserId ? ProfilePage.profileMe : ProfilePage.profileUser,
           );
         },
       ),

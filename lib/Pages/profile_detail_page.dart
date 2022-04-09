@@ -6,7 +6,6 @@ import 'package:provider/provider.dart';
 
 import '../Pages/challenges_chat.dart';
 import '../Pages/head_to_head_page.dart';
-import '../Pages/league_details.dart';
 import '../Pages/profile_page.dart';
 import '../Pages/recent_matches_pages.dart';
 import '../Pages/submit_score_details.dart';
@@ -19,18 +18,18 @@ import '../providers/user_id_provider.dart';
 import '../utils/Constants.dart' as Constants;
 import '../utils/app_colors.dart';
 import '../utils/app_labels.dart';
-import '../utils/shared_preferences_utils.dart';
 
 //Updated on 20220308
 class ProfileDetailPage extends StatefulWidget {
   final String? from;
+
   const ProfileDetailPage({Key? key, required this.from}) : super(key: key);
 
   @override
   _ProfileDetailPageState createState() => _ProfileDetailPageState();
 }
 
-class _ProfileDetailPageState extends State<ProfileDetailPage> with SharedPrefUtils{
+class _ProfileDetailPageState extends State<ProfileDetailPage> {
   String readRepositories = Constants.fetchUserProfiles;
   var dataRecent;
 
@@ -46,7 +45,6 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> with SharedPrefUt
   bool? isLoaded = false;
   String? userId;
 
-
   @override
   void initState() {
     _scrollController = ScrollController();
@@ -55,8 +53,7 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> with SharedPrefUt
   }
 
   double _getWidgetHeight(GlobalKey? key) {
-    final RenderBox renderBoxRed =
-    key?.currentContext?.findRenderObject() as RenderBox;
+    final RenderBox renderBoxRed = key?.currentContext?.findRenderObject() as RenderBox;
     return renderBoxRed.size.height;
   }
 
@@ -76,8 +73,7 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> with SharedPrefUt
 
     print(_childWidgetHeights);
     setState(() {
-      _dynamicTotalHeight =
-          _dynamicTotalHeight! + kToolbarHeight + kToolbarHeight;
+      _dynamicTotalHeight = _dynamicTotalHeight! + kToolbarHeight + kToolbarHeight;
     });
 
     return _dynamicTotalHeight;
@@ -89,7 +85,6 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> with SharedPrefUt
     super.dispose();
   }
 
-
   @override
   Widget build(BuildContext context) {
     final mq = MediaQuery.of(context).size;
@@ -97,8 +92,7 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> with SharedPrefUt
     double? height = (size.height / 2) - 56;
     var scrollPosition;
 
-    print('FROM ${widget.from}');
-
+    print('Profile Details FROM ${widget.from}');
 
     // if(ModalRoute.of(context)?.settings.arguments != null) {
     //   _userProfiles = ModalRoute
@@ -107,7 +101,6 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> with SharedPrefUt
     //       .arguments as UserProfiles;
     //   userId = _userProfiles?.userId;
     // }
-
 
     return Consumer<UserIdProvider>(
       builder: (context, userId, child) {
@@ -124,7 +117,7 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> with SharedPrefUt
                 pollInterval: Duration(seconds: 100),
               ),
               builder: (userResult, {fetchMore, refetch}) {
-                late UserProfiles?  newProfile;
+                late UserProfiles? newProfile;
                 if (userResult.hasException) {
                   return Text(userResult.exception.toString());
                 }
@@ -139,10 +132,7 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> with SharedPrefUt
                 }
 
                 try {
-                  newProfile =
-                  UserProfileData.fromJson(userResult.data!)
-                      .userProfiles!;
-
+                  newProfile = UserProfileData.fromJson(userResult.data!).userProfiles!;
                 } catch (e) {
                   debugPrint('Exception -- $e');
                 }
@@ -166,14 +156,9 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> with SharedPrefUt
                                 Navigator.pop(context);
                               },
                               icon: Icon(Icons.arrow_back)),
-                          titleTextStyle: TextStyle(
-                              color: height <= scrollPosition
-                                  ? Colors.black
-                                  : Colors.transparent),
-                          iconTheme: IconThemeData(
-                              color: height <= scrollPosition
-                                  ? Colors.black
-                                  : Colors.white),
+                          titleTextStyle:
+                              TextStyle(color: height <= scrollPosition ? Colors.black : Colors.transparent),
+                          iconTheme: IconThemeData(color: height <= scrollPosition ? Colors.black : Colors.white),
                           flexibleSpace: FlexibleSpaceBar(
                             background: ProfileHeaderTile(
                               playerName: '${newProfile?.firstName} ${newProfile?.lastName}',
@@ -187,20 +172,26 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> with SharedPrefUt
                               profileImgKey: _profileImgKey,
                               btnLeft: widget.from! == ProfilePage.profileMe ? editProfile : chat,
                               btnRight: widget.from! == ProfilePage.profileMe ? messages : submitScore,
-                              onLeftBtnClick: (){
-                                widget.from! == ProfilePage.profileMe ? print('EDIT PROFILE')
-                                    :Navigator.pushNamedAndRemoveUntil(context,ChallengesChat.path,ModalRoute.withName(LeagueDetails.path));
+                              onLeftBtnClick: () {
+                                widget.from! == ProfilePage.profileMe
+                                    ? print('EDIT PROFILE')
+                                    : Navigator.pushReplacementNamed(context, ChallengesChat.path);
+                                // :Navigator.pushNamedAndRemoveUntil(context,ChallengesChat.path,ModalRoute.withName(LeagueDetails.path));
                               },
-                              onRightBtnClick: (){
-                                widget.from! == ProfilePage.profileMe ? print('MESSAGES') :
-                                // Navigator.pushNamedAndRemoveUntil(context,LeagueDetails.path,ModalRoute.withName(DashboardPage.path));
-                                Navigator.pushNamed(context, SubmitScoreDetails.path);
+                              onRightBtnClick: () {
+                                widget.from! == ProfilePage.profileMe
+                                    ? print('MESSAGES')
+                                    :
+                                    // Navigator.pushNamedAndRemoveUntil(context,LeagueDetails.path,ModalRoute.withName(DashboardPage.path));
+                                    Navigator.pushNamed(context, SubmitScoreDetails.path);
                               },
                             ),
                             centerTitle: true,
                             // title: size.height / 2 <= constraints.scrollOffset ? Text('Participating Players') : SizedBox(),
                             title: height <= scrollPosition
-                                ? Text('${newProfile?.firstName} ${newProfile?.lastName}',)
+                                ? Text(
+                                    '${newProfile?.firstName} ${newProfile?.lastName}',
+                                  )
                                 : SizedBox(),
                           ),
                           expandedHeight: _dynamicTotalHeight,
@@ -223,13 +214,8 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> with SharedPrefUt
                                 title: "Matches",
                                 subtitle: '${newProfile?.matchesCount}',
                               ),
-                              StatsTile(
-                                  title: "Victories",
-                                  subtitle: '${newProfile?.wonCount}'),
-                              StatsTile(
-                                  title: "Defeats",
-                                  subtitle: '${newProfile?.lostCount}'
-                              ),
+                              StatsTile(title: "Victories", subtitle: '${newProfile?.wonCount}'),
+                              StatsTile(title: "Defeats", subtitle: '${newProfile?.lostCount}'),
                               StatsTile(
                                 title: "Rating",
                                 subtitle: "4.5",
@@ -258,13 +244,11 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> with SharedPrefUt
                           children: [
                             Text(
                               "Recent Matches",
-                              style: GoogleFonts.poppins(
-                                  fontSize: 16, color: Color(0xff263238)),
+                              style: GoogleFonts.poppins(fontSize: 16, color: Color(0xff263238)),
                             ),
                             GestureDetector(
                                 onTap: () {
-                                  Navigator.pushNamed(
-                                      context, RecentMatchesPage.path);
+                                  Navigator.pushNamed(context, RecentMatchesPage.path);
                                 },
                                 child: Text("See All"))
                           ],
@@ -293,13 +277,11 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> with SharedPrefUt
                                   onTileClick: () {},
                                   player1matchScore: [5, 4, 3, 2, 1],
                                   player1Img: 'assets/Ellipse 5.png',
-                                  player1Name: result.data!["allMatches"]["edges"][i]
-                                  ["node"]["playerOne"]["firstName"],
+                                  player1Name: result.data!["allMatches"]["edges"][i]["node"]["playerOne"]["firstName"],
                                   player1Active: true,
                                   player2matchScore: [1, 2, 3, 4, 5],
                                   player2Img: 'assets/Ellipse 2.png',
-                                  player2Name: result.data!["allMatches"]["edges"][i]
-                                  ["node"]["playerTwo"]["firstName"],
+                                  player2Name: result.data!["allMatches"]["edges"][i]["node"]["playerTwo"]["firstName"],
                                   player2Active: false,
                                 )
                               // Padding(
@@ -320,12 +302,10 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> with SharedPrefUt
                             ],
                           );
                         },
-
                         options: QueryOptions(
                           document: gql(Constants.matchesQuery),
                           // this is the query string you just created
                           variables: {
-
                             'userSearch': userId.getUserId,
                           },
                           pollInterval: Duration(seconds: 100),
@@ -341,15 +321,11 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> with SharedPrefUt
                           children: [
                             Text(
                               "Head to Heads",
-                              style: GoogleFonts.poppins(
-                                  fontSize: 16, color: Color(0xff263238)),
+                              style: GoogleFonts.poppins(fontSize: 16, color: Color(0xff263238)),
                             ),
                             GestureDetector(
                                 onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (_) => HeadtoHeadpage()));
+                                  Navigator.push(context, MaterialPageRoute(builder: (_) => HeadtoHeadpage()));
                                 },
                                 child: Text("See All"))
                           ],
@@ -372,8 +348,7 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> with SharedPrefUt
                   ],
                 );
               },
-            )
-        );
+            ));
       },
     );
   }
@@ -385,8 +360,7 @@ class Delegate extends SliverPersistentHeaderDelegate {
   Delegate({this.child});
 
   @override
-  Widget build(
-      BuildContext context, double shrinkOffset, bool overlapsContent) {
+  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
     return child!;
   }
 
