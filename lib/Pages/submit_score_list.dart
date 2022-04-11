@@ -10,6 +10,7 @@ import '../Pages/submit_score_details.dart';
 import '../bean/all_messaging/all_messaging.dart';
 import '../bean/all_users/all_users.dart';
 import '../components/edit_text_form_field.dart';
+import '../components/no_data_list_tile.dart';
 import '../components/submit_score_list_tile.dart';
 import '../providers/league_id_provider.dart';
 import '../providers/user_id_provider.dart';
@@ -70,7 +71,6 @@ class _SubmitScoreListState extends State<SubmitScoreList> {
     paramTypeForMsg = {
       'senderReceipientSearch': '\$senderReceipientSearch',
     };
-    variableForMsg = {'senderReceipientSearch': '1211d15f-5147-4394-812e-47c801d567c5'};
     _streamController.sink.add([]);
     super.initState();
   }
@@ -86,12 +86,15 @@ class _SubmitScoreListState extends State<SubmitScoreList> {
   Widget build(BuildContext context) {
     return BaseWidget(
       appbarHeight: kToolbarHeight,
+      onBackClick: () => Navigator.pop(context),
       appbar: Text(
         submitScore,
         style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
       ),
       body: Consumer<UserIdProvider>(
         builder: (context, UserId, child) {
+          variableForMsg = {'senderReceipientSearch': '${UserId.getUserId}'};
+
           return StreamBuilder<List<dynamic>>(
             stream: _streamController.stream,
             builder: (context, snapshot) {
@@ -134,7 +137,7 @@ class _SubmitScoreListState extends State<SubmitScoreList> {
                           // _foundUsers = _listAllUsers;
 
                         } catch (e) {
-                          debugPrint('Exception -- $e');
+                          debugPrint('${SubmitScoreDetails.path}  * Exception -- $e');
                         }
                       }
                       return CustomScrollView(
@@ -188,37 +191,47 @@ class _SubmitScoreListState extends State<SubmitScoreList> {
                             pinned: true,
                           ),
                           SliverToBoxAdapter(
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                submitMatchScore,
-                                style: TextStyle(color: aLightGray, fontWeight: FontWeight.bold, fontSize: 16.0),
-                              ),
-                            ),
+                            child: snapshot.data!.length > 0
+                                ? Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text(
+                                      submitMatchScore,
+                                      style: TextStyle(color: aLightGray, fontWeight: FontWeight.bold, fontSize: 16.0),
+                                    ),
+                                  )
+                                : SizedBox(),
                           ),
-                          SliverList(
-                            delegate: SliverChildBuilderDelegate(
-                              (context, index) => SubmitScoreListTile(
-                                userName: '${snapshot.data![index].firstName} ${snapshot.data![index].lastName}',
-                                // profileImg: _foundUsers![index].node?.picture,
-                                profileImg: 'assets/Ellipse 1.png',
-                                rating: '${snapshot.data![index].rating}',
-                                playerLocation:
-                                    '${snapshot.data![index].city}, ${snapshot.data![index].state}, ${snapshot.data![index].country}',
-                                onTileClick: () {
-                                  Provider.of<UserIdProvider>(context, listen: false)
-                                      .setUserId(snapshot.data![index].userId);
-                                  Navigator.pushNamed(context, SubmitScoreDetails.path);
+                          snapshot.data!.length > 0
+                              ? SliverList(
+                                  delegate: SliverChildBuilderDelegate(
+                                    (context, index) => SubmitScoreListTile(
+                                      userName: '${snapshot.data![index].firstName} ${snapshot.data![index].lastName}',
+                                      // profileImg: _foundUsers![index].node?.picture,
+                                      profileImg: 'assets/Ellipse 1.png',
+                                      rating: '${snapshot.data![index].rating}',
+                                      playerLocation:
+                                          '${snapshot.data![index].city}, ${snapshot.data![index].state}, ${snapshot.data![index].country}',
+                                      onTileClick: () {
+                                        Provider.of<UserIdProvider>(context, listen: false)
+                                            .setUserId(snapshot.data![index].userId);
+                                        Navigator.pushNamed(context, SubmitScoreDetails.path);
 
-                                  Provider.of<LeagueIdProvider>(context, listen: false).setLeagueId('');
+                                        Provider.of<LeagueIdProvider>(context, listen: false).setLeagueId('');
 
-                                  _chatNode?.enclosingScope;
-                                },
-                                onProfileClick: () {},
-                              ),
-                              childCount: snapshot.data!.length,
-                            ),
-                          ),
+                                        _chatNode?.enclosingScope;
+                                      },
+                                      onProfileClick: () {},
+                                    ),
+                                    childCount: snapshot.data!.length,
+                                  ),
+                                )
+                              : SliverToBoxAdapter(
+                                  child: NoDataListTile(
+                                    onTileClick: () {},
+                                    noCaption: noPlayerFound,
+                                    noMsg: '',
+                                  ),
+                                ),
                           if (flagSearch!)
                             SliverToBoxAdapter(
                               child: Padding(
@@ -262,7 +275,9 @@ class _SubmitScoreListState extends State<SubmitScoreList> {
                   ),
                 );
               }
-              return Text('Load');
+              return Center(
+                child: CupertinoActivityIndicator(),
+              );
             },
           );
         },

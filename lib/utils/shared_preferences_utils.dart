@@ -29,6 +29,7 @@ class SharedPreferencesUtils {
   }
 
   static String? get getUserData => _sharedPreferences?.getString('userData');
+  // Eg. : var data = LoggedUser.fromJson(jsonDecode(SharedPreferencesUtils.getUserData.toString()));
 
   static void setEmail(String? email) {
     _sharedPreferences?.setString('email', email ?? '');

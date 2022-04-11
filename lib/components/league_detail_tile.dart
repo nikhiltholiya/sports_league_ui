@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../components/bordered_circle_avatar.dart';
 import '../utils/app_colors.dart';
 
@@ -13,7 +14,7 @@ class LeagueDetailTile extends StatefulWidget {
   final Function? onProfileClick;
 
   const LeagueDetailTile(
-      {Key? key, this.name, this.profileImg, this.games, this.win, this.loss, this.onTileClick,this.onProfileClick})
+      {Key? key, this.name, this.profileImg, this.games, this.win, this.loss, this.onTileClick, this.onProfileClick})
       : super(key: key);
 
   @override
@@ -32,10 +33,7 @@ class _LeagueDetailTileState extends State<LeagueDetailTile> {
           color: aPartGray5,
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12.0),
-              side: BorderSide(
-                  color: aPartGray10,
-                  style: BorderStyle.solid,
-                  width: 1.0)),
+              side: BorderSide(color: aPartGray10, style: BorderStyle.solid, width: 1.0)),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

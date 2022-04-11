@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
@@ -54,8 +56,6 @@ class _LeagueDetailsState extends State<LeagueDetails> {
     super.initState();
   }
 
-  // late Future<bool?> isJoin;
-
   Future<dynamic> isJoined() async {
     var contain = null;
 
@@ -86,7 +86,7 @@ class _LeagueDetailsState extends State<LeagueDetails> {
     for (double height in _childWidgetHeights!) {
       _dynamicTotalHeight = height + _dynamicTotalHeight!;
     }
-    print(_childWidgetHeights);
+    debugPrint('${LeagueDetails.path} * _childWidgetHeights - $_childWidgetHeights');
 
     setState(() {
       _dynamicTotalHeight = _dynamicTotalHeight! + kToolbarHeight;
@@ -113,13 +113,13 @@ class _LeagueDetailsState extends State<LeagueDetails> {
       appbar: AppBar(
         centerTitle: true,
         title: Text(''),
-        toolbarHeight: 0,
+        toolbarHeight: 0.0,
       ),
       body: Container(
         color: aWhite,
         child: Consumer<LeagueIdProvider>(
           builder: (context, value, child) {
-            print(value.leagueId);
+            debugPrint('${LeagueDetails.path} * LeagueId : ${value.leagueId}');
             return Query(
               options: QueryOptions(
                 document: gql(fetchLeague),
@@ -152,7 +152,7 @@ class _LeagueDetailsState extends State<LeagueDetails> {
                     WidgetsBinding.instance?.addPostFrameCallback(_getTotalHeight);
                   }
                 } catch (e) {
-                  debugPrint('Exception -- $e');
+                  debugPrint('${LeagueDetails.path} - Exception -- $e');
                 }
 
                 return Column(
@@ -176,10 +176,11 @@ class _LeagueDetailsState extends State<LeagueDetails> {
                                   stretch: true,
                                   centerTitle: true,
                                   leading: IconButton(
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                      },
-                                      icon: Icon(Icons.arrow_back)),
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    icon: Icon(Platform.isIOS ? Icons.arrow_back_ios : Icons.arrow_back),
+                                  ),
                                   titleTextStyle:
                                       TextStyle(color: height <= scrollPosition ? Colors.black : Colors.transparent),
                                   iconTheme:
@@ -297,39 +298,39 @@ class _LeagueDetailsState extends State<LeagueDetails> {
                           ],
                         ),
                         flex: 1),
-                    FutureBuilder<dynamic>(
-                      future: isJoined(),
-                      builder: (context, snapshot) {
-                        if (snapshot.hasData) {
-                          // print('snapshot.data - ${snapshot.data} -- ${snapshot.data.length}');
-                          if (LeagueData!.leagueStat!.status != null &&
-                              LeagueData!.leagueStat!.status!.toString() == 'ongoing' &&
-                              snapshot.data.length == 0) {
-                            return ElevatedButtons(
-                              width: double.infinity,
-                              label: joinNow,
-                              fontSize: 25,
-                              radius: 0.0,
-                              onClick: () {},
-                              borderColor: aGreen,
-                              buttonColor: aGreen,
-                              labelColor: aWhite,
-                            );
-                          } else {
-                            return SizedBox(
-                              height: 0.0,
-                            );
-                          }
-                        }
-                        return CupertinoActivityIndicator();
-                      },
-                    )
                   ],
                 );
               },
             );
           },
         ),
+      ),
+      bottomBar: FutureBuilder<dynamic>(
+        future: isJoined(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            // print('snapshot.data - ${snapshot.data} -- ${snapshot.data.length}');
+            if (LeagueData!.leagueStat!.status != null &&
+                LeagueData!.leagueStat!.status!.toString() == 'ongoing' &&
+                snapshot.data.length == 0) {
+              return ElevatedButtons(
+                width: double.infinity,
+                label: joinNow,
+                fontSize: 25,
+                radius: 0.0,
+                onClick: () {},
+                borderColor: aGreen,
+                buttonColor: aGreen,
+                labelColor: aWhite,
+              );
+            } else {
+              return SizedBox(
+                height: 0.0,
+              );
+            }
+          }
+          return CupertinoActivityIndicator();
+        },
       ),
     );
   }

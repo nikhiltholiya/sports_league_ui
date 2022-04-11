@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+
 import '../components/elevated_buttons.dart';
 import '../utils/app_colors.dart';
 
@@ -57,7 +58,10 @@ class _AppDialogState extends State<AppDialog> with SingleTickerProviderStateMix
       elevation: 0.0,
       insetPadding: EdgeInsets.all(10),
       child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 2.0 * _animationController!.value, sigmaY: 2.0 * _animationController!.value, tileMode: TileMode.decal),
+        filter: ImageFilter.blur(
+            sigmaX: 2.0 * _animationController!.value,
+            sigmaY: 2.0 * _animationController!.value,
+            tileMode: TileMode.decal),
         child: Card(
           color: aWhite,
           margin: EdgeInsets.symmetric(horizontal: 10.0 * _animationController!.value, vertical: 30),
@@ -73,7 +77,8 @@ class _AppDialogState extends State<AppDialog> with SingleTickerProviderStateMix
                 child: Text(
                   widget.title!,
                   maxLines: 1,
-                  style: TextStyle(fontSize: 18.0 * _animationController!.value, color: aWhite, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                      fontSize: 18.0 * _animationController!.value, color: aWhite, fontWeight: FontWeight.bold),
                 ),
                 color: aGreen,
                 height: 56,

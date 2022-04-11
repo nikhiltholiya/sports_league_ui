@@ -1,29 +1,7 @@
 const String SUCCESS_MESSAGE = " You will be contacted by us very soon.";
 
-const String leaque = """
-query MyQuery {
-leagueStat(leagueId: "ae2b8a9e-e87a-4402-a125-dabf5d8f7ef8") {
-leagueId
-name
-city
-state
-country
-startDate
-endDate
-level
-description
-format
-status
-userStat {
-loss
-total
-userId
-won
-}
-}
-}
-""";
 
+//Add rating from service side
 const fetchUserProfiles = """
 query (\$userId : String!) {
   userProfiles(userId:\$userId) {
@@ -43,24 +21,6 @@ query (\$userId : String!) {
 
 """;
 
-// const String homepageQuery = """
-//   query (\$userId: String!) {
-//     userProfiles(userId:\$userId){
-//     matchesCount
-//     drawCount
-//     lostCount
-//     city
-//     dob
-//     state
-//     firstName
-//     lastName
-//     userId
-//     wonCount
-//     age
-//     }
-//   }
-// """;
-
 const String matchesQuery = """
   query (\$userSearch: String!) {
     allMatches(userSearch:\$userSearch){
@@ -68,7 +28,7 @@ const String matchesQuery = """
       node {
         id
         matchId
-        matchSet(first: 5) {
+        matchSet(first: 2) {
           edges {
             node {
               id
@@ -265,6 +225,41 @@ String RegisterPlayer(Map<String, dynamic>? param, Map<String, dynamic>? paramTy
 ''';
 }
 
+String sendPasswordResetEmail(Map<String, dynamic>? param, Map<String, dynamic>? paramType) {
+  return '''
+      mutation SendPasswordResetEmail(${param.toString().trim().substring(1, param.toString().trim().length - 1)}) {
+          sendPasswordResetEmail(${paramType.toString().trim().substring(1, paramType.toString().trim().length - 1)}) {
+                success
+                errors
+          }
+      }
+''';
+}
+
+String passwordReset(Map<String, dynamic>? param, Map<String, dynamic>? paramType) {
+  return '''
+      mutation passwordReset(${param.toString().trim().substring(1, param.toString().trim().length - 1)}) {
+          passwordReset(${paramType.toString().trim().substring(1, paramType.toString().trim().length - 1)}) {
+                success
+                errors
+          }
+      }
+''';
+}
+
+String passwordChange(Map<String, dynamic>? param, Map<String, dynamic>? paramType) {
+  return '''
+      mutation passwordChange(${param.toString().trim().substring(1, param.toString().trim().length - 1)}) {
+          passwordChange(${paramType.toString().trim().substring(1, paramType.toString().trim().length - 1)}) {
+                success
+                refreshToken
+                errors
+                token
+          }
+      }
+''';
+}
+
 String resendActivationEmail(Map<String, dynamic>? param, Map<String, dynamic>? paramType) {
   return '''
       mutation resendActivationEmail(${param.toString().trim().substring(1, param.toString().trim().length - 1)}) {
@@ -284,6 +279,7 @@ String tokenAuth(Map<String, dynamic>? param, Map<String, dynamic>? paramType) {
                success
                token
                unarchiving
+               errors
                user {
                  aboutMe
                  active
@@ -325,5 +321,35 @@ String updateAccount(Map<String, dynamic>? param, Map<String, dynamic>? paramTyp
             success   
       }
      }
+''';
+}
+
+
+
+String sendMessage(Map<String, dynamic>? param, Map<String, dynamic>? paramType) {
+  return '''
+      mutation sendMessage(${param.toString().trim().substring(1, param.toString().trim().length - 1)}) {
+          sendMessage(${paramType.toString().trim().substring(1, paramType.toString().trim().length - 1)}) {
+              messaging {
+                 createdAt
+                 id
+                 message
+                 messageId
+                 updatedAt
+                 recipient {
+                    userId
+                    email
+                    firstName
+                    lastName
+                 }
+                 sender {
+                    userId
+                    email
+                    firstName
+                    lastName
+                 }
+             }  
+          }
+      }
 ''';
 }

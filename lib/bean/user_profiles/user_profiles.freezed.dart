@@ -200,6 +200,7 @@ class _$UserProfilesTearOff {
       required String? city,
       required String? state,
       required String? dob,
+      required String? rating,
       required int? age}) {
     return _UserProfile(
       userId: userId,
@@ -212,6 +213,7 @@ class _$UserProfilesTearOff {
       city: city,
       state: state,
       dob: dob,
+      rating: rating,
       age: age,
     );
   }
@@ -236,6 +238,7 @@ mixin _$UserProfiles {
   String? get city => throw _privateConstructorUsedError;
   String? get state => throw _privateConstructorUsedError;
   String? get dob => throw _privateConstructorUsedError;
+  String? get rating => throw _privateConstructorUsedError;
   int? get age => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -260,6 +263,7 @@ abstract class $UserProfilesCopyWith<$Res> {
       String? city,
       String? state,
       String? dob,
+      String? rating,
       int? age});
 }
 
@@ -283,6 +287,7 @@ class _$UserProfilesCopyWithImpl<$Res> implements $UserProfilesCopyWith<$Res> {
     Object? city = freezed,
     Object? state = freezed,
     Object? dob = freezed,
+    Object? rating = freezed,
     Object? age = freezed,
   }) {
     return _then(_value.copyWith(
@@ -326,6 +331,10 @@ class _$UserProfilesCopyWithImpl<$Res> implements $UserProfilesCopyWith<$Res> {
           ? _value.dob
           : dob // ignore: cast_nullable_to_non_nullable
               as String?,
+      rating: rating == freezed
+          ? _value.rating
+          : rating // ignore: cast_nullable_to_non_nullable
+              as String?,
       age: age == freezed
           ? _value.age
           : age // ignore: cast_nullable_to_non_nullable
@@ -352,6 +361,7 @@ abstract class _$UserProfileCopyWith<$Res>
       String? city,
       String? state,
       String? dob,
+      String? rating,
       int? age});
 }
 
@@ -377,6 +387,7 @@ class __$UserProfileCopyWithImpl<$Res> extends _$UserProfilesCopyWithImpl<$Res>
     Object? city = freezed,
     Object? state = freezed,
     Object? dob = freezed,
+    Object? rating = freezed,
     Object? age = freezed,
   }) {
     return _then(_UserProfile(
@@ -420,6 +431,10 @@ class __$UserProfileCopyWithImpl<$Res> extends _$UserProfilesCopyWithImpl<$Res>
           ? _value.dob
           : dob // ignore: cast_nullable_to_non_nullable
               as String?,
+      rating: rating == freezed
+          ? _value.rating
+          : rating // ignore: cast_nullable_to_non_nullable
+              as String?,
       age: age == freezed
           ? _value.age
           : age // ignore: cast_nullable_to_non_nullable
@@ -442,6 +457,7 @@ class _$_UserProfile implements _UserProfile {
       required this.city,
       required this.state,
       required this.dob,
+      required this.rating,
       required this.age});
 
   factory _$_UserProfile.fromJson(Map<String, dynamic> json) =>
@@ -468,11 +484,13 @@ class _$_UserProfile implements _UserProfile {
   @override
   final String? dob;
   @override
+  final String? rating;
+  @override
   final int? age;
 
   @override
   String toString() {
-    return 'UserProfiles(userId: $userId, firstName: $firstName, lastName: $lastName, matchesCount: $matchesCount, wonCount: $wonCount, drawCount: $drawCount, lostCount: $lostCount, city: $city, state: $state, dob: $dob, age: $age)';
+    return 'UserProfiles(userId: $userId, firstName: $firstName, lastName: $lastName, matchesCount: $matchesCount, wonCount: $wonCount, drawCount: $drawCount, lostCount: $lostCount, city: $city, state: $state, dob: $dob, rating: $rating, age: $age)';
   }
 
   @override
@@ -491,6 +509,7 @@ class _$_UserProfile implements _UserProfile {
             const DeepCollectionEquality().equals(other.city, city) &&
             const DeepCollectionEquality().equals(other.state, state) &&
             const DeepCollectionEquality().equals(other.dob, dob) &&
+            const DeepCollectionEquality().equals(other.rating, rating) &&
             const DeepCollectionEquality().equals(other.age, age));
   }
 
@@ -507,6 +526,7 @@ class _$_UserProfile implements _UserProfile {
       const DeepCollectionEquality().hash(city),
       const DeepCollectionEquality().hash(state),
       const DeepCollectionEquality().hash(dob),
+      const DeepCollectionEquality().hash(rating),
       const DeepCollectionEquality().hash(age));
 
   @JsonKey(ignore: true)
@@ -532,6 +552,7 @@ abstract class _UserProfile implements UserProfiles {
       required String? city,
       required String? state,
       required String? dob,
+      required String? rating,
       required int? age}) = _$_UserProfile;
 
   factory _UserProfile.fromJson(Map<String, dynamic> json) =
@@ -557,6 +578,8 @@ abstract class _UserProfile implements UserProfiles {
   String? get state;
   @override
   String? get dob;
+  @override
+  String? get rating;
   @override
   int? get age;
   @override

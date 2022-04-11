@@ -101,6 +101,7 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
           ),
         ),
         appbarHeight: kToolbarHeight,
+        onBackClick: () => Navigator.pop(context),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: ListView(
@@ -190,12 +191,12 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
                       minTime: DateTime(DateTime.now().year - 70, DateTime.now().month, DateTime.now().day),
                       maxTime: DateTime.now(),
                       onChanged: (date) {
-                        print('change $date');
+                        debugPrint('${CreateProfilePage.path} * change $date');
                       },
                       onConfirm: (date) {
                         bDate = date.toString();
                         setState(() {});
-                        print('confirm $date');
+                        debugPrint('${CreateProfilePage.path} * confirm $date');
                       },
                       currentTime: datePickerDate(bDate == 'Date of Birth' ? DateTime.now().toString() : bDate),
                     );
@@ -272,7 +273,7 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
               updateAccount(paramUpdateProfile, paramTypeUpdateProfile),
             ),
             onError: (OperationException? error) {
-              print('erroR -- $error');
+              debugPrint('${CreateProfilePage.path} * erroR -- $error');
               errorList = [];
               errorList!.add('$error');
 
@@ -288,7 +289,7 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
 
               isEnable = true;
               setState(() {});
-              print('**** RESULT * $resultData');
+              debugPrint('${CreateProfilePage.path} **** RESULT * $resultData');
 
               if (resultData != null) {
                 _createProfileData = CreateProfileData.fromJson(resultData);

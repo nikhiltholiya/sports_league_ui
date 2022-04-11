@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 
 import '../Pages/base_activity.dart';
@@ -18,7 +16,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BaseWidget(
-      appbarHeight: 0,
+      appbarHeight: 0.0,
       appbar: Text(''),
       body: ListView(
         shrinkWrap: true,

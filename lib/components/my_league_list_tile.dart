@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../components/bordered_circle_avatar.dart';
 import '../components/iconic_text_view.dart';
 import '../utils/app_colors.dart';
@@ -45,13 +46,10 @@ class _MyLeagueListTileState extends State<MyLeagueListTile> {
                 color: aPartGray5,
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12.0),
-                    side: BorderSide(
-                        color: aPartGray10,
-                        style: BorderStyle.solid,
-                        width: 1.0)),
+                    side: BorderSide(color: aPartGray10, style: BorderStyle.solid, width: 1.0)),
               ),
               child: Padding(
-                padding: const EdgeInsets.only(top: 15,right: 5,left: 5,bottom: 10),
+                padding: const EdgeInsets.only(top: 15, right: 5, left: 5, bottom: 10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -82,9 +80,7 @@ class _MyLeagueListTileState extends State<MyLeagueListTile> {
                             ),
                           ),
                           IconicTextView(
-                              icon: Icons.location_pin,
-                              label: widget.leagueLocation ?? '',
-                              labelTextSize: 12.0),
+                              icon: Icons.location_pin, label: widget.leagueLocation ?? '', labelTextSize: 12.0),
                           IconicTextView(
                             icon: Icons.calendar_today,
                             label: widget.leagueDate ?? '',
@@ -101,14 +97,10 @@ class _MyLeagueListTileState extends State<MyLeagueListTile> {
           Positioned(
               child: Card(
                 elevation: 2.0,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0)),
-                color: widget.leagueStatus?.toLowerCase() == 'ongoing'
-                    ? aYellow
-                    : aGreen,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+                color: widget.leagueStatus?.toLowerCase() == 'ongoing' ? aYellow : aGreen,
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 10.0, vertical: 5.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
                   child: Text(
                     widget.leagueStatus ?? '',
                     style: TextStyle(

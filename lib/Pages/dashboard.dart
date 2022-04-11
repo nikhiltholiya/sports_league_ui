@@ -3,24 +3,22 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:provider/provider.dart';
 
 import '../Pages/all_messaging_list_page.dart';
 import '../Pages/base_activity.dart';
-import '../Pages/home_page.dart';
+import '../Pages/contact_us_page.dart';
 import '../Pages/my_league_list.dart';
+import '../Pages/password_change_page.dart';
 import '../Pages/profile_page.dart';
 import '../Pages/submit_score_list.dart';
-import '../bean/all_users/all_users.dart';
+import '../bean/token_auth/token_auth.dart';
 import '../components/bordered_circle_avatar.dart';
 import '../components/dashboard_menu_item.dart';
 import '../components/decorated_app_header_tile.dart';
 import '../providers/league_id_provider.dart';
 import '../providers/user_id_provider.dart';
-import '../utils/Constants.dart';
 import '../utils/app_colors.dart';
-import '../utils/app_labels.dart';
 import '../utils/shared_preferences_utils.dart';
 
 //Changes on 20220225
@@ -38,13 +36,11 @@ class _DashboardPageState extends State<DashboardPage> {
 
   @override
   void initState() {
-    SharedPreferencesUtils.setUserId('021c2515-e12e-49bd-bc08-744dc64a508c');
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-
     List<MenuItems>? dashBoardMenuItems = [
       MenuItems(
           title: 'My Leagues',
@@ -82,7 +78,7 @@ class _DashboardPageState extends State<DashboardPage> {
           image: 'transperent_tennis_ball_icon_black.png',
           subtitle: 'Contact support team',
           color: Color(0xff263238),
-          path: ''),
+          path: ContactUsPage.path),
 
       MenuItems(
           title: 'Messages',
@@ -92,97 +88,65 @@ class _DashboardPageState extends State<DashboardPage> {
           path: AllMessagesListPage.path),
 
       MenuItems(
-          title: 'Signup',
+          title: 'Change Password',
           image: 'transperent_tennis_ball_icon_red.png',
-          subtitle: 'This is temp for check signup',
+          subtitle: 'User can able to change password from here',
           color: Color(0xffeb5945),
-          path: HomePage.path),
+          path: PasswordChangePage.path),
     ];
 
-    Map<String, dynamic> param = {
-      '\$userId': 'UUID',
-    };
-    Map<String, dynamic> paramType = {
-      'userId': '\$userId',
-    };
-    // Map<String, dynamic> passVariable = {'userId': '021c2515-e12e-49bd-bc08-744dc64a508c'};
-    Map<String, dynamic> passVariable = {'userId': '${SharedPreferencesUtils.getUserId!}'};
+    // Map<String, dynamic> param = {
+    //   '\$userId': 'UUID',
+    // };
+    // Map<String, dynamic> paramType = {
+    //   'userId': '\$userId',
+    // };
+    // Map<String, dynamic> passVariable = {'userId': '${SharedPreferencesUtils.getUserId!}'};
+
+    var data = LoggedUser.fromJson(jsonDecode(SharedPreferencesUtils.getUserData.toString()));
 
     return BaseWidget(
       scaffoldKey: scKey,
       appbar: AppBar(),
+      isLeading: false,
       appbarHeight: 0.0,
-      body: Query(
-        options: QueryOptions(
-          document: gql(allUsers(param, paramType)),
-          // this is the query string you just created
-          variables: passVariable,
-          pollInterval: Duration(seconds: 100),
-        ),
-        builder: (result, {fetchMore, refetch}) {
-          print(passVariable);
-          if (result.hasException) {
-            return Text(result.exception.toString());
-          }
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          dashboardHeader(
+            name: data.firstName,
+          ),
+          Flexible(
+            fit: FlexFit.loose,
+            flex: 1,
+            child: Container(
+              color: aWhite,
+              child: GridView.builder(
+                physics: BouncingScrollPhysics(),
+                padding: EdgeInsets.all(10.0),
+                gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                    maxCrossAxisExtent: 200, childAspectRatio: 2, crossAxisSpacing: 10, mainAxisSpacing: 10),
+                itemCount: dashBoardMenuItems.length,
+                itemBuilder: (BuildContext ctx, index) {
+                  return DashboardMenuItem(
+                    menu_color: dashBoardMenuItems[index].color,
+                    menu_image: dashBoardMenuItems[index].image,
+                    subtitle: dashBoardMenuItems[index].subtitle,
+                    title: dashBoardMenuItems[index].title,
+                    onMenuClick: () {
+                      Provider.of<UserIdProvider>(context, listen: false).setUserId(SharedPreferencesUtils.getUserId);
+                      Provider.of<LeagueIdProvider>(context, listen: false).setLeagueId('');
 
-          if (result.isLoading && result.data == null) {
-            return const Center(child: CupertinoActivityIndicator());
-          }
-
-          // setLoggedUser(AllUsersData.fromJson(result.data!).allUsers?.edges?.first.node?.toJson().toString());
-          // setLoggedUser(jsonEncode(AllUsersData.fromJson(result.data!).allUsers.));
-
-          SharedPreferencesUtils.setUserData(
-              jsonEncode(AllUsersData.fromJson(result.data!).allUsers?.edges?.first.node));
-
-          // print('USER DATA ${SharedPreferencesUtils.getUserData}');
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              dashboardHeader(
-                name: AllUsersData.fromJson(result.data!).allUsers?.edges?.first.node?.firstName,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 10, left: 10),
-                child: Text(
-                  explore,
-                  style: TextStyle(color: aLightGray, fontSize: 16),
-                ),
-              ),
-              Flexible(
-                fit: FlexFit.loose,
-                flex: 1,
-                child: Container(
-                  color: aWhite,
-                  child: GridView.builder(
-                    physics: BouncingScrollPhysics(),
-                    padding: EdgeInsets.all(10.0),
-                    gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                        maxCrossAxisExtent: 200, childAspectRatio: 2, crossAxisSpacing: 10, mainAxisSpacing: 10),
-                    itemCount: dashBoardMenuItems.length,
-                    itemBuilder: (BuildContext ctx, index) {
-                      return DashboardMenuItem(
-                        menu_color: dashBoardMenuItems[index].color,
-                        menu_image: dashBoardMenuItems[index].image,
-                        subtitle: dashBoardMenuItems[index].subtitle,
-                        title: dashBoardMenuItems[index].title,
-                        onMenuClick: () {
-                          Provider.of<UserIdProvider>(context, listen: false)
-                              .setUserId(SharedPreferencesUtils.getUserId);
-                          Provider.of<LeagueIdProvider>(context, listen: false).setLeagueId('');
-
-                          if (dashBoardMenuItems[index].path!.isNotEmpty)
-                            Navigator.pushNamed(context, dashBoardMenuItems[index].path ?? '');
-                        },
-                      );
+                      if (dashBoardMenuItems[index].path!.isNotEmpty)
+                        Navigator.pushNamed(context, dashBoardMenuItems[index].path ?? '');
                     },
-                  ),
-                ),
+                  );
+                },
               ),
-            ],
-          );
-        },
+            ),
+          ),
+        ],
       ),
     );
   }

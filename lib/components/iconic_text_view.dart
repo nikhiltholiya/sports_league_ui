@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+
 import '../utils/app_colors.dart';
 
 //Created on 20220304
@@ -35,8 +36,7 @@ class _IconicTextViewState extends State<IconicTextView> {
       children: [
         Padding(
           padding: EdgeInsets.all(5.0),
-          child: Icon(widget.icon!,
-              size: widget.iconSize!, color: widget.iconColor!),
+          child: Icon(widget.icon!, size: widget.iconSize!, color: widget.iconColor!),
           // child: Image.asset('assets/Vector (1).png',color: Color(0xFF3E4982),fit: BoxFit.none),
         ),
         Flexible(
@@ -45,9 +45,7 @@ class _IconicTextViewState extends State<IconicTextView> {
           child: Text(
             widget.label!,
             style: TextStyle(
-                color: widget.labelTextColor!,
-                fontWeight: FontWeight.normal,
-                fontSize: widget.labelTextSize!),
+                color: widget.labelTextColor!, fontWeight: FontWeight.normal, fontSize: widget.labelTextSize!),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             softWrap: true,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../components/decorated_app_header_tile.dart';
 import '../components/iconic_text_view.dart';
 import '../utils/app_colors.dart';
@@ -24,17 +25,16 @@ class LeagueDetailsHeaderTile extends StatefulWidget {
     required this.leagueLocation,
     required this.leagueDate,
     required this.leagueDesc,
-     this.stackKey,
-     this.textTitleKey,
-     this.imgLocationKey,
-     this.imgCalendarKey,
-     this.textDescKey,
-     this.textStatusKey,
+    this.stackKey,
+    this.textTitleKey,
+    this.imgLocationKey,
+    this.imgCalendarKey,
+    this.textDescKey,
+    this.textStatusKey,
   }) : super(key: key);
 
   @override
-  State<LeagueDetailsHeaderTile> createState() =>
-      _LeagueDetailsHeaderTileState();
+  State<LeagueDetailsHeaderTile> createState() => _LeagueDetailsHeaderTileState();
 }
 
 class _LeagueDetailsHeaderTileState extends State<LeagueDetailsHeaderTile> {
@@ -63,8 +63,7 @@ class _LeagueDetailsHeaderTileState extends State<LeagueDetailsHeaderTile> {
                   child: Stack(
                     children: [
                       Padding(
-                        padding: EdgeInsets.only(
-                            top: 20.0, left: 10.0, right: 10.0, bottom: 10),
+                        padding: EdgeInsets.only(top: 20.0, left: 10.0, right: 10.0, bottom: 10),
                         child: Wrap(
                           runAlignment: WrapAlignment.spaceBetween,
                           alignment: WrapAlignment.start,
@@ -75,28 +74,25 @@ class _LeagueDetailsHeaderTileState extends State<LeagueDetailsHeaderTile> {
                               widget.playerName ?? 'playerName',
                               maxLines: 1,
                               key: widget.textTitleKey,
-                              style: TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.bold),
+                              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                             ),
                             SizedBox(
                               key: widget.imgLocationKey,
                               child: IconicTextView(
-                                  icon: Icons.location_pin,
-                                  label: widget.leagueLocation?? '',
-                                  labelTextSize: 14.0),
+                                  icon: Icons.location_pin, label: widget.leagueLocation ?? '', labelTextSize: 14.0),
                             ),
                             SizedBox(
                               key: widget.imgCalendarKey,
                               child: IconicTextView(
                                 icon: Icons.calendar_today,
-                                label: widget.leagueDate ??  '',
+                                label: widget.leagueDate ?? '',
                                 labelTextSize: 14.0,
                               ),
                             ),
                             SizedBox(
                               key: widget.textDescKey,
                               child: Text(
-                                widget.leagueDesc ??  '',
+                                widget.leagueDesc ?? '',
                                 maxLines: 4,
                                 softWrap: true,
                                 textAlign: TextAlign.start,
@@ -124,14 +120,10 @@ class _LeagueDetailsHeaderTileState extends State<LeagueDetailsHeaderTile> {
                   child: Card(
                     key: widget.textStatusKey,
                     elevation: 2.0,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0)),
-                    color: widget.leagueStatus?.toLowerCase() == 'ongoing'
-                        ? aYellow
-                        : aGreen,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+                    color: widget.leagueStatus?.toLowerCase() == 'ongoing' ? aYellow : aGreen,
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 10.0, vertical: 5.0),
+                      padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
                       child: Text(
                         widget.leagueStatus ?? '',
                         style: TextStyle(

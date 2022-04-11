@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+
 import '../components/bordered_circle_avatar.dart';
 import '../components/decorated_app_header_tile.dart';
-import '../utils/app_colors.dart';
 
 //Created on 20220315
 class SubmitScoreDetailsHeaderTile extends StatefulWidget {
@@ -24,12 +24,10 @@ class SubmitScoreDetailsHeaderTile extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<SubmitScoreDetailsHeaderTile> createState() =>
-      _SubmitScoreDetailsHeaderTileState();
+  State<SubmitScoreDetailsHeaderTile> createState() => _SubmitScoreDetailsHeaderTileState();
 }
 
-class _SubmitScoreDetailsHeaderTileState
-    extends State<SubmitScoreDetailsHeaderTile> {
+class _SubmitScoreDetailsHeaderTileState extends State<SubmitScoreDetailsHeaderTile> {
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -62,7 +60,10 @@ class _SubmitScoreDetailsHeaderTileState
                           imgUrl: widget.player1Img!, //'assets/Ellipse 1.png',
                         ),
                       ),
-                      Text('VS',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+                      Text(
+                        'VS',
+                        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      ),
                       Expanded(
                         flex: 2,
                         child: UserDetails(

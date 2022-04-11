@@ -4,6 +4,9 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:provider/provider.dart';
+import '../Pages/contact_us_page.dart';
+import '../Pages/password_change_page.dart';
+import '../Pages/password_reset_page.dart';
 
 import '../Pages/all_messaging_list_page.dart';
 import '../Pages/challenges_chat.dart';
@@ -105,7 +108,7 @@ class AppBody extends StatelessWidget {
 
         //20220223
         // initialRoute: LeagueDetails.path,
-        initialRoute: DashboardPage.path,
+        initialRoute: HomePage.path,
         onGenerateRoute: (settings) {
           if (settings.name == HomePage.path) {
             return CupertinoPageRoute(builder: (context) => HomePage(), settings: settings);
@@ -115,6 +118,10 @@ class AppBody extends StatelessWidget {
             return CupertinoPageRoute(builder: (context) => SignInPage(), settings: settings);
           } else if (settings.name == VerifyEmailPage.path) {
             return CupertinoPageRoute(builder: (context) => VerifyEmailPage(), settings: settings);
+          } else if (settings.name == PasswordResetPage.path) {
+            return CupertinoPageRoute(builder: (context) => PasswordResetPage(), settings: settings);
+          } else if (settings.name == PasswordChangePage.path) {
+            return CupertinoPageRoute(builder: (context) => PasswordChangePage(), settings: settings);
           } else if (settings.name == CreateProfilePage.path) {
             return CupertinoPageRoute(builder: (context) => CreateProfilePage(), settings: settings);
           } else if (settings.name == CreateProfilePicturePage.path) {
@@ -123,6 +130,8 @@ class AppBody extends StatelessWidget {
             return CupertinoPageRoute(builder: (context) => DashboardPage(), settings: settings);
           } else if (settings.name == LeagueDetails.path) {
             return CupertinoPageRoute(builder: (context) => LeagueDetails(), settings: settings);
+          } else if (settings.name == ContactUsPage.path) {
+            return CupertinoPageRoute(builder: (context) => ContactUsPage(), settings: settings);
           } else if (settings.name == ChallengesChat.path) {
             return CupertinoPageRoute(builder: (context) => ChallengesChat(), settings: settings);
           } else if (settings.name == ProfilePage.path) {
@@ -145,8 +154,6 @@ class AppBody extends StatelessWidget {
             return null;
           }
         },
-
-        // home: const LeagueDetailCompleted(), //20220222
       ),
     );
   }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import '../utils/app_labels.dart';
+
 import '../utils/app_colors.dart';
+import '../utils/app_labels.dart';
 
 class AutoCompleteEditField extends StatefulWidget {
   final String? hint;
@@ -12,7 +13,8 @@ class AutoCompleteEditField extends StatefulWidget {
     Key? key,
     this.displayForOption,
     this.onSelection,
-    this.listOptions, this.hint,
+    this.listOptions,
+    this.hint,
   }) : super(key: key);
 
   @override
@@ -25,8 +27,7 @@ class _AutoCompleteEditFieldState extends State<AutoCompleteEditField> {
   @override
   Widget build(BuildContext context) {
     return Autocomplete<String>(
-      fieldViewBuilder:
-          (context, textEditingController, _focusNode, onFieldSubmitted) {
+      fieldViewBuilder: (context, textEditingController, _focusNode, onFieldSubmitted) {
         return TextFormField(
           focusNode: _focusNode,
           controller: textEditingController,
@@ -35,8 +36,7 @@ class _AutoCompleteEditFieldState extends State<AutoCompleteEditField> {
               height: 0.0,
               width: 0.0,
             ),
-            contentPadding:
-                EdgeInsets.symmetric(horizontal: 10.0, vertical: 0.0),
+            contentPadding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 0.0),
             hintText: widget.hint ?? leagueOptHint,
             focusColor: Colors.black,
             fillColor: aWhite,
@@ -58,29 +58,24 @@ class _AutoCompleteEditFieldState extends State<AutoCompleteEditField> {
           ),
         );
       },
-
       displayStringForOption: _displayStringForOption,
       optionsBuilder: (TextEditingValue textEditingValue) {
         if (textEditingValue.text == '') {
           return const Iterable<String>.empty();
         }
         return widget.listOptions!.where((String? option) {
-          return option
-              .toString()
-              .toLowerCase()
-              .contains(textEditingValue.text.toLowerCase());
+          return option.toString().toLowerCase().contains(textEditingValue.text.toLowerCase());
         });
       },
       optionsViewBuilder: (context, onSelec, options) {
-
-         return Align(
+        return Align(
             alignment: Alignment.topLeft,
             child: Material(
               color: aWhite,
               elevation: 4.0,
               // size works, when placed here below the Material widget
               child: Container(
-                margin: EdgeInsets.symmetric(horizontal: 10,vertical: 0),
+                  margin: EdgeInsets.symmetric(horizontal: 10, vertical: 0),
                   width: MediaQuery.of(context).size.width - 40,
                   child: ListView.separated(
                     shrinkWrap: true,
@@ -90,19 +85,22 @@ class _AutoCompleteEditFieldState extends State<AutoCompleteEditField> {
                       return Divider();
                     },
                     itemBuilder: (BuildContext context, int index) {
-                      return GestureDetector(child: Padding(
-                        padding: const EdgeInsets.all(4.0),
-                        child: Text(options.elementAt(index),style: TextStyle(fontSize: 14.0),),
-                      ),
-                      onTap: (){
-                        onSelec(options.elementAt(index));
-                      },);
+                      return GestureDetector(
+                        child: Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: Text(
+                            options.elementAt(index),
+                            style: TextStyle(fontSize: 14.0),
+                          ),
+                        ),
+                        onTap: () {
+                          onSelec(options.elementAt(index));
+                        },
+                      );
                       // some child here
                     },
-                  )
-              ),
-            )
-        );
+                  )),
+            ));
       },
       onSelected: (String selection) {
         // print(widget.listOptions!.indexOf(selection));

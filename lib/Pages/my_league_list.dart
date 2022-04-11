@@ -10,7 +10,7 @@ import '../Pages/league_details.dart';
 import '../bean/all_league_Applications/all_leagues_applications.dart';
 import '../components/drop_down_view.dart';
 import '../components/my_league_list_tile.dart';
-import '../components/my_league_no_data_list_tile.dart';
+import '../components/no_data_list_tile.dart';
 import '../providers/league_id_provider.dart';
 import '../utils/Constants.dart';
 import '../utils/app_colors.dart';
@@ -79,6 +79,7 @@ class _MyLeagueListState extends State<MyLeagueList> {
         myLeagues,
         style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
       ),
+      onBackClick: () => Navigator.pop(context),
       body: Container(
         color: aWhite,
         child: StreamBuilder<Map<String, dynamic>>(
@@ -86,8 +87,8 @@ class _MyLeagueListState extends State<MyLeagueList> {
           builder: (context, streamSnapshot) {
             if (streamSnapshot.hasError) return Text('Error in Stream');
 
-            print('$param -- $paramType -- $passVariable');
-            print('${streamSnapshot.data} ***');
+            debugPrint('${MyLeagueList.path} * params : $param -- $paramType -- $passVariable');
+            debugPrint('${MyLeagueList.path} * data :${streamSnapshot.data} *');
 
             if (streamSnapshot.hasData) {
               return Query(
@@ -156,9 +157,12 @@ class _MyLeagueListState extends State<MyLeagueList> {
                       ),
                       (applicantsList!.length <= 0)
                           ? SliverToBoxAdapter(
-                              child: MyLeagueNoDataListTile(
-                              onTileClick: () {},
-                            ))
+                              child: NoDataListTile(
+                                onTileClick: () {},
+                                noCaption: myLeaguesNoData,
+                                noMsg: myLeaguesNoDataMsg,
+                              ),
+                            )
                           : SliverList(
                               delegate: SliverChildBuilderDelegate(
                                 (context, index) => MyLeagueListTile(

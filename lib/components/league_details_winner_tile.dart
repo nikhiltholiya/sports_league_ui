@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../components/bordered_circle_avatar.dart';
 
+import '../components/bordered_circle_avatar.dart';
 import '../components/iconic_text_view.dart';
 import '../components/stats_tile.dart';
 import '../utils/app_colors.dart';
@@ -28,8 +28,7 @@ class LeagueDetailsWinnerTile extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<LeagueDetailsWinnerTile> createState() =>
-      _LeagueDetailsWinnerTileState();
+  State<LeagueDetailsWinnerTile> createState() => _LeagueDetailsWinnerTileState();
 }
 
 class _LeagueDetailsWinnerTileState extends State<LeagueDetailsWinnerTile> {
@@ -84,8 +83,7 @@ class _LeagueDetailsWinnerTileState extends State<LeagueDetailsWinnerTile> {
                       Text(
                         widget.winnerName ?? '',
                         maxLines: 1,
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold),
+                        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                       ),
                     ],
                   ),

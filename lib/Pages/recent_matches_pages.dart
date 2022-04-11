@@ -21,6 +21,7 @@ class _RecentMatchesPageState extends State<RecentMatchesPage> {
   Widget build(BuildContext context) {
     return BaseWidget(
       appbarHeight: kToolbarHeight,
+      onBackClick: () => Navigator.pop(context),
       appbar: Text(
         "Recent Matches",
         style: GoogleFonts.poppins(color: Colors.black, fontSize: 20, fontWeight: FontWeight.w600),

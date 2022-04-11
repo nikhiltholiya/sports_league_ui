@@ -6,13 +6,7 @@ class DashboardMenuItem extends StatelessWidget {
   final menu_image, menu_color, title, subtitle;
   final Function? onMenuClick;
 
-  const DashboardMenuItem(
-      {Key? key,
-        this.menu_image,
-        this.menu_color,
-        this.title,
-        this.subtitle,
-        this.onMenuClick})
+  const DashboardMenuItem({Key? key, this.menu_image, this.menu_color, this.title, this.subtitle, this.onMenuClick})
       : super(key: key);
 
   @override
@@ -24,14 +18,14 @@ class DashboardMenuItem extends StatelessWidget {
           color: menu_color,
           borderRadius: BorderRadius.circular(12),
         ),
-        child : ClipRRect(
-          borderRadius:
-          BorderRadius.circular(12.0),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(12.0),
           child: Stack(
             children: [
               Positioned(
                 child: Image.asset(
-                  'assets/$menu_image',width: 60,
+                  'assets/$menu_image',
+                  width: 60,
                 ),
                 top: -25,
                 right: -25,

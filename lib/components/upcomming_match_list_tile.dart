@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../components/bordered_circle_avatar.dart';
 import '../components/iconic_text_view.dart';
 import '../utils/app_colors.dart';
@@ -46,8 +47,7 @@ class _UpcommingMatchListTileState extends State<UpcommingMatchListTile> {
           color: aPartGray5,
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12.0),
-              side: BorderSide(
-                  color: aPartGray10, style: BorderStyle.solid, width: 1.0)),
+              side: BorderSide(color: aPartGray10, style: BorderStyle.solid, width: 1.0)),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -111,9 +111,7 @@ class _UpcommingMatchListTileState extends State<UpcommingMatchListTile> {
                     child: IconicTextView(
                         icon: Icons.circle,
                         iconSize: 10.0,
-                        iconColor: widget.matchStatus!.toLowerCase() == 'open'
-                            ? aGreen
-                            : aYellow,
+                        iconColor: widget.matchStatus!.toLowerCase() == 'open' ? aGreen : aYellow,
                         label: widget.matchStatus!),
                   ),
                   // Padding(
@@ -141,8 +139,7 @@ class _UpcommingMatchListTileState extends State<UpcommingMatchListTile> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                IconicTextView(
-                    icon: Icons.location_pin, label: widget.location!),
+                IconicTextView(icon: Icons.location_pin, label: widget.location!),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -150,16 +147,12 @@ class _UpcommingMatchListTileState extends State<UpcommingMatchListTile> {
                     Flexible(
                       flex: 1,
                       fit: FlexFit.loose,
-                      child: IconicTextView(
-                          icon: Icons.calendar_today, label: widget.date!),
+                      child: IconicTextView(icon: Icons.calendar_today, label: widget.date!),
                     ),
                     Flexible(
                         flex: 1,
                         fit: FlexFit.loose,
-                        child: IconicTextView(
-                            icon: Icons.circle,
-                            iconSize: 5.0,
-                            label: widget.time!)),
+                        child: IconicTextView(icon: Icons.circle, iconSize: 5.0, label: widget.time!)),
                   ],
                 ),
                 IconicTextView(icon: Icons.circle, label: widget.gameType),

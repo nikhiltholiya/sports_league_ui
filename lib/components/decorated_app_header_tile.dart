@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+
 import '../utils/app_colors.dart';
 
 //created on 20220307
 class DecoratedAppHeader extends StatelessWidget {
   final double? height;
+
   const DecoratedAppHeader({Key? key, this.height = 170}) : super(key: key);
 
   @override
@@ -11,8 +13,7 @@ class DecoratedAppHeader extends StatelessWidget {
     return Container(
       width: double.infinity,
       height: height,
-      padding: EdgeInsets.symmetric(
-          vertical: 50.0, horizontal: 20.0),
+      padding: EdgeInsets.symmetric(vertical: 50.0, horizontal: 20.0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(12),
@@ -31,9 +32,7 @@ class DecoratedAppHeader extends StatelessWidget {
             'assets/tennis.png',
           ),
           fit: BoxFit.fill,
-          colorFilter: new ColorFilter.mode(
-              Colors.black.withOpacity(0.20),
-              BlendMode.dstATop),
+          colorFilter: new ColorFilter.mode(Colors.black.withOpacity(0.20), BlendMode.dstATop),
         ),
       ),
     );

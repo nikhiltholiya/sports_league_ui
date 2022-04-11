@@ -92,13 +92,13 @@ class _CreateProfilePicturePageState extends State<CreateProfilePicturePage> {
   }
 
   Future<String?> _cropImage(BuildContext context) async {
-    print('CropImage');
+    debugPrint('${CreateProfilePicturePage.path} * CropImage');
 
     File imageFile = File(Provider.of<ProfilePicProvider>(context).getXFile!.path);
 
     // selectedAvatar = imageFile.path != null ? [] : [0];
 
-    print('imageFile -- ${imageFile.path}');
+    debugPrint('${CreateProfilePicturePage.path} * imageFile -- ${imageFile.path}');
 
     File? croppedFile = await ImageCropper().cropImage(
         sourcePath: imageFile.path,
@@ -215,7 +215,7 @@ class _CreateProfilePicturePageState extends State<CreateProfilePicturePage> {
   Widget build(BuildContext context) {
     // Provider.of<ProfilePicProvider>(context, listen: false).setXFile(null);
 
-    print('path  -- ${Provider.of<ProfilePicProvider>(context).getXFile}');
+    debugPrint('${CreateProfilePicturePage.path} * path  -- ${Provider.of<ProfilePicProvider>(context).getXFile}');
 
     return BaseWidget(
       appbar: Text(
@@ -226,6 +226,7 @@ class _CreateProfilePicturePageState extends State<CreateProfilePicturePage> {
         ),
       ),
       appbarHeight: kToolbarHeight,
+      onBackClick: () => Navigator.pop(context),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Consumer<ProfilePicProvider>(
@@ -420,7 +421,7 @@ class _CreateProfilePicturePageState extends State<CreateProfilePicturePage> {
           //     )
           // );
 
-          print('finalPath -- $_finalPath');
+          debugPrint('${CreateProfilePicturePage.path} * finalPath -- $_finalPath');
         },
         borderColor: aGreen,
         buttonColor: aGreen,

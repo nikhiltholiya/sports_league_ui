@@ -3,9 +3,7 @@ import 'package:form_field_validator/form_field_validator.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
 import '../Pages/base_activity.dart';
-import '../Pages/verify_email_page.dart';
 import '../bean/register/register.dart';
-import '../bean/resend_activation_mail/resend_activation_mail.dart';
 import '../components/app_dialog.dart';
 import '../components/edit_text_form_field.dart';
 import '../components/elevated_buttons.dart';
@@ -15,31 +13,27 @@ import '../utils/app_labels.dart';
 import '../utils/shared_preferences_utils.dart';
 import '../utils/validators.dart';
 
-//Created on 20220325
+//Created on 20220409
+class PasswordResetPage extends StatefulWidget {
+  static const String path = 'passwordResetPage';
 
-class SignUpPage extends StatefulWidget {
-  static const String path = 'signUpPage';
-
-  const SignUpPage({Key? key}) : super(key: key);
+  const PasswordResetPage({Key? key}) : super(key: key);
 
   @override
-  State<SignUpPage> createState() => _SignUpPageState();
+  State<PasswordResetPage> createState() => _PasswordResetPageState();
 }
 
-class _SignUpPageState extends State<SignUpPage> {
+class _PasswordResetPageState extends State<PasswordResetPage> {
   bool? obSecure = true;
   bool? obSecureRetype = true;
-  String? email = '';
+  String? token = '';
   String? password = '';
   String? rePassword = '';
 
   final _formKey = GlobalKey<FormState>();
-  final keyEmail = GlobalKey();
-  Map<String, dynamic> paramRegister = {};
-  Map<String, dynamic> paramTypeRegister = {};
+  Map<String, dynamic> param = {};
+  Map<String, dynamic> paramType = {};
 
-  Map<String, dynamic> paramSendMail = {};
-  Map<String, dynamic> paramTypeSendMail = {};
   late RegisterData _registerData;
 
   late List<String?>? errorList = [];
@@ -48,11 +42,9 @@ class _SignUpPageState extends State<SignUpPage> {
 
   @override
   void initState() {
-    paramRegister = {'\$email': 'String!', '\$pass1': 'String!', '\$pass2': 'String!'};
-    paramTypeRegister = {'email': '\$email', 'password1': '\$pass1', 'password2': '\$pass2'};
+    param = {'\$token': 'String!', '\$pass1': 'String!', '\$pass2': 'String!'};
+    paramType = {'token': '\$token', 'newPassword1': '\$pass1', 'newPassword2': '\$pass2'};
 
-    paramSendMail = {'\$email': 'String!'};
-    paramTypeSendMail = {'email': '\$email'};
     super.initState();
   }
 
@@ -62,7 +54,7 @@ class _SignUpPageState extends State<SignUpPage> {
       key: _formKey,
       child: BaseWidget(
         appbar: Text(
-          createAc,
+          resetPassword,
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 20,
@@ -83,21 +75,6 @@ class _SignUpPageState extends State<SignUpPage> {
                 padding: const EdgeInsets.symmetric(vertical: 5),
                 child: EditTextFormField(
                   isEnable: isEnable!,
-                  key: keyEmail,
-                  textInputType: TextInputType.emailAddress,
-                  validator: emailValidator,
-                  textInputAction: TextInputAction.next,
-                  onTap: () {},
-                  hint: emailLabel,
-                  onTextChange: (value) {
-                    email = value;
-                  },
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 5),
-                child: EditTextFormField(
-                  isEnable: isEnable!,
                   textInputAction: TextInputAction.next,
                   onTextChange: (value) {
                     password = value;
@@ -105,7 +82,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   onTap: () {},
                   isObscure: obSecure,
                   validator: passwordValidator,
-                  hint: passwordLabel,
+                  hint: enterNewRePass,
                   suffixIcon: IconButton(
                       icon: Icon(
                         obSecure! ? Icons.remove_red_eye_rounded : Icons.visibility_off_rounded,
@@ -128,7 +105,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   onTap: () {},
                   isObscure: obSecureRetype,
                   validator: (val) => MatchValidator(errorText: 'Password do not match').validateMatch(val!, password!),
-                  hint: rePasswordLabel,
+                  hint: enterNewRePass,
                   suffixIcon: IconButton(
                       icon: Icon(
                         obSecureRetype! ? Icons.remove_red_eye_rounded : Icons.visibility_off_rounded,
@@ -140,57 +117,28 @@ class _SignUpPageState extends State<SignUpPage> {
                       }),
                 ),
               ),
-
-              // Mutation for sendmail
-              Mutation(
-                key: mutationSendMail,
-                options: MutationOptions(
-                  document: gql(resendActivationEmail(paramSendMail, paramTypeSendMail)),
-                  // update: update,
-                  onError: (OperationException? error) {
-                    debugPrint('**Maill -- erroR*** -- $error');
-                    // Text('$error');
-                  },
-
-                  // _simpleAlert(context, error.toString()),
-                  onCompleted: (dynamic resultData) async {
-                    debugPrint('**Maill** $resultData');
-
-                    ResendActivationMailData data = ResendActivationMailData.fromJson(resultData);
-                    errorList = [];
-                    if (data.resendActivationEmail!.success!) {
-                      Navigator.pushNamed(context, VerifyEmailPage.path);
-                    } else {
-                      if (data.resendActivationEmail?.errors?.email?.first.message != null)
-                        errorList!.add(data.resendActivationEmail?.errors?.email?.first.message);
-
-                      if (data.resendActivationEmail?.errors?.password1?.first.message != null)
-                        errorList!.add(data.resendActivationEmail?.errors?.password1?.first.message);
-
-                      if (data.resendActivationEmail?.errors?.password2?.first.message != null)
-                        errorList!.add(data.resendActivationEmail?.errors?.password2?.first.message);
-
-                      _showAlert();
-                    }
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 5),
+                child: EditTextFormField(
+                  isEnable: isEnable!,
+                  textInputType: TextInputType.emailAddress,
+                  textInputAction: TextInputAction.next,
+                  onTap: () {},
+                  hint: enterToken,
+                  onTextChange: (value) {
+                    token = value;
                   },
                 ),
-                builder: (RunMutation _sendMail, QueryResult? addResult) {
-                  final doSendmail = (result) {
-                    _sendMail(result);
-                  };
-                  // Future.delayed(const Duration(milliseconds: 200)).then((value) => doSendmail(passVariable));
-                  return SizedBox();
-                },
               ),
             ],
           ),
         ),
         bottomBar: Mutation(
           options: MutationOptions(
-            document: gql(RegisterPlayer(paramRegister, paramTypeRegister)),
+            document: gql(passwordReset(param, paramType)),
             // update: update,
             onError: (OperationException? error) {
-              debugPrint('${SignUpPage.path} erroR -- $error');
+              debugPrint('${PasswordResetPage.path} erroR -- $error');
               isEnable = true;
               setState(() {});
               // Text('$error');
@@ -201,23 +149,20 @@ class _SignUpPageState extends State<SignUpPage> {
 
               isEnable = true;
               setState(() {});
-              debugPrint('${SignUpPage.path}**** $resultData');
+              debugPrint('${PasswordResetPage.path}**** $resultData');
 
               _registerData = RegisterData.fromJson(resultData);
-              debugPrint('${SignUpPage.path} SUCCESS -- ${_registerData.register?.success}');
+              debugPrint('${PasswordResetPage.path} SUCCESS -- ${_registerData.register?.success}');
               errorList = [];
               if (_registerData.register!.success!) {
-                SharedPreferencesUtils.setEmail(email);
+                // SharedPreferencesUtils.setEmail(email);
                 SharedPreferencesUtils.setToken(_registerData.register?.token);
                 SharedPreferencesUtils.setRefreshToken(_registerData.register?.refreshToken);
 
                 // Provider.of<TokenProvider>(context,listen: false).setToken(_registerData.register?.token);
 
                 // send email
-                Map<String, dynamic> passEmail = {
-                  'email': email,
-                };
-                mutationSendMail.currentState?.runMutation(passEmail);
+
               } else {
                 if (_registerData.register?.errors?.email?.first.message != null)
                   errorList!.add(_registerData.register?.errors?.email?.first.message);
@@ -233,9 +178,9 @@ class _SignUpPageState extends State<SignUpPage> {
             },
             // 'Sorry you changed your mind!',
           ),
-          builder: (RunMutation _register, QueryResult? addResult) {
-            final doRegister = (result) {
-              _register(result);
+          builder: (RunMutation _resetPass, QueryResult? addResult) {
+            final doResetPass = (result) {
+              _resetPass(result);
             };
 
             bool? anyLoading = addResult!.isLoading;
@@ -247,9 +192,9 @@ class _SignUpPageState extends State<SignUpPage> {
               radius: 0.0,
               onClick: () {
                 if (_formKey.currentState!.validate()) {
-                  Map<String, dynamic> passVariable = {'email': email, 'pass1': password, 'pass2': rePassword};
+                  Map<String, dynamic> passVariable = {'token': token, 'pass1': password, 'pass2': rePassword};
 
-                  doRegister(passVariable);
+                  doResetPass(passVariable);
                   isEnable = false;
                   setState(() {});
                 }

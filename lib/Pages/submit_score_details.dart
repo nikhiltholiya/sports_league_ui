@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -139,7 +140,7 @@ class _SubmitScoreDetailsState extends State<SubmitScoreDetails> {
 
     player1 = UserNode.fromJson(jsonDecode(SharedPreferencesUtils.getUserData!));
 
-    print('Player 1 == $player1');
+    debugPrint('${SubmitScoreDetails.path} * Player 1 - $player1');
     super.initState();
   }
 
@@ -152,10 +153,10 @@ class _SubmitScoreDetailsState extends State<SubmitScoreDetails> {
 
   @override
   Widget build(BuildContext context) {
-    print('matchGameType -- ${matchGameType} -- $selectedGameType');
+    debugPrint('${SubmitScoreDetails.path} * matchGameType -- ${matchGameType} -- $selectedGameType');
     return BaseWidget(
       // key: _scKey,
-      appbarHeight: 0,
+      appbarHeight: 0.0,
       appbar: Text(
         submitScore,
         style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
@@ -170,6 +171,7 @@ class _SubmitScoreDetailsState extends State<SubmitScoreDetails> {
             Map<String, dynamic> paramType = {
               'userId': '\$userId',
             };
+
             Map<String, dynamic> passVariable = {'userId': '${value.getUserId}'};
 
             return Query(
@@ -231,10 +233,11 @@ class _SubmitScoreDetailsState extends State<SubmitScoreDetails> {
                           stretch: true,
                           centerTitle: true,
                           leading: IconButton(
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              icon: Icon(Icons.arrow_back)),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            icon: Icon(Platform.isIOS ? Icons.arrow_back_ios : Icons.arrow_back),
+                          ),
                           titleTextStyle: TextStyle(
                               color: _dynamicTotalHeight! <= scrollPosition ? Colors.black : Colors.transparent),
                           iconTheme: IconThemeData(
@@ -306,12 +309,12 @@ class _SubmitScoreDetailsState extends State<SubmitScoreDetails> {
                                           DateTime(DateTime.now().year - 5, DateTime.now().month, DateTime.now().day),
                                       maxTime: DateTime.now(),
                                       onChanged: (date) {
-                                        print('change $date');
+                                        debugPrint('${SubmitScoreDetails.path}  * change $date');
                                       },
                                       onConfirm: (date) {
                                         matchDate = date.toString();
                                         setState(() {});
-                                        print('confirm $date');
+                                        debugPrint('${SubmitScoreDetails.path}  * confirm $date');
                                       },
                                       currentTime: datePickerDate(matchDate ?? DateTime.now().toString()),
                                     );
@@ -331,12 +334,12 @@ class _SubmitScoreDetailsState extends State<SubmitScoreDetails> {
                                       ),
                                       showTitleActions: true,
                                       onChanged: (date) {
-                                        print('change $date');
+                                        debugPrint('${SubmitScoreDetails.path}  * changeTime $date');
                                       },
                                       onConfirm: (date) {
                                         matchTime = date.toString();
                                         setState(() {});
-                                        print('confirm $date');
+                                        debugPrint('${SubmitScoreDetails.path}  * confirmTime $date');
                                       },
                                       currentTime: datePickerTime(matchTime ?? DateTime.now().toString()),
                                     );
@@ -655,13 +658,13 @@ class _SubmitScoreDetailsState extends State<SubmitScoreDetails> {
                               document: gql(SubmitScore(paramSubmitScore, paramTypeSubmitScore)),
                               // update: update,
                               onError: (OperationException? error) {
-                                print('erroR -- $error');
+                                debugPrint('${SubmitScoreDetails.path}  * erroR -- $error');
                                 // Text('$error');
                               },
                               // _simpleAlert(context, error.toString()),
                               onCompleted: (dynamic resultData) {
                                 // Text('Thanks for your star!');
-                                print('**** $resultData');
+                                debugPrint('${SubmitScoreDetails.path}  * Result -- $resultData');
 
                                 _showMyDialog(submitSuccess);
                               },
@@ -690,8 +693,8 @@ class _SubmitScoreDetailsState extends State<SubmitScoreDetails> {
                                       ? gameType[selectedGameType.indexOf(true)].toString().trim().toLowerCase()
                                       : '';
 
-                                  print(
-                                      'matchGameStatus : $matchGameStatus ** matchWinnerName : $matchWinnerName ** matchGameType : $matchGameType');
+                                  debugPrint(
+                                      '${SubmitScoreDetails.path}  * matchGameStatus : $matchGameStatus ** matchWinnerName : $matchWinnerName ** matchGameType : $matchGameType');
 
                                   if (matchGameStatus!.isEmpty)
                                     return ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -739,7 +742,7 @@ class _SubmitScoreDetailsState extends State<SubmitScoreDetails> {
 
                                   passVariableSubmitScore = {'passParam': passMap};
 
-                                  print(passMap);
+                                  debugPrint('${SubmitScoreDetails.path}  * passMap $passMap');
                                   submitScoreApi(passVariableSubmitScore);
                                 },
                                 label: anyLoading ? 'wait' : submit,

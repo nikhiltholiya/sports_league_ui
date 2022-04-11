@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../components/bordered_circle_avatar.dart';
 import '../components/rate_badges.dart';
 import '../utils/app_colors.dart';
@@ -40,8 +41,7 @@ class _HeadToHeadListTileState extends State<HeadToHeadListTile> {
           color: aPartGray5,
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12.0),
-              side: BorderSide(
-                  color: aPartGray10, style: BorderStyle.solid, width: 1.0)),
+              side: BorderSide(color: aPartGray10, style: BorderStyle.solid, width: 1.0)),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
