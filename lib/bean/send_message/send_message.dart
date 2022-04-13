@@ -1,5 +1,8 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../all_messaging/all_messaging.dart';
+
+
 part 'send_message.freezed.dart';
 
 part 'send_message.g.dart';
@@ -17,35 +20,8 @@ class SendMessageData with _$SendMessageData {
 @Freezed()
 class SendMessage with _$SendMessage {
   const factory SendMessage({
-    required Messaging? messaging,
+    required MsgNode? messaging,
   }) = _SendMessage;
 
   factory SendMessage.fromJson(Map<String, dynamic> SendMessageMap) => _$SendMessageFromJson(SendMessageMap);
-}
-
-@Freezed()
-class Messaging with _$Messaging {
-  const factory Messaging({
-    required String? createdAt,
-    required String? id,
-    required String? message,
-    required String? messageId,
-    required String? updatedAt,
-    required Recipient? recipient,
-    required Recipient? sender,
-  }) = _Messaging;
-
-  factory Messaging.fromJson(Map<String, dynamic> MessagingMap) => _$MessagingFromJson(MessagingMap);
-}
-
-@Freezed()
-class Recipient with _$Recipient {
-  const factory Recipient({
-    required String? userId,
-    required String? email,
-    required String? firstName,
-    required String? lastName,
-  }) = _Recipient;
-
-  factory Recipient.fromJson(Map<String, dynamic> RecipientMap) => _$RecipientFromJson(RecipientMap);
 }

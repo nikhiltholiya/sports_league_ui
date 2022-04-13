@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:collection';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +19,7 @@ import '../utils/Constants.dart';
 import '../utils/app_colors.dart';
 import '../utils/app_labels.dart';
 import '../utils/common.dart';
+import '../utils/shared_preferences_utils.dart';
 
 //Created on 20220315
 class SubmitScoreList extends StatefulWidget {
@@ -38,6 +40,7 @@ class _SubmitScoreListState extends State<SubmitScoreList> {
   late AllUsersData _allUsersData;
 
   List<dynamic>? _listAllUsers;
+  List<dynamic>? _listAllUsersTemp = [];
 
   // List<dynamic>? _foundUsers = [];
 
@@ -95,7 +98,7 @@ class _SubmitScoreListState extends State<SubmitScoreList> {
         builder: (context, UserId, child) {
           variableForMsg = {'senderReceipientSearch': '${UserId.getUserId}'};
 
-          return StreamBuilder<List<dynamic>>(
+          return StreamBuilder<List<dynamic>?>(
             stream: _streamController.stream,
             builder: (context, snapshot) {
               if (snapshot.hasData) {
@@ -119,9 +122,11 @@ class _SubmitScoreListState extends State<SubmitScoreList> {
 
                       if (!isLoaded!) {
                         isLoaded = true;
+
                         try {
                           _allMessagingData = AllMessagingData.fromJson(msgresult.data!);
                           _listAllUsers = [];
+                          _listAllUsersTemp = [];
 
                           // for (var data in _allMessagingData.allMessaging!.edges!){
                           //   print('data  -R-${data.node?.recipient?.firstName}');
@@ -133,9 +138,13 @@ class _SubmitScoreListState extends State<SubmitScoreList> {
                                 ? data.node!.recipient!
                                 : data.node!.sender!);
 
-                          _streamController.sink.add(_listAllUsers ?? []);
-                          // _foundUsers = _listAllUsers;
+                          var uniques = LinkedHashMap<MsgRecipient, bool>();
+                          for (var s in _listAllUsers!) {
+                            uniques[s] = true;
+                          }
+                          _listAllUsersTemp!.addAll(uniques.keys);
 
+                          _streamController.sink.add(_listAllUsersTemp!);
                         } catch (e) {
                           debugPrint('${SubmitScoreDetails.path}  * Exception -- $e');
                         }
@@ -173,7 +182,7 @@ class _SubmitScoreListState extends State<SubmitScoreList> {
                                     } else {
                                       // _foundUsers = [];
                                       // _foundUsers = _listAllUsers;
-                                      _streamController.sink.add(_listAllUsers ?? []);
+                                      _streamController.sink.add(_listAllUsersTemp!);
                                       flagSearch = false;
                                     }
 
@@ -210,7 +219,7 @@ class _SubmitScoreListState extends State<SubmitScoreList> {
                                       profileImg: 'assets/Ellipse 1.png',
                                       rating: '${snapshot.data![index].rating}',
                                       playerLocation:
-                                          '${snapshot.data![index].city}, ${snapshot.data![index].state}, ${snapshot.data![index].country}',
+                                          '${snapshot.data![index].city != null ? snapshot.data![index].city : ''}${snapshot.data![index].state != null ? ', ' + snapshot.data![index].state : ''}${snapshot.data![index].country != null ? ', ' + snapshot.data![index].country : ''}',
                                       onTileClick: () {
                                         Provider.of<UserIdProvider>(context, listen: false)
                                             .setUserId(snapshot.data![index].userId);
@@ -256,7 +265,7 @@ class _SubmitScoreListState extends State<SubmitScoreList> {
                                     List<dynamic>? temp = [];
                                     // _foundUsers = [];
                                     for (var data in _allUsersData.allUsers!.edges!) {
-                                      temp.add(data.node);
+                                      if (data.node!.userId != SharedPreferencesUtils.getUserId) temp.add(data.node);
                                     }
 
                                     _streamController.sink.add(temp);

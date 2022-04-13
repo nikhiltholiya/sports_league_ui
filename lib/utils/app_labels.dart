@@ -77,3 +77,4 @@ const String errDob = 'Please select date of birth';
 const String errState = 'Please select state';
 const String errRate = 'Please select your rate';
 const String errCity = 'Please enter your city';
+const String enterFirstMsg = 'Enter your first message';

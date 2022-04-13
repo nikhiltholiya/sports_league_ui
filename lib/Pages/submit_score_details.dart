@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
@@ -236,7 +237,11 @@ class _SubmitScoreDetailsState extends State<SubmitScoreDetails> {
                             onPressed: () {
                               Navigator.pop(context);
                             },
-                            icon: Icon(Platform.isIOS ? Icons.arrow_back_ios : Icons.arrow_back),
+                            icon: Icon(kIsWeb
+                                ? null
+                                : Platform.isIOS
+                                    ? Icons.arrow_back_ios
+                                    : Icons.arrow_back),
                           ),
                           titleTextStyle: TextStyle(
                               color: _dynamicTotalHeight! <= scrollPosition ? Colors.black : Colors.transparent),

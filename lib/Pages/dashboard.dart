@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:provider/provider.dart';
 
 import '../Pages/all_messaging_list_page.dart';
@@ -12,12 +13,13 @@ import '../Pages/my_league_list.dart';
 import '../Pages/password_change_page.dart';
 import '../Pages/profile_page.dart';
 import '../Pages/submit_score_list.dart';
-import '../bean/token_auth/token_auth.dart';
+import '../bean/all_users/all_users.dart';
 import '../components/bordered_circle_avatar.dart';
 import '../components/dashboard_menu_item.dart';
 import '../components/decorated_app_header_tile.dart';
 import '../providers/league_id_provider.dart';
 import '../providers/user_id_provider.dart';
+import '../utils/Constants.dart';
 import '../utils/app_colors.dart';
 import '../utils/shared_preferences_utils.dart';
 
@@ -36,6 +38,7 @@ class _DashboardPageState extends State<DashboardPage> {
 
   @override
   void initState() {
+    // SharedPreferencesUtils.setUserId('f44760f3-ce87-41a7-a3ca-e4f5bc3f449a');
     super.initState();
   }
 
@@ -90,63 +93,90 @@ class _DashboardPageState extends State<DashboardPage> {
       MenuItems(
           title: 'Change Password',
           image: 'transperent_tennis_ball_icon_red.png',
-          subtitle: 'User can able to change password from here',
+          subtitle: 'Change password from here',
           color: Color(0xffeb5945),
           path: PasswordChangePage.path),
     ];
 
-    // Map<String, dynamic> param = {
-    //   '\$userId': 'UUID',
-    // };
-    // Map<String, dynamic> paramType = {
-    //   'userId': '\$userId',
-    // };
-    // Map<String, dynamic> passVariable = {'userId': '${SharedPreferencesUtils.getUserId!}'};
+    Map<String, dynamic> param = {
+      '\$userId': 'UUID',
+    };
+    Map<String, dynamic> paramType = {
+      'userId': '\$userId',
+    };
+    Map<String, dynamic> passVariable = {'userId': '${SharedPreferencesUtils.getUserId!}'};
 
-    var data = LoggedUser.fromJson(jsonDecode(SharedPreferencesUtils.getUserData.toString()));
+    // var data = LoggedUser.fromJson(jsonDecode(SharedPreferencesUtils.getUserData.toString()));
 
     return BaseWidget(
       scaffoldKey: scKey,
       appbar: AppBar(),
       isLeading: false,
       appbarHeight: 0.0,
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          dashboardHeader(
-            name: data.firstName,
-          ),
-          Flexible(
-            fit: FlexFit.loose,
-            flex: 1,
-            child: Container(
-              color: aWhite,
-              child: GridView.builder(
-                physics: BouncingScrollPhysics(),
-                padding: EdgeInsets.all(10.0),
-                gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                    maxCrossAxisExtent: 200, childAspectRatio: 2, crossAxisSpacing: 10, mainAxisSpacing: 10),
-                itemCount: dashBoardMenuItems.length,
-                itemBuilder: (BuildContext ctx, index) {
-                  return DashboardMenuItem(
-                    menu_color: dashBoardMenuItems[index].color,
-                    menu_image: dashBoardMenuItems[index].image,
-                    subtitle: dashBoardMenuItems[index].subtitle,
-                    title: dashBoardMenuItems[index].title,
-                    onMenuClick: () {
-                      Provider.of<UserIdProvider>(context, listen: false).setUserId(SharedPreferencesUtils.getUserId);
-                      Provider.of<LeagueIdProvider>(context, listen: false).setLeagueId('');
+      body: Query(
+        options: QueryOptions(
+          document: gql(allUsers(param, paramType)),
+          // this is the query string you just created
+          variables: passVariable,
+          pollInterval: Duration(seconds: 100),
+        ),
+        builder: (result, {fetchMore, refetch}) {
+          print(passVariable);
+          if (result.hasException) {
+            return Text(result.exception.toString());
+          }
 
-                      if (dashBoardMenuItems[index].path!.isNotEmpty)
-                        Navigator.pushNamed(context, dashBoardMenuItems[index].path ?? '');
-                    },
-                  );
-                },
+          if (result.isLoading && result.data == null) {
+            return const Center(child: CupertinoActivityIndicator());
+          }
+
+          // setLoggedUser(AllUsersData.fromJson(result.data!).allUsers?.edges?.first.node?.toJson().toString());
+          // setLoggedUser(jsonEncode(AllUsersData.fromJson(result.data!).allUsers.));
+
+          SharedPreferencesUtils.setUserData(
+              jsonEncode(AllUsersData.fromJson(result.data!).allUsers?.edges?.first.node));
+
+          // print('USER DATA ${SharedPreferencesUtils.getUserData}');
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              dashboardHeader(
+                name: AllUsersData.fromJson(result.data!).allUsers?.edges?.first.node?.firstName,
               ),
-            ),
-          ),
-        ],
+              Flexible(
+                fit: FlexFit.loose,
+                flex: 1,
+                child: Container(
+                  color: aWhite,
+                  child: GridView.builder(
+                    physics: BouncingScrollPhysics(),
+                    padding: EdgeInsets.all(10.0),
+                    gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                        maxCrossAxisExtent: 200, childAspectRatio: 2, crossAxisSpacing: 10, mainAxisSpacing: 10),
+                    itemCount: dashBoardMenuItems.length,
+                    itemBuilder: (BuildContext ctx, index) {
+                      return DashboardMenuItem(
+                        menu_color: dashBoardMenuItems[index].color,
+                        menu_image: dashBoardMenuItems[index].image,
+                        subtitle: dashBoardMenuItems[index].subtitle,
+                        title: dashBoardMenuItems[index].title,
+                        onMenuClick: () {
+                          Provider.of<UserIdProvider>(context, listen: false)
+                              .setUserId(SharedPreferencesUtils.getUserId);
+                          Provider.of<LeagueIdProvider>(context, listen: false).setLeagueId('');
+
+                          if (dashBoardMenuItems[index].path!.isNotEmpty)
+                            Navigator.pushNamed(context, dashBoardMenuItems[index].path ?? '');
+                        },
+                      );
+                    },
+                  ),
+                ),
+              ),
+            ],
+          );
+        },
       ),
     );
   }

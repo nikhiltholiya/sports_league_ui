@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../Pages/base_activity.dart';
@@ -111,7 +112,11 @@ class _HeadToHeadDetailsState extends State<HeadToHeadDetails> {
                       onPressed: () {
                         Navigator.pop(context);
                       },
-                      icon: Icon(Platform.isIOS ? Icons.arrow_back_ios : Icons.arrow_back),
+                      icon: Icon(kIsWeb
+                          ? null
+                          : Platform.isIOS
+                              ? Icons.arrow_back_ios
+                              : Icons.arrow_back),
                     ),
                     titleTextStyle: TextStyle(fontSize: 10, color: _isSilverCollapsed! ? Colors.black : Colors.white),
                     iconTheme: IconThemeData(color: _isSilverCollapsed! ? Colors.black : Colors.white),

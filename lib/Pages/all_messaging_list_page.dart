@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:collection';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -38,7 +39,7 @@ class _AllMessagesListPageState extends State<AllMessagesListPage> {
   Map<String, dynamic> paramTypeForMsg = {};
   Map<String, dynamic> variableForMsg = {};
 
-  var _streamController = StreamController<List<dynamic>>();
+  var _streamController = StreamController<List<dynamic>?>();
 
   @override
   void initState() {
@@ -75,7 +76,7 @@ class _AllMessagesListPageState extends State<AllMessagesListPage> {
         builder: (context, UserId, child) {
           variableForMsg = {'senderReceipientSearch': '${UserId.getUserId}', 'orderBy': 'createdAt'};
 
-          return StreamBuilder<List<dynamic>>(
+          return StreamBuilder<List<dynamic>?>(
             stream: _streamController.stream,
             builder: (context, snapshot) {
               if (snapshot.hasData) {
@@ -86,7 +87,7 @@ class _AllMessagesListPageState extends State<AllMessagesListPage> {
                       document: gql(allMessaging(paramForMsg, paramTypeForMsg)),
                       // this is the query string you just created
                       variables: variableForMsg,
-                      pollInterval: Duration(seconds: 100),
+                      pollInterval: Duration(seconds: 50),
                     ),
                     builder: (msgresult, {fetchMore, refetch}) {
                       if (msgresult.hasException) {
@@ -104,13 +105,19 @@ class _AllMessagesListPageState extends State<AllMessagesListPage> {
                           _listAllUsers = [];
 
                           for (var data in _allMessagingData.allMessaging!.edges!)
-                            _listAllUsers?.add(data.node?.recipient?.userId !=
-                                    UserId.getUserId //TODO Remove Comment LIVE
-                                // _listAllUsers?.add(data.node?.recipient?.userId != 'dbd94b63-4d03-4144-b28c-b8bd506f8c68'
+                            _listAllUsers?.add(data.node?.recipient?.userId != UserId.getUserId
                                 ? data.node!.recipient!
                                 : data.node!.sender!);
+                          // _listAllUsers?.where((element) => element.node!.node!.recipient!.userId == )
 
-                          _streamController.sink.add(_listAllUsers ?? []);
+                          List<dynamic>? _listAllUsersTemp = [];
+                          var uniques = LinkedHashMap<dynamic, bool>();
+                          for (var s in _listAllUsers!) {
+                            uniques[s] = true;
+                          }
+                          _listAllUsersTemp.addAll(uniques.keys);
+
+                          _streamController.sink.add(_listAllUsersTemp);
                           // _foundUsers = _listAllUsers;
 
                         } catch (e) {

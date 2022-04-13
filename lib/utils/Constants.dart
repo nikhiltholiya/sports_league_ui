@@ -353,3 +353,19 @@ String sendMessage(Map<String, dynamic>? param, Map<String, dynamic>? paramType)
       }
 ''';
 }
+
+
+//Test purpose
+String readRepositories = '''
+  query ReadRepositories(\$nRepositories: Int!) {
+    viewer {
+      repositories(last: \$nRepositories) {
+        nodes {
+          id
+          name
+          viewerHasStarred
+        }
+      }
+    }
+  }
+''';

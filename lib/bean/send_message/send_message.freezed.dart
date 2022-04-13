@@ -189,7 +189,7 @@ SendMessage _$SendMessageFromJson(Map<String, dynamic> json) {
 class _$SendMessageTearOff {
   const _$SendMessageTearOff();
 
-  _SendMessage call({required Messaging? messaging}) {
+  _SendMessage call({required MsgNode? messaging}) {
     return _SendMessage(
       messaging: messaging,
     );
@@ -205,7 +205,7 @@ const $SendMessage = _$SendMessageTearOff();
 
 /// @nodoc
 mixin _$SendMessage {
-  Messaging? get messaging => throw _privateConstructorUsedError;
+  MsgNode? get messaging => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -218,9 +218,9 @@ abstract class $SendMessageCopyWith<$Res> {
   factory $SendMessageCopyWith(
           SendMessage value, $Res Function(SendMessage) then) =
       _$SendMessageCopyWithImpl<$Res>;
-  $Res call({Messaging? messaging});
+  $Res call({MsgNode? messaging});
 
-  $MessagingCopyWith<$Res>? get messaging;
+  $MsgNodeCopyWith<$Res>? get messaging;
 }
 
 /// @nodoc
@@ -239,17 +239,17 @@ class _$SendMessageCopyWithImpl<$Res> implements $SendMessageCopyWith<$Res> {
       messaging: messaging == freezed
           ? _value.messaging
           : messaging // ignore: cast_nullable_to_non_nullable
-              as Messaging?,
+              as MsgNode?,
     ));
   }
 
   @override
-  $MessagingCopyWith<$Res>? get messaging {
+  $MsgNodeCopyWith<$Res>? get messaging {
     if (_value.messaging == null) {
       return null;
     }
 
-    return $MessagingCopyWith<$Res>(_value.messaging!, (value) {
+    return $MsgNodeCopyWith<$Res>(_value.messaging!, (value) {
       return _then(_value.copyWith(messaging: value));
     });
   }
@@ -262,10 +262,10 @@ abstract class _$SendMessageCopyWith<$Res>
           _SendMessage value, $Res Function(_SendMessage) then) =
       __$SendMessageCopyWithImpl<$Res>;
   @override
-  $Res call({Messaging? messaging});
+  $Res call({MsgNode? messaging});
 
   @override
-  $MessagingCopyWith<$Res>? get messaging;
+  $MsgNodeCopyWith<$Res>? get messaging;
 }
 
 /// @nodoc
@@ -286,7 +286,7 @@ class __$SendMessageCopyWithImpl<$Res> extends _$SendMessageCopyWithImpl<$Res>
       messaging: messaging == freezed
           ? _value.messaging
           : messaging // ignore: cast_nullable_to_non_nullable
-              as Messaging?,
+              as MsgNode?,
     ));
   }
 }
@@ -300,7 +300,7 @@ class _$_SendMessage implements _SendMessage {
       _$$_SendMessageFromJson(json);
 
   @override
-  final Messaging? messaging;
+  final MsgNode? messaging;
 
   @override
   String toString() {
@@ -331,546 +331,15 @@ class _$_SendMessage implements _SendMessage {
 }
 
 abstract class _SendMessage implements SendMessage {
-  const factory _SendMessage({required Messaging? messaging}) = _$_SendMessage;
+  const factory _SendMessage({required MsgNode? messaging}) = _$_SendMessage;
 
   factory _SendMessage.fromJson(Map<String, dynamic> json) =
       _$_SendMessage.fromJson;
 
   @override
-  Messaging? get messaging;
+  MsgNode? get messaging;
   @override
   @JsonKey(ignore: true)
   _$SendMessageCopyWith<_SendMessage> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-Messaging _$MessagingFromJson(Map<String, dynamic> json) {
-  return _Messaging.fromJson(json);
-}
-
-/// @nodoc
-class _$MessagingTearOff {
-  const _$MessagingTearOff();
-
-  _Messaging call(
-      {required String? createdAt,
-      required String? id,
-      required String? message,
-      required String? messageId,
-      required String? updatedAt,
-      required Recipient? recipient,
-      required Recipient? sender}) {
-    return _Messaging(
-      createdAt: createdAt,
-      id: id,
-      message: message,
-      messageId: messageId,
-      updatedAt: updatedAt,
-      recipient: recipient,
-      sender: sender,
-    );
-  }
-
-  Messaging fromJson(Map<String, Object?> json) {
-    return Messaging.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $Messaging = _$MessagingTearOff();
-
-/// @nodoc
-mixin _$Messaging {
-  String? get createdAt => throw _privateConstructorUsedError;
-  String? get id => throw _privateConstructorUsedError;
-  String? get message => throw _privateConstructorUsedError;
-  String? get messageId => throw _privateConstructorUsedError;
-  String? get updatedAt => throw _privateConstructorUsedError;
-  Recipient? get recipient => throw _privateConstructorUsedError;
-  Recipient? get sender => throw _privateConstructorUsedError;
-
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
-  $MessagingCopyWith<Messaging> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $MessagingCopyWith<$Res> {
-  factory $MessagingCopyWith(Messaging value, $Res Function(Messaging) then) =
-      _$MessagingCopyWithImpl<$Res>;
-  $Res call(
-      {String? createdAt,
-      String? id,
-      String? message,
-      String? messageId,
-      String? updatedAt,
-      Recipient? recipient,
-      Recipient? sender});
-
-  $RecipientCopyWith<$Res>? get recipient;
-  $RecipientCopyWith<$Res>? get sender;
-}
-
-/// @nodoc
-class _$MessagingCopyWithImpl<$Res> implements $MessagingCopyWith<$Res> {
-  _$MessagingCopyWithImpl(this._value, this._then);
-
-  final Messaging _value;
-  // ignore: unused_field
-  final $Res Function(Messaging) _then;
-
-  @override
-  $Res call({
-    Object? createdAt = freezed,
-    Object? id = freezed,
-    Object? message = freezed,
-    Object? messageId = freezed,
-    Object? updatedAt = freezed,
-    Object? recipient = freezed,
-    Object? sender = freezed,
-  }) {
-    return _then(_value.copyWith(
-      createdAt: createdAt == freezed
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as String?,
-      id: id == freezed
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String?,
-      message: message == freezed
-          ? _value.message
-          : message // ignore: cast_nullable_to_non_nullable
-              as String?,
-      messageId: messageId == freezed
-          ? _value.messageId
-          : messageId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      updatedAt: updatedAt == freezed
-          ? _value.updatedAt
-          : updatedAt // ignore: cast_nullable_to_non_nullable
-              as String?,
-      recipient: recipient == freezed
-          ? _value.recipient
-          : recipient // ignore: cast_nullable_to_non_nullable
-              as Recipient?,
-      sender: sender == freezed
-          ? _value.sender
-          : sender // ignore: cast_nullable_to_non_nullable
-              as Recipient?,
-    ));
-  }
-
-  @override
-  $RecipientCopyWith<$Res>? get recipient {
-    if (_value.recipient == null) {
-      return null;
-    }
-
-    return $RecipientCopyWith<$Res>(_value.recipient!, (value) {
-      return _then(_value.copyWith(recipient: value));
-    });
-  }
-
-  @override
-  $RecipientCopyWith<$Res>? get sender {
-    if (_value.sender == null) {
-      return null;
-    }
-
-    return $RecipientCopyWith<$Res>(_value.sender!, (value) {
-      return _then(_value.copyWith(sender: value));
-    });
-  }
-}
-
-/// @nodoc
-abstract class _$MessagingCopyWith<$Res> implements $MessagingCopyWith<$Res> {
-  factory _$MessagingCopyWith(
-          _Messaging value, $Res Function(_Messaging) then) =
-      __$MessagingCopyWithImpl<$Res>;
-  @override
-  $Res call(
-      {String? createdAt,
-      String? id,
-      String? message,
-      String? messageId,
-      String? updatedAt,
-      Recipient? recipient,
-      Recipient? sender});
-
-  @override
-  $RecipientCopyWith<$Res>? get recipient;
-  @override
-  $RecipientCopyWith<$Res>? get sender;
-}
-
-/// @nodoc
-class __$MessagingCopyWithImpl<$Res> extends _$MessagingCopyWithImpl<$Res>
-    implements _$MessagingCopyWith<$Res> {
-  __$MessagingCopyWithImpl(_Messaging _value, $Res Function(_Messaging) _then)
-      : super(_value, (v) => _then(v as _Messaging));
-
-  @override
-  _Messaging get _value => super._value as _Messaging;
-
-  @override
-  $Res call({
-    Object? createdAt = freezed,
-    Object? id = freezed,
-    Object? message = freezed,
-    Object? messageId = freezed,
-    Object? updatedAt = freezed,
-    Object? recipient = freezed,
-    Object? sender = freezed,
-  }) {
-    return _then(_Messaging(
-      createdAt: createdAt == freezed
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as String?,
-      id: id == freezed
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String?,
-      message: message == freezed
-          ? _value.message
-          : message // ignore: cast_nullable_to_non_nullable
-              as String?,
-      messageId: messageId == freezed
-          ? _value.messageId
-          : messageId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      updatedAt: updatedAt == freezed
-          ? _value.updatedAt
-          : updatedAt // ignore: cast_nullable_to_non_nullable
-              as String?,
-      recipient: recipient == freezed
-          ? _value.recipient
-          : recipient // ignore: cast_nullable_to_non_nullable
-              as Recipient?,
-      sender: sender == freezed
-          ? _value.sender
-          : sender // ignore: cast_nullable_to_non_nullable
-              as Recipient?,
-    ));
-  }
-}
-
-/// @nodoc
-@JsonSerializable()
-class _$_Messaging implements _Messaging {
-  const _$_Messaging(
-      {required this.createdAt,
-      required this.id,
-      required this.message,
-      required this.messageId,
-      required this.updatedAt,
-      required this.recipient,
-      required this.sender});
-
-  factory _$_Messaging.fromJson(Map<String, dynamic> json) =>
-      _$$_MessagingFromJson(json);
-
-  @override
-  final String? createdAt;
-  @override
-  final String? id;
-  @override
-  final String? message;
-  @override
-  final String? messageId;
-  @override
-  final String? updatedAt;
-  @override
-  final Recipient? recipient;
-  @override
-  final Recipient? sender;
-
-  @override
-  String toString() {
-    return 'Messaging(createdAt: $createdAt, id: $id, message: $message, messageId: $messageId, updatedAt: $updatedAt, recipient: $recipient, sender: $sender)';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _Messaging &&
-            const DeepCollectionEquality().equals(other.createdAt, createdAt) &&
-            const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality().equals(other.message, message) &&
-            const DeepCollectionEquality().equals(other.messageId, messageId) &&
-            const DeepCollectionEquality().equals(other.updatedAt, updatedAt) &&
-            const DeepCollectionEquality().equals(other.recipient, recipient) &&
-            const DeepCollectionEquality().equals(other.sender, sender));
-  }
-
-  @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(createdAt),
-      const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(message),
-      const DeepCollectionEquality().hash(messageId),
-      const DeepCollectionEquality().hash(updatedAt),
-      const DeepCollectionEquality().hash(recipient),
-      const DeepCollectionEquality().hash(sender));
-
-  @JsonKey(ignore: true)
-  @override
-  _$MessagingCopyWith<_Messaging> get copyWith =>
-      __$MessagingCopyWithImpl<_Messaging>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$_MessagingToJson(this);
-  }
-}
-
-abstract class _Messaging implements Messaging {
-  const factory _Messaging(
-      {required String? createdAt,
-      required String? id,
-      required String? message,
-      required String? messageId,
-      required String? updatedAt,
-      required Recipient? recipient,
-      required Recipient? sender}) = _$_Messaging;
-
-  factory _Messaging.fromJson(Map<String, dynamic> json) =
-      _$_Messaging.fromJson;
-
-  @override
-  String? get createdAt;
-  @override
-  String? get id;
-  @override
-  String? get message;
-  @override
-  String? get messageId;
-  @override
-  String? get updatedAt;
-  @override
-  Recipient? get recipient;
-  @override
-  Recipient? get sender;
-  @override
-  @JsonKey(ignore: true)
-  _$MessagingCopyWith<_Messaging> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-Recipient _$RecipientFromJson(Map<String, dynamic> json) {
-  return _Recipient.fromJson(json);
-}
-
-/// @nodoc
-class _$RecipientTearOff {
-  const _$RecipientTearOff();
-
-  _Recipient call(
-      {required String? userId,
-      required String? email,
-      required String? firstName,
-      required String? lastName}) {
-    return _Recipient(
-      userId: userId,
-      email: email,
-      firstName: firstName,
-      lastName: lastName,
-    );
-  }
-
-  Recipient fromJson(Map<String, Object?> json) {
-    return Recipient.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $Recipient = _$RecipientTearOff();
-
-/// @nodoc
-mixin _$Recipient {
-  String? get userId => throw _privateConstructorUsedError;
-  String? get email => throw _privateConstructorUsedError;
-  String? get firstName => throw _privateConstructorUsedError;
-  String? get lastName => throw _privateConstructorUsedError;
-
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
-  $RecipientCopyWith<Recipient> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $RecipientCopyWith<$Res> {
-  factory $RecipientCopyWith(Recipient value, $Res Function(Recipient) then) =
-      _$RecipientCopyWithImpl<$Res>;
-  $Res call(
-      {String? userId, String? email, String? firstName, String? lastName});
-}
-
-/// @nodoc
-class _$RecipientCopyWithImpl<$Res> implements $RecipientCopyWith<$Res> {
-  _$RecipientCopyWithImpl(this._value, this._then);
-
-  final Recipient _value;
-  // ignore: unused_field
-  final $Res Function(Recipient) _then;
-
-  @override
-  $Res call({
-    Object? userId = freezed,
-    Object? email = freezed,
-    Object? firstName = freezed,
-    Object? lastName = freezed,
-  }) {
-    return _then(_value.copyWith(
-      userId: userId == freezed
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      email: email == freezed
-          ? _value.email
-          : email // ignore: cast_nullable_to_non_nullable
-              as String?,
-      firstName: firstName == freezed
-          ? _value.firstName
-          : firstName // ignore: cast_nullable_to_non_nullable
-              as String?,
-      lastName: lastName == freezed
-          ? _value.lastName
-          : lastName // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ));
-  }
-}
-
-/// @nodoc
-abstract class _$RecipientCopyWith<$Res> implements $RecipientCopyWith<$Res> {
-  factory _$RecipientCopyWith(
-          _Recipient value, $Res Function(_Recipient) then) =
-      __$RecipientCopyWithImpl<$Res>;
-  @override
-  $Res call(
-      {String? userId, String? email, String? firstName, String? lastName});
-}
-
-/// @nodoc
-class __$RecipientCopyWithImpl<$Res> extends _$RecipientCopyWithImpl<$Res>
-    implements _$RecipientCopyWith<$Res> {
-  __$RecipientCopyWithImpl(_Recipient _value, $Res Function(_Recipient) _then)
-      : super(_value, (v) => _then(v as _Recipient));
-
-  @override
-  _Recipient get _value => super._value as _Recipient;
-
-  @override
-  $Res call({
-    Object? userId = freezed,
-    Object? email = freezed,
-    Object? firstName = freezed,
-    Object? lastName = freezed,
-  }) {
-    return _then(_Recipient(
-      userId: userId == freezed
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      email: email == freezed
-          ? _value.email
-          : email // ignore: cast_nullable_to_non_nullable
-              as String?,
-      firstName: firstName == freezed
-          ? _value.firstName
-          : firstName // ignore: cast_nullable_to_non_nullable
-              as String?,
-      lastName: lastName == freezed
-          ? _value.lastName
-          : lastName // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ));
-  }
-}
-
-/// @nodoc
-@JsonSerializable()
-class _$_Recipient implements _Recipient {
-  const _$_Recipient(
-      {required this.userId,
-      required this.email,
-      required this.firstName,
-      required this.lastName});
-
-  factory _$_Recipient.fromJson(Map<String, dynamic> json) =>
-      _$$_RecipientFromJson(json);
-
-  @override
-  final String? userId;
-  @override
-  final String? email;
-  @override
-  final String? firstName;
-  @override
-  final String? lastName;
-
-  @override
-  String toString() {
-    return 'Recipient(userId: $userId, email: $email, firstName: $firstName, lastName: $lastName)';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _Recipient &&
-            const DeepCollectionEquality().equals(other.userId, userId) &&
-            const DeepCollectionEquality().equals(other.email, email) &&
-            const DeepCollectionEquality().equals(other.firstName, firstName) &&
-            const DeepCollectionEquality().equals(other.lastName, lastName));
-  }
-
-  @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(userId),
-      const DeepCollectionEquality().hash(email),
-      const DeepCollectionEquality().hash(firstName),
-      const DeepCollectionEquality().hash(lastName));
-
-  @JsonKey(ignore: true)
-  @override
-  _$RecipientCopyWith<_Recipient> get copyWith =>
-      __$RecipientCopyWithImpl<_Recipient>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$_RecipientToJson(this);
-  }
-}
-
-abstract class _Recipient implements Recipient {
-  const factory _Recipient(
-      {required String? userId,
-      required String? email,
-      required String? firstName,
-      required String? lastName}) = _$_Recipient;
-
-  factory _Recipient.fromJson(Map<String, dynamic> json) =
-      _$_Recipient.fromJson;
-
-  @override
-  String? get userId;
-  @override
-  String? get email;
-  @override
-  String? get firstName;
-  @override
-  String? get lastName;
-  @override
-  @JsonKey(ignore: true)
-  _$RecipientCopyWith<_Recipient> get copyWith =>
       throw _privateConstructorUsedError;
 }

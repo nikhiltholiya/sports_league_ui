@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 //Created on 20220303
@@ -44,7 +45,11 @@ class _BaseWidgetState extends State<BaseWidget> {
         body: SafeArea(top: true, right: true, left: true, bottom: true, child: widget.body!),
         appBar: AppBar(
           leading: IconButton(
-              icon: Icon(Platform.isIOS ? Icons.arrow_back_ios : Icons.arrow_back),
+              icon: Icon(kIsWeb
+                  ? null
+                  : Platform.isIOS
+                      ? Icons.arrow_back_ios
+                      : Icons.arrow_back),
               onPressed: () => widget.onBackClick!()),
           elevation: 0.0,
           centerTitle: true,

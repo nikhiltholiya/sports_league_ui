@@ -38,7 +38,7 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
         ),
       ),
       // leading: IconButton(onPressed: () {},
-      //     icon: Icon(Platform.isIOS ? Icons.arrow_back_ios : Icons.arrow_back)),
+      //     icon: Icon(kIsWeb ? null : Platform.isIOS ? Icons.arrow_back_ios : Icons.arrow_back)),
       appbarHeight: kToolbarHeight,
       onBackClick: () => onBackManage(),
       body: Padding(

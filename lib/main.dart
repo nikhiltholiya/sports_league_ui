@@ -33,7 +33,9 @@ import '../utils/shared_preferences_utils.dart';
 
 // final HttpLink httpLink = HttpLink('http://52.144.47.85:8000/graphql/',);
 final graphqlEndpoint = 'http://52.144.47.85:8000/graphql/';
-final subscriptionEndpoint = '';
+// final graphqlEndpoint = 'https://api.github.com/graphql'; //Test purpose
+final subscriptionEndpoint = null;
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -56,12 +58,36 @@ class MyApp extends StatelessWidget {
         //     : '',
 
         getToken: () async =>
+        // 'Bearer <YOUR GIT TOKEN>' //Test purpose
             SharedPreferencesUtils.getToken != null ? '''JWT ${SharedPreferencesUtils.getToken}''' : '',
       ),
       child: AppBody(),
     );
   }
 }
+
+
+
+/*OLD*/
+//
+// void main() async {
+//   await initHiveForFlutter();
+//
+//   final HttpLink httpLink = HttpLink(
+//     'http://52.144.47.85:8000/graphql/',
+//   );
+//   final AuthLink authLink = AuthLink(
+//     getToken: () async => '',
+//   );
+//   final Link link = authLink.concat(httpLink);
+//
+//   ValueNotifier<GraphQLClient> client = ValueNotifier(
+//     GraphQLClient(link: link, cache: GraphQLCache()),
+//   );
+//   runApp(GraphQLProvider(client: client, child: const AppBody()));
+// }
+
+/*OLD*/
 
 class AppBody extends StatelessWidget {
   const AppBody({Key? key}) : super(key: key);
@@ -82,7 +108,7 @@ class AppBody extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
-        title: 'Flutter Demo',
+        title: 'Tennis Toon',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
             // This is the theme of your application.

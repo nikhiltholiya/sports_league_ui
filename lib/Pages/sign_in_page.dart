@@ -212,30 +212,36 @@ class _SignInPageState extends State<SignInPage> {
               setState(() {});
               debugPrint('${SignInPage.path} * Result -- $resultData');
 
-              _tokenAuthData = TokenAuthData.fromJson(resultData);
-              debugPrint('${SignInPage.path} * SUCCESS -- ${_tokenAuthData?.tokenAuth?.success}');
-              errorList = [];
-              if (_tokenAuthData!.tokenAuth!.success!) {
-                SharedPreferencesUtils.setEmail(_tokenAuthData?.tokenAuth?.user?.email);
-                SharedPreferencesUtils.setToken(_tokenAuthData?.tokenAuth?.token);
-                SharedPreferencesUtils.setRefreshToken(_tokenAuthData?.tokenAuth?.refreshToken);
-                SharedPreferencesUtils.setUserData(jsonEncode(_tokenAuthData!.tokenAuth?.user));
-                SharedPreferencesUtils.setUserId(_tokenAuthData?.tokenAuth?.user?.userId);
+              if (resultData != null) {
+                _tokenAuthData = TokenAuthData.fromJson(resultData);
+                debugPrint('${SignInPage.path} * SUCCESS -- ${_tokenAuthData?.tokenAuth?.success}');
+                errorList = [];
+                if (_tokenAuthData!.tokenAuth!.success!) {
+                  SharedPreferencesUtils.setEmail(_tokenAuthData?.tokenAuth?.user?.email);
+                  SharedPreferencesUtils.setToken(_tokenAuthData?.tokenAuth?.token);
+                  SharedPreferencesUtils.setRefreshToken(_tokenAuthData?.tokenAuth?.refreshToken);
+                  SharedPreferencesUtils.setUserData(jsonEncode(_tokenAuthData!.tokenAuth?.user));
+                  SharedPreferencesUtils.setUserId(_tokenAuthData?.tokenAuth?.user?.userId);
 
-                // Provider.of<TokenProvider>(context, listen: false).setToken(_tokenAuthData?.tokenAuth?.token);
+                  // Provider.of<TokenProvider>(context, listen: false).setToken(_tokenAuthData?.tokenAuth?.token);
 
-                if (_tokenAuthData!.tokenAuth!.user!.firstName.toString().isNotEmpty) {
-                  Navigator.pushNamedAndRemoveUntil(context, DashboardPage.path, (route) => false);
+                  if (_tokenAuthData!.tokenAuth!.user!.firstName.toString().isNotEmpty) {
+                    Navigator.pushNamedAndRemoveUntil(context, DashboardPage.path, (route) => false);
+                  } else {
+                    Navigator.pushNamed(context, CreateProfilePage.path);
+                  }
+                  // Navigator.pushNamed(context, CreateProfilePage.path);
                 } else {
-                  Navigator.pushNamed(context, CreateProfilePage.path);
-                }
-                // Navigator.pushNamed(context, CreateProfilePage.path);
-              } else {
-                for (var errData in _tokenAuthData!.tokenAuth!.errors!.nonFieldErrors!) {
-                  if (errData.message != null) errorList!.add(errData.message);
-                }
+                  for (var errData in _tokenAuthData!.tokenAuth!.errors!.nonFieldErrors!) {
+                    if (errData.message != null) errorList!.add(errData.message);
+                  }
 
-                _showAlert();
+                  _showAlert();
+                }
+              } else {
+                // errorList = [];
+                // errorList!.add('Result is Null');
+                // _showAlert();
               }
             },
             // 'Sorry you changed your mind!',
@@ -255,6 +261,9 @@ class _SignInPageState extends State<SignInPage> {
               onClick: () {
                 if (_formKey.currentState!.validate()) {
                   Map<String, dynamic> passVariable = {'email': email, 'pass': password};
+
+                  debugPrint(
+                      '${SignInPage.path} * param -- $paramSignIn * Type -- $paramTypeSignIn -- Variable -- $passVariable');
 
                   doSignIn(passVariable);
                   isEnable = false;
