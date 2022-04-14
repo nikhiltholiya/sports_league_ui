@@ -513,13 +513,13 @@ class _CreateProfilePicturePageState extends State<CreateProfilePicturePage> {
     return null;
   }
 
-  Future<Widget> _showAlert() async {
+  _showAlert() async {
     return await showDialog(
         context: context,
         barrierDismissible: false,
         builder: (BuildContext context) {
           return AppDialog(
-            title: 'Profile',
+            title: profile,
             body: [
               ListView.builder(
                 shrinkWrap: true,
@@ -534,7 +534,7 @@ class _CreateProfilePicturePageState extends State<CreateProfilePicturePage> {
             ],
             isBtnPositiveAvail: false,
             btnPositiveText: '',
-            btnNegativeText: 'Dismiss',
+            btnNegativeText: dialogDismiss,
             onNegativeClick: () {
               Navigator.pop(context);
             },

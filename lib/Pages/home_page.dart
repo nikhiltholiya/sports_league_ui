@@ -84,7 +84,7 @@ class HomePage extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(5.0),
                   child: Text(
-                    loginBtn,
+                    signIn,
                     style: TextStyle(fontWeight: FontWeight.bold, color: aGreen, decoration: TextDecoration.underline),
                   ),
                 ),

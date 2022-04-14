@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:tenniston/utils/common.dart';
 
 import '../Pages/base_activity.dart';
 import '../Pages/profile_page.dart';
@@ -25,6 +24,7 @@ import '../components/rate_badges.dart';
 import '../providers/user_id_provider.dart';
 import '../utils/Constants.dart';
 import '../utils/app_colors.dart';
+import '../utils/common.dart';
 import '../utils/shared_preferences_utils.dart';
 
 //Created on 20220223
@@ -45,6 +45,7 @@ class _ChallengesChatState extends State<ChallengesChat> {
   double? _totalHeight = 0.0;
   bool? _visibility = true;
   bool? _isSilverCollapsed = false;
+  bool? _isLoaded = false;
   FocusNode? _chatNode;
   TextEditingController? _textController = TextEditingController(text: '');
 
@@ -271,7 +272,7 @@ class _ChallengesChatState extends State<ChallengesChat> {
                                   Navigator.pop(context);
                                 },
                                 icon: Icon(kIsWeb
-                                    ? null
+                                    ? Icons.arrow_back
                                     : Platform.isIOS
                                         ? Icons.arrow_back_ios
                                         : Icons.arrow_back),
@@ -320,7 +321,7 @@ class _ChallengesChatState extends State<ChallengesChat> {
                                               ),
                                               Padding(
                                                 padding: const EdgeInsets.all(5.0),
-                                                child: BorderedCircleAvatar(radius: 20, path: 'assets/Ellipse 5.png'),
+                                                child: BorderedCircleAvatar(radius: 20, path: 'assets/Ellipse 1.png'),
                                               ),
                                               Expanded(
                                                 flex: 1,
@@ -387,7 +388,10 @@ class _ChallengesChatState extends State<ChallengesChat> {
 
                                           _streamController.sink.add(_chatList ?? []);
 
-                                          // scrollToLast();
+                                          if(!_isLoaded!) {
+                                            _isLoaded = true;
+                                            scrollToLast();
+                                          }
                                         } catch (e) {
                                           debugPrint('Exception -- $e');
                                         }
@@ -541,7 +545,7 @@ class _ChallengesChatState extends State<ChallengesChat> {
                                   },
                                   icon: Icon(
                                     Icons.send,
-                                    color: Color(0XFF808080),
+                                    color: aGreen,
                                   ),
                                 );
                               },

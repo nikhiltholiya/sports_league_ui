@@ -134,7 +134,7 @@ class AppBody extends StatelessWidget {
 
         //20220223
         // initialRoute: LeagueDetails.path,
-        initialRoute: HomePage.path,
+        initialRoute: DashboardPage.path,
         onGenerateRoute: (settings) {
           if (settings.name == HomePage.path) {
             return CupertinoPageRoute(builder: (context) => HomePage(), settings: settings);

@@ -13,11 +13,11 @@ class BaseWidget extends StatefulWidget {
   final Widget? fab;
   final Function? onBackClick;
   final bool? isLeading;
-  final GlobalKey<ScaffoldState>? scaffoldKey;
+  final GlobalKey<ScaffoldState>? scKey;
 
   const BaseWidget(
       {Key? key,
-      this.scaffoldKey,
+      this.scKey,
       required this.body,
       required this.appbar,
       this.appbarHeight = 0.0,
@@ -41,12 +41,12 @@ class _BaseWidgetState extends State<BaseWidget> {
       maintainBottomViewPadding: true,
       minimum: EdgeInsets.only(bottom: 2.0),
       child: Scaffold(
-        key: widget.key,
+        key: widget.scKey,
         body: SafeArea(top: true, right: true, left: true, bottom: true, child: widget.body!),
         appBar: AppBar(
           leading: IconButton(
               icon: Icon(kIsWeb
-                  ? null
+                  ? Icons.arrow_back
                   : Platform.isIOS
                       ? Icons.arrow_back_ios
                       : Icons.arrow_back),

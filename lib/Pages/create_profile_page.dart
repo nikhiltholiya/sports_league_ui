@@ -369,13 +369,13 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
     );
   }
 
-  Future<Widget> _showAlert() async {
+  _showAlert() async {
     return await showDialog(
         context: context,
         barrierDismissible: false,
         builder: (BuildContext context) {
           return AppDialog(
-            title: 'Profile',
+            title: profile,
             body: [
               ListView.builder(
                 shrinkWrap: true,
@@ -390,7 +390,7 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
             ],
             isBtnPositiveAvail: false,
             btnPositiveText: '',
-            btnNegativeText: 'Dismiss',
+            btnNegativeText: dialogDismiss,
             onNegativeClick: () {
               Navigator.pop(context);
               if (errorList?.first?.toString().toLowerCase() == 'done') {

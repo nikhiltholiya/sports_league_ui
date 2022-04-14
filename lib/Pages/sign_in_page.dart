@@ -280,13 +280,13 @@ class _SignInPageState extends State<SignInPage> {
     );
   }
 
-  Future<Widget> _showAlert() async {
+  _showAlert() async {
     return await showDialog(
         context: context,
         barrierDismissible: false,
         builder: (BuildContext context) {
           return AppDialog(
-            title: 'SignIn',
+            title: signIn,
             body: [
               ListView.builder(
                 shrinkWrap: true,
@@ -301,7 +301,7 @@ class _SignInPageState extends State<SignInPage> {
             ],
             isBtnPositiveAvail: false,
             btnPositiveText: '',
-            btnNegativeText: 'Dismiss',
+            btnNegativeText: dialogDismiss,
             onNegativeClick: () {
               Navigator.pop(context);
             },

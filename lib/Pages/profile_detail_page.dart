@@ -164,7 +164,7 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> {
                               Navigator.pop(context);
                             },
                             icon: Icon(kIsWeb
-                                ? null
+                                ? Icons.arrow_back
                                 : Platform.isIOS
                                     ? Icons.arrow_back_ios
                                     : Icons.arrow_back),

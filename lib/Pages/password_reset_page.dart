@@ -209,13 +209,13 @@ class _PasswordResetPageState extends State<PasswordResetPage> {
     );
   }
 
-  Future<Widget> _showAlert() async {
+  _showAlert() async {
     return await showDialog(
         context: context,
         barrierDismissible: false,
         builder: (BuildContext context) {
           return AppDialog(
-            title: 'Signup',
+            title: reset,
             body: [
               ListView.builder(
                 shrinkWrap: true,
@@ -230,7 +230,7 @@ class _PasswordResetPageState extends State<PasswordResetPage> {
             ],
             isBtnPositiveAvail: false,
             btnPositiveText: '',
-            btnNegativeText: 'Dismiss',
+            btnNegativeText: dialogDismiss,
             onNegativeClick: () {
               Navigator.pop(context);
             },

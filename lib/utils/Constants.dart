@@ -325,6 +325,19 @@ String updateAccount(Map<String, dynamic>? param, Map<String, dynamic>? paramTyp
 }
 
 
+String revokeToken(Map<String, dynamic>? param, Map<String, dynamic>? paramType) {
+  return '''
+      mutation revokeToken(${param.toString().trim().substring(1, param.toString().trim().length - 1)}) {
+          revokeToken(${paramType.toString().trim().substring(1, paramType.toString().trim().length - 1)}) {
+           errors
+           revoked
+           success   
+      }
+    }
+''';
+}
+
+
 
 String sendMessage(Map<String, dynamic>? param, Map<String, dynamic>? paramType) {
   return '''

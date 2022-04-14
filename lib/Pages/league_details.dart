@@ -181,7 +181,7 @@ class _LeagueDetailsState extends State<LeagueDetails> {
                                       Navigator.pop(context);
                                     },
                                     icon: Icon(kIsWeb
-                                        ? null
+                                        ? Icons.arrow_back
                                         : Platform.isIOS
                                             ? Icons.arrow_back_ios
                                             : Icons.arrow_back),

@@ -25,7 +25,6 @@ class ContactUsPage extends StatefulWidget {
 }
 
 class _ContactUsPageState extends State<ContactUsPage> {
-  var scKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
@@ -37,7 +36,6 @@ class _ContactUsPageState extends State<ContactUsPage> {
     var data = LoggedUser.fromJson(jsonDecode(SharedPreferencesUtils.getUserData.toString()));
 
     return BaseWidget(
-      scaffoldKey: scKey,
       appbar: AppBar(),
       isLeading: false,
       appbarHeight: 0.0,
@@ -149,7 +147,7 @@ class contactUsHeader extends StatelessWidget {
             },
             icon: Icon(
                 kIsWeb
-                    ? null
+                    ? Icons.arrow_back
                     : Platform.isIOS
                         ? Icons.arrow_back_ios
                         : Icons.arrow_back,

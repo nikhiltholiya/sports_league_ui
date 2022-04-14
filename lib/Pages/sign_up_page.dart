@@ -264,13 +264,13 @@ class _SignUpPageState extends State<SignUpPage> {
     );
   }
 
-  Future<Widget> _showAlert() async {
+  _showAlert() async {
     return await showDialog(
         context: context,
         barrierDismissible: false,
         builder: (BuildContext context) {
           return AppDialog(
-            title: 'Signup',
+            title: signUp,
             body: [
               ListView.builder(
                 shrinkWrap: true,
@@ -285,7 +285,7 @@ class _SignUpPageState extends State<SignUpPage> {
             ],
             isBtnPositiveAvail: false,
             btnPositiveText: '',
-            btnNegativeText: 'Dismiss',
+            btnNegativeText: dialogDismiss,
             onNegativeClick: () {
               Navigator.pop(context);
             },
