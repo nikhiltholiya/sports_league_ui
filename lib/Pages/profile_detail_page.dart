@@ -7,7 +7,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:provider/provider.dart';
 
+import '../Pages/all_messaging_list_page.dart';
 import '../Pages/challenges_chat.dart';
+import '../Pages/edit_profile_page.dart';
 import '../Pages/head_to_head_page.dart';
 import '../Pages/profile_page.dart';
 import '../Pages/recent_matches_pages.dart';
@@ -75,7 +77,7 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> {
       _dynamicTotalHeight = height + _dynamicTotalHeight!;
     }
 
-    print(_childWidgetHeights);
+    // print(_childWidgetHeights);
     setState(() {
       _dynamicTotalHeight = _dynamicTotalHeight! + kToolbarHeight + kToolbarHeight;
     });
@@ -187,13 +189,13 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> {
                               btnRight: widget.from! == ProfilePage.profileMe ? messages : submitScore,
                               onLeftBtnClick: () {
                                 widget.from! == ProfilePage.profileMe
-                                    ? print('EDIT PROFILE')
+                                    ? Navigator.pushNamed(context, EditProfilePage.path) // 'EDIT PROFILE'
                                     : Navigator.pushReplacementNamed(context, ChallengesChat.path);
                                 // :Navigator.pushNamedAndRemoveUntil(context,ChallengesChat.path,ModalRoute.withName(LeagueDetails.path));
                               },
                               onRightBtnClick: () {
                                 widget.from! == ProfilePage.profileMe
-                                    ? print('MESSAGES')
+                                    ? Navigator.pushNamed(context, AllMessagesListPage.path) // 'MESSAGES'
                                     :
                                     // Navigator.pushNamedAndRemoveUntil(context,LeagueDetails.path,ModalRoute.withName(DashboardPage.path));
                                     Navigator.pushNamed(context, SubmitScoreDetails.path);

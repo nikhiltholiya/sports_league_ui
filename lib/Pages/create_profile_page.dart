@@ -70,9 +70,8 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
       '\$phone': 'String',
       '\$rating': 'String',
       '\$state': 'String',
+      '\$picture': 'String',
     };
-
-    // '\$uId': 'UUID'
 
     paramTypeUpdateProfile = {
       'userId': '\$userId',
@@ -83,6 +82,7 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
       'phone': ' \$phone',
       'rating': ' \$rating',
       'state': ' \$state',
+      'picture': ' \$picture',
     };
 
     super.initState();
@@ -352,6 +352,7 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
                     'phone': mobileNoValue,
                     'rating': selectedRate,
                     'state': selectedState,
+                    'picture': '',
                   };
 
                   doUpdateProfile(passVariable);

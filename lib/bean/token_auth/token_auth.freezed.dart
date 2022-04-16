@@ -486,9 +486,9 @@ class _$LoggedUserTearOff {
   const _$LoggedUserTearOff();
 
   _LoggedUser call(
-      {required String? aboutMe,
+      {required String? userId,
+      required String? aboutMe,
       required bool? active,
-      required bool? archived,
       required String? city,
       required String? country,
       required String? dateJoined,
@@ -497,7 +497,6 @@ class _$LoggedUserTearOff {
       required String? dob,
       required String? firstName,
       required String? gender,
-      required String? height,
       required bool? isActive,
       required String? id,
       required bool? isStaff,
@@ -506,15 +505,11 @@ class _$LoggedUserTearOff {
       required String? phone,
       required String? picture,
       required String? rating,
-      required int? pk,
-      required String? state,
-      required String? secondaryEmail,
-      required String? userId,
-      required bool? verified}) {
+      required String? state}) {
     return _LoggedUser(
+      userId: userId,
       aboutMe: aboutMe,
       active: active,
-      archived: archived,
       city: city,
       country: country,
       dateJoined: dateJoined,
@@ -523,7 +518,6 @@ class _$LoggedUserTearOff {
       dob: dob,
       firstName: firstName,
       gender: gender,
-      height: height,
       isActive: isActive,
       id: id,
       isStaff: isStaff,
@@ -532,11 +526,7 @@ class _$LoggedUserTearOff {
       phone: phone,
       picture: picture,
       rating: rating,
-      pk: pk,
       state: state,
-      secondaryEmail: secondaryEmail,
-      userId: userId,
-      verified: verified,
     );
   }
 
@@ -550,9 +540,9 @@ const $LoggedUser = _$LoggedUserTearOff();
 
 /// @nodoc
 mixin _$LoggedUser {
+  String? get userId => throw _privateConstructorUsedError;
   String? get aboutMe => throw _privateConstructorUsedError;
   bool? get active => throw _privateConstructorUsedError;
-  bool? get archived => throw _privateConstructorUsedError;
   String? get city => throw _privateConstructorUsedError;
   String? get country => throw _privateConstructorUsedError;
   String? get dateJoined => throw _privateConstructorUsedError;
@@ -561,7 +551,6 @@ mixin _$LoggedUser {
   String? get dob => throw _privateConstructorUsedError;
   String? get firstName => throw _privateConstructorUsedError;
   String? get gender => throw _privateConstructorUsedError;
-  String? get height => throw _privateConstructorUsedError;
   bool? get isActive => throw _privateConstructorUsedError;
   String? get id => throw _privateConstructorUsedError;
   bool? get isStaff => throw _privateConstructorUsedError;
@@ -570,11 +559,7 @@ mixin _$LoggedUser {
   String? get phone => throw _privateConstructorUsedError;
   String? get picture => throw _privateConstructorUsedError;
   String? get rating => throw _privateConstructorUsedError;
-  int? get pk => throw _privateConstructorUsedError;
   String? get state => throw _privateConstructorUsedError;
-  String? get secondaryEmail => throw _privateConstructorUsedError;
-  String? get userId => throw _privateConstructorUsedError;
-  bool? get verified => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -588,9 +573,9 @@ abstract class $LoggedUserCopyWith<$Res> {
           LoggedUser value, $Res Function(LoggedUser) then) =
       _$LoggedUserCopyWithImpl<$Res>;
   $Res call(
-      {String? aboutMe,
+      {String? userId,
+      String? aboutMe,
       bool? active,
-      bool? archived,
       String? city,
       String? country,
       String? dateJoined,
@@ -599,7 +584,6 @@ abstract class $LoggedUserCopyWith<$Res> {
       String? dob,
       String? firstName,
       String? gender,
-      String? height,
       bool? isActive,
       String? id,
       bool? isStaff,
@@ -608,11 +592,7 @@ abstract class $LoggedUserCopyWith<$Res> {
       String? phone,
       String? picture,
       String? rating,
-      int? pk,
-      String? state,
-      String? secondaryEmail,
-      String? userId,
-      bool? verified});
+      String? state});
 }
 
 /// @nodoc
@@ -625,9 +605,9 @@ class _$LoggedUserCopyWithImpl<$Res> implements $LoggedUserCopyWith<$Res> {
 
   @override
   $Res call({
+    Object? userId = freezed,
     Object? aboutMe = freezed,
     Object? active = freezed,
-    Object? archived = freezed,
     Object? city = freezed,
     Object? country = freezed,
     Object? dateJoined = freezed,
@@ -636,7 +616,6 @@ class _$LoggedUserCopyWithImpl<$Res> implements $LoggedUserCopyWith<$Res> {
     Object? dob = freezed,
     Object? firstName = freezed,
     Object? gender = freezed,
-    Object? height = freezed,
     Object? isActive = freezed,
     Object? id = freezed,
     Object? isStaff = freezed,
@@ -645,13 +624,13 @@ class _$LoggedUserCopyWithImpl<$Res> implements $LoggedUserCopyWith<$Res> {
     Object? phone = freezed,
     Object? picture = freezed,
     Object? rating = freezed,
-    Object? pk = freezed,
     Object? state = freezed,
-    Object? secondaryEmail = freezed,
-    Object? userId = freezed,
-    Object? verified = freezed,
   }) {
     return _then(_value.copyWith(
+      userId: userId == freezed
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as String?,
       aboutMe: aboutMe == freezed
           ? _value.aboutMe
           : aboutMe // ignore: cast_nullable_to_non_nullable
@@ -659,10 +638,6 @@ class _$LoggedUserCopyWithImpl<$Res> implements $LoggedUserCopyWith<$Res> {
       active: active == freezed
           ? _value.active
           : active // ignore: cast_nullable_to_non_nullable
-              as bool?,
-      archived: archived == freezed
-          ? _value.archived
-          : archived // ignore: cast_nullable_to_non_nullable
               as bool?,
       city: city == freezed
           ? _value.city
@@ -696,10 +671,6 @@ class _$LoggedUserCopyWithImpl<$Res> implements $LoggedUserCopyWith<$Res> {
           ? _value.gender
           : gender // ignore: cast_nullable_to_non_nullable
               as String?,
-      height: height == freezed
-          ? _value.height
-          : height // ignore: cast_nullable_to_non_nullable
-              as String?,
       isActive: isActive == freezed
           ? _value.isActive
           : isActive // ignore: cast_nullable_to_non_nullable
@@ -732,26 +703,10 @@ class _$LoggedUserCopyWithImpl<$Res> implements $LoggedUserCopyWith<$Res> {
           ? _value.rating
           : rating // ignore: cast_nullable_to_non_nullable
               as String?,
-      pk: pk == freezed
-          ? _value.pk
-          : pk // ignore: cast_nullable_to_non_nullable
-              as int?,
       state: state == freezed
           ? _value.state
           : state // ignore: cast_nullable_to_non_nullable
               as String?,
-      secondaryEmail: secondaryEmail == freezed
-          ? _value.secondaryEmail
-          : secondaryEmail // ignore: cast_nullable_to_non_nullable
-              as String?,
-      userId: userId == freezed
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      verified: verified == freezed
-          ? _value.verified
-          : verified // ignore: cast_nullable_to_non_nullable
-              as bool?,
     ));
   }
 }
@@ -763,9 +718,9 @@ abstract class _$LoggedUserCopyWith<$Res> implements $LoggedUserCopyWith<$Res> {
       __$LoggedUserCopyWithImpl<$Res>;
   @override
   $Res call(
-      {String? aboutMe,
+      {String? userId,
+      String? aboutMe,
       bool? active,
-      bool? archived,
       String? city,
       String? country,
       String? dateJoined,
@@ -774,7 +729,6 @@ abstract class _$LoggedUserCopyWith<$Res> implements $LoggedUserCopyWith<$Res> {
       String? dob,
       String? firstName,
       String? gender,
-      String? height,
       bool? isActive,
       String? id,
       bool? isStaff,
@@ -783,11 +737,7 @@ abstract class _$LoggedUserCopyWith<$Res> implements $LoggedUserCopyWith<$Res> {
       String? phone,
       String? picture,
       String? rating,
-      int? pk,
-      String? state,
-      String? secondaryEmail,
-      String? userId,
-      bool? verified});
+      String? state});
 }
 
 /// @nodoc
@@ -802,9 +752,9 @@ class __$LoggedUserCopyWithImpl<$Res> extends _$LoggedUserCopyWithImpl<$Res>
 
   @override
   $Res call({
+    Object? userId = freezed,
     Object? aboutMe = freezed,
     Object? active = freezed,
-    Object? archived = freezed,
     Object? city = freezed,
     Object? country = freezed,
     Object? dateJoined = freezed,
@@ -813,7 +763,6 @@ class __$LoggedUserCopyWithImpl<$Res> extends _$LoggedUserCopyWithImpl<$Res>
     Object? dob = freezed,
     Object? firstName = freezed,
     Object? gender = freezed,
-    Object? height = freezed,
     Object? isActive = freezed,
     Object? id = freezed,
     Object? isStaff = freezed,
@@ -822,13 +771,13 @@ class __$LoggedUserCopyWithImpl<$Res> extends _$LoggedUserCopyWithImpl<$Res>
     Object? phone = freezed,
     Object? picture = freezed,
     Object? rating = freezed,
-    Object? pk = freezed,
     Object? state = freezed,
-    Object? secondaryEmail = freezed,
-    Object? userId = freezed,
-    Object? verified = freezed,
   }) {
     return _then(_LoggedUser(
+      userId: userId == freezed
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as String?,
       aboutMe: aboutMe == freezed
           ? _value.aboutMe
           : aboutMe // ignore: cast_nullable_to_non_nullable
@@ -836,10 +785,6 @@ class __$LoggedUserCopyWithImpl<$Res> extends _$LoggedUserCopyWithImpl<$Res>
       active: active == freezed
           ? _value.active
           : active // ignore: cast_nullable_to_non_nullable
-              as bool?,
-      archived: archived == freezed
-          ? _value.archived
-          : archived // ignore: cast_nullable_to_non_nullable
               as bool?,
       city: city == freezed
           ? _value.city
@@ -873,10 +818,6 @@ class __$LoggedUserCopyWithImpl<$Res> extends _$LoggedUserCopyWithImpl<$Res>
           ? _value.gender
           : gender // ignore: cast_nullable_to_non_nullable
               as String?,
-      height: height == freezed
-          ? _value.height
-          : height // ignore: cast_nullable_to_non_nullable
-              as String?,
       isActive: isActive == freezed
           ? _value.isActive
           : isActive // ignore: cast_nullable_to_non_nullable
@@ -909,26 +850,10 @@ class __$LoggedUserCopyWithImpl<$Res> extends _$LoggedUserCopyWithImpl<$Res>
           ? _value.rating
           : rating // ignore: cast_nullable_to_non_nullable
               as String?,
-      pk: pk == freezed
-          ? _value.pk
-          : pk // ignore: cast_nullable_to_non_nullable
-              as int?,
       state: state == freezed
           ? _value.state
           : state // ignore: cast_nullable_to_non_nullable
               as String?,
-      secondaryEmail: secondaryEmail == freezed
-          ? _value.secondaryEmail
-          : secondaryEmail // ignore: cast_nullable_to_non_nullable
-              as String?,
-      userId: userId == freezed
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      verified: verified == freezed
-          ? _value.verified
-          : verified // ignore: cast_nullable_to_non_nullable
-              as bool?,
     ));
   }
 }
@@ -937,9 +862,9 @@ class __$LoggedUserCopyWithImpl<$Res> extends _$LoggedUserCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_LoggedUser implements _LoggedUser {
   const _$_LoggedUser(
-      {required this.aboutMe,
+      {required this.userId,
+      required this.aboutMe,
       required this.active,
-      required this.archived,
       required this.city,
       required this.country,
       required this.dateJoined,
@@ -948,7 +873,6 @@ class _$_LoggedUser implements _LoggedUser {
       required this.dob,
       required this.firstName,
       required this.gender,
-      required this.height,
       required this.isActive,
       required this.id,
       required this.isStaff,
@@ -957,21 +881,17 @@ class _$_LoggedUser implements _LoggedUser {
       required this.phone,
       required this.picture,
       required this.rating,
-      required this.pk,
-      required this.state,
-      required this.secondaryEmail,
-      required this.userId,
-      required this.verified});
+      required this.state});
 
   factory _$_LoggedUser.fromJson(Map<String, dynamic> json) =>
       _$$_LoggedUserFromJson(json);
 
   @override
+  final String? userId;
+  @override
   final String? aboutMe;
   @override
   final bool? active;
-  @override
-  final bool? archived;
   @override
   final String? city;
   @override
@@ -989,8 +909,6 @@ class _$_LoggedUser implements _LoggedUser {
   @override
   final String? gender;
   @override
-  final String? height;
-  @override
   final bool? isActive;
   @override
   final String? id;
@@ -1007,19 +925,11 @@ class _$_LoggedUser implements _LoggedUser {
   @override
   final String? rating;
   @override
-  final int? pk;
-  @override
   final String? state;
-  @override
-  final String? secondaryEmail;
-  @override
-  final String? userId;
-  @override
-  final bool? verified;
 
   @override
   String toString() {
-    return 'LoggedUser(aboutMe: $aboutMe, active: $active, archived: $archived, city: $city, country: $country, dateJoined: $dateJoined, deleted: $deleted, email: $email, dob: $dob, firstName: $firstName, gender: $gender, height: $height, isActive: $isActive, id: $id, isStaff: $isStaff, lastLogin: $lastLogin, lastName: $lastName, phone: $phone, picture: $picture, rating: $rating, pk: $pk, state: $state, secondaryEmail: $secondaryEmail, userId: $userId, verified: $verified)';
+    return 'LoggedUser(userId: $userId, aboutMe: $aboutMe, active: $active, city: $city, country: $country, dateJoined: $dateJoined, deleted: $deleted, email: $email, dob: $dob, firstName: $firstName, gender: $gender, isActive: $isActive, id: $id, isStaff: $isStaff, lastLogin: $lastLogin, lastName: $lastName, phone: $phone, picture: $picture, rating: $rating, state: $state)';
   }
 
   @override
@@ -1027,9 +937,9 @@ class _$_LoggedUser implements _LoggedUser {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _LoggedUser &&
+            const DeepCollectionEquality().equals(other.userId, userId) &&
             const DeepCollectionEquality().equals(other.aboutMe, aboutMe) &&
             const DeepCollectionEquality().equals(other.active, active) &&
-            const DeepCollectionEquality().equals(other.archived, archived) &&
             const DeepCollectionEquality().equals(other.city, city) &&
             const DeepCollectionEquality().equals(other.country, country) &&
             const DeepCollectionEquality()
@@ -1039,7 +949,6 @@ class _$_LoggedUser implements _LoggedUser {
             const DeepCollectionEquality().equals(other.dob, dob) &&
             const DeepCollectionEquality().equals(other.firstName, firstName) &&
             const DeepCollectionEquality().equals(other.gender, gender) &&
-            const DeepCollectionEquality().equals(other.height, height) &&
             const DeepCollectionEquality().equals(other.isActive, isActive) &&
             const DeepCollectionEquality().equals(other.id, id) &&
             const DeepCollectionEquality().equals(other.isStaff, isStaff) &&
@@ -1048,20 +957,15 @@ class _$_LoggedUser implements _LoggedUser {
             const DeepCollectionEquality().equals(other.phone, phone) &&
             const DeepCollectionEquality().equals(other.picture, picture) &&
             const DeepCollectionEquality().equals(other.rating, rating) &&
-            const DeepCollectionEquality().equals(other.pk, pk) &&
-            const DeepCollectionEquality().equals(other.state, state) &&
-            const DeepCollectionEquality()
-                .equals(other.secondaryEmail, secondaryEmail) &&
-            const DeepCollectionEquality().equals(other.userId, userId) &&
-            const DeepCollectionEquality().equals(other.verified, verified));
+            const DeepCollectionEquality().equals(other.state, state));
   }
 
   @override
   int get hashCode => Object.hashAll([
         runtimeType,
+        const DeepCollectionEquality().hash(userId),
         const DeepCollectionEquality().hash(aboutMe),
         const DeepCollectionEquality().hash(active),
-        const DeepCollectionEquality().hash(archived),
         const DeepCollectionEquality().hash(city),
         const DeepCollectionEquality().hash(country),
         const DeepCollectionEquality().hash(dateJoined),
@@ -1070,7 +974,6 @@ class _$_LoggedUser implements _LoggedUser {
         const DeepCollectionEquality().hash(dob),
         const DeepCollectionEquality().hash(firstName),
         const DeepCollectionEquality().hash(gender),
-        const DeepCollectionEquality().hash(height),
         const DeepCollectionEquality().hash(isActive),
         const DeepCollectionEquality().hash(id),
         const DeepCollectionEquality().hash(isStaff),
@@ -1079,11 +982,7 @@ class _$_LoggedUser implements _LoggedUser {
         const DeepCollectionEquality().hash(phone),
         const DeepCollectionEquality().hash(picture),
         const DeepCollectionEquality().hash(rating),
-        const DeepCollectionEquality().hash(pk),
-        const DeepCollectionEquality().hash(state),
-        const DeepCollectionEquality().hash(secondaryEmail),
-        const DeepCollectionEquality().hash(userId),
-        const DeepCollectionEquality().hash(verified)
+        const DeepCollectionEquality().hash(state)
       ]);
 
   @JsonKey(ignore: true)
@@ -1099,9 +998,9 @@ class _$_LoggedUser implements _LoggedUser {
 
 abstract class _LoggedUser implements LoggedUser {
   const factory _LoggedUser(
-      {required String? aboutMe,
+      {required String? userId,
+      required String? aboutMe,
       required bool? active,
-      required bool? archived,
       required String? city,
       required String? country,
       required String? dateJoined,
@@ -1110,7 +1009,6 @@ abstract class _LoggedUser implements LoggedUser {
       required String? dob,
       required String? firstName,
       required String? gender,
-      required String? height,
       required bool? isActive,
       required String? id,
       required bool? isStaff,
@@ -1119,21 +1017,17 @@ abstract class _LoggedUser implements LoggedUser {
       required String? phone,
       required String? picture,
       required String? rating,
-      required int? pk,
-      required String? state,
-      required String? secondaryEmail,
-      required String? userId,
-      required bool? verified}) = _$_LoggedUser;
+      required String? state}) = _$_LoggedUser;
 
   factory _LoggedUser.fromJson(Map<String, dynamic> json) =
       _$_LoggedUser.fromJson;
 
   @override
+  String? get userId;
+  @override
   String? get aboutMe;
   @override
   bool? get active;
-  @override
-  bool? get archived;
   @override
   String? get city;
   @override
@@ -1151,8 +1045,6 @@ abstract class _LoggedUser implements LoggedUser {
   @override
   String? get gender;
   @override
-  String? get height;
-  @override
   bool? get isActive;
   @override
   String? get id;
@@ -1169,15 +1061,7 @@ abstract class _LoggedUser implements LoggedUser {
   @override
   String? get rating;
   @override
-  int? get pk;
-  @override
   String? get state;
-  @override
-  String? get secondaryEmail;
-  @override
-  String? get userId;
-  @override
-  bool? get verified;
   @override
   @JsonKey(ignore: true)
   _$LoggedUserCopyWith<_LoggedUser> get copyWith =>

@@ -119,15 +119,28 @@ String allUsers(Map<String, dynamic>? param, Map<String, dynamic>? paramType) {
   return '''
   query(${param.toString().trim().substring(1, param.toString().trim().length - 1)}) {
   allUsers(${paramType.toString().trim().substring(1, paramType.toString().trim().length - 1)}) {
-      edges {
-        node {
-        rating
+    edges {
+      node {
         userId
-        firstName
-        lastName
+        aboutMe
+        active
         city
-        state
+        country
+        dateJoined
+        deleted
+        email
+        dob
+        firstName
+        gender
+        isActive
+        id
+        isStaff
+        lastLogin
+        lastName
+        phone
         picture
+        rating
+        state
       }
     }
   }
@@ -281,31 +294,26 @@ String tokenAuth(Map<String, dynamic>? param, Map<String, dynamic>? paramType) {
                unarchiving
                errors
                user {
-                 aboutMe
-                 active
-                 archived
-                 city
-                 country
-                 dateJoined
-                 deleted
-                 email
-                 dob
-                 firstName
-                 gender
-                 height
-                 isActive
-                 id
-                 isStaff
-                 lastLogin
-                 lastName
-                 phone
-                 picture
-                 rating
-                 pk
-                 state
-                 secondaryEmail
-                 userId
-                 verified
+                  userId
+                  aboutMe
+                  active
+                  city
+                  country
+                  dateJoined
+                  deleted
+                  email
+                  dob
+                  firstName
+                  gender
+                  isActive
+                  id
+                  isStaff
+                  lastLogin
+                  lastName
+                  phone
+                  picture
+                  rating
+                  state
                }
           }
       }

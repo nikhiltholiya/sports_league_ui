@@ -54,14 +54,13 @@ class _ChallengesChatState extends State<ChallengesChat> {
   Map<String, dynamic> passVariableSendMsg = {};
   late SendMessageData? _sendMessageData;
   late AllMessagingData _allMessagingData;
+  late List<MsgNode>? _chatList;
 
   Map<String, dynamic> paramForMsg = {};
   Map<String, dynamic> paramTypeForMsg = {};
   Map<String, dynamic> variableForMsg = {};
 
   var _streamController = StreamController<List<MsgNode>>();
-
-  late List<MsgNode>? _chatList;
 
   // var scrollPosition;
   // String? userName = '';
@@ -221,6 +220,7 @@ class _ChallengesChatState extends State<ChallengesChat> {
 
             variableForMsg = {'senderReceipientSearch': '${value.getUserId}|${SharedPreferencesUtils.getUserId}'};
 
+
             return Query(
               options: QueryOptions(
                 document: gql(allUsers(param, paramType)),
@@ -245,7 +245,7 @@ class _ChallengesChatState extends State<ChallengesChat> {
                     WidgetsBinding.instance?.addPostFrameCallback(_getTotalHeight);
                   }
                 } catch (e) {
-                  debugPrint('Exception -- $e');
+                  debugPrint('Exception -- allUsers -- $e');
                 }
 
                 return Column(
@@ -393,7 +393,7 @@ class _ChallengesChatState extends State<ChallengesChat> {
                                             scrollToLast();
                                           }
                                         } catch (e) {
-                                          debugPrint('Exception -- $e');
+                                          debugPrint('Exception -- allMessaging -- $e');
                                         }
 
                                         // return SliverToBoxAdapter(

@@ -23,6 +23,7 @@ const String changePassword = 'Change password';
 const String passwordChanged = 'Your Password changed successfully';
 const String verifyEmail = 'Verify your Email';
 const String createProfileTitle = 'Create your Profile';
+const String updateProfileTitle = 'Update your Profile';
 const String uploadProfilePic = 'Upload Profile Pic';
 const String takeOrUploadLine = 'Take or Upload your picture';
 const String chooseAvatar = 'Choose your Avatar';

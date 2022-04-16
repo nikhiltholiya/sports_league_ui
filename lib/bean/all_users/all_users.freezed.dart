@@ -488,53 +488,47 @@ class _$UserNodeTearOff {
   const _$UserNodeTearOff();
 
   _UserNode call(
-      {required String? city,
+      {required String? userId,
+      required String? aboutMe,
       required bool? active,
+      required String? city,
       required String? country,
       required String? dateJoined,
-      required String? dob,
+      required bool? deleted,
       required String? email,
+      required String? dob,
       required String? firstName,
       required String? gender,
-      required int? height,
-      required String? id,
-      required int? age,
       required bool? isActive,
+      required String? id,
       required bool? isStaff,
-      required bool? isSuperuser,
       required String? lastLogin,
       required String? lastName,
-      required int? level,
       required String? phone,
       required String? picture,
       required String? rating,
-      required String? state,
-      required String? userId,
-      required String? aboutMe}) {
+      required String? state}) {
     return _UserNode(
-      city: city,
+      userId: userId,
+      aboutMe: aboutMe,
       active: active,
+      city: city,
       country: country,
       dateJoined: dateJoined,
-      dob: dob,
+      deleted: deleted,
       email: email,
+      dob: dob,
       firstName: firstName,
       gender: gender,
-      height: height,
-      id: id,
-      age: age,
       isActive: isActive,
+      id: id,
       isStaff: isStaff,
-      isSuperuser: isSuperuser,
       lastLogin: lastLogin,
       lastName: lastName,
-      level: level,
       phone: phone,
       picture: picture,
       rating: rating,
       state: state,
-      userId: userId,
-      aboutMe: aboutMe,
     );
   }
 
@@ -548,29 +542,26 @@ const $UserNode = _$UserNodeTearOff();
 
 /// @nodoc
 mixin _$UserNode {
-  String? get city => throw _privateConstructorUsedError;
+  String? get userId => throw _privateConstructorUsedError;
+  String? get aboutMe => throw _privateConstructorUsedError;
   bool? get active => throw _privateConstructorUsedError;
+  String? get city => throw _privateConstructorUsedError;
   String? get country => throw _privateConstructorUsedError;
   String? get dateJoined => throw _privateConstructorUsedError;
-  String? get dob => throw _privateConstructorUsedError;
+  bool? get deleted => throw _privateConstructorUsedError;
   String? get email => throw _privateConstructorUsedError;
+  String? get dob => throw _privateConstructorUsedError;
   String? get firstName => throw _privateConstructorUsedError;
   String? get gender => throw _privateConstructorUsedError;
-  int? get height => throw _privateConstructorUsedError;
-  String? get id => throw _privateConstructorUsedError;
-  int? get age => throw _privateConstructorUsedError;
   bool? get isActive => throw _privateConstructorUsedError;
+  String? get id => throw _privateConstructorUsedError;
   bool? get isStaff => throw _privateConstructorUsedError;
-  bool? get isSuperuser => throw _privateConstructorUsedError;
   String? get lastLogin => throw _privateConstructorUsedError;
   String? get lastName => throw _privateConstructorUsedError;
-  int? get level => throw _privateConstructorUsedError;
   String? get phone => throw _privateConstructorUsedError;
   String? get picture => throw _privateConstructorUsedError;
   String? get rating => throw _privateConstructorUsedError;
   String? get state => throw _privateConstructorUsedError;
-  String? get userId => throw _privateConstructorUsedError;
-  String? get aboutMe => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -583,29 +574,26 @@ abstract class $UserNodeCopyWith<$Res> {
   factory $UserNodeCopyWith(UserNode value, $Res Function(UserNode) then) =
       _$UserNodeCopyWithImpl<$Res>;
   $Res call(
-      {String? city,
+      {String? userId,
+      String? aboutMe,
       bool? active,
+      String? city,
       String? country,
       String? dateJoined,
-      String? dob,
+      bool? deleted,
       String? email,
+      String? dob,
       String? firstName,
       String? gender,
-      int? height,
-      String? id,
-      int? age,
       bool? isActive,
+      String? id,
       bool? isStaff,
-      bool? isSuperuser,
       String? lastLogin,
       String? lastName,
-      int? level,
       String? phone,
       String? picture,
       String? rating,
-      String? state,
-      String? userId,
-      String? aboutMe});
+      String? state});
 }
 
 /// @nodoc
@@ -618,39 +606,44 @@ class _$UserNodeCopyWithImpl<$Res> implements $UserNodeCopyWith<$Res> {
 
   @override
   $Res call({
-    Object? city = freezed,
+    Object? userId = freezed,
+    Object? aboutMe = freezed,
     Object? active = freezed,
+    Object? city = freezed,
     Object? country = freezed,
     Object? dateJoined = freezed,
-    Object? dob = freezed,
+    Object? deleted = freezed,
     Object? email = freezed,
+    Object? dob = freezed,
     Object? firstName = freezed,
     Object? gender = freezed,
-    Object? height = freezed,
-    Object? id = freezed,
-    Object? age = freezed,
     Object? isActive = freezed,
+    Object? id = freezed,
     Object? isStaff = freezed,
-    Object? isSuperuser = freezed,
     Object? lastLogin = freezed,
     Object? lastName = freezed,
-    Object? level = freezed,
     Object? phone = freezed,
     Object? picture = freezed,
     Object? rating = freezed,
     Object? state = freezed,
-    Object? userId = freezed,
-    Object? aboutMe = freezed,
   }) {
     return _then(_value.copyWith(
-      city: city == freezed
-          ? _value.city
-          : city // ignore: cast_nullable_to_non_nullable
+      userId: userId == freezed
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      aboutMe: aboutMe == freezed
+          ? _value.aboutMe
+          : aboutMe // ignore: cast_nullable_to_non_nullable
               as String?,
       active: active == freezed
           ? _value.active
           : active // ignore: cast_nullable_to_non_nullable
               as bool?,
+      city: city == freezed
+          ? _value.city
+          : city // ignore: cast_nullable_to_non_nullable
+              as String?,
       country: country == freezed
           ? _value.country
           : country // ignore: cast_nullable_to_non_nullable
@@ -659,13 +652,17 @@ class _$UserNodeCopyWithImpl<$Res> implements $UserNodeCopyWith<$Res> {
           ? _value.dateJoined
           : dateJoined // ignore: cast_nullable_to_non_nullable
               as String?,
-      dob: dob == freezed
-          ? _value.dob
-          : dob // ignore: cast_nullable_to_non_nullable
-              as String?,
+      deleted: deleted == freezed
+          ? _value.deleted
+          : deleted // ignore: cast_nullable_to_non_nullable
+              as bool?,
       email: email == freezed
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
+              as String?,
+      dob: dob == freezed
+          ? _value.dob
+          : dob // ignore: cast_nullable_to_non_nullable
               as String?,
       firstName: firstName == freezed
           ? _value.firstName
@@ -675,29 +672,17 @@ class _$UserNodeCopyWithImpl<$Res> implements $UserNodeCopyWith<$Res> {
           ? _value.gender
           : gender // ignore: cast_nullable_to_non_nullable
               as String?,
-      height: height == freezed
-          ? _value.height
-          : height // ignore: cast_nullable_to_non_nullable
-              as int?,
-      id: id == freezed
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String?,
-      age: age == freezed
-          ? _value.age
-          : age // ignore: cast_nullable_to_non_nullable
-              as int?,
       isActive: isActive == freezed
           ? _value.isActive
           : isActive // ignore: cast_nullable_to_non_nullable
               as bool?,
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String?,
       isStaff: isStaff == freezed
           ? _value.isStaff
           : isStaff // ignore: cast_nullable_to_non_nullable
-              as bool?,
-      isSuperuser: isSuperuser == freezed
-          ? _value.isSuperuser
-          : isSuperuser // ignore: cast_nullable_to_non_nullable
               as bool?,
       lastLogin: lastLogin == freezed
           ? _value.lastLogin
@@ -707,10 +692,6 @@ class _$UserNodeCopyWithImpl<$Res> implements $UserNodeCopyWith<$Res> {
           ? _value.lastName
           : lastName // ignore: cast_nullable_to_non_nullable
               as String?,
-      level: level == freezed
-          ? _value.level
-          : level // ignore: cast_nullable_to_non_nullable
-              as int?,
       phone: phone == freezed
           ? _value.phone
           : phone // ignore: cast_nullable_to_non_nullable
@@ -727,14 +708,6 @@ class _$UserNodeCopyWithImpl<$Res> implements $UserNodeCopyWith<$Res> {
           ? _value.state
           : state // ignore: cast_nullable_to_non_nullable
               as String?,
-      userId: userId == freezed
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      aboutMe: aboutMe == freezed
-          ? _value.aboutMe
-          : aboutMe // ignore: cast_nullable_to_non_nullable
-              as String?,
     ));
   }
 }
@@ -745,29 +718,26 @@ abstract class _$UserNodeCopyWith<$Res> implements $UserNodeCopyWith<$Res> {
       __$UserNodeCopyWithImpl<$Res>;
   @override
   $Res call(
-      {String? city,
+      {String? userId,
+      String? aboutMe,
       bool? active,
+      String? city,
       String? country,
       String? dateJoined,
-      String? dob,
+      bool? deleted,
       String? email,
+      String? dob,
       String? firstName,
       String? gender,
-      int? height,
-      String? id,
-      int? age,
       bool? isActive,
+      String? id,
       bool? isStaff,
-      bool? isSuperuser,
       String? lastLogin,
       String? lastName,
-      int? level,
       String? phone,
       String? picture,
       String? rating,
-      String? state,
-      String? userId,
-      String? aboutMe});
+      String? state});
 }
 
 /// @nodoc
@@ -781,39 +751,44 @@ class __$UserNodeCopyWithImpl<$Res> extends _$UserNodeCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? city = freezed,
+    Object? userId = freezed,
+    Object? aboutMe = freezed,
     Object? active = freezed,
+    Object? city = freezed,
     Object? country = freezed,
     Object? dateJoined = freezed,
-    Object? dob = freezed,
+    Object? deleted = freezed,
     Object? email = freezed,
+    Object? dob = freezed,
     Object? firstName = freezed,
     Object? gender = freezed,
-    Object? height = freezed,
-    Object? id = freezed,
-    Object? age = freezed,
     Object? isActive = freezed,
+    Object? id = freezed,
     Object? isStaff = freezed,
-    Object? isSuperuser = freezed,
     Object? lastLogin = freezed,
     Object? lastName = freezed,
-    Object? level = freezed,
     Object? phone = freezed,
     Object? picture = freezed,
     Object? rating = freezed,
     Object? state = freezed,
-    Object? userId = freezed,
-    Object? aboutMe = freezed,
   }) {
     return _then(_UserNode(
-      city: city == freezed
-          ? _value.city
-          : city // ignore: cast_nullable_to_non_nullable
+      userId: userId == freezed
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      aboutMe: aboutMe == freezed
+          ? _value.aboutMe
+          : aboutMe // ignore: cast_nullable_to_non_nullable
               as String?,
       active: active == freezed
           ? _value.active
           : active // ignore: cast_nullable_to_non_nullable
               as bool?,
+      city: city == freezed
+          ? _value.city
+          : city // ignore: cast_nullable_to_non_nullable
+              as String?,
       country: country == freezed
           ? _value.country
           : country // ignore: cast_nullable_to_non_nullable
@@ -822,13 +797,17 @@ class __$UserNodeCopyWithImpl<$Res> extends _$UserNodeCopyWithImpl<$Res>
           ? _value.dateJoined
           : dateJoined // ignore: cast_nullable_to_non_nullable
               as String?,
-      dob: dob == freezed
-          ? _value.dob
-          : dob // ignore: cast_nullable_to_non_nullable
-              as String?,
+      deleted: deleted == freezed
+          ? _value.deleted
+          : deleted // ignore: cast_nullable_to_non_nullable
+              as bool?,
       email: email == freezed
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
+              as String?,
+      dob: dob == freezed
+          ? _value.dob
+          : dob // ignore: cast_nullable_to_non_nullable
               as String?,
       firstName: firstName == freezed
           ? _value.firstName
@@ -838,29 +817,17 @@ class __$UserNodeCopyWithImpl<$Res> extends _$UserNodeCopyWithImpl<$Res>
           ? _value.gender
           : gender // ignore: cast_nullable_to_non_nullable
               as String?,
-      height: height == freezed
-          ? _value.height
-          : height // ignore: cast_nullable_to_non_nullable
-              as int?,
-      id: id == freezed
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String?,
-      age: age == freezed
-          ? _value.age
-          : age // ignore: cast_nullable_to_non_nullable
-              as int?,
       isActive: isActive == freezed
           ? _value.isActive
           : isActive // ignore: cast_nullable_to_non_nullable
               as bool?,
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String?,
       isStaff: isStaff == freezed
           ? _value.isStaff
           : isStaff // ignore: cast_nullable_to_non_nullable
-              as bool?,
-      isSuperuser: isSuperuser == freezed
-          ? _value.isSuperuser
-          : isSuperuser // ignore: cast_nullable_to_non_nullable
               as bool?,
       lastLogin: lastLogin == freezed
           ? _value.lastLogin
@@ -870,10 +837,6 @@ class __$UserNodeCopyWithImpl<$Res> extends _$UserNodeCopyWithImpl<$Res>
           ? _value.lastName
           : lastName // ignore: cast_nullable_to_non_nullable
               as String?,
-      level: level == freezed
-          ? _value.level
-          : level // ignore: cast_nullable_to_non_nullable
-              as int?,
       phone: phone == freezed
           ? _value.phone
           : phone // ignore: cast_nullable_to_non_nullable
@@ -890,14 +853,6 @@ class __$UserNodeCopyWithImpl<$Res> extends _$UserNodeCopyWithImpl<$Res>
           ? _value.state
           : state // ignore: cast_nullable_to_non_nullable
               as String?,
-      userId: userId == freezed
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      aboutMe: aboutMe == freezed
-          ? _value.aboutMe
-          : aboutMe // ignore: cast_nullable_to_non_nullable
-              as String?,
     ));
   }
 }
@@ -906,67 +861,62 @@ class __$UserNodeCopyWithImpl<$Res> extends _$UserNodeCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_UserNode implements _UserNode {
   const _$_UserNode(
-      {required this.city,
+      {required this.userId,
+      required this.aboutMe,
       required this.active,
+      required this.city,
       required this.country,
       required this.dateJoined,
-      required this.dob,
+      required this.deleted,
       required this.email,
+      required this.dob,
       required this.firstName,
       required this.gender,
-      required this.height,
-      required this.id,
-      required this.age,
       required this.isActive,
+      required this.id,
       required this.isStaff,
-      required this.isSuperuser,
       required this.lastLogin,
       required this.lastName,
-      required this.level,
       required this.phone,
       required this.picture,
       required this.rating,
-      required this.state,
-      required this.userId,
-      required this.aboutMe});
+      required this.state});
 
   factory _$_UserNode.fromJson(Map<String, dynamic> json) =>
       _$$_UserNodeFromJson(json);
 
   @override
-  final String? city;
+  final String? userId;
+  @override
+  final String? aboutMe;
   @override
   final bool? active;
+  @override
+  final String? city;
   @override
   final String? country;
   @override
   final String? dateJoined;
   @override
-  final String? dob;
+  final bool? deleted;
   @override
   final String? email;
+  @override
+  final String? dob;
   @override
   final String? firstName;
   @override
   final String? gender;
   @override
-  final int? height;
+  final bool? isActive;
   @override
   final String? id;
   @override
-  final int? age;
-  @override
-  final bool? isActive;
-  @override
   final bool? isStaff;
-  @override
-  final bool? isSuperuser;
   @override
   final String? lastLogin;
   @override
   final String? lastName;
-  @override
-  final int? level;
   @override
   final String? phone;
   @override
@@ -975,14 +925,10 @@ class _$_UserNode implements _UserNode {
   final String? rating;
   @override
   final String? state;
-  @override
-  final String? userId;
-  @override
-  final String? aboutMe;
 
   @override
   String toString() {
-    return 'UserNode(city: $city, active: $active, country: $country, dateJoined: $dateJoined, dob: $dob, email: $email, firstName: $firstName, gender: $gender, height: $height, id: $id, age: $age, isActive: $isActive, isStaff: $isStaff, isSuperuser: $isSuperuser, lastLogin: $lastLogin, lastName: $lastName, level: $level, phone: $phone, picture: $picture, rating: $rating, state: $state, userId: $userId, aboutMe: $aboutMe)';
+    return 'UserNode(userId: $userId, aboutMe: $aboutMe, active: $active, city: $city, country: $country, dateJoined: $dateJoined, deleted: $deleted, email: $email, dob: $dob, firstName: $firstName, gender: $gender, isActive: $isActive, id: $id, isStaff: $isStaff, lastLogin: $lastLogin, lastName: $lastName, phone: $phone, picture: $picture, rating: $rating, state: $state)';
   }
 
   @override
@@ -990,59 +936,52 @@ class _$_UserNode implements _UserNode {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _UserNode &&
-            const DeepCollectionEquality().equals(other.city, city) &&
+            const DeepCollectionEquality().equals(other.userId, userId) &&
+            const DeepCollectionEquality().equals(other.aboutMe, aboutMe) &&
             const DeepCollectionEquality().equals(other.active, active) &&
+            const DeepCollectionEquality().equals(other.city, city) &&
             const DeepCollectionEquality().equals(other.country, country) &&
             const DeepCollectionEquality()
                 .equals(other.dateJoined, dateJoined) &&
-            const DeepCollectionEquality().equals(other.dob, dob) &&
+            const DeepCollectionEquality().equals(other.deleted, deleted) &&
             const DeepCollectionEquality().equals(other.email, email) &&
+            const DeepCollectionEquality().equals(other.dob, dob) &&
             const DeepCollectionEquality().equals(other.firstName, firstName) &&
             const DeepCollectionEquality().equals(other.gender, gender) &&
-            const DeepCollectionEquality().equals(other.height, height) &&
-            const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality().equals(other.age, age) &&
             const DeepCollectionEquality().equals(other.isActive, isActive) &&
+            const DeepCollectionEquality().equals(other.id, id) &&
             const DeepCollectionEquality().equals(other.isStaff, isStaff) &&
-            const DeepCollectionEquality()
-                .equals(other.isSuperuser, isSuperuser) &&
             const DeepCollectionEquality().equals(other.lastLogin, lastLogin) &&
             const DeepCollectionEquality().equals(other.lastName, lastName) &&
-            const DeepCollectionEquality().equals(other.level, level) &&
             const DeepCollectionEquality().equals(other.phone, phone) &&
             const DeepCollectionEquality().equals(other.picture, picture) &&
             const DeepCollectionEquality().equals(other.rating, rating) &&
-            const DeepCollectionEquality().equals(other.state, state) &&
-            const DeepCollectionEquality().equals(other.userId, userId) &&
-            const DeepCollectionEquality().equals(other.aboutMe, aboutMe));
+            const DeepCollectionEquality().equals(other.state, state));
   }
 
   @override
   int get hashCode => Object.hashAll([
         runtimeType,
-        const DeepCollectionEquality().hash(city),
+        const DeepCollectionEquality().hash(userId),
+        const DeepCollectionEquality().hash(aboutMe),
         const DeepCollectionEquality().hash(active),
+        const DeepCollectionEquality().hash(city),
         const DeepCollectionEquality().hash(country),
         const DeepCollectionEquality().hash(dateJoined),
-        const DeepCollectionEquality().hash(dob),
+        const DeepCollectionEquality().hash(deleted),
         const DeepCollectionEquality().hash(email),
+        const DeepCollectionEquality().hash(dob),
         const DeepCollectionEquality().hash(firstName),
         const DeepCollectionEquality().hash(gender),
-        const DeepCollectionEquality().hash(height),
-        const DeepCollectionEquality().hash(id),
-        const DeepCollectionEquality().hash(age),
         const DeepCollectionEquality().hash(isActive),
+        const DeepCollectionEquality().hash(id),
         const DeepCollectionEquality().hash(isStaff),
-        const DeepCollectionEquality().hash(isSuperuser),
         const DeepCollectionEquality().hash(lastLogin),
         const DeepCollectionEquality().hash(lastName),
-        const DeepCollectionEquality().hash(level),
         const DeepCollectionEquality().hash(phone),
         const DeepCollectionEquality().hash(picture),
         const DeepCollectionEquality().hash(rating),
-        const DeepCollectionEquality().hash(state),
-        const DeepCollectionEquality().hash(userId),
-        const DeepCollectionEquality().hash(aboutMe)
+        const DeepCollectionEquality().hash(state)
       ]);
 
   @JsonKey(ignore: true)
@@ -1058,66 +997,61 @@ class _$_UserNode implements _UserNode {
 
 abstract class _UserNode implements UserNode {
   const factory _UserNode(
-      {required String? city,
+      {required String? userId,
+      required String? aboutMe,
       required bool? active,
+      required String? city,
       required String? country,
       required String? dateJoined,
-      required String? dob,
+      required bool? deleted,
       required String? email,
+      required String? dob,
       required String? firstName,
       required String? gender,
-      required int? height,
-      required String? id,
-      required int? age,
       required bool? isActive,
+      required String? id,
       required bool? isStaff,
-      required bool? isSuperuser,
       required String? lastLogin,
       required String? lastName,
-      required int? level,
       required String? phone,
       required String? picture,
       required String? rating,
-      required String? state,
-      required String? userId,
-      required String? aboutMe}) = _$_UserNode;
+      required String? state}) = _$_UserNode;
 
   factory _UserNode.fromJson(Map<String, dynamic> json) = _$_UserNode.fromJson;
 
   @override
-  String? get city;
+  String? get userId;
+  @override
+  String? get aboutMe;
   @override
   bool? get active;
+  @override
+  String? get city;
   @override
   String? get country;
   @override
   String? get dateJoined;
   @override
-  String? get dob;
+  bool? get deleted;
   @override
   String? get email;
+  @override
+  String? get dob;
   @override
   String? get firstName;
   @override
   String? get gender;
   @override
-  int? get height;
+  bool? get isActive;
   @override
   String? get id;
   @override
-  int? get age;
-  @override
-  bool? get isActive;
-  @override
   bool? get isStaff;
-  @override
-  bool? get isSuperuser;
   @override
   String? get lastLogin;
   @override
   String? get lastName;
-  @override
-  int? get level;
   @override
   String? get phone;
   @override
@@ -1126,10 +1060,6 @@ abstract class _UserNode implements UserNode {
   String? get rating;
   @override
   String? get state;
-  @override
-  String? get userId;
-  @override
-  String? get aboutMe;
   @override
   @JsonKey(ignore: true)
   _$UserNodeCopyWith<_UserNode> get copyWith =>

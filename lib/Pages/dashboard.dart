@@ -135,7 +135,7 @@ class _DashboardPageState extends State<DashboardPage> {
           pollInterval: Duration(seconds: 100),
         ),
         builder: (result, {fetchMore, refetch}) {
-          print(passVariable);
+          // print(passVariable);
           if (result.hasException) {
             return Text(result.exception.toString());
           }
@@ -149,6 +149,8 @@ class _DashboardPageState extends State<DashboardPage> {
 
           SharedPreferencesUtils.setUserData(
               jsonEncode(AllUsersData.fromJson(result.data!).allUsers?.edges?.first.node));
+
+
 
           // print('USER DATA ${SharedPreferencesUtils.getUserData}');
           return Column(
@@ -211,7 +213,6 @@ class _DashboardPageState extends State<DashboardPage> {
                   // _simpleAlert(context, error.toString()),
                   onCompleted: (dynamic resultData) async {
                     // Text('Thanks for your star!');
-
                     debugPrint('${DashboardPage.path} * Result -- $resultData');
 
                     if (resultData != null) {

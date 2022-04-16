@@ -4,12 +4,11 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:provider/provider.dart';
-import '../Pages/contact_us_page.dart';
-import '../Pages/password_change_page.dart';
-import '../Pages/password_reset_page.dart';
+import '../Pages/edit_profile_page.dart';
 
 import '../Pages/all_messaging_list_page.dart';
 import '../Pages/challenges_chat.dart';
+import '../Pages/contact_us_page.dart';
 import '../Pages/create_profile_page.dart';
 import '../Pages/create_profile_picture_page.dart';
 import '../Pages/dashboard.dart';
@@ -18,6 +17,8 @@ import '../Pages/head_to_head_page.dart';
 import '../Pages/home_page.dart';
 import '../Pages/league_details.dart';
 import '../Pages/my_league_list.dart';
+import '../Pages/password_change_page.dart';
+import '../Pages/password_reset_page.dart';
 import '../Pages/profile_page.dart';
 import '../Pages/recent_matches_pages.dart';
 import '../Pages/sign_in_page.dart';
@@ -35,7 +36,6 @@ import '../utils/shared_preferences_utils.dart';
 final graphqlEndpoint = 'http://52.144.47.85:8000/graphql/';
 // final graphqlEndpoint = 'https://api.github.com/graphql'; //Test purpose
 final subscriptionEndpoint = null;
-
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -58,15 +58,13 @@ class MyApp extends StatelessWidget {
         //     : '',
 
         getToken: () async =>
-        // 'Bearer <YOUR GIT TOKEN>' //Test purpose
+            // 'Bearer <YOUR GIT TOKEN>' //Test purpose
             SharedPreferencesUtils.getToken != null ? '''JWT ${SharedPreferencesUtils.getToken}''' : '',
       ),
       child: AppBody(),
     );
   }
 }
-
-
 
 /*OLD*/
 //
@@ -134,7 +132,7 @@ class AppBody extends StatelessWidget {
 
         //20220223
         // initialRoute: LeagueDetails.path,
-        initialRoute: DashboardPage.path,
+        initialRoute: HomePage.path,
         onGenerateRoute: (settings) {
           if (settings.name == HomePage.path) {
             return CupertinoPageRoute(builder: (context) => HomePage(), settings: settings);
@@ -162,6 +160,8 @@ class AppBody extends StatelessWidget {
             return CupertinoPageRoute(builder: (context) => ChallengesChat(), settings: settings);
           } else if (settings.name == ProfilePage.path) {
             return CupertinoPageRoute(builder: (context) => ProfilePage(), settings: settings);
+          } else if (settings.name == EditProfilePage.path) {
+            return CupertinoPageRoute(builder: (context) => EditProfilePage(), settings: settings);
           } else if (settings.name == AllMessagesListPage.path) {
             return CupertinoPageRoute(builder: (context) => AllMessagesListPage(), settings: settings);
           } else if (settings.name == HeadToHeadDetails.path) {

@@ -43,9 +43,9 @@ Map<String, dynamic> _$$_TokenAuthToJson(_$_TokenAuth instance) =>
 
 _$_LoggedUser _$$_LoggedUserFromJson(Map<String, dynamic> json) =>
     _$_LoggedUser(
+      userId: json['userId'] as String?,
       aboutMe: json['aboutMe'] as String?,
       active: json['active'] as bool?,
-      archived: json['archived'] as bool?,
       city: json['city'] as String?,
       country: json['country'] as String?,
       dateJoined: json['dateJoined'] as String?,
@@ -54,7 +54,6 @@ _$_LoggedUser _$$_LoggedUserFromJson(Map<String, dynamic> json) =>
       dob: json['dob'] as String?,
       firstName: json['firstName'] as String?,
       gender: json['gender'] as String?,
-      height: json['height'] as String?,
       isActive: json['isActive'] as bool?,
       id: json['id'] as String?,
       isStaff: json['isStaff'] as bool?,
@@ -63,18 +62,14 @@ _$_LoggedUser _$$_LoggedUserFromJson(Map<String, dynamic> json) =>
       phone: json['phone'] as String?,
       picture: json['picture'] as String?,
       rating: json['rating'] as String?,
-      pk: json['pk'] as int?,
       state: json['state'] as String?,
-      secondaryEmail: json['secondaryEmail'] as String?,
-      userId: json['userId'] as String?,
-      verified: json['verified'] as bool?,
     );
 
 Map<String, dynamic> _$$_LoggedUserToJson(_$_LoggedUser instance) =>
     <String, dynamic>{
+      'userId': instance.userId,
       'aboutMe': instance.aboutMe,
       'active': instance.active,
-      'archived': instance.archived,
       'city': instance.city,
       'country': instance.country,
       'dateJoined': instance.dateJoined,
@@ -83,7 +78,6 @@ Map<String, dynamic> _$$_LoggedUserToJson(_$_LoggedUser instance) =>
       'dob': instance.dob,
       'firstName': instance.firstName,
       'gender': instance.gender,
-      'height': instance.height,
       'isActive': instance.isActive,
       'id': instance.id,
       'isStaff': instance.isStaff,
@@ -92,11 +86,7 @@ Map<String, dynamic> _$$_LoggedUserToJson(_$_LoggedUser instance) =>
       'phone': instance.phone,
       'picture': instance.picture,
       'rating': instance.rating,
-      'pk': instance.pk,
       'state': instance.state,
-      'secondaryEmail': instance.secondaryEmail,
-      'userId': instance.userId,
-      'verified': instance.verified,
     };
 
 _$_TokenError _$$_TokenErrorFromJson(Map<String, dynamic> json) =>

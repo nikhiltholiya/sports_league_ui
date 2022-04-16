@@ -35,29 +35,27 @@ class UserEdges with _$UserEdges {
 @Freezed()
 class UserNode with _$UserNode {
   const factory UserNode({
-    required String? city,
+    required String? userId,
+    required String? aboutMe,
     required bool? active,
+    required String? city,
     required String? country,
     required String? dateJoined,
-    required String? dob,
+    required bool? deleted,
     required String? email,
+    required String? dob,
     required String? firstName,
     required String? gender,
-    required int? height,
-    required String? id,
-    required int? age,
     required bool? isActive,
+    required String? id,
     required bool? isStaff,
-    required bool? isSuperuser,
     required String? lastLogin,
     required String? lastName,
-    required int? level,
     required String? phone,
     required String? picture,
     required String? rating,
     required String? state,
-    required String? userId,
-    required String? aboutMe,
+
   }) = _UserNode;
 
   factory UserNode.fromJson(Map<String, dynamic> UserNodeMap) =>
