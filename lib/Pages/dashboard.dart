@@ -5,20 +5,20 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:provider/provider.dart';
-import '../Pages/home_page.dart';
-import '../components/dashboard_drawer_list_tile.dart';
 
 import '../Pages/all_messaging_list_page.dart';
 import '../Pages/base_activity.dart';
 import '../Pages/contact_us_page.dart';
+import '../Pages/home_page.dart';
 import '../Pages/my_league_list.dart';
 import '../Pages/password_change_page.dart';
 import '../Pages/profile_page.dart';
 import '../Pages/submit_score_list.dart';
 import '../bean/all_users/all_users.dart';
-import '../components/bordered_circle_avatar.dart';
+import '../components/dashboard_drawer_list_tile.dart';
 import '../components/dashboard_grid_item.dart';
 import '../components/decorated_app_header_tile.dart';
+import '../components/profile_pic_avatar.dart';
 import '../providers/league_id_provider.dart';
 import '../providers/user_id_provider.dart';
 import '../utils/Constants.dart';
@@ -150,8 +150,6 @@ class _DashboardPageState extends State<DashboardPage> {
           SharedPreferencesUtils.setUserData(
               jsonEncode(AllUsersData.fromJson(result.data!).allUsers?.edges?.first.node));
 
-
-
           // print('USER DATA ${SharedPreferencesUtils.getUserData}');
           return Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -162,6 +160,7 @@ class _DashboardPageState extends State<DashboardPage> {
                 onMenuClick: () {
                   _scKey.currentState?.openDrawer();
                 },
+                userImage: AllUsersData.fromJson(result.data!).allUsers?.edges?.first.node?.picture,
 
                 // onMenuClick: (){
                 //   scKey.currentState?.openEndDrawer();
@@ -260,29 +259,29 @@ class _DashboardPageState extends State<DashboardPage> {
         itemBuilder: (context, index) {
           return index == 0
               ? Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Image.asset('assets/tennis_toon_logo.png', height: 40, alignment: Alignment.centerLeft),
-                )
+            padding: const EdgeInsets.all(20.0),
+            child: Image.asset('assets/tennis_toon_logo.png', height: 40, alignment: Alignment.centerLeft),
+          )
               : DashboardDrawerListTile(
-                  onMenuClick: () {
-                    switch (index) {
-                      case 1:
-                        Navigator.popAndPushNamed(context, ContactUsPage.path);
-                        break;
-                      case 2:
-                        Navigator.pop(context);
-                        break;
-                      case 3:
-                        Map<String, dynamic> passVars = {'refreshToken': '${SharedPreferencesUtils.getRefreshToken}'};
+            onMenuClick: () {
+              switch (index) {
+                case 1:
+                  Navigator.popAndPushNamed(context, ContactUsPage.path);
+                  break;
+                case 2:
+                  Navigator.pop(context);
+                  break;
+                case 3:
+                  Map<String, dynamic> passVars = {'refreshToken': '${SharedPreferencesUtils.getRefreshToken}'};
 
-                        print('revoke -$paramRevoke :: $paramTypeRevoke :: $passVars');
-                        _revokeToken.currentState?.runMutation(passVars);
-                        break;
-                    }
-                  },
-                  menuIcon: slidingDrawerItems[index].values.first,
-                  menuName: slidingDrawerItems[index].keys.first,
-                );
+                  print('revoke -$paramRevoke :: $paramTypeRevoke :: $passVars');
+                  _revokeToken.currentState?.runMutation(passVars);
+                  break;
+              }
+            },
+            menuIcon: slidingDrawerItems[index].values.first,
+            menuName: slidingDrawerItems[index].keys.first,
+          );
         },
         itemCount: slidingDrawerItems.length,
         shrinkWrap: true,
@@ -321,26 +320,26 @@ class dashboardHeader extends StatelessWidget {
           left: 20,
           child: RichText(
               text: TextSpan(children: <TextSpan>[
-            TextSpan(
-              text: "Hello,\n",
-              style: GoogleFonts.poppins(
-                fontSize: 14,
-                color: aWhite,
-              ),
-            ),
-           TextSpan(
-              text: name,
-              style: GoogleFonts.poppins(
-                fontSize: 26,
-                color: aWhite,
-              ),
-            ),
-          ])),
+                TextSpan(
+                  text: "Hello,\n",
+                  style: GoogleFonts.poppins(
+                    fontSize: 14,
+                    color: aWhite,
+                  ),
+                ),
+                TextSpan(
+                  text: name,
+                  style: GoogleFonts.poppins(
+                    fontSize: 26,
+                    color: aWhite,
+                  ),
+                ),
+              ])),
         ),
         Positioned(
           top: 50,
           right: 20,
-          child: BorderedCircleAvatar(radius: 40, path: 'assets/Ellipse 5.png'),
+          child: ProfilePicAvatar(radius: 40, path: userImage),
         )
       ],
     );

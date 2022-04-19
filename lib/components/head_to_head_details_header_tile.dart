@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../components/bordered_circle_avatar.dart';
+import '../components/profile_pic_avatar.dart';
 import '../components/decorated_app_header_tile.dart';
 import '../components/rate_badges.dart';
 import '../utils/app_colors.dart';
@@ -25,12 +25,12 @@ class HeadToHeadDetailsHeaderTile extends StatefulWidget {
   const HeadToHeadDetailsHeaderTile(
       {Key? key,
       this.player1Name,
-      this.player1Img = 'assets/Ellipse 1.png',
+      this.player1Img,
       this.player1Score,
       this.player1win,
       this.player1Loss,
       this.player2Name,
-      this.player2Img = 'assets/Ellipse 2.png',
+      this.player2Img,
       this.player2Score,
       this.player2win,
       this.player2Loss,
@@ -72,9 +72,7 @@ class _HeadToHeadDetailsHeaderTileState extends State<HeadToHeadDetailsHeaderTil
                         child: HeadUsers(
                             key: widget.usersKey,
                             userName: widget.player1Name ?? '',
-                            // Novak J.
                             imgUrl: widget.player1Img ?? '',
-                            //'assets/Ellipse 1.png',
                             userRate: widget.player1Score ?? '' //'4.5',
                             ),
                       ),
@@ -128,9 +126,7 @@ class _HeadToHeadDetailsHeaderTileState extends State<HeadToHeadDetailsHeaderTil
                         flex: 2,
                         child: HeadUsers(
                             userName: widget.player2Name ?? '',
-                            //'Kalpesh t.',
                             imgUrl: widget.player2Img ?? '',
-                            //'assets/Ellipse 5.png',
                             userRate: widget.player2Score ?? '' //'4.5',
                             ),
                       ),
@@ -205,7 +201,7 @@ class _HeadUsersState extends State<HeadUsers> {
       children: [
         Padding(
           padding: const EdgeInsets.all(5.0),
-          child: BorderedCircleAvatar(radius: 31, path: widget.imgUrl!),
+          child: ProfilePicAvatar(radius: 31, path: widget.imgUrl!),
         ),
         Padding(
           padding: const EdgeInsets.only(top: 3.0, bottom: 8.0),

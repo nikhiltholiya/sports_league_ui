@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../components/bordered_circle_avatar.dart';
+import '../components/profile_pic_avatar.dart';
 import '../components/rate_badges.dart';
 import '../utils/app_colors.dart';
 
@@ -94,7 +94,7 @@ class _HeadToHeadListTileState extends State<HeadToHeadListTile> {
                   Expanded(
                     child: GestureDetector(
                       onTap: () => widget.onProfileClick!(),
-                      child: BorderedCircleAvatar(
+                      child: ProfilePicAvatar(
                         radius: 25,
                         path: widget.profileImg!,
                       ),

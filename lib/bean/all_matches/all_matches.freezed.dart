@@ -505,8 +505,8 @@ class _$MatchesNodeTearOff {
       required AllMatches? matchSet,
       required int? playerOneScore,
       required int? playerTwoScore,
-      required PlayerOne? playerOne,
-      required PlayerOne? playerTwo}) {
+      required UserNode? playerOne,
+      required UserNode? playerTwo}) {
     return _MatchesNode(
       id: id,
       matchId: matchId,
@@ -533,8 +533,8 @@ mixin _$MatchesNode {
   AllMatches? get matchSet => throw _privateConstructorUsedError;
   int? get playerOneScore => throw _privateConstructorUsedError;
   int? get playerTwoScore => throw _privateConstructorUsedError;
-  PlayerOne? get playerOne => throw _privateConstructorUsedError;
-  PlayerOne? get playerTwo => throw _privateConstructorUsedError;
+  UserNode? get playerOne => throw _privateConstructorUsedError;
+  UserNode? get playerTwo => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -553,12 +553,12 @@ abstract class $MatchesNodeCopyWith<$Res> {
       AllMatches? matchSet,
       int? playerOneScore,
       int? playerTwoScore,
-      PlayerOne? playerOne,
-      PlayerOne? playerTwo});
+      UserNode? playerOne,
+      UserNode? playerTwo});
 
   $AllMatchesCopyWith<$Res>? get matchSet;
-  $PlayerOneCopyWith<$Res>? get playerOne;
-  $PlayerOneCopyWith<$Res>? get playerTwo;
+  $UserNodeCopyWith<$Res>? get playerOne;
+  $UserNodeCopyWith<$Res>? get playerTwo;
 }
 
 /// @nodoc
@@ -603,11 +603,11 @@ class _$MatchesNodeCopyWithImpl<$Res> implements $MatchesNodeCopyWith<$Res> {
       playerOne: playerOne == freezed
           ? _value.playerOne
           : playerOne // ignore: cast_nullable_to_non_nullable
-              as PlayerOne?,
+              as UserNode?,
       playerTwo: playerTwo == freezed
           ? _value.playerTwo
           : playerTwo // ignore: cast_nullable_to_non_nullable
-              as PlayerOne?,
+              as UserNode?,
     ));
   }
 
@@ -623,23 +623,23 @@ class _$MatchesNodeCopyWithImpl<$Res> implements $MatchesNodeCopyWith<$Res> {
   }
 
   @override
-  $PlayerOneCopyWith<$Res>? get playerOne {
+  $UserNodeCopyWith<$Res>? get playerOne {
     if (_value.playerOne == null) {
       return null;
     }
 
-    return $PlayerOneCopyWith<$Res>(_value.playerOne!, (value) {
+    return $UserNodeCopyWith<$Res>(_value.playerOne!, (value) {
       return _then(_value.copyWith(playerOne: value));
     });
   }
 
   @override
-  $PlayerOneCopyWith<$Res>? get playerTwo {
+  $UserNodeCopyWith<$Res>? get playerTwo {
     if (_value.playerTwo == null) {
       return null;
     }
 
-    return $PlayerOneCopyWith<$Res>(_value.playerTwo!, (value) {
+    return $UserNodeCopyWith<$Res>(_value.playerTwo!, (value) {
       return _then(_value.copyWith(playerTwo: value));
     });
   }
@@ -658,15 +658,15 @@ abstract class _$MatchesNodeCopyWith<$Res>
       AllMatches? matchSet,
       int? playerOneScore,
       int? playerTwoScore,
-      PlayerOne? playerOne,
-      PlayerOne? playerTwo});
+      UserNode? playerOne,
+      UserNode? playerTwo});
 
   @override
   $AllMatchesCopyWith<$Res>? get matchSet;
   @override
-  $PlayerOneCopyWith<$Res>? get playerOne;
+  $UserNodeCopyWith<$Res>? get playerOne;
   @override
-  $PlayerOneCopyWith<$Res>? get playerTwo;
+  $UserNodeCopyWith<$Res>? get playerTwo;
 }
 
 /// @nodoc
@@ -713,11 +713,11 @@ class __$MatchesNodeCopyWithImpl<$Res> extends _$MatchesNodeCopyWithImpl<$Res>
       playerOne: playerOne == freezed
           ? _value.playerOne
           : playerOne // ignore: cast_nullable_to_non_nullable
-              as PlayerOne?,
+              as UserNode?,
       playerTwo: playerTwo == freezed
           ? _value.playerTwo
           : playerTwo // ignore: cast_nullable_to_non_nullable
-              as PlayerOne?,
+              as UserNode?,
     ));
   }
 }
@@ -748,9 +748,9 @@ class _$_MatchesNode implements _MatchesNode {
   @override
   final int? playerTwoScore;
   @override
-  final PlayerOne? playerOne;
+  final UserNode? playerOne;
   @override
-  final PlayerOne? playerTwo;
+  final UserNode? playerTwo;
 
   @override
   String toString() {
@@ -802,8 +802,8 @@ abstract class _MatchesNode implements MatchesNode {
       required AllMatches? matchSet,
       required int? playerOneScore,
       required int? playerTwoScore,
-      required PlayerOne? playerOne,
-      required PlayerOne? playerTwo}) = _$_MatchesNode;
+      required UserNode? playerOne,
+      required UserNode? playerTwo}) = _$_MatchesNode;
 
   factory _MatchesNode.fromJson(Map<String, dynamic> json) =
       _$_MatchesNode.fromJson;
@@ -819,199 +819,11 @@ abstract class _MatchesNode implements MatchesNode {
   @override
   int? get playerTwoScore;
   @override
-  PlayerOne? get playerOne;
+  UserNode? get playerOne;
   @override
-  PlayerOne? get playerTwo;
+  UserNode? get playerTwo;
   @override
   @JsonKey(ignore: true)
   _$MatchesNodeCopyWith<_MatchesNode> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-PlayerOne _$PlayerOneFromJson(Map<String, dynamic> json) {
-  return _PlayerOne.fromJson(json);
-}
-
-/// @nodoc
-class _$PlayerOneTearOff {
-  const _$PlayerOneTearOff();
-
-  _PlayerOne call(
-      {required String? firstName,
-      required String? userId,
-      required String? lastName}) {
-    return _PlayerOne(
-      firstName: firstName,
-      userId: userId,
-      lastName: lastName,
-    );
-  }
-
-  PlayerOne fromJson(Map<String, Object?> json) {
-    return PlayerOne.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $PlayerOne = _$PlayerOneTearOff();
-
-/// @nodoc
-mixin _$PlayerOne {
-  String? get firstName => throw _privateConstructorUsedError;
-  String? get userId => throw _privateConstructorUsedError;
-  String? get lastName => throw _privateConstructorUsedError;
-
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
-  $PlayerOneCopyWith<PlayerOne> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $PlayerOneCopyWith<$Res> {
-  factory $PlayerOneCopyWith(PlayerOne value, $Res Function(PlayerOne) then) =
-      _$PlayerOneCopyWithImpl<$Res>;
-  $Res call({String? firstName, String? userId, String? lastName});
-}
-
-/// @nodoc
-class _$PlayerOneCopyWithImpl<$Res> implements $PlayerOneCopyWith<$Res> {
-  _$PlayerOneCopyWithImpl(this._value, this._then);
-
-  final PlayerOne _value;
-  // ignore: unused_field
-  final $Res Function(PlayerOne) _then;
-
-  @override
-  $Res call({
-    Object? firstName = freezed,
-    Object? userId = freezed,
-    Object? lastName = freezed,
-  }) {
-    return _then(_value.copyWith(
-      firstName: firstName == freezed
-          ? _value.firstName
-          : firstName // ignore: cast_nullable_to_non_nullable
-              as String?,
-      userId: userId == freezed
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      lastName: lastName == freezed
-          ? _value.lastName
-          : lastName // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ));
-  }
-}
-
-/// @nodoc
-abstract class _$PlayerOneCopyWith<$Res> implements $PlayerOneCopyWith<$Res> {
-  factory _$PlayerOneCopyWith(
-          _PlayerOne value, $Res Function(_PlayerOne) then) =
-      __$PlayerOneCopyWithImpl<$Res>;
-  @override
-  $Res call({String? firstName, String? userId, String? lastName});
-}
-
-/// @nodoc
-class __$PlayerOneCopyWithImpl<$Res> extends _$PlayerOneCopyWithImpl<$Res>
-    implements _$PlayerOneCopyWith<$Res> {
-  __$PlayerOneCopyWithImpl(_PlayerOne _value, $Res Function(_PlayerOne) _then)
-      : super(_value, (v) => _then(v as _PlayerOne));
-
-  @override
-  _PlayerOne get _value => super._value as _PlayerOne;
-
-  @override
-  $Res call({
-    Object? firstName = freezed,
-    Object? userId = freezed,
-    Object? lastName = freezed,
-  }) {
-    return _then(_PlayerOne(
-      firstName: firstName == freezed
-          ? _value.firstName
-          : firstName // ignore: cast_nullable_to_non_nullable
-              as String?,
-      userId: userId == freezed
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      lastName: lastName == freezed
-          ? _value.lastName
-          : lastName // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ));
-  }
-}
-
-/// @nodoc
-@JsonSerializable()
-class _$_PlayerOne implements _PlayerOne {
-  const _$_PlayerOne(
-      {required this.firstName, required this.userId, required this.lastName});
-
-  factory _$_PlayerOne.fromJson(Map<String, dynamic> json) =>
-      _$$_PlayerOneFromJson(json);
-
-  @override
-  final String? firstName;
-  @override
-  final String? userId;
-  @override
-  final String? lastName;
-
-  @override
-  String toString() {
-    return 'PlayerOne(firstName: $firstName, userId: $userId, lastName: $lastName)';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _PlayerOne &&
-            const DeepCollectionEquality().equals(other.firstName, firstName) &&
-            const DeepCollectionEquality().equals(other.userId, userId) &&
-            const DeepCollectionEquality().equals(other.lastName, lastName));
-  }
-
-  @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(firstName),
-      const DeepCollectionEquality().hash(userId),
-      const DeepCollectionEquality().hash(lastName));
-
-  @JsonKey(ignore: true)
-  @override
-  _$PlayerOneCopyWith<_PlayerOne> get copyWith =>
-      __$PlayerOneCopyWithImpl<_PlayerOne>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$_PlayerOneToJson(this);
-  }
-}
-
-abstract class _PlayerOne implements PlayerOne {
-  const factory _PlayerOne(
-      {required String? firstName,
-      required String? userId,
-      required String? lastName}) = _$_PlayerOne;
-
-  factory _PlayerOne.fromJson(Map<String, dynamic> json) =
-      _$_PlayerOne.fromJson;
-
-  @override
-  String? get firstName;
-  @override
-  String? get userId;
-  @override
-  String? get lastName;
-  @override
-  @JsonKey(ignore: true)
-  _$PlayerOneCopyWith<_PlayerOne> get copyWith =>
       throw _privateConstructorUsedError;
 }

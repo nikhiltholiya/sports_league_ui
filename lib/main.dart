@@ -78,7 +78,7 @@ class MyApp extends StatelessWidget {
 //     getToken: () async => '',
 //   );
 //   final Link link = authLink.concat(httpLink);
-//
+
 //   ValueNotifier<GraphQLClient> client = ValueNotifier(
 //     GraphQLClient(link: link, cache: GraphQLCache()),
 //   );
@@ -100,9 +100,6 @@ class AppBody extends StatelessWidget {
         ),
         ChangeNotifierProvider<LeagueIdProvider>(
           create: (context) => LeagueIdProvider(),
-        ),
-        ChangeNotifierProvider<ProfilePicProvider>(
-          create: (context) => ProfilePicProvider(),
         ),
       ],
       child: MaterialApp(

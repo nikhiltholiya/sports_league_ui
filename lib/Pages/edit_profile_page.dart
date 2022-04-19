@@ -1,29 +1,36 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:http/http.dart' as http;
+import 'package:http_parser/http_parser.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:provider/provider.dart';
 
 import '../Pages/base_activity.dart';
-import '../Pages/dashboard.dart';
 import '../bean/create_profile/create_profile_data.dart';
 import '../bean/token_auth/token_auth.dart';
 import '../components/app_dialog.dart';
 import '../components/drop_down_view.dart';
 import '../components/edit_text_form_field.dart';
 import '../components/elevated_buttons.dart';
-import '../providers/profile_pic_provider.dart';
 import '../utils/Constants.dart';
 import '../utils/app_colors.dart';
 import '../utils/app_labels.dart';
 import '../utils/common.dart';
 import '../utils/shared_preferences_utils.dart';
+
+enum imgState {
+  free,
+  picked,
+  cropped,
+}
 
 //Created on 20220415
 class EditProfilePage extends StatefulWidget {
@@ -52,42 +59,21 @@ class _EditProfilePageState extends State<EditProfilePage> {
   String? cityValue = '';
   String? picture = '';
 
-  bool? isEnable = true;
-
   Map<String, dynamic> paramUpdateProfile = {};
   Map<String, dynamic> paramTypeUpdateProfile = {};
 
+  Map<String, dynamic> paramImgUpload = {};
+  Map<String, dynamic> paramTypeImgUpload = {};
+
   var _formKey = GlobalKey<FormState>();
+  var _profileImgMutation = GlobalKey<MutationState>();
   late List<String?>? errorList = [];
   late CreateProfileData _createProfileData;
 
-  //Image
-  String? _retrieveDataError;
-  late String? _finalPath = null;
+  var _streamFormController = StreamController<bool?>();
+  var _streamImgState = StreamController<imgState>();
+  File? imageFile;
   dynamic _pickImageError;
-  final ImagePicker _picker = ImagePicker();
-  List<int?> selectedAvatar = [0];
-
-  Future<void> _onImageButtonPressed(ImageSource source, {BuildContext? context, bool isMultiImage = false}) async {
-    try {
-      final XFile? pickedFile = await _picker.pickImage(
-        source: source,
-        maxWidth: 1000,
-        maxHeight: 1000,
-        imageQuality: 100,
-      );
-
-      Provider.of<ProfilePicProvider>(context!, listen: false).setXFile(pickedFile);
-
-      // setState(() {
-      //   _imageFile = pickedFile;
-      // });
-    } catch (e) {
-      setState(() {
-        _pickImageError = e;
-      });
-    }
-  }
 
   @override
   void initState() {
@@ -96,7 +82,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
       rate?.add('$i.0');
       if (i < 10) rate?.add('$i.5');
     }
-
 
     bDate = userData.dob ?? 'Date of Birth';
     dropDownValueCity = userData.state;
@@ -111,11 +96,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
     cityValue = userData.city;
     picture = userData.picture;
 
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
     paramUpdateProfile = {
       '\$userId': 'String',
       '\$city': 'String',
@@ -140,8 +120,30 @@ class _EditProfilePageState extends State<EditProfilePage> {
       'dob': ' \$dob',
     };
 
-    print('$paramUpdateProfile ** $paramTypeUpdateProfile');
+    paramImgUpload = {
+      '\$file': 'Upload!',
+      '\$userId': 'String',
+    };
+    paramTypeImgUpload = {
+      'file': '\$file',
+      'userid': '\$userId',
+    };
 
+    _streamImgState.sink.add(imgState.free);
+    _streamFormController.sink.add(true);
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _streamImgState.close();
+    _streamFormController.close();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Form(
       key: _formKey,
       child: BaseWidget(
@@ -163,212 +165,216 @@ class _EditProfilePageState extends State<EditProfilePage> {
               SizedBox(
                 height: 10,
               ),
-              Stack(
-                alignment: Alignment.bottomCenter,
-                fit: StackFit.loose,
-                children: [
-                  // selectedAvatar.isNotEmpty
-                  CircleAvatar(
-                    backgroundImage: AssetImage('assets/avatar${selectedAvatar.first}.png'),
-                    radius: 70,
-                  ),
-
-                  // if(selectedAvatar.isEmpty)
-                  if (Provider.of<ProfilePicProvider>(context, listen: false).getXFile != null)
-                    Center(
-                      child: !kIsWeb && defaultTargetPlatform == TargetPlatform.android
-                          ? FutureBuilder<void>(
-                              future: retrieveLostData(),
-                              builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
-                                switch (snapshot.connectionState) {
-                                  case ConnectionState.none:
-                                  case ConnectionState.waiting:
-                                    return const Text(
-                                      'You have not yet picked an image.',
-                                      textAlign: TextAlign.center,
-                                    );
-                                  case ConnectionState.done:
-                                    return _handlePreview(context);
-                                  default:
-                                    if (snapshot.hasError) {
-                                      return Text(
-                                        'Pick image/video error: ${snapshot.error}}',
-                                        textAlign: TextAlign.center,
-                                      );
-                                    } else {
-                                      return const Text(
-                                        'You have not yet picked an image.',
-                                        textAlign: TextAlign.center,
-                                      );
-                                    }
+              StreamBuilder(
+                stream: _streamImgState.stream,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return Stack(
+                      alignment: Alignment.bottomCenter,
+                      fit: StackFit.loose,
+                      children: [
+                        imagePreview(),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            CircleAvatar(
+                              backgroundColor: aGreen,
+                              radius: 20,
+                              child: IconButton(
+                                onPressed: () {
+                                  _pickImage(ImageSource.gallery);
+                                },
+                                icon: Icon(
+                                  Icons.add_photo_alternate,
+                                  color: aWhite,
+                                ),
+                              ),
+                            ),
+                            CircleAvatar(
+                              backgroundColor: aGreen,
+                              radius: 20,
+                              child: IconButton(
+                                onPressed: () {
+                                  _pickImage(ImageSource.camera);
+                                },
+                                icon: Icon(
+                                  Icons.camera_alt_rounded,
+                                  color: aWhite,
+                                ),
+                              ),
+                            ),
+                          ],
+                        )
+                      ],
+                    );
+                  }
+                  return Center(
+                    child: CupertinoActivityIndicator(),
+                  );
+                },
+              ),
+              StreamBuilder<bool?>(
+                stream: _streamFormController.stream,
+                builder: (context, isEnabled) {
+                  if (isEnabled.hasData) {
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 5),
+                          child: EditTextFormField(
+                            textController: TextEditingController(text: firstNameValue),
+                            isEnable: isEnabled.data!,
+                            validator: RequiredValidator(errorText: errFirstName),
+                            inputFormatter: [FilteringTextInputFormatter(RegExp(r'[a-zA-Z]'), allow: true)],
+                            textInputAction: TextInputAction.send,
+                            onTextChange: (value) {
+                              firstNameValue = value;
+                            },
+                            onTap: () {},
+                            hint: firstName,
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 5),
+                          child: EditTextFormField(
+                            textController: TextEditingController(text: lastNameValue),
+                            isEnable: isEnabled.data!,
+                            validator: RequiredValidator(errorText: errLastName),
+                            inputFormatter: [FilteringTextInputFormatter(RegExp(r'[a-zA-Z]'), allow: true)],
+                            textInputAction: TextInputAction.send,
+                            onTextChange: (value) {
+                              lastNameValue = value;
+                            },
+                            onTap: () {},
+                            hint: lastName,
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 5),
+                          child: EditTextFormField(
+                            isEnable: false,
+                            textInputAction: TextInputAction.next,
+                            onTextChange: (value) {},
+                            onTap: () {},
+                            hint: SharedPreferencesUtils.getEmail!,
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 5),
+                          child: EditTextFormField(
+                            textController: TextEditingController(text: mobileNoValue),
+                            isEnable: isEnabled.data!,
+                            textInputAction: TextInputAction.send,
+                            validator: RequiredValidator(errorText: errMobNo),
+                            textInputType: TextInputType.number,
+                            inputFormatter: [
+                              FilteringTextInputFormatter.allow(
+                                RegExp(r'^\d+?\d*'),
+                              )
+                            ],
+                            maxLength: 12,
+                            onTextChange: (value) {
+                              mobileNoValue = value;
+                            },
+                            onTap: () {},
+                            hint: phoneNo,
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 5),
+                          child: Container(
+                            margin: EdgeInsets.symmetric(vertical: 2, horizontal: 5),
+                            decoration: ShapeDecoration(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(70), side: BorderSide(color: aPartGray30))),
+                            child: Padding(
+                              padding: const EdgeInsets.all(12.0),
+                              child: Text(
+                                '${bDate == 'Date of Birth' ? bDate : convertDate(bDate ?? DateTime.now().toString(), null)}',
+                                style: TextStyle(fontSize: 16.0, color: aLightGray),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 5),
+                          child: EditTextFormField(
+                            textController: TextEditingController(text: cityValue),
+                            isEnable: isEnabled.data!,
+                            validator: RequiredValidator(errorText: errCity),
+                            inputFormatter: [FilteringTextInputFormatter(RegExp(r'[a-zA-Z]'), allow: true)],
+                            textInputAction: TextInputAction.send,
+                            onTextChange: (value) {
+                              cityValue = value;
+                            },
+                            onTap: () {},
+                            hint: city,
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+                          child: DropDownView(
+                            dropList: [
+                              // 'Portland, Oregon',
+                              // 'Los Angeles, California',
+                              // 'Atlanta, Georgia'
+                              'Oregon',
+                              'California',
+                              'Georgia'
+                            ],
+                            hint: selectState,
+                            dropdownValue: dropDownValueCity,
+                            onValueChange: (value) {
+                              dropDownValueCity = value;
+                              // final split = value.split(',');
+                              // selectedCity = split![0].toString().trim();
+                              // selectedState = split![1].toString().trim();
+                              selectedState = value;
+                            },
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+                          child: DropDownView(
+                            dropList: rate,
+                            hint: selectRate,
+                            dropdownValue: dropDownValueRate,
+                            onValueChange: (value) {
+                              dropDownValueRate = value;
+                              selectedRate = value;
+                            },
+                          ),
+                        ),
+                        Mutation(
+                          key: _profileImgMutation,
+                          options: MutationOptions(
+                              document: gql(uploadImage(paramImgUpload, paramTypeImgUpload)),
+                              onCompleted: (dynamic resultData) {
+                                if (resultData != null) {
+                                  // errorList = [];
+                                  // var result = resultData['uploadImage']['success'];
+                                  // errorList!.add(result ? 'DONE' : 'some problem for update picture');
+                                  // _showAlert();
                                 }
                               },
-                            )
-                          : _handlePreview(context),
-                    ),
-
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      CircleAvatar(
-                        backgroundColor: aGreen,
-                        radius: 20,
-                        child: IconButton(
-                          onPressed: () {
-                            _onImageButtonPressed(ImageSource.gallery, context: context);
+                              onError: (OperationException? error) {
+                                print('erroR -- $error');
+                              }),
+                          builder: (runMutation, result) {
+                            return SizedBox();
                           },
-                          icon: Icon(
-                            Icons.add_photo_alternate,
-                            color: aWhite,
-                          ),
                         ),
-                      ),
-                      CircleAvatar(
-                        backgroundColor: aGreen,
-                        radius: 20,
-                        child: IconButton(
-                          onPressed: () {
-                            _onImageButtonPressed(ImageSource.camera, context: context);
-                          },
-                          icon: Icon(
-                            Icons.camera_alt_rounded,
-                            color: aWhite,
-                          ),
-                        ),
-                      ),
-                    ],
-                  )
-                ],
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 5),
-                child: EditTextFormField(
-                  textController: TextEditingController(text: firstNameValue),
-                  isEnable: isEnable!,
-                  validator: RequiredValidator(errorText: errFirstName),
-                  inputFormatter: [FilteringTextInputFormatter(RegExp(r'[a-zA-Z]'), allow: true)],
-                  textInputAction: TextInputAction.send,
-                  onTextChange: (value) {
-                    firstNameValue = value;
-                  },
-                  onTap: () {},
-                  hint: firstName,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 5),
-                child: EditTextFormField(
-                  textController: TextEditingController(text: lastNameValue),
-                  isEnable: isEnable!,
-                  validator: RequiredValidator(errorText: errLastName),
-                  inputFormatter: [FilteringTextInputFormatter(RegExp(r'[a-zA-Z]'), allow: true)],
-                  textInputAction: TextInputAction.send,
-                  onTextChange: (value) {
-                    lastNameValue = value;
-                  },
-                  onTap: () {},
-                  hint: lastName,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 5),
-                child: EditTextFormField(
-                  isEnable: false,
-                  textInputAction: TextInputAction.next,
-                  onTextChange: (value) {},
-                  onTap: () {},
-                  hint: SharedPreferencesUtils.getEmail!,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 5),
-                child: EditTextFormField(
-                  textController: TextEditingController(text: mobileNoValue),
-                  isEnable: isEnable!,
-                  textInputAction: TextInputAction.send,
-                  validator: RequiredValidator(errorText: errMobNo),
-                  textInputType: TextInputType.number,
-                  inputFormatter: [
-                    FilteringTextInputFormatter.allow(
-                      RegExp(r'^\d+?\d*'),
-                    )
-                  ],
-                  maxLength: 12,
-                  onTextChange: (value) {
-                    mobileNoValue = value;
-                  },
-                  onTap: () {},
-                  hint: phoneNo,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 5),
-                child: Container(
-                  margin: EdgeInsets.symmetric(vertical: 2, horizontal: 5),
-                  decoration: ShapeDecoration(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(70), side: BorderSide(color: aPartGray30))),
-                  child: Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Text(
-                      '${bDate == 'Date of Birth' ? bDate : convertDate(bDate ?? DateTime.now().toString(), null)}',
-                      style: TextStyle(fontSize: 16.0, color: aLightGray),
-                    ),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 5),
-                child: EditTextFormField(
-                  textController: TextEditingController(text: cityValue),
-                  isEnable: isEnable!,
-                  validator: RequiredValidator(errorText: errCity),
-                  inputFormatter: [FilteringTextInputFormatter(RegExp(r'[a-zA-Z]'), allow: true)],
-                  textInputAction: TextInputAction.send,
-                  onTextChange: (value) {
-                    cityValue = value;
-                  },
-                  onTap: () {},
-                  hint: city,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-                child: DropDownView(
-                  dropList: [
-                    // 'Portland, Oregon',
-                    // 'Los Angeles, California',
-                    // 'Atlanta, Georgia'
-                    'Oregon',
-                    'California',
-                    'Georgia'
-                  ],
-                  hint: selectState,
-                  dropdownValue: dropDownValueCity,
-                  onValueChange: (value) {
-                    dropDownValueCity = value;
-
-                    print(dropDownValueCity);
-                    // final split = value.split(',');
-                    // selectedCity = split![0].toString().trim();
-                    // selectedState = split![1].toString().trim();
-                    selectedState = value;
-                  },
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-                child: DropDownView(
-                  dropList: rate,
-                  hint: selectRate,
-                  dropdownValue: dropDownValueRate,
-                  onValueChange: (value) {
-                    dropDownValueRate = value;
-                    selectedRate = value;
-                  },
-                ),
-              ),
+                      ],
+                    );
+                  }
+                  return Center(
+                    child: CupertinoActivityIndicator(),
+                  );
+                },
+              )
             ],
           ),
         ),
@@ -379,21 +385,16 @@ class _EditProfilePageState extends State<EditProfilePage> {
             ),
             onError: (OperationException? error) {
               debugPrint('${EditProfilePage.path} * erroR -- $error');
+              _streamFormController.sink.add(true);
               errorList = [];
               errorList!.add('$error');
-
-              isEnable = true;
-              setState(() {});
-
               if (errorList!.isNotEmpty) _showAlert();
               // Text('$error');
             },
             // _simpleAlert(context, error.toString()),
             onCompleted: (dynamic resultData) {
               // Text('Thanks for your star!');
-
-              isEnable = true;
-              setState(() {});
+              _streamFormController.sink.add(true);
               debugPrint('${EditProfilePage.path} **** RESULT * $resultData');
 
               if (resultData != null) {
@@ -410,6 +411,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     errorList!.add(_createProfileData.updateAccount!.errors?.dob?.first.message);
                 }
 
+                imageUploadProgress();
+
+                print('After');
                 if (errorList!.isNotEmpty) _showAlert();
               }
             },
@@ -453,8 +457,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 };
 
                 doUpdateProfile(passVariable);
-                isEnable = false;
-                setState(() {});
+                _streamFormController.sink.add(false);
               },
               borderColor: aGreen,
               buttonColor: aGreen,
@@ -466,124 +469,129 @@ class _EditProfilePageState extends State<EditProfilePage> {
     );
   }
 
+  void imageUploadProgress() async {
+    // var byteData = imageFile != null
+    //     ? imageFile!.readAsBytesSync()
+    //     : await getImageFileFromAssets('avatar${selectedAvatar.first}.png').then((value) => value.readAsBytesSync());
+
+    if (imageFile != null) {
+      var byteData = imageFile!.readAsBytesSync();
+
+      var multipartFile = http.MultipartFile.fromBytes(
+        'photo',
+        byteData,
+        filename: '${DateTime.now().second}.jpg',
+        contentType: MediaType('image', 'jpg'),
+      );
+
+      var resp = await _profileImgMutation.currentState?.runMutation(<String, dynamic>{
+        'file': multipartFile,
+        'userId': '${userData.userId}',
+      });
+
+      print('resp 522 *$resp');
+    }
+  }
+
   //IMAGE
-  Future<String?> _cropImage(BuildContext context) async {
-    debugPrint('${EditProfilePage.path} * CropImage');
+  Widget imagePreview() {
+    return kIsWeb
+        ? CircleAvatar(
+            backgroundImage: NetworkImage(imageFile!.path),
+            radius: 100,
+          )
+        : imageFile != null
+            ? CircleAvatar(backgroundImage: FileImage(imageFile!), radius: 100)
+            : picture != null
+                ? CircleAvatar(
+                    backgroundImage: NetworkImage('http://52.144.47.85:8000/$picture'),
+                    radius: 100,
+                  )
+                : CircleAvatar(
+                    backgroundImage: AssetImage('assets/avatar0.png'),
+                    radius: 100,
+                  );
+  }
 
-    File imageFile = File(Provider.of<ProfilePicProvider>(context).getXFile!.path);
+  Future<Null> _pickImage(ImageSource source) async {
+    try {
+      final pickedImage = await ImagePicker().pickImage(
+        source: source,
+        maxWidth: 1000,
+        maxHeight: 1000,
+        imageQuality: 100,
+      );
+      imageFile = pickedImage != null ? File(pickedImage.path) : null;
+      if (imageFile != null) {
+        // setState(() {
+        //   state = imgState.picked;
+        // });
 
-    // selectedAvatar = imageFile.path != null ? [] : [0];
+        _streamImgState.sink.add(imgState.picked);
+        if (!kIsWeb) {
+          _cropImage();
+        }
+      }
+    } catch (e) {
+      _pickImageError = e;
+    }
+  }
 
-    debugPrint('${EditProfilePage.path} * imageFile -- ${imageFile.path}');
-
+  Future<Null> _cropImage() async {
     File? croppedFile = await ImageCropper().cropImage(
-        sourcePath: imageFile.path,
-        aspectRatioPresets: Platform.isAndroid
-            ? [
-                CropAspectRatioPreset.square,
-                CropAspectRatioPreset.ratio3x2,
-                CropAspectRatioPreset.original,
-                CropAspectRatioPreset.ratio4x3,
-                CropAspectRatioPreset.ratio16x9
-              ]
-            : [
-                CropAspectRatioPreset.original,
-                CropAspectRatioPreset.square,
-                CropAspectRatioPreset.ratio3x2,
-                CropAspectRatioPreset.ratio4x3,
-                CropAspectRatioPreset.ratio5x3,
-                CropAspectRatioPreset.ratio5x4,
-                CropAspectRatioPreset.ratio7x5,
-                CropAspectRatioPreset.ratio16x9
-              ],
-        androidUiSettings: AndroidUiSettings(
-            toolbarTitle: 'Cropper',
-            toolbarColor: aWhite,
-            toolbarWidgetColor: aBlack,
-            cropGridColor: Colors.white38,
-            activeControlsWidgetColor: aGreen,
-            initAspectRatio: CropAspectRatioPreset.original,
-            lockAspectRatio: true),
-        iosUiSettings: IOSUiSettings(
+        sourcePath: imageFile!.path,
+        cropStyle: CropStyle.circle,
+
+        // aspectRatioPresets: Platform.isAndroid
+        //     ? [
+        //         CropAspectRatioPreset.square,
+        //         CropAspectRatioPreset.ratio3x2,
+        //         CropAspectRatioPreset.original,
+        //         CropAspectRatioPreset.ratio4x3,
+        //         CropAspectRatioPreset.ratio16x9
+        //       ]
+        //     : [
+        //         CropAspectRatioPreset.square,
+        //         CropAspectRatioPreset.original,
+        //         CropAspectRatioPreset.ratio3x2,
+        //         CropAspectRatioPreset.ratio4x3,
+        //         CropAspectRatioPreset.ratio5x3,
+        //         CropAspectRatioPreset.ratio5x4,
+        //         CropAspectRatioPreset.ratio7x5,
+        //         CropAspectRatioPreset.ratio16x9
+        //       ],
+        androidUiSettings: const AndroidUiSettings(
+          toolbarTitle: 'Cropper',
+          toolbarColor: aWhite,
+          toolbarWidgetColor: aBlack,
+          activeControlsWidgetColor: aGreen,
+          initAspectRatio: CropAspectRatioPreset.square,
+          lockAspectRatio: true,
+          showCropGrid: false,
+          hideBottomControls: true,
+          cropFrameColor: Colors.transparent,
+        ),
+        iosUiSettings: const IOSUiSettings(
+          aspectRatioLockEnabled: true,
+          aspectRatioPickerButtonHidden: true,
           title: 'Cropper',
         ));
     if (croppedFile != null) {
       imageFile = croppedFile;
-    }
+      _streamImgState.sink.add(imgState.cropped);
 
-    return croppedFile != null ? croppedFile.path : null;
-  }
-
-  Widget _previewImages(String path) {
-    _finalPath = path;
-
-    final Text? retrieveError = _getRetrieveErrorWidget();
-    if (retrieveError != null) {
-      return retrieveError;
-    }
-    // if (_imageFileList != null) {
-    return
-        // Why network for web?
-        // See https://pub.dev/packages/image_picker#getting-ready-for-the-web-platform
-        Semantics(
-      label: 'image_picker_example_picked_image',
-      // child: kIsWeb ? Image.network(path) : Image.file(File(path)),
-      child: kIsWeb
-          ? CircleAvatar(
-              backgroundImage: NetworkImage(path),
-              radius: 70,
-            )
-          : CircleAvatar(backgroundImage: FileImage(File(path)), radius: 70),
-    );
-  }
-
-  Widget _handlePreview(BuildContext context) {
-    String? webPath = Provider.of<ProfilePicProvider>(context).getXFile?.path ?? null;
-    return kIsWeb
-        ? webPath != null
-            ? _previewImages(webPath)
-            : SizedBox()
-        : FutureBuilder<String?>(
-            future: _cropImage(context),
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                return _previewImages(snapshot.data!);
-              }
-
-              //TODO CHANGE HERE
-              return CircleAvatar(
-                backgroundImage: AssetImage('assets/avatar${selectedAvatar.first}.png'),
-                radius: 70,
-              );
-            },
-          );
-  }
-
-  Future<void> retrieveLostData() async {
-    final LostDataResponse response = await _picker.retrieveLostData();
-    if (response.isEmpty) {
-      return;
-    }
-    if (response.file != null) {
-      Provider.of<ProfilePicProvider>(context, listen: false).setXFile(response.file);
-
-      // print('retrieveLostData -- ${Provider.of<ProfilePicProvider>(context,listen: false).getXFile}');
       // setState(() {
-      //   _imageFile = response.file;
-      //   _imageFileList = response.files;
+      //   state = imgState.cropped;
       // });
-    } else {
-      _retrieveDataError = response.exception!.code;
     }
   }
 
-  Text? _getRetrieveErrorWidget() {
-    if (_retrieveDataError != null) {
-      final Text result = Text(_retrieveDataError!);
-      _retrieveDataError = null;
-      return result;
-    }
-    return null;
+  void _clearImage() {
+    imageFile = null;
+    _streamImgState.sink.add(imgState.free);
+    // setState(() {
+    //   state = imgState.free;
+    // });
   }
 
 //IMAGE OVER
@@ -613,8 +621,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
             onNegativeClick: () {
               Navigator.pop(context);
               if (errorList?.first?.toString().toLowerCase() == 'done') {
-                // Navigator.pushNamed(context, CreateProfilePicturePage.path);
-                Navigator.pushNamed(context, DashboardPage.path);
+                Navigator.of(context).pop();
+                // Navigator.of(context).pop();
+                // Navigator.un(context, ProfilePage.path, (route) => false);
+                // Navigator.popUntil(context, (route) => false)
               }
             },
             onPositiveClick: () {

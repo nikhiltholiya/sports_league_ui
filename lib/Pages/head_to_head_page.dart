@@ -50,7 +50,7 @@ class _HeadtoHeadpageState extends State<HeadtoHeadpage> {
                     onTileClick: () {
                       Navigator.pushNamed(context, HeadToHeadDetails.path);
                     },
-                    profileImg: 'assets/Ellipse 5.png',
+                    profileImg: null,
                     date: 'Dec 31st 2021',
                     rating: '4.5',
                     userName: 'kalpesh',

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../components/bordered_circle_avatar.dart';
+import '../components/profile_pic_avatar.dart';
 import '../components/decorated_app_header_tile.dart';
 import '../components/elevated_buttons.dart';
 import '../components/iconic_text_view.dart';
@@ -22,7 +22,7 @@ class ChattingListHeaderTile extends StatefulWidget {
   const ChattingListHeaderTile({
     Key? key,
     this.playerName = 'appName',
-    this.playerImg = 'assets/Ellipse 1.png',
+    this.playerImg,
     this.playerLocation = '',
     this.playerRate = '0.0',
     this.onViewProfile,
@@ -65,7 +65,7 @@ class _ChattingListHeaderTileState extends State<ChattingListHeaderTile> {
                         children: [
                           Padding(
                             padding: const EdgeInsets.all(5.0),
-                            child: BorderedCircleAvatar(radius: 30, path: 'assets/Ellipse 1.png'),
+                            child: ProfilePicAvatar(radius: 30, path: widget.playerImg),
                           ),
                           Text(
                             widget.playerName!,

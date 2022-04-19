@@ -84,3 +84,7 @@ const String errCity = 'Please enter your city';
 const String enterFirstMsg = 'Enter your first message';
 const String dialogDismiss = 'Dismiss';
 const String dialogOk = 'Ok';
+const String enterQuery = 'Enter your query';
+const String errQuery = 'Please enter your query';
+const String thankYou = 'Thank you';
+

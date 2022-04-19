@@ -53,10 +53,10 @@ _$_MatchesNode _$$_MatchesNodeFromJson(Map<String, dynamic> json) =>
       playerTwoScore: json['playerTwoScore'] as int?,
       playerOne: json['playerOne'] == null
           ? null
-          : PlayerOne.fromJson(json['playerOne'] as Map<String, dynamic>),
+          : UserNode.fromJson(json['playerOne'] as Map<String, dynamic>),
       playerTwo: json['playerTwo'] == null
           ? null
-          : PlayerOne.fromJson(json['playerTwo'] as Map<String, dynamic>),
+          : UserNode.fromJson(json['playerTwo'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$_MatchesNodeToJson(_$_MatchesNode instance) =>
@@ -68,17 +68,4 @@ Map<String, dynamic> _$$_MatchesNodeToJson(_$_MatchesNode instance) =>
       'playerTwoScore': instance.playerTwoScore,
       'playerOne': instance.playerOne,
       'playerTwo': instance.playerTwo,
-    };
-
-_$_PlayerOne _$$_PlayerOneFromJson(Map<String, dynamic> json) => _$_PlayerOne(
-      firstName: json['firstName'] as String?,
-      userId: json['userId'] as String?,
-      lastName: json['lastName'] as String?,
-    );
-
-Map<String, dynamic> _$$_PlayerOneToJson(_$_PlayerOne instance) =>
-    <String, dynamic>{
-      'firstName': instance.firstName,
-      'userId': instance.userId,
-      'lastName': instance.lastName,
     };

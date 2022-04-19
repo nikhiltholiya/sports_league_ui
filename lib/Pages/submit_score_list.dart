@@ -216,7 +216,7 @@ class _SubmitScoreListState extends State<SubmitScoreList> {
                                     (context, index) => SubmitScoreListTile(
                                       userName: '${snapshot.data![index].firstName} ${snapshot.data![index].lastName}',
                                       // profileImg: _foundUsers![index].node?.picture,
-                                      profileImg: 'assets/Ellipse 1.png',
+                                      profileImg: snapshot.data![index].picture,
                                       rating: '${snapshot.data![index].rating}',
                                       playerLocation:
                                           '${snapshot.data![index].city != null ? snapshot.data![index].city : ''}${snapshot.data![index].state != null ? ', ' + snapshot.data![index].state : ''}${snapshot.data![index].country != null ? ', ' + snapshot.data![index].country : ''}',

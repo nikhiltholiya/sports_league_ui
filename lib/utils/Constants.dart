@@ -1,6 +1,5 @@
 const String SUCCESS_MESSAGE = " You will be contacted by us very soon.";
 
-
 //Add rating from service side
 const fetchUserProfiles = """
 query (\$userId : String!) {
@@ -28,7 +27,51 @@ const String matchesQuery = """
       node {
         id
         matchId
-        matchSet(first: 2) {
+        playerOne {
+          userId
+          aboutMe
+          active
+          city
+          country
+          dateJoined
+          deleted
+          email
+          dob
+          firstName
+          gender
+          isActive
+          id
+          isStaff
+          lastLogin
+          lastName
+          phone
+          picture
+          rating
+          state
+        }
+        playerTwo {
+          userId
+          aboutMe
+          active
+          city
+          country
+          dateJoined
+          deleted
+          email
+          dob
+          firstName
+          gender
+          isActive
+          id
+          isStaff
+          lastLogin
+          lastName
+          phone
+          picture
+          rating
+          state
+        }
+        matchSet(first: 10) {
           edges {
             node {
               id
@@ -36,16 +79,6 @@ const String matchesQuery = """
               playerTwoScore
             }
           }
-        }
-        playerOne {
-          firstName
-          userId
-          lastName
-        }
-        playerTwo {
-          userId
-          lastName
-          firstName
         }
       }
     }
@@ -320,7 +353,6 @@ String tokenAuth(Map<String, dynamic>? param, Map<String, dynamic>? paramType) {
 ''';
 }
 
-
 String updateAccount(Map<String, dynamic>? param, Map<String, dynamic>? paramType) {
   return '''
       mutation updateAccount(${param.toString().trim().substring(1, param.toString().trim().length - 1)}) {
@@ -332,6 +364,22 @@ String updateAccount(Map<String, dynamic>? param, Map<String, dynamic>? paramTyp
 ''';
 }
 
+// const String uploadImage = r'''
+// mutation($file: Upload!) {
+//   upload(file: $file)
+// }
+// ''';
+
+String uploadImage(Map<String, dynamic>? param, Map<String, dynamic>? paramType) {
+  return '''
+    mutation(${param.toString().trim().substring(1, param.toString().trim().length - 1)}) {
+      uploadImage(${paramType.toString().trim().substring(1, paramType.toString().trim().length - 1)})
+      {
+        success
+      }
+    }
+''';
+}
 
 String revokeToken(Map<String, dynamic>? param, Map<String, dynamic>? paramType) {
   return '''
@@ -344,8 +392,6 @@ String revokeToken(Map<String, dynamic>? param, Map<String, dynamic>? paramType)
     }
 ''';
 }
-
-
 
 String sendMessage(Map<String, dynamic>? param, Map<String, dynamic>? paramType) {
   return '''
@@ -375,18 +421,17 @@ String sendMessage(Map<String, dynamic>? param, Map<String, dynamic>? paramType)
 ''';
 }
 
-
-//Test purpose
-String readRepositories = '''
-  query ReadRepositories(\$nRepositories: Int!) {
-    viewer {
-      repositories(last: \$nRepositories) {
-        nodes {
-          id
-          name
-          viewerHasStarred
-        }
+String userQuery(Map<String, dynamic>? param, Map<String, dynamic>? paramType) {
+  return '''
+      mutation userQuery(${param.toString().trim().substring(1, param.toString().trim().length - 1)}) {
+          userQuery(${paramType.toString().trim().substring(1, paramType.toString().trim().length - 1)}) {
+              userQuery {
+                createdAt
+                id
+                updatedAt
+                message
+             }  
+          }
       }
-    }
-  }
 ''';
+}

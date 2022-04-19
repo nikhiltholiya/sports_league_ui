@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../components/bordered_circle_avatar.dart';
+import '../components/profile_pic_avatar.dart';
 import '../components/iconic_text_view.dart';
 import '../utils/app_colors.dart';
 
@@ -56,7 +56,7 @@ class _MyLeagueListTileState extends State<MyLeagueListTile> {
                   children: [
                     GestureDetector(
                       onTap: () => widget.onProfileClick!(),
-                      child: BorderedCircleAvatar(
+                      child: ProfilePicAvatar(
                         path: widget.profileImg!,
                         radius: 25,
                       ),

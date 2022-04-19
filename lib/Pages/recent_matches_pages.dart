@@ -39,11 +39,11 @@ class _RecentMatchesPageState extends State<RecentMatchesPage> {
                   onProfileClick: () {},
                   onTileClick: () {},
                   player1matchScore: [5, 4, 3, 2, 1],
-                  player1Img: 'assets/Ellipse 5.png',
+                  player1Img: null,
                   player1Name: 'Novak J.',
                   player1Active: true,
                   player2matchScore: [1, 2, 3, 4, 5],
-                  player2Img: 'assets/Ellipse 2.png',
+                  player2Img: null,
                   player2Name: 'Kalpesh T.',
                   player2Active: false,
                 );

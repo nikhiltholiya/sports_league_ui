@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:tenniston/bean/all_users/all_users.dart';
 
 part 'all_matches.g.dart';
 part 'all_matches.freezed.dart';
@@ -35,21 +36,9 @@ class MatchesNode with _$MatchesNode {
     required AllMatches? matchSet,
     required int? playerOneScore,
     required int? playerTwoScore,
-    required PlayerOne? playerOne,
-    required PlayerOne? playerTwo,
+    required UserNode? playerOne,
+    required UserNode? playerTwo,
   }) = _MatchesNode;
 
   factory MatchesNode.fromJson(Map<String, dynamic> MatchesNodeMap) => _$MatchesNodeFromJson(MatchesNodeMap);
-}
-
-
-@Freezed()
-class PlayerOne with _$PlayerOne {
-  const factory PlayerOne({
-    required String? firstName,
-    required String? userId,
-    required String? lastName,
-  }) = _PlayerOne;
-
-  factory PlayerOne.fromJson(Map<String, dynamic> PlayerOneMap) => _$PlayerOneFromJson(PlayerOneMap);
 }

@@ -88,6 +88,7 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> {
   @override
   void dispose() {
     _scrollController!.dispose();
+
     super.dispose();
   }
 
@@ -179,6 +180,7 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> {
                               playerName: '${newProfile?.firstName} ${newProfile?.lastName}',
                               playerAge: newProfile?.age,
                               playerImg: 'assets/Ellipse 1.png',
+                              //TODO Required picture
                               playerLocation: '${newProfile?.city}, ${newProfile?.state}',
                               stackKey: _stackKey,
                               btnKey: _btnKey,
@@ -188,6 +190,8 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> {
                               btnLeft: widget.from! == ProfilePage.profileMe ? editProfile : chat,
                               btnRight: widget.from! == ProfilePage.profileMe ? messages : submitScore,
                               onLeftBtnClick: () {
+                                // Provider.of<ProfilePicProvider>(context, listen: false).setXFile(null);
+
                                 widget.from! == ProfilePage.profileMe
                                     ? Navigator.pushNamed(context, EditProfilePage.path) // 'EDIT PROFILE'
                                     : Navigator.pushReplacementNamed(context, ChallengesChat.path);
@@ -302,11 +306,11 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> {
                                         onProfileClick: () {},
                                         onTileClick: () {},
                                         player1matchScore: [5, 4, 3, 2, 1],
-                                        player1Img: 'assets/Ellipse 5.png',
+                                        player1Img: tempMatches[i].node?.playerOne?.picture,
                                         player1Name: tempMatches[i].node?.playerOne?.firstName,
                                         player1Active: true,
                                         player2matchScore: [1, 2, 3, 4, 5],
-                                        player2Img: 'assets/Ellipse 2.png',
+                                        player2Img: tempMatches[i].node?.playerTwo?.picture,
                                         player2Name: tempMatches[i].node?.playerTwo?.firstName,
                                         player2Active: false,
                                       )
@@ -341,6 +345,7 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> {
                       ),
                     ),
 
+                    //TODO API REMAINS
                     SliverToBoxAdapter(
                       child: Padding(
                         padding: const EdgeInsets.only(left: 16.0, right: 16),

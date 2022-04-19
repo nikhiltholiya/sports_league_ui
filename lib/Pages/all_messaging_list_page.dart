@@ -134,8 +134,8 @@ class _AllMessagesListPageState extends State<AllMessagesListPage> {
                                   delegate: SliverChildBuilderDelegate(
                                     (context, index) => AllMessagesListTile(
                                       userName: '${snapshot.data![index].firstName} ${snapshot.data![index].lastName}',
-                                      // profileImg: _foundUsers![index].node?.picture,
-                                      profileImg: 'assets/Ellipse 1.png',
+                                      profileImg: snapshot.data?[index].picture,
+                                      // profileImg: 'assets/Ellipse 1.png',
                                       onTileClick: () {
                                         Provider.of<UserIdProvider>(context, listen: false)
                                             .setUserId('${snapshot.data![index].userId}');

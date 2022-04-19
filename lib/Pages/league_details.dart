@@ -257,6 +257,8 @@ class _LeagueDetailsState extends State<LeagueDetails> {
                                           wonCount: profile.wonCount,
                                           matchesCount: profile.matchesCount,
                                           lostCount: profile.lostCount,
+                                          // winnerProfile: profile., //TODO Required picture
+                                          //rate: , //TODO Required Rate
                                         ),
                                         // try {
                                         // LeagueData = LeagueStatData.fromJson(result.data!);
@@ -287,6 +289,7 @@ class _LeagueDetailsState extends State<LeagueDetails> {
                                     loss: userStat![index].loss,
                                     win: userStat![index].won,
                                     profileImg: 'assets/Ellipse 3.png',
+                                    //TODO Required picture
                                     onTileClick: () {
                                       if (LeagueData!.leagueStat!.status!.toLowerCase() == 'ongoing') {
                                         Provider.of<UserIdProvider>(context, listen: false)

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../components/bordered_circle_avatar.dart';
+import '../components/profile_pic_avatar.dart';
 import '../components/decorated_app_header_tile.dart';
 import '../components/elevated_buttons.dart';
 import '../components/iconic_text_view.dart';
@@ -27,7 +27,7 @@ class ProfileHeaderTile extends StatefulWidget {
   const ProfileHeaderTile({
     Key? key,
     this.playerName = 'a',
-    this.playerImg = 'assets/Ellipse 5.png',
+    this.playerImg,
     this.playerLocation = 'a',
     this.playerAge = 20,
     required this.stackKey,
@@ -72,7 +72,7 @@ class _ProfileHeaderTileState extends State<ProfileHeaderTile> {
                     children: [
                       Padding(
                         padding: const EdgeInsets.all(5.0),
-                        child: BorderedCircleAvatar(
+                        child: ProfilePicAvatar(
                           key: widget.profileImgKey,
                           path: widget.playerImg!,
                           radius: 41,

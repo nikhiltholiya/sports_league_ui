@@ -251,9 +251,9 @@ class _SubmitScoreDetailsState extends State<SubmitScoreDetails> {
                             background: SubmitScoreDetailsHeaderTile(
                               stackKey: _stackKey,
                               userKey: _userKey,
-                              player1Img: 'assets/Ellipse 3.png',
+                              player1ProfileImg: player1.picture,
                               player1Name: player1.firstName,
-                              player2Img: 'assets/Ellipse 1.png',
+                              player2ProfileImg: player2.picture,
                               player2Name: player2.firstName,
                             ),
                             centerTitle: true,

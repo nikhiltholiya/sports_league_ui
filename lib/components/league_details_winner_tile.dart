@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../components/bordered_circle_avatar.dart';
+import '../components/profile_pic_avatar.dart';
 import '../components/iconic_text_view.dart';
 import '../components/stats_tile.dart';
 import '../utils/app_colors.dart';
@@ -8,6 +8,7 @@ import '../utils/app_colors.dart';
 class LeagueDetailsWinnerTile extends StatefulWidget {
   final String? winnerName;
   final String? winnerLocation;
+  final String? winnerProfile;
   final int? winnerAge;
   final int? matchesCount;
   final int? wonCount;
@@ -19,6 +20,7 @@ class LeagueDetailsWinnerTile extends StatefulWidget {
     Key? key,
     this.winnerName,
     this.winnerLocation,
+    this.winnerProfile,
     this.winnerAge,
     this.matchesCount,
     this.wonCount,
@@ -75,9 +77,9 @@ class _LeagueDetailsWinnerTileState extends State<LeagueDetailsWinnerTile> {
                     children: [
                       Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: BorderedCircleAvatar(
+                        child: ProfilePicAvatar(
                           radius: 40,
-                          path: 'assets/Ellipse 1.png',
+                          path: widget.winnerProfile,
                         ),
                       ),
                       Text(
