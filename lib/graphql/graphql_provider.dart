@@ -15,22 +15,10 @@ import 'package:flutter/material.dart';
 ValueNotifier<GraphQLClient> clientFor({
   required String uri,
   required AuthLink authLink,
-  required String subscriptionUri,
+  String? subscriptionUri,
 }) {
 
 
-//   final AuthLink authLink = AuthLink(
-//       getToken: () async => '',
-// //       // getToken: () async =>  SharedPreferencesUtils.getToken != null ? '''JWT ${SharedPreferencesUtils.getToken}''' :'',
-// //       getToken: () async =>  Provider.of<TokenProvider>(context,listen: false).getToken != null ?
-// //       'JWT ${Provider.of<TokenProvider>(context,listen: false).getToken}'
-// //        : '',
-//     );
-//
-//     final Link link = authLink.concat(httpLink);
-
-
-  // final AuthLink authLink1 =
   Link link = authLink.concat(HttpLink(uri));
 
   if (subscriptionUri != null) {

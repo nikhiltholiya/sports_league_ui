@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../utils/app_colors.dart';
 
 //Updated on 20220307
@@ -7,8 +8,7 @@ class StatsTile extends StatefulWidget {
   final String? subtitle;
   final Color? colors;
 
-  const StatsTile({Key? key, this.title, this.subtitle, this.colors = aBlue})
-      : super(key: key);
+  const StatsTile({Key? key, this.title, this.subtitle, this.colors = aBlue}) : super(key: key);
 
   @override
   _StatsTileState createState() => _StatsTileState();
@@ -26,10 +26,7 @@ class _StatsTileState extends State<StatsTile> {
           child: Text(
             widget.title!,
             textAlign: TextAlign.center,
-            style: TextStyle(
-                color: aLightGray,
-                fontSize: 12.0,
-                fontWeight: (FontWeight.normal)),
+            style: TextStyle(color: aLightGray, fontSize: 12.0, fontWeight: (FontWeight.normal)),
           ),
         ),
         Padding(

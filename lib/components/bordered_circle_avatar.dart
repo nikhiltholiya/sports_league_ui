@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../utils/app_colors.dart';
 
 class BorderedCircleAvatar extends StatelessWidget {
@@ -6,11 +7,7 @@ class BorderedCircleAvatar extends StatelessWidget {
   final double? radius;
   final String? path;
 
-  const BorderedCircleAvatar(
-      {Key? key,
-      this.backColor = aLightGray,
-      required this.radius,
-      required this.path})
+  const BorderedCircleAvatar({Key? key, this.backColor = aLightGray, required this.radius, required this.path})
       : super(key: key);
 
   @override

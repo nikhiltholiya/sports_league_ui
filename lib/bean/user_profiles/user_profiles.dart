@@ -28,6 +28,7 @@ class UserProfiles with _$UserProfiles {
     required String? city,
     required String? state,
     required String? dob,
+    required String? rating,
     required int? age,
   }) = _UserProfile;
 

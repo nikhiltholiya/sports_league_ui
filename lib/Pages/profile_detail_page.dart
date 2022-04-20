@@ -1,14 +1,20 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:provider/provider.dart';
 
+import '../Pages/all_messaging_list_page.dart';
 import '../Pages/challenges_chat.dart';
+import '../Pages/edit_profile_page.dart';
 import '../Pages/head_to_head_page.dart';
 import '../Pages/profile_page.dart';
 import '../Pages/recent_matches_pages.dart';
 import '../Pages/submit_score_details.dart';
+import '../bean/all_matches/all_matches.dart';
 import '../bean/user_profiles/user_profiles.dart';
 import '../components/head_to_head_details_list_tile.dart';
 import '../components/head_to_head_list_tile.dart';
@@ -31,7 +37,6 @@ class ProfileDetailPage extends StatefulWidget {
 
 class _ProfileDetailPageState extends State<ProfileDetailPage> {
   String readRepositories = Constants.fetchUserProfiles;
-  var dataRecent;
 
   ScrollController? _scrollController;
   GlobalKey? _stackKey = GlobalKey();
@@ -44,6 +49,7 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> {
   List<double>? _childWidgetHeights = [];
   bool? isLoaded = false;
   String? userId;
+  late AllMatchesData _allMatchesData;
 
   @override
   void initState() {
@@ -71,7 +77,7 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> {
       _dynamicTotalHeight = height + _dynamicTotalHeight!;
     }
 
-    print(_childWidgetHeights);
+    // print(_childWidgetHeights);
     setState(() {
       _dynamicTotalHeight = _dynamicTotalHeight! + kToolbarHeight + kToolbarHeight;
     });
@@ -92,7 +98,7 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> {
     double? height = (size.height / 2) - 56;
     var scrollPosition;
 
-    print('Profile Details FROM ${widget.from}');
+    debugPrint('Profile Details FROM ${widget.from}');
 
     // if(ModalRoute.of(context)?.settings.arguments != null) {
     //   _userProfiles = ModalRoute
@@ -104,7 +110,7 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> {
 
     return Consumer<UserIdProvider>(
       builder: (context, userId, child) {
-        print(userId.getUserId);
+        debugPrint('ProfileDetails * UserId: ${userId.getUserId}');
         return Container(
             height: mq.height,
             child: Query(
@@ -118,6 +124,9 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> {
               ),
               builder: (userResult, {fetchMore, refetch}) {
                 late UserProfiles? newProfile;
+
+                debugPrint('ProfileDetailPage --resp -$userResult');
+
                 if (userResult.hasException) {
                   return Text(userResult.exception.toString());
                 }
@@ -136,6 +145,7 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> {
                 } catch (e) {
                   debugPrint('Exception -- $e');
                 }
+
                 return CustomScrollView(
                   controller: _scrollController,
                   physics: const BouncingScrollPhysics(),
@@ -152,10 +162,15 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> {
                           stretch: true,
                           centerTitle: true,
                           leading: IconButton(
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              icon: Icon(Icons.arrow_back)),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            icon: Icon(kIsWeb
+                                ? Icons.arrow_back
+                                : Platform.isIOS
+                                    ? Icons.arrow_back_ios
+                                    : Icons.arrow_back),
+                          ),
                           titleTextStyle:
                               TextStyle(color: height <= scrollPosition ? Colors.black : Colors.transparent),
                           iconTheme: IconThemeData(color: height <= scrollPosition ? Colors.black : Colors.white),
@@ -174,13 +189,13 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> {
                               btnRight: widget.from! == ProfilePage.profileMe ? messages : submitScore,
                               onLeftBtnClick: () {
                                 widget.from! == ProfilePage.profileMe
-                                    ? print('EDIT PROFILE')
+                                    ? Navigator.pushNamed(context, EditProfilePage.path) // 'EDIT PROFILE'
                                     : Navigator.pushReplacementNamed(context, ChallengesChat.path);
                                 // :Navigator.pushNamedAndRemoveUntil(context,ChallengesChat.path,ModalRoute.withName(LeagueDetails.path));
                               },
                               onRightBtnClick: () {
                                 widget.from! == ProfilePage.profileMe
-                                    ? print('MESSAGES')
+                                    ? Navigator.pushNamed(context, AllMessagesListPage.path) // 'MESSAGES'
                                     :
                                     // Navigator.pushNamedAndRemoveUntil(context,LeagueDetails.path,ModalRoute.withName(DashboardPage.path));
                                     Navigator.pushNamed(context, SubmitScoreDetails.path);
@@ -218,7 +233,7 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> {
                               StatsTile(title: "Defeats", subtitle: '${newProfile?.lostCount}'),
                               StatsTile(
                                 title: "Rating",
-                                subtitle: "4.5",
+                                subtitle: '${newProfile?.rating}',
                               )
                             ],
                           ),
@@ -237,26 +252,6 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> {
                     ),
 
                     SliverToBoxAdapter(
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 16.0, right: 16),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "Recent Matches",
-                              style: GoogleFonts.poppins(fontSize: 16, color: Color(0xff263238)),
-                            ),
-                            GestureDetector(
-                                onTap: () {
-                                  Navigator.pushNamed(context, RecentMatchesPage.path);
-                                },
-                                child: Text("See All"))
-                          ],
-                        ),
-                      ),
-                    ),
-
-                    SliverToBoxAdapter(
                       child: Query(
                         builder: (result, {fetchMore, refetch}) {
                           if (result.hasException) {
@@ -264,49 +259,82 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> {
                           }
 
                           if (result.isLoading) {
-                            return Text('Loading');
+                            return Center(
+                              child: CupertinoActivityIndicator(),
+                            );
                           }
-                          dataRecent = result.data;
-                          return Column(
-                            children: [
-                              for (int i = 0; i < 2; i++)
-                                HeadToHeadDetailsListTile(
-                                  title: 'CBS Arena',
-                                  date: 'Dec 31st 2021',
-                                  onProfileClick: () {},
-                                  onTileClick: () {},
-                                  player1matchScore: [5, 4, 3, 2, 1],
-                                  player1Img: 'assets/Ellipse 5.png',
-                                  player1Name: result.data!["allMatches"]["edges"][i]["node"]["playerOne"]["firstName"],
-                                  player1Active: true,
-                                  player2matchScore: [1, 2, 3, 4, 5],
-                                  player2Img: 'assets/Ellipse 2.png',
-                                  player2Name: result.data!["allMatches"]["edges"][i]["node"]["playerTwo"]["firstName"],
-                                  player2Active: false,
+
+                          _allMatchesData = AllMatchesData.fromJson(result.data!);
+
+                          List<MatchesEdges>? tempMatches = [];
+                          if (_allMatchesData.allMatches!.edges!.length > 0) {
+                            tempMatches.add(_allMatchesData.allMatches!.edges![0]);
+                          }
+
+                          if (_allMatchesData.allMatches!.edges!.length > 1) {
+                            tempMatches.add(_allMatchesData.allMatches!.edges![1]);
+                          }
+
+                          return tempMatches.length > 0
+                              ? Column(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 16.0, right: 16),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            "Recent Matches",
+                                            style: GoogleFonts.poppins(fontSize: 16, color: Color(0xff263238)),
+                                          ),
+                                          GestureDetector(
+                                              onTap: () {
+                                                Navigator.pushNamed(context, RecentMatchesPage.path);
+                                              },
+                                              child: Text("See All"))
+                                        ],
+                                      ),
+                                    ),
+                                    for (int i = 0; i < 2; i++)
+                                      HeadToHeadDetailsListTile(
+                                        title: 'CBS Arena',
+                                        date: 'Dec 31st 2021',
+                                        onProfileClick: () {},
+                                        onTileClick: () {},
+                                        player1matchScore: [5, 4, 3, 2, 1],
+                                        player1Img: 'assets/Ellipse 5.png',
+                                        player1Name: tempMatches[i].node?.playerOne?.firstName,
+                                        player1Active: true,
+                                        player2matchScore: [1, 2, 3, 4, 5],
+                                        player2Img: 'assets/Ellipse 2.png',
+                                        player2Name: tempMatches[i].node?.playerTwo?.firstName,
+                                        player2Active: false,
+                                      )
+                                    // Padding(
+                                    //   padding: const EdgeInsets.only(
+                                    //       left: 16.0, right: 16, top: 10),
+                                    //   child: MatchCard(
+                                    //     scores: result.data!["allMatches"]
+                                    //     ["edges"][i]["node"]["matchSet"]
+                                    //     ["edges"],
+                                    //     playerOneName: result.data!["allMatches"]
+                                    //     ["edges"][i]["node"]["playerOne"]
+                                    //     ["firstName"],
+                                    //     playerTwoName: result.data!["allMatches"]
+                                    //     ["edges"][i]["node"]["playerTwo"]
+                                    //     ["firstName"],
+                                    //   ),
+                                    // ),
+                                  ],
                                 )
-                              // Padding(
-                              //   padding: const EdgeInsets.only(
-                              //       left: 16.0, right: 16, top: 10),
-                              //   child: MatchCard(
-                              //     scores: result.data!["allMatches"]
-                              //     ["edges"][i]["node"]["matchSet"]
-                              //     ["edges"],
-                              //     playerOneName: result.data!["allMatches"]
-                              //     ["edges"][i]["node"]["playerOne"]
-                              //     ["firstName"],
-                              //     playerTwoName: result.data!["allMatches"]
-                              //     ["edges"][i]["node"]["playerTwo"]
-                              //     ["firstName"],
-                              //   ),
-                              // ),
-                            ],
-                          );
+                              : SizedBox();
                         },
                         options: QueryOptions(
                           document: gql(Constants.matchesQuery),
                           // this is the query string you just created
                           variables: {
                             'userSearch': userId.getUserId,
+                            // 'userSearch': '021c2515-e12e-49bd-bc08-744dc64a508c',
                           },
                           pollInterval: Duration(seconds: 100),
                         ),

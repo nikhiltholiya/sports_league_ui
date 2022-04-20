@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+
 import '../components/bordered_circle_avatar.dart';
 import '../components/decorated_app_header_tile.dart';
 import '../components/elevated_buttons.dart';
 import '../components/iconic_text_view.dart';
 import '../utils/app_colors.dart';
+import '../utils/app_labels.dart';
 
 //Created on 20220304
 class ProfileHeaderTile extends StatefulWidget {
@@ -128,10 +130,11 @@ class _ProfileHeaderTileState extends State<ProfileHeaderTile> {
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: ElevatedButtons(
-                                  borderColor: aLightGray,
-                                  buttonColor: aWhite,
-                                  labelColor: aLightGray,
                                   label: widget.btnLeft,
+                                  borderColor: widget.btnLeft == chat ? aGreen : aLightGray  ,
+                                  buttonColor: widget.btnLeft == chat ? aGreen : aWhite,
+                                  labelColor: widget.btnLeft == chat ? aWhite : aLightGray,
+
                                   onClick: () => widget.onLeftBtnClick!(),
                                 ),
                               ),

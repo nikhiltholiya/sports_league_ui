@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:collection';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +11,7 @@ import '../Pages/submit_score_details.dart';
 import '../bean/all_messaging/all_messaging.dart';
 import '../bean/all_users/all_users.dart';
 import '../components/edit_text_form_field.dart';
+import '../components/no_data_list_tile.dart';
 import '../components/submit_score_list_tile.dart';
 import '../providers/league_id_provider.dart';
 import '../providers/user_id_provider.dart';
@@ -17,6 +19,7 @@ import '../utils/Constants.dart';
 import '../utils/app_colors.dart';
 import '../utils/app_labels.dart';
 import '../utils/common.dart';
+import '../utils/shared_preferences_utils.dart';
 
 //Created on 20220315
 class SubmitScoreList extends StatefulWidget {
@@ -37,6 +40,7 @@ class _SubmitScoreListState extends State<SubmitScoreList> {
   late AllUsersData _allUsersData;
 
   List<dynamic>? _listAllUsers;
+  List<dynamic>? _listAllUsersTemp = [];
 
   // List<dynamic>? _foundUsers = [];
 
@@ -70,7 +74,6 @@ class _SubmitScoreListState extends State<SubmitScoreList> {
     paramTypeForMsg = {
       'senderReceipientSearch': '\$senderReceipientSearch',
     };
-    variableForMsg = {'senderReceipientSearch': '1211d15f-5147-4394-812e-47c801d567c5'};
     _streamController.sink.add([]);
     super.initState();
   }
@@ -86,13 +89,16 @@ class _SubmitScoreListState extends State<SubmitScoreList> {
   Widget build(BuildContext context) {
     return BaseWidget(
       appbarHeight: kToolbarHeight,
+      onBackClick: () => Navigator.pop(context),
       appbar: Text(
         submitScore,
         style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
       ),
       body: Consumer<UserIdProvider>(
         builder: (context, UserId, child) {
-          return StreamBuilder<List<dynamic>>(
+          variableForMsg = {'senderReceipientSearch': '${UserId.getUserId}'};
+
+          return StreamBuilder<List<dynamic>?>(
             stream: _streamController.stream,
             builder: (context, snapshot) {
               if (snapshot.hasData) {
@@ -116,9 +122,11 @@ class _SubmitScoreListState extends State<SubmitScoreList> {
 
                       if (!isLoaded!) {
                         isLoaded = true;
+
                         try {
                           _allMessagingData = AllMessagingData.fromJson(msgresult.data!);
                           _listAllUsers = [];
+                          _listAllUsersTemp = [];
 
                           // for (var data in _allMessagingData.allMessaging!.edges!){
                           //   print('data  -R-${data.node?.recipient?.firstName}');
@@ -130,11 +138,15 @@ class _SubmitScoreListState extends State<SubmitScoreList> {
                                 ? data.node!.recipient!
                                 : data.node!.sender!);
 
-                          _streamController.sink.add(_listAllUsers ?? []);
-                          // _foundUsers = _listAllUsers;
+                          var uniques = LinkedHashMap<MsgRecipient, bool>();
+                          for (var s in _listAllUsers!) {
+                            uniques[s] = true;
+                          }
+                          _listAllUsersTemp!.addAll(uniques.keys);
 
+                          _streamController.sink.add(_listAllUsersTemp!);
                         } catch (e) {
-                          debugPrint('Exception -- $e');
+                          debugPrint('${SubmitScoreDetails.path}  * Exception -- $e');
                         }
                       }
                       return CustomScrollView(
@@ -170,7 +182,7 @@ class _SubmitScoreListState extends State<SubmitScoreList> {
                                     } else {
                                       // _foundUsers = [];
                                       // _foundUsers = _listAllUsers;
-                                      _streamController.sink.add(_listAllUsers ?? []);
+                                      _streamController.sink.add(_listAllUsersTemp!);
                                       flagSearch = false;
                                     }
 
@@ -188,37 +200,47 @@ class _SubmitScoreListState extends State<SubmitScoreList> {
                             pinned: true,
                           ),
                           SliverToBoxAdapter(
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                submitMatchScore,
-                                style: TextStyle(color: aLightGray, fontWeight: FontWeight.bold, fontSize: 16.0),
-                              ),
-                            ),
+                            child: snapshot.data!.length > 0
+                                ? Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text(
+                                      submitMatchScore,
+                                      style: TextStyle(color: aLightGray, fontWeight: FontWeight.bold, fontSize: 16.0),
+                                    ),
+                                  )
+                                : SizedBox(),
                           ),
-                          SliverList(
-                            delegate: SliverChildBuilderDelegate(
-                              (context, index) => SubmitScoreListTile(
-                                userName: '${snapshot.data![index].firstName} ${snapshot.data![index].lastName}',
-                                // profileImg: _foundUsers![index].node?.picture,
-                                profileImg: 'assets/Ellipse 1.png',
-                                rating: '${snapshot.data![index].rating}',
-                                playerLocation:
-                                    '${snapshot.data![index].city}, ${snapshot.data![index].state}, ${snapshot.data![index].country}',
-                                onTileClick: () {
-                                  Provider.of<UserIdProvider>(context, listen: false)
-                                      .setUserId(snapshot.data![index].userId);
-                                  Navigator.pushNamed(context, SubmitScoreDetails.path);
+                          snapshot.data!.length > 0
+                              ? SliverList(
+                                  delegate: SliverChildBuilderDelegate(
+                                    (context, index) => SubmitScoreListTile(
+                                      userName: '${snapshot.data![index].firstName} ${snapshot.data![index].lastName}',
+                                      // profileImg: _foundUsers![index].node?.picture,
+                                      profileImg: 'assets/Ellipse 1.png',
+                                      rating: '${snapshot.data![index].rating}',
+                                      playerLocation:
+                                          '${snapshot.data![index].city != null ? snapshot.data![index].city : ''}${snapshot.data![index].state != null ? ', ' + snapshot.data![index].state : ''}${snapshot.data![index].country != null ? ', ' + snapshot.data![index].country : ''}',
+                                      onTileClick: () {
+                                        Provider.of<UserIdProvider>(context, listen: false)
+                                            .setUserId(snapshot.data![index].userId);
+                                        Navigator.pushNamed(context, SubmitScoreDetails.path);
 
-                                  Provider.of<LeagueIdProvider>(context, listen: false).setLeagueId('');
+                                        Provider.of<LeagueIdProvider>(context, listen: false).setLeagueId('');
 
-                                  _chatNode?.enclosingScope;
-                                },
-                                onProfileClick: () {},
-                              ),
-                              childCount: snapshot.data!.length,
-                            ),
-                          ),
+                                        _chatNode?.enclosingScope;
+                                      },
+                                      onProfileClick: () {},
+                                    ),
+                                    childCount: snapshot.data!.length,
+                                  ),
+                                )
+                              : SliverToBoxAdapter(
+                                  child: NoDataListTile(
+                                    onTileClick: () {},
+                                    noCaption: noPlayerFound,
+                                    noMsg: '',
+                                  ),
+                                ),
                           if (flagSearch!)
                             SliverToBoxAdapter(
                               child: Padding(
@@ -243,7 +265,7 @@ class _SubmitScoreListState extends State<SubmitScoreList> {
                                     List<dynamic>? temp = [];
                                     // _foundUsers = [];
                                     for (var data in _allUsersData.allUsers!.edges!) {
-                                      temp.add(data.node);
+                                      if (data.node!.userId != SharedPreferencesUtils.getUserId) temp.add(data.node);
                                     }
 
                                     _streamController.sink.add(temp);
@@ -262,7 +284,9 @@ class _SubmitScoreListState extends State<SubmitScoreList> {
                   ),
                 );
               }
-              return Text('Load');
+              return Center(
+                child: CupertinoActivityIndicator(),
+              );
             },
           );
         },

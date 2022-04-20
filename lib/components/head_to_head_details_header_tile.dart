@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../components/bordered_circle_avatar.dart';
 import '../components/decorated_app_header_tile.dart';
 import '../components/rate_badges.dart';
@@ -38,12 +39,10 @@ class HeadToHeadDetailsHeaderTile extends StatefulWidget {
       : super(key: key);
 
   @override
-  State<HeadToHeadDetailsHeaderTile> createState() =>
-      _HeadToHeadDetailsHeaderTileState();
+  State<HeadToHeadDetailsHeaderTile> createState() => _HeadToHeadDetailsHeaderTileState();
 }
 
-class _HeadToHeadDetailsHeaderTileState
-    extends State<HeadToHeadDetailsHeaderTile> {
+class _HeadToHeadDetailsHeaderTileState extends State<HeadToHeadDetailsHeaderTile> {
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -88,8 +87,7 @@ class _HeadToHeadDetailsHeaderTileState
                           //   2: FlexColumnWidth(4),
                           // },
                           defaultColumnWidth: IntrinsicColumnWidth(),
-                          defaultVerticalAlignment:
-                              TableCellVerticalAlignment.middle,
+                          defaultVerticalAlignment: TableCellVerticalAlignment.middle,
                           children: [
                             TableRow(
                               children: [
@@ -103,9 +101,7 @@ class _HeadToHeadDetailsHeaderTileState
                               ],
                             ),
                             TableRow(children: [
-                              ScoreText(
-                                  statusName: widget.player1win ?? '',
-                                  align: TextAlign.start),
+                              ScoreText(statusName: widget.player1win ?? '', align: TextAlign.start),
                               ScoreText(
                                 statusName: 'Win',
                                 fWeight: FontWeight.bold,
@@ -118,14 +114,8 @@ class _HeadToHeadDetailsHeaderTileState
                               )
                             ]),
                             TableRow(children: [
-                              ScoreText(
-                                  statusName: widget.player1Loss ?? '',
-                                  align: TextAlign.start),
-                              ScoreText(
-                                  statusName: 'Loss',
-                                  fWeight: FontWeight.bold,
-                                  color: aRed,
-                                  fontSize: 15),
+                              ScoreText(statusName: widget.player1Loss ?? '', align: TextAlign.start),
+                              ScoreText(statusName: 'Loss', fWeight: FontWeight.bold, color: aRed, fontSize: 15),
                               ScoreText(
                                 statusName: widget.player2Loss ?? '',
                                 align: TextAlign.end,
@@ -200,8 +190,7 @@ class HeadUsers extends StatefulWidget {
   final String? userName;
   final String? userRate;
 
-  const HeadUsers({Key? key, this.imgUrl, this.userName, this.userRate})
-      : super(key: key);
+  const HeadUsers({Key? key, this.imgUrl, this.userName, this.userRate}) : super(key: key);
 
   @override
   State<HeadUsers> createState() => _HeadUsersState();

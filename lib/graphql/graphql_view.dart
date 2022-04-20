@@ -10,7 +10,7 @@ class ClientProvider extends StatelessWidget {
     required this.child,
     required String uri,
     required AuthLink authLink,
-    required String subscriptionUri,
+    String? subscriptionUri,
   }) : client = clientFor(
     authLink: authLink,
     uri: uri,

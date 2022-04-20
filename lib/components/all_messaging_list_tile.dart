@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+
 import '../components/bordered_circle_avatar.dart';
-import '../components/iconic_text_view.dart';
-import '../components/rate_badges.dart';
 import '../utils/app_colors.dart';
 
 //created on 20220408
@@ -12,11 +11,7 @@ class AllMessagesListTile extends StatefulWidget {
   final Function? onProfileClick;
 
   const AllMessagesListTile(
-      {Key? key,
-      required this.profileImg,
-      required this.userName,
-      this.onTileClick,
-      this.onProfileClick})
+      {Key? key, required this.profileImg, required this.userName, this.onTileClick, this.onProfileClick})
       : super(key: key);
 
   @override
@@ -35,8 +30,7 @@ class _AllMessagesListTileState extends State<AllMessagesListTile> {
           color: aPartGray5,
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12.0),
-              side: BorderSide(
-                  color: aPartGray10, style: BorderStyle.solid, width: 1.0)),
+              side: BorderSide(color: aPartGray10, style: BorderStyle.solid, width: 1.0)),
         ),
         child: Padding(
           padding: const EdgeInsets.all(5.0),

@@ -70,9 +70,8 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
       '\$phone': 'String',
       '\$rating': 'String',
       '\$state': 'String',
+      '\$picture': 'String',
     };
-
-    // '\$uId': 'UUID'
 
     paramTypeUpdateProfile = {
       'userId': '\$userId',
@@ -83,6 +82,7 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
       'phone': ' \$phone',
       'rating': ' \$rating',
       'state': ' \$state',
+      'picture': ' \$picture',
     };
 
     super.initState();
@@ -101,6 +101,7 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
           ),
         ),
         appbarHeight: kToolbarHeight,
+        onBackClick: () => Navigator.pop(context),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: ListView(
@@ -190,12 +191,12 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
                       minTime: DateTime(DateTime.now().year - 70, DateTime.now().month, DateTime.now().day),
                       maxTime: DateTime.now(),
                       onChanged: (date) {
-                        print('change $date');
+                        debugPrint('${CreateProfilePage.path} * change $date');
                       },
                       onConfirm: (date) {
                         bDate = date.toString();
                         setState(() {});
-                        print('confirm $date');
+                        debugPrint('${CreateProfilePage.path} * confirm $date');
                       },
                       currentTime: datePickerDate(bDate == 'Date of Birth' ? DateTime.now().toString() : bDate),
                     );
@@ -272,7 +273,7 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
               updateAccount(paramUpdateProfile, paramTypeUpdateProfile),
             ),
             onError: (OperationException? error) {
-              print('erroR -- $error');
+              debugPrint('${CreateProfilePage.path} * erroR -- $error');
               errorList = [];
               errorList!.add('$error');
 
@@ -288,7 +289,7 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
 
               isEnable = true;
               setState(() {});
-              print('**** RESULT * $resultData');
+              debugPrint('${CreateProfilePage.path} **** RESULT * $resultData');
 
               if (resultData != null) {
                 _createProfileData = CreateProfileData.fromJson(resultData);
@@ -351,6 +352,7 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
                     'phone': mobileNoValue,
                     'rating': selectedRate,
                     'state': selectedState,
+                    'picture': '',
                   };
 
                   doUpdateProfile(passVariable);
@@ -368,13 +370,13 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
     );
   }
 
-  Future<Widget> _showAlert() async {
+  _showAlert() async {
     return await showDialog(
         context: context,
         barrierDismissible: false,
         builder: (BuildContext context) {
           return AppDialog(
-            title: 'Profile',
+            title: profile,
             body: [
               ListView.builder(
                 shrinkWrap: true,
@@ -389,7 +391,7 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
             ],
             isBtnPositiveAvail: false,
             btnPositiveText: '',
-            btnNegativeText: 'Dismiss',
+            btnNegativeText: dialogDismiss,
             onNegativeClick: () {
               Navigator.pop(context);
               if (errorList?.first?.toString().toLowerCase() == 'done') {

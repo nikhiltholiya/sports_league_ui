@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
@@ -8,11 +9,13 @@ import 'package:provider/provider.dart';
 
 import '../Pages/base_activity.dart';
 import '../bean/create_profile/create_profile_data.dart';
+import '../bean/token_auth/token_auth.dart';
 import '../components/app_dialog.dart';
 import '../components/elevated_buttons.dart';
 import '../providers/profile_pic_provider.dart';
 import '../utils/app_colors.dart';
 import '../utils/app_labels.dart';
+import '../utils/shared_preferences_utils.dart';
 
 //Created on 20220330
 class CreateProfilePicturePage extends StatefulWidget {
@@ -24,13 +27,25 @@ class CreateProfilePicturePage extends StatefulWidget {
   State<CreateProfilePicturePage> createState() => _CreateProfilePicturePageState();
 }
 
-class _CreateProfilePicturePageState extends State<CreateProfilePicturePage> {
+class _CreateProfilePicturePageState extends State<CreateProfilePicturePage>  {
   // List<XFile>? _imageFileList;
   // File? imageFile;
 
   // set _imageFile(XFile? value) {
   //   _imageFileList = value == null ? null : <XFile>[value];
   // }
+
+  var userData = LoggedUser.fromJson(jsonDecode(SharedPreferencesUtils.getUserData.toString()));
+
+  String? bDate;
+  String? selectedRate = '';
+  String? firstNameValue = '';
+  String? lastNameValue = '';
+  String? mobileNoValue = '';
+  String? cityValue = '';
+  String? selectedState = '';
+  String? picture = '';
+
 
   dynamic _pickImageError;
   String? _retrieveDataError;
@@ -74,15 +89,41 @@ class _CreateProfilePicturePageState extends State<CreateProfilePicturePage> {
 
     paramUpdateProfile = {
       '\$userId': 'String',
+      '\$city': 'String',
+      '\$dob': 'String',
+      '\$fName': 'String',
+      '\$lName': 'String',
+      '\$phone': 'String',
+      '\$rating': 'String',
+      '\$state': 'String',
       '\$picture': 'String',
     };
 
-    // '\$uId': 'UUID'
-
     paramTypeUpdateProfile = {
       'userId': '\$userId',
+      'city': ' \$city',
+      'dob': ' \$dob',
+      'firstName': ' \$fName',
+      'lastName': ' \$lName',
+      'phone': ' \$phone',
+      'rating': ' \$rating',
+      'state': ' \$state',
       'picture': ' \$picture',
     };
+
+    bDate = userData.dob ?? 'Date of Birth';
+    selectedRate = userData.rating;
+    firstNameValue = userData.firstName;
+    lastNameValue = userData.lastName;
+    mobileNoValue = userData.phone;
+    cityValue = userData.city;
+    selectedState = userData.state;
+    picture = userData.picture;
+
+
+
+
+
     super.initState();
   }
 
@@ -92,13 +133,13 @@ class _CreateProfilePicturePageState extends State<CreateProfilePicturePage> {
   }
 
   Future<String?> _cropImage(BuildContext context) async {
-    print('CropImage');
+    debugPrint('${CreateProfilePicturePage.path} * CropImage');
 
     File imageFile = File(Provider.of<ProfilePicProvider>(context).getXFile!.path);
 
     // selectedAvatar = imageFile.path != null ? [] : [0];
 
-    print('imageFile -- ${imageFile.path}');
+    debugPrint('${CreateProfilePicturePage.path} * imageFile -- ${imageFile.path}');
 
     File? croppedFile = await ImageCropper().cropImage(
         sourcePath: imageFile.path,
@@ -215,7 +256,7 @@ class _CreateProfilePicturePageState extends State<CreateProfilePicturePage> {
   Widget build(BuildContext context) {
     // Provider.of<ProfilePicProvider>(context, listen: false).setXFile(null);
 
-    print('path  -- ${Provider.of<ProfilePicProvider>(context).getXFile}');
+    debugPrint('${CreateProfilePicturePage.path} * path  -- ${Provider.of<ProfilePicProvider>(context).getXFile}');
 
     return BaseWidget(
       appbar: Text(
@@ -226,6 +267,7 @@ class _CreateProfilePicturePageState extends State<CreateProfilePicturePage> {
         ),
       ),
       appbarHeight: kToolbarHeight,
+      onBackClick: () => Navigator.pop(context),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Consumer<ProfilePicProvider>(
@@ -420,7 +462,7 @@ class _CreateProfilePicturePageState extends State<CreateProfilePicturePage> {
           //     )
           // );
 
-          print('finalPath -- $_finalPath');
+          debugPrint('${CreateProfilePicturePage.path} * finalPath -- $_finalPath');
         },
         borderColor: aGreen,
         buttonColor: aGreen,
@@ -512,13 +554,13 @@ class _CreateProfilePicturePageState extends State<CreateProfilePicturePage> {
     return null;
   }
 
-  Future<Widget> _showAlert() async {
+  _showAlert() async {
     return await showDialog(
         context: context,
         barrierDismissible: false,
         builder: (BuildContext context) {
           return AppDialog(
-            title: 'Profile',
+            title: profile,
             body: [
               ListView.builder(
                 shrinkWrap: true,
@@ -533,7 +575,7 @@ class _CreateProfilePicturePageState extends State<CreateProfilePicturePage> {
             ],
             isBtnPositiveAvail: false,
             btnPositiveText: '',
-            btnNegativeText: 'Dismiss',
+            btnNegativeText: dialogDismiss,
             onNegativeClick: () {
               Navigator.pop(context);
             },

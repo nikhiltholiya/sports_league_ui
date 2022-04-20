@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../components/bordered_circle_avatar.dart';
 
+import '../components/bordered_circle_avatar.dart';
 import '../utils/app_colors.dart';
 
 //Created on 20220304
@@ -35,8 +35,7 @@ class HeadToHeadDetailsListTile extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<HeadToHeadDetailsListTile> createState() =>
-      _HeadToHeadDetailsListTileState();
+  State<HeadToHeadDetailsListTile> createState() => _HeadToHeadDetailsListTileState();
 }
 
 class _HeadToHeadDetailsListTileState extends State<HeadToHeadDetailsListTile> {
@@ -53,8 +52,7 @@ class _HeadToHeadDetailsListTileState extends State<HeadToHeadDetailsListTile> {
             color: aPartGray5,
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12.0),
-                side: BorderSide(
-                    color: aPartGray10, style: BorderStyle.solid, width: 1.0)),
+                side: BorderSide(color: aPartGray10, style: BorderStyle.solid, width: 1.0)),
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -132,13 +130,7 @@ class UserStats extends StatefulWidget {
   final bool? isActive;
   final List<int>? matchScore;
 
-  const UserStats(
-      {Key? key,
-      this.onProfileClick,
-      this.userName,
-      this.profileImg,
-      this.isActive,
-      this.matchScore})
+  const UserStats({Key? key, this.onProfileClick, this.userName, this.profileImg, this.isActive, this.matchScore})
       : super(key: key);
 
   @override
@@ -148,67 +140,58 @@ class UserStats extends StatefulWidget {
 class _UserStatsState extends State<UserStats> {
   @override
   Widget build(BuildContext context) {
-    return Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Container(
-            height: 30,
-            width: 2,
-            color: widget.isActive! ? aGreen : aTransparent,
-          ),
-          Expanded(
-            flex: 1,
-            child: Padding(
-              padding: const EdgeInsets.all(5.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Expanded(
-                    child: GestureDetector(
-                      onTap: () => widget.onProfileClick!(widget.userName!),
-                      child: BorderedCircleAvatar(
-                        radius: 25,
-                        path: widget.profileImg!,
-                      ),
-                    ),
-                    flex: 1,
+    return Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: [
+      Container(
+        height: 30,
+        width: 2,
+        color: widget.isActive! ? aGreen : aTransparent,
+      ),
+      Expanded(
+        flex: 1,
+        child: Padding(
+          padding: const EdgeInsets.all(5.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Expanded(
+                child: GestureDetector(
+                  onTap: () => widget.onProfileClick!(widget.userName!),
+                  child: BorderedCircleAvatar(
+                    radius: 25,
+                    path: widget.profileImg!,
                   ),
-                  Expanded(
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 10.0),
-                      child: Text(
-                        widget.userName!,
-                        textAlign: TextAlign.start,
-                        style: TextStyle(
-                          color: aBlack,
-                          fontSize: 15,
-                          fontWeight: widget.isActive!
-                              ? (FontWeight.bold)
-                              : (FontWeight.normal),
-                        ),
-                      ),
-                    ),
-                    flex: 4,
-                  ),
-                  for (var data in widget.matchScore!)
-                    Padding(
-                      padding: const EdgeInsets.all(5.0),
-                      child: Text(
-                        '$data',
-                        maxLines: 1,
-                        style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: widget.isActive!
-                                ? FontWeight.bold
-                                : FontWeight.normal),
-                      ),
-                    )
-                ],
+                ),
+                flex: 1,
               ),
-            ),
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 10.0),
+                  child: Text(
+                    widget.userName!,
+                    textAlign: TextAlign.start,
+                    style: TextStyle(
+                      color: aBlack,
+                      fontSize: 15,
+                      fontWeight: widget.isActive! ? (FontWeight.bold) : (FontWeight.normal),
+                    ),
+                  ),
+                ),
+                flex: 4,
+              ),
+              for (var data in widget.matchScore!)
+                Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: Text(
+                    '$data',
+                    maxLines: 1,
+                    style: TextStyle(fontSize: 16, fontWeight: widget.isActive! ? FontWeight.bold : FontWeight.normal),
+                  ),
+                )
+            ],
           ),
-        ]);
+        ),
+      ),
+    ]);
   }
 }

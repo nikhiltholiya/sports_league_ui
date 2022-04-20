@@ -1,24 +1,27 @@
 import 'package:flutter/material.dart';
 
 import '../utils/app_colors.dart';
-import '../utils/app_labels.dart';
 
 //Created on 20220315
-class MyLeagueNoDataListTile extends StatefulWidget {
-
+class NoDataListTile extends StatefulWidget {
+  final String? noCaption;
+  final String? noMsg;
+  final String? noImage;
   final Function? onTileClick;
 
-  const MyLeagueNoDataListTile(
-      {Key? key,
-      this.onTileClick,
-      })
-      : super(key: key);
+  const NoDataListTile({
+    Key? key,
+    this.onTileClick,
+    this.noCaption,
+    this.noMsg,
+    this.noImage = 'assets/no_data_tenis_my_league.png',
+  }) : super(key: key);
 
   @override
-  _MyLeagueNoDataListTileState createState() => _MyLeagueNoDataListTileState();
+  _NoDataListTileState createState() => _NoDataListTileState();
 }
 
-class _MyLeagueNoDataListTileState extends State<MyLeagueNoDataListTile> {
+class _NoDataListTileState extends State<NoDataListTile> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -32,36 +35,37 @@ class _MyLeagueNoDataListTileState extends State<MyLeagueNoDataListTile> {
             color: aWhite,
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12.0),
-                side: BorderSide(
-                    color: aPartGray10,
-                    style: BorderStyle.solid,
-                    width: 1.0)),
+                side: BorderSide(color: aPartGray10, style: BorderStyle.solid, width: 1.0)),
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Image.asset('assets/no_data_tenis_my_league.png',height: 150,width: 150,fit: BoxFit.fitHeight,),
-
+              Image.asset(
+                widget.noImage ?? 'assets/no_data_tenis_my_league.png',
+                height: 150,
+                width: 150,
+                fit: BoxFit.fitHeight,
+              ),
               Text(
-                myLeaguesNoData,
+                widget.noCaption ?? '',
                 style: TextStyle(
                   color: aBlack,
                   fontSize: 18,
                   fontWeight: (FontWeight.bold),
                 ),
               ),
-
               Text(
-                myLeaguesNoDataMsg,
+                widget.noMsg ?? '',
                 style: TextStyle(
                   color: aBlack,
                   fontSize: 12,
                   fontWeight: (FontWeight.normal),
                 ),
               ),
-
-              SizedBox(height: 20,)
+              SizedBox(
+                height: 20,
+              )
             ],
           ),
         ),

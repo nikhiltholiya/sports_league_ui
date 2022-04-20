@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
 import '../utils/app_colors.dart';
 
 class EditTextFormField extends StatefulWidget {
@@ -28,7 +29,7 @@ class EditTextFormField extends StatefulWidget {
       this.hint,
       this.suffixIcon,
       this.prefixIcon,
-      this.textInputType = TextInputType.name,
+      this.textInputType = TextInputType.text,
       this.textAlign = TextAlign.justify,
       this.inputFormatter,
       this.maxLength = 999,
@@ -74,8 +75,7 @@ class _EditTextFormFieldState extends State<EditTextFormField> {
             counterStyle: TextStyle(height: 0.0),
             counterText: '',
             //Remove space for counter
-            contentPadding:
-                EdgeInsets.symmetric(horizontal: 10.0, vertical: 0.0),
+            contentPadding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 0.0),
             hintText: widget.hint,
             focusColor: Colors.black,
             fillColor: aWhite,

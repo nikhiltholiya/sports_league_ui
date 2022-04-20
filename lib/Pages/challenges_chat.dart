@@ -1,4 +1,9 @@
+import 'dart:async';
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
@@ -7,8 +12,10 @@ import 'package:provider/provider.dart';
 import '../Pages/base_activity.dart';
 import '../Pages/profile_page.dart';
 import '../Pages/submit_score_details.dart';
+import '../bean/all_messaging/all_messaging.dart';
 import '../bean/all_users/all_users.dart';
-import '../bean/chat_dto.dart';
+import '../bean/send_message/send_message.dart';
+import '../bean/token_auth/token_auth.dart';
 import '../components/bordered_circle_avatar.dart';
 import '../components/chatting_list_header_tile.dart';
 import '../components/chatting_list_tile.dart';
@@ -17,9 +24,10 @@ import '../components/rate_badges.dart';
 import '../providers/user_id_provider.dart';
 import '../utils/Constants.dart';
 import '../utils/app_colors.dart';
+import '../utils/common.dart';
+import '../utils/shared_preferences_utils.dart';
 
 //Created on 20220223
-//20220321
 class ChallengesChat extends StatefulWidget {
   static const String path = 'challengesChat';
 
@@ -30,13 +38,6 @@ class ChallengesChat extends StatefulWidget {
 }
 
 class _ChallengesChatState extends State<ChallengesChat> {
-  List<Chat>? chatList = [
-    Chat(message: 'Are you up for a challenge?', dateTime: '3:27 PM', isMe: false),
-    Chat(message: 'Yes, count me in', dateTime: '3:28 PM', isMe: true),
-    Chat(message: 'No, I am not available', dateTime: '3:28 PM', isMe: true),
-    Chat(message: 'Yes, count me in', dateTime: '3:28 PM', isMe: false)
-  ];
-
   ScrollController? _scrollController;
   var _stackKey = GlobalKey();
   var _textTitleKey = GlobalKey();
@@ -44,8 +45,22 @@ class _ChallengesChatState extends State<ChallengesChat> {
   double? _totalHeight = 0.0;
   bool? _visibility = true;
   bool? _isSilverCollapsed = false;
+  bool? _isLoaded = false;
   FocusNode? _chatNode;
   TextEditingController? _textController = TextEditingController(text: '');
+
+  Map<String, dynamic> paramSendMsg = {};
+  Map<String, dynamic> paramTypeSendMsg = {};
+  Map<String, dynamic> passVariableSendMsg = {};
+  late SendMessageData? _sendMessageData;
+  late AllMessagingData _allMessagingData;
+  late List<MsgNode>? _chatList;
+
+  Map<String, dynamic> paramForMsg = {};
+  Map<String, dynamic> paramTypeForMsg = {};
+  Map<String, dynamic> variableForMsg = {};
+
+  var _streamController = StreamController<List<MsgNode>>();
 
   // var scrollPosition;
   // String? userName = '';
@@ -54,6 +69,7 @@ class _ChallengesChatState extends State<ChallengesChat> {
 
   bool? isBuildWidgets = false;
   late AllUsersData _allUsersData;
+  List<String>? errorList = [];
 
   double? _getHeight(GlobalKey? gKey) {
     try {
@@ -76,6 +92,30 @@ class _ChallengesChatState extends State<ChallengesChat> {
     _totalHeight = (stack ?? 0.0) + (title ?? 0.0) /*+ (location ?? 0.0) + (btn ?? 0.0)*/ + kToolbarHeight;
 
     // print('Height == $_totalHeight');
+  }
+
+  // if(_chatList!.isNotEmpty) {
+  // Timer(Duration(milliseconds: 300),
+  // () =>
+  // _scrollController!.jumpTo(
+  // _scrollController!.position.maxScrollExtent));
+  // }
+  //
+
+  void scrollToLast() async {
+    if (_chatList!.isNotEmpty) {
+      _scrollController!.animateTo(
+        _scrollController!.position.maxScrollExtent,
+        duration: const Duration(milliseconds: 100),
+        curve: Curves.bounceIn,
+      );
+
+      // Timer(Duration(microseconds : 300),
+      //         () =>
+      //         _scrollController!.jumpTo(
+      //             _scrollController!.position.maxScrollExtent));
+
+    }
   }
 
   void _getListItems() async {
@@ -129,6 +169,24 @@ class _ChallengesChatState extends State<ChallengesChat> {
 
     // _getListItems(); No Need for right now
     setToolbarTitle();
+
+    paramSendMsg = {
+      '\$passParam': ' MessagingInput!',
+    };
+    paramTypeSendMsg = {
+      'input': '\$passParam',
+    };
+
+    paramForMsg = {
+      '\$senderReceipientSearch': 'String!',
+    };
+    paramTypeForMsg = {
+      'senderReceipientSearch': '\$senderReceipientSearch',
+    };
+
+    _chatList = [];
+    _streamController.sink.add(_chatList!);
+
     super.initState();
   }
 
@@ -146,11 +204,7 @@ class _ChallengesChatState extends State<ChallengesChat> {
     return BaseWidget(
       appbar: AppBar(
         centerTitle: true,
-        // title: SizedBox(
-        //   child: ChattingListHeaderTile(),
-        //   key: _headerContentSize,
-        // ), // This is used for getting dynamic height of contents!!!
-        toolbarHeight: 0,
+        toolbarHeight: 0.0,
       ),
       body: Container(
         color: aWhite,
@@ -163,6 +217,9 @@ class _ChallengesChatState extends State<ChallengesChat> {
               'userId': '\$userId',
             };
             Map<String, dynamic> passVariable = {'userId': '${value.getUserId}'};
+
+            variableForMsg = {'senderReceipientSearch': '${value.getUserId}|${SharedPreferencesUtils.getUserId}'};
+
 
             return Query(
               options: QueryOptions(
@@ -188,7 +245,7 @@ class _ChallengesChatState extends State<ChallengesChat> {
                     WidgetsBinding.instance?.addPostFrameCallback(_getTotalHeight);
                   }
                 } catch (e) {
-                  debugPrint('Exception -- $e');
+                  debugPrint('Exception -- allUsers -- $e');
                 }
 
                 return Column(
@@ -211,10 +268,15 @@ class _ChallengesChatState extends State<ChallengesChat> {
                               stretch: true,
                               centerTitle: true,
                               leading: IconButton(
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                  icon: Icon(Icons.arrow_back)),
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                icon: Icon(kIsWeb
+                                    ? Icons.arrow_back
+                                    : Platform.isIOS
+                                        ? Icons.arrow_back_ios
+                                        : Icons.arrow_back),
+                              ),
                               titleTextStyle:
                                   TextStyle(fontSize: 10, color: _isSilverCollapsed! ? Colors.black : Colors.white),
                               iconTheme: IconThemeData(color: _isSilverCollapsed! ? Colors.black : Colors.white),
@@ -259,7 +321,7 @@ class _ChallengesChatState extends State<ChallengesChat> {
                                               ),
                                               Padding(
                                                 padding: const EdgeInsets.all(5.0),
-                                                child: BorderedCircleAvatar(radius: 20, path: 'assets/Ellipse 5.png'),
+                                                child: BorderedCircleAvatar(radius: 20, path: 'assets/Ellipse 1.png'),
                                               ),
                                               Expanded(
                                                 flex: 1,
@@ -286,22 +348,120 @@ class _ChallengesChatState extends State<ChallengesChat> {
                               expandedHeight: _totalHeight,
                               backgroundColor: Colors.white,
                             ),
-                            SliverList(
-                              delegate: SliverChildBuilderDelegate(
-                                (context, index) => ChattingListTile(
-                                  key: ValueKey(index),
-                                  isMe: chatList![index].isMe,
-                                  msg: chatList![index].message,
-                                  time: chatList![index].dateTime,
-                                ),
-                                childCount: chatList!.length,
-                              ),
+                            StreamBuilder<List<MsgNode>?>(
+                              stream: _streamController.stream,
+                              builder: (context, snapshot) {
+                                if (snapshot.hasData) {
+                                  return Query(
+                                    options: QueryOptions(
+                                      document: gql(allMessaging(paramForMsg, paramTypeForMsg)),
+                                      // this is the query string you just created
+                                      variables: variableForMsg,
+                                      pollInterval: Duration(seconds: 5),
+                                    ),
+                                    builder: (msgresult, {fetchMore, refetch}) {
+                                      if (msgresult.hasException) {
+                                        return SliverToBoxAdapter(
+                                          child: Text(
+                                            msgresult.exception.toString(),
+                                          ),
+                                        );
+                                      }
+
+                                      if (msgresult.isLoading && msgresult.data == null) {
+                                        return SliverToBoxAdapter(
+                                          child: const Center(
+                                            child: CupertinoActivityIndicator(),
+                                          ),
+                                        );
+                                      }
+
+                                      if (msgresult.data != null) {
+                                        try {
+                                          _allMessagingData = AllMessagingData.fromJson(msgresult.data!);
+
+                                          _chatList = [];
+                                          // MsgNode
+                                          for (var msgData in _allMessagingData.allMessaging!.edges!) {
+                                            _chatList!.add(msgData.node!);
+                                          }
+
+                                          _streamController.sink.add(_chatList ?? []);
+
+                                          if(!_isLoaded!) {
+                                            _isLoaded = true;
+                                            scrollToLast();
+                                          }
+                                        } catch (e) {
+                                          debugPrint('Exception -- allMessaging -- $e');
+                                        }
+
+                                        // return SliverToBoxAdapter(
+                                        //   child: Text('Loaded'),
+                                        // );
+                                        return SliverList(
+                                          delegate: SliverChildBuilderDelegate(
+                                            (context, index) => ChattingListTile(
+                                              key: ValueKey(index),
+                                              isMe:
+                                                  _chatList![index].sender?.userId == SharedPreferencesUtils.getUserId,
+                                              msg: _chatList![index].message,
+                                              time: '${convertTime(_chatList![index].createdAt, null)}',
+                                            ),
+                                            childCount: _chatList!.length,
+                                          ),
+                                        );
+
+                                        // return ListView.builder(
+                                        //   itemBuilder: (context, index) {
+                                        //     return ChattingListTile(
+                                        //       key: ValueKey(index),
+                                        //       isMe: _chatList![index].sender?.userId ==
+                                        //           SharedPreferencesUtils.getUserId,
+                                        //       msg: _chatList![index].message,
+                                        //       time: _chatList![index].createdAt,
+                                        //     );
+                                        //   },
+                                        //   shrinkWrap: true,
+                                        //   physics: const BouncingScrollPhysics(),
+                                        //   itemCount: _chatList!.length,
+                                        // );
+                                      } else {
+                                        return SliverToBoxAdapter(
+                                          child: Text('Null'),
+                                        );
+                                        // return SliverPadding(
+                                        //   padding: EdgeInsets.zero,
+                                        //   sliver: Center(
+                                        //     child: Text(enterFirstMsg),
+                                        //   ),
+                                        // );
+                                      }
+                                    },
+                                  );
+                                }
+                                return SliverToBoxAdapter(
+                                  child: Text('Error'),
+                                );
+                                // return SliverPadding(
+                                //   padding: EdgeInsets.zero,
+                                //   sliver: Center(
+                                //     child: CupertinoActivityIndicator(),
+                                //   ),
+                                // );
+                              },
+                            ),
+                            SliverToBoxAdapter(
+                              child:
+                                  Padding(padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom)),
                             )
                           ], //<Widget>[]
                         ),
                         flex: 1),
                     EditTextFormField(
-                      onTap: () {},
+                      onTap: () {
+                        scrollToLast();
+                      },
                       focusNode: _chatNode,
                       hint: 'Enter Message',
                       onTextChange: (dynamic value) {
@@ -312,37 +472,83 @@ class _ChallengesChatState extends State<ChallengesChat> {
                         });
                       },
                       suffixIcon: _textController!.text.trim().isNotEmpty
-                          ? IconButton(
-                              onPressed: () {
-                                if (_textController!.text.trim().isNotEmpty) {
-                                  setState(() {
-                                    chatList!.add(
-                                      Chat(message: _textController?.text, dateTime: '3:27 PM', isMe: true),
-                                    );
-                                  });
-                                  _textController!.text = '';
+                          ? Mutation(
+                              options: MutationOptions(
+                                document: gql(
+                                  sendMessage(paramSendMsg, paramTypeSendMsg),
+                                ),
+                                onError: (OperationException? error) {
+                                  debugPrint('${ChallengesChat.path} * erroR -- $error');
+                                  errorList = [];
+                                  errorList!.add('$error');
 
-                                  // _getListItems();
+                                  // Text('$error');
+                                },
+                                // _simpleAlert(context, error.toString()),
+                                onCompleted: (dynamic resultData) {
+                                  // Text('Thanks for your star!');
 
-                                  // Timer(
-                                  //     Duration(milliseconds: 300),
-                                  //         () => _scrollController!.jumpTo(
-                                  //         _scrollController!
-                                  //             .position.minScrollExtent));
-                                  // Timer(
-                                  //     Duration(milliseconds: 300),
-                                  //         () => _scrollController!.jumpTo(
-                                  //         _scrollController!
-                                  //             .position.maxScrollExtent));
-                                  //
-                                  // print(_scrollController!
-                                  //     .position.maxScrollExtent);
-                                }
-                              },
-                              icon: Icon(
-                                Icons.send,
-                                color: Color(0XFF808080),
+                                  debugPrint('${ChallengesChat.path} **** RESULT * $resultData');
+
+                                  if (resultData != null) {
+                                    _sendMessageData = SendMessageData.fromJson(resultData);
+
+                                    _chatList!.add(_sendMessageData!.sendMessage!.messaging!);
+
+                                    _streamController.sink.add(_chatList ?? []);
+
+                                    scrollToLast();
+                                  }
+                                },
+                                // 'Sorry you changed your mind!',
                               ),
+                              builder: (RunMutation _sendMessage, QueryResult? addResult) {
+                                final doSendMsg = (result) {
+                                  _sendMessage(result);
+                                };
+
+                                final anyLoading = addResult!.isLoading;
+
+                                return IconButton(
+                                  onPressed: () {
+                                    if (_textController!.text.trim().isNotEmpty) {
+                                      var data = LoggedUser.fromJson(
+                                          jsonDecode(SharedPreferencesUtils.getUserData.toString()));
+
+                                      Map<String, dynamic> passVariableSendMsg = {
+                                        'message': '${_textController?.text}',
+                                        'sender': '${data.userId}',
+                                        'recipient': '${value.getUserId}',
+                                      };
+
+                                      doSendMsg({'passParam': passVariableSendMsg});
+
+                                      _textController!.text = '';
+
+                                      scrollToLast();
+                                      // _getListItems();
+
+                                      // Timer(
+                                      //     Duration(milliseconds: 300),
+                                      //         () => _scrollController!.jumpTo(
+                                      //         _scrollController!
+                                      //             .position.minScrollExtent));
+                                      // Timer(
+                                      //     Duration(milliseconds: 300),
+                                      //         () => _scrollController!.jumpTo(
+                                      //         _scrollController!
+                                      //             .position.maxScrollExtent));
+                                      //
+                                      // print(_scrollController!
+                                      //     .position.maxScrollExtent);
+                                    }
+                                  },
+                                  icon: Icon(
+                                    Icons.send,
+                                    color: aGreen,
+                                  ),
+                                );
+                              },
                             )
                           : SizedBox(),
                       textController: _textController,

@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../Pages/base_activity.dart';
@@ -84,7 +87,7 @@ class _HeadToHeadDetailsState extends State<HeadToHeadDetails> {
         //   child: HeadToHeadDetailsHeaderTile(),
         //   key: _headerContentSize,
         // ), // This is used for getting dynamic height of contents!!!
-        toolbarHeight: 0,
+        toolbarHeight: 0.0,
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -106,10 +109,15 @@ class _HeadToHeadDetailsState extends State<HeadToHeadDetails> {
                     stretch: true,
                     centerTitle: true,
                     leading: IconButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        icon: Icon(Icons.arrow_back)),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      icon: Icon(kIsWeb
+                          ? Icons.arrow_back
+                          : Platform.isIOS
+                              ? Icons.arrow_back_ios
+                              : Icons.arrow_back),
+                    ),
                     titleTextStyle: TextStyle(fontSize: 10, color: _isSilverCollapsed! ? Colors.black : Colors.white),
                     iconTheme: IconThemeData(color: _isSilverCollapsed! ? Colors.black : Colors.white),
                     /* titleTextStyle: TextStyle(

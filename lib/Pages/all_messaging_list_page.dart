@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:collection';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +10,7 @@ import '../Pages/base_activity.dart';
 import '../Pages/challenges_chat.dart';
 import '../bean/all_messaging/all_messaging.dart';
 import '../components/all_messaging_list_tile.dart';
+import '../components/no_data_list_tile.dart';
 import '../providers/user_id_provider.dart';
 import '../utils/Constants.dart';
 import '../utils/app_colors.dart';
@@ -26,9 +28,6 @@ class AllMessagesListPage extends StatefulWidget {
 
 class _AllMessagesListPageState extends State<AllMessagesListPage> {
   ScrollController? _scrollController;
-
-  // late AllUsersData _allUsersData;
-
   List<dynamic>? _listAllUsers;
 
   late AllMessagingData _allMessagingData;
@@ -40,7 +39,7 @@ class _AllMessagesListPageState extends State<AllMessagesListPage> {
   Map<String, dynamic> paramTypeForMsg = {};
   Map<String, dynamic> variableForMsg = {};
 
-  var _streamController = StreamController<List<dynamic>>();
+  var _streamController = StreamController<List<dynamic>?>();
 
   @override
   void initState() {
@@ -54,7 +53,6 @@ class _AllMessagesListPageState extends State<AllMessagesListPage> {
       'senderReceipientSearch': '\$senderReceipientSearch',
       'orderBy': '\$orderBy',
     };
-    variableForMsg = {'senderReceipientSearch': 'dbd94b63-4d03-4144-b28c-b8bd506f8c68', 'orderBy': 'createdAt'};
     _streamController.sink.add([]);
     super.initState();
   }
@@ -73,9 +71,12 @@ class _AllMessagesListPageState extends State<AllMessagesListPage> {
         messages,
         style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
       ),
+      onBackClick: () => Navigator.pop(context),
       body: Consumer<UserIdProvider>(
         builder: (context, UserId, child) {
-          return StreamBuilder<List<dynamic>>(
+          variableForMsg = {'senderReceipientSearch': '${UserId.getUserId}', 'orderBy': 'createdAt'};
+
+          return StreamBuilder<List<dynamic>?>(
             stream: _streamController.stream,
             builder: (context, snapshot) {
               if (snapshot.hasData) {
@@ -86,7 +87,7 @@ class _AllMessagesListPageState extends State<AllMessagesListPage> {
                       document: gql(allMessaging(paramForMsg, paramTypeForMsg)),
                       // this is the query string you just created
                       variables: variableForMsg,
-                      pollInterval: Duration(seconds: 100),
+                      pollInterval: Duration(seconds: 50),
                     ),
                     builder: (msgresult, {fetchMore, refetch}) {
                       if (msgresult.hasException) {
@@ -104,12 +105,19 @@ class _AllMessagesListPageState extends State<AllMessagesListPage> {
                           _listAllUsers = [];
 
                           for (var data in _allMessagingData.allMessaging!.edges!)
-                            // _listAllUsers?.add(data.node?.recipient?.userId != UserId.getUserId //TODO Remove Comment LIVE
-                            _listAllUsers?.add(data.node?.recipient?.userId != 'dbd94b63-4d03-4144-b28c-b8bd506f8c68'
+                            _listAllUsers?.add(data.node?.recipient?.userId != UserId.getUserId
                                 ? data.node!.recipient!
                                 : data.node!.sender!);
+                          // _listAllUsers?.where((element) => element.node!.node!.recipient!.userId == )
 
-                          _streamController.sink.add(_listAllUsers ?? []);
+                          List<dynamic>? _listAllUsersTemp = [];
+                          var uniques = LinkedHashMap<dynamic, bool>();
+                          for (var s in _listAllUsers!) {
+                            uniques[s] = true;
+                          }
+                          _listAllUsersTemp.addAll(uniques.keys);
+
+                          _streamController.sink.add(_listAllUsersTemp);
                           // _foundUsers = _listAllUsers;
 
                         } catch (e) {
@@ -121,30 +129,38 @@ class _AllMessagesListPageState extends State<AllMessagesListPage> {
                         physics: const BouncingScrollPhysics(),
                         shrinkWrap: true,
                         slivers: <Widget>[
-                          SliverList(
-                            delegate: SliverChildBuilderDelegate(
-                              (context, index) => AllMessagesListTile(
-                                userName: '${snapshot.data![index].firstName} ${snapshot.data![index].lastName}',
-                                // profileImg: _foundUsers![index].node?.picture,
-                                profileImg: 'assets/Ellipse 1.png',
-                                onTileClick: () {
-                                  Provider.of<UserIdProvider>(context, listen: false)
-                                      .setUserId('${snapshot.data![index].userId}');
-                                  Navigator.pushNamed(context, ChallengesChat.path);
+                          snapshot.data!.length > 0
+                              ? SliverList(
+                                  delegate: SliverChildBuilderDelegate(
+                                    (context, index) => AllMessagesListTile(
+                                      userName: '${snapshot.data![index].firstName} ${snapshot.data![index].lastName}',
+                                      // profileImg: _foundUsers![index].node?.picture,
+                                      profileImg: 'assets/Ellipse 1.png',
+                                      onTileClick: () {
+                                        Provider.of<UserIdProvider>(context, listen: false)
+                                            .setUserId('${snapshot.data![index].userId}');
+                                        Navigator.pushNamed(context, ChallengesChat.path);
 
-                                  // Provider.of<UserIdProvider>(context,
-                                  //         listen: false)
-                                  //     .setUserId(snapshot.data![index].userId);
-                                  // Navigator.pushNamed(
-                                  //     context, SubmitScoreDetails.path);
-                                  //
-                                  // Provider.of<LeagueIdProvider>(context,listen: false).setLeagueId('');
-                                },
-                                onProfileClick: () {},
-                              ),
-                              childCount: snapshot.data!.length,
-                            ),
-                          ),
+                                        // Provider.of<UserIdProvider>(context,
+                                        //         listen: false)
+                                        //     .setUserId(snapshot.data![index].userId);
+                                        // Navigator.pushNamed(
+                                        //     context, SubmitScoreDetails.path);
+                                        //
+                                        // Provider.of<LeagueIdProvider>(context,listen: false).setLeagueId('');
+                                      },
+                                      onProfileClick: () {},
+                                    ),
+                                    childCount: snapshot.data!.length,
+                                  ),
+                                )
+                              : SliverToBoxAdapter(
+                                  child: NoDataListTile(
+                                    onTileClick: () {},
+                                    noCaption: noMsgFound,
+                                    noMsg: '',
+                                  ),
+                                ),
                         ],
                       );
                     },

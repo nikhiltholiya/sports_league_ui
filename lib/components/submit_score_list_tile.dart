@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../components/bordered_circle_avatar.dart';
 import '../components/iconic_text_view.dart';
 import '../components/rate_badges.dart';
@@ -39,8 +40,7 @@ class _SubmitScoreListTileState extends State<SubmitScoreListTile> {
           color: aPartGray5,
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12.0),
-              side: BorderSide(
-                  color: aPartGray10, style: BorderStyle.solid, width: 1.0)),
+              side: BorderSide(color: aPartGray10, style: BorderStyle.solid, width: 1.0)),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,

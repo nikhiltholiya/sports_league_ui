@@ -69,6 +69,7 @@ class _SignUpPageState extends State<SignUpPage> {
           ),
         ),
         appbarHeight: kToolbarHeight,
+        onBackClick: () => Navigator.pop(context),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: ListView(
@@ -147,13 +148,13 @@ class _SignUpPageState extends State<SignUpPage> {
                   document: gql(resendActivationEmail(paramSendMail, paramTypeSendMail)),
                   // update: update,
                   onError: (OperationException? error) {
-                    print('**Maill -- erroR*** -- $error');
+                    debugPrint('**Maill -- erroR*** -- $error');
                     // Text('$error');
                   },
 
                   // _simpleAlert(context, error.toString()),
                   onCompleted: (dynamic resultData) async {
-                    print('**Maill** $resultData');
+                    debugPrint('**Maill** $resultData');
 
                     ResendActivationMailData data = ResendActivationMailData.fromJson(resultData);
                     errorList = [];
@@ -189,7 +190,7 @@ class _SignUpPageState extends State<SignUpPage> {
             document: gql(RegisterPlayer(paramRegister, paramTypeRegister)),
             // update: update,
             onError: (OperationException? error) {
-              print('erroR -- $error');
+              debugPrint('${SignUpPage.path} erroR -- $error');
               isEnable = true;
               setState(() {});
               // Text('$error');
@@ -200,10 +201,10 @@ class _SignUpPageState extends State<SignUpPage> {
 
               isEnable = true;
               setState(() {});
-              print('**** $resultData');
+              debugPrint('${SignUpPage.path}**** $resultData');
 
               _registerData = RegisterData.fromJson(resultData);
-              print('SUCCESS -- ${_registerData.register?.success}');
+              debugPrint('${SignUpPage.path} SUCCESS -- ${_registerData.register?.success}');
               errorList = [];
               if (_registerData.register!.success!) {
                 SharedPreferencesUtils.setEmail(email);
@@ -263,13 +264,13 @@ class _SignUpPageState extends State<SignUpPage> {
     );
   }
 
-  Future<Widget> _showAlert() async {
+  _showAlert() async {
     return await showDialog(
         context: context,
         barrierDismissible: false,
         builder: (BuildContext context) {
           return AppDialog(
-            title: 'Signup',
+            title: signUp,
             body: [
               ListView.builder(
                 shrinkWrap: true,
@@ -284,7 +285,7 @@ class _SignUpPageState extends State<SignUpPage> {
             ],
             isBtnPositiveAvail: false,
             btnPositiveText: '',
-            btnNegativeText: 'Dismiss',
+            btnNegativeText: dialogDismiss,
             onNegativeClick: () {
               Navigator.pop(context);
             },

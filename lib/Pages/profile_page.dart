@@ -42,7 +42,7 @@ class _ProfilePageState extends State<ProfilePage> {
       appbar: AppBar(
         centerTitle: true,
         title: Text(''),
-        toolbarHeight: 0,
+        toolbarHeight: 0.0,
       ),
       body: Consumer<UserIdProvider>(
         builder: (context, userId, child) {

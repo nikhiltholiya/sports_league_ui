@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
 import '../utils/app_colors.dart';
-import '../utils/app_labels.dart';
 
 //Created on 20220312
 class DropDownView extends StatefulWidget {
@@ -10,13 +10,7 @@ class DropDownView extends StatefulWidget {
   final String? dropdownValue;
   final String? hint;
 
-  const DropDownView(
-      {Key? key,
-      this.dropdownValue,
-      this.dropList,
-      this.onValueChange,
-      this.hint})
-      : super(key: key);
+  const DropDownView({Key? key, this.dropdownValue, this.dropList, this.onValueChange, this.hint}) : super(key: key);
 
   @override
   State<DropDownView> createState() => _DropDownViewState();

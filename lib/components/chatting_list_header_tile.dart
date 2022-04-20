@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+
 import '../components/bordered_circle_avatar.dart';
 import '../components/decorated_app_header_tile.dart';
-import '../utils/app_labels.dart';
 import '../components/elevated_buttons.dart';
 import '../components/iconic_text_view.dart';
 import '../components/rate_badges.dart';
 import '../utils/app_colors.dart';
+import '../utils/app_labels.dart';
 
 class ChattingListHeaderTile extends StatefulWidget {
   final String? playerName;
@@ -75,46 +76,41 @@ class _ChattingListHeaderTileState extends State<ChattingListHeaderTile> {
                             ),
                           ),
                           IconicTextView(
-                              align: MainAxisAlignment.center,
-                              icon: Icons.location_pin,
-                              label: widget.playerLocation!),
-
-
+                              align: MainAxisAlignment.center, icon: Icons.location_pin, label: widget.playerLocation!),
                           Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Flexible(
-                                  flex: 1,
-                                  fit: FlexFit.loose,
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: ElevatedButtons(
-                                      borderColor: aLightGray,
-                                      buttonColor: aWhite,
-                                      labelColor: aLightGray,
-                                      label: viewProfile,
-                                      onClick: () => widget.onViewProfile!(),
-                                    ),
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Flexible(
+                                flex: 1,
+                                fit: FlexFit.loose,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: ElevatedButtons(
+                                    borderColor: aLightGray,
+                                    buttonColor: aWhite,
+                                    labelColor: aLightGray,
+                                    label: viewProfile,
+                                    onClick: () => widget.onViewProfile!(),
                                   ),
                                 ),
-                                Flexible(
-                                  flex: 1,
-                                  fit: FlexFit.loose,
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: ElevatedButtons(
-                                      borderColor: aGreen,
-                                      buttonColor: aGreen,
-                                      labelColor: aWhite,
-                                      onClick: () => widget.onSubmitScore!(),
-                                      label: submitScore,
-                                    ),
+                              ),
+                              Flexible(
+                                flex: 1,
+                                fit: FlexFit.loose,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: ElevatedButtons(
+                                    borderColor: aGreen,
+                                    buttonColor: aGreen,
+                                    labelColor: aWhite,
+                                    onClick: () => widget.onSubmitScore!(),
+                                    label: submitScore,
                                   ),
                                 ),
-                              ],
-                            ),
-
+                              ),
+                            ],
+                          ),
                         ],
                       ),
                       Positioned(

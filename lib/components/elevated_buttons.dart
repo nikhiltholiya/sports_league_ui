@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../utils/app_colors.dart';
 
 //Created on 20220304
 class ElevatedButtons extends StatefulWidget {
@@ -15,8 +14,8 @@ class ElevatedButtons extends StatefulWidget {
   final Color? buttonColor;
   final Color? borderColor;
 
-
-  const ElevatedButtons({Key? key,
+  const ElevatedButtons({
+    Key? key,
     required this.label,
     required this.onClick,
     required this.labelColor,
@@ -28,8 +27,7 @@ class ElevatedButtons extends StatefulWidget {
     this.fontSize = 15,
     this.isIcon = false,
     this.icon,
-  })
-      : super(key: key);
+  }) : super(key: key);
 
   @override
   State<ElevatedButtons> createState() => _ElevatedButtonsState();
@@ -47,8 +45,7 @@ class _ElevatedButtonsState extends State<ElevatedButtons> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            if (widget.isIcon!)
-              widget.icon!,
+            if (widget.isIcon!) widget.icon!,
             Flexible(
                 flex: 1,
                 fit: FlexFit.tight,
@@ -70,14 +67,10 @@ class _ElevatedButtonsState extends State<ElevatedButtons> {
         shape: MaterialStateProperty.all(
           RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(widget.radius!),
-              side: BorderSide(
-                  color: widget.borderColor!,
-                  width: 1.0,
-                  style: BorderStyle.solid)),
+              side: BorderSide(color: widget.borderColor!, width: 1.0, style: BorderStyle.solid)),
         ),
 
-        backgroundColor:
-        MaterialStateProperty.all(widget.buttonColor),
+        backgroundColor: MaterialStateProperty.all(widget.buttonColor),
         elevation: MaterialStateProperty.all(2.0),
         // textStyle: MaterialStateProperty.all(TextStyle(backgroundColor: Colors.black,))
       ),

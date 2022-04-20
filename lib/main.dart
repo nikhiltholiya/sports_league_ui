@@ -4,9 +4,11 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:provider/provider.dart';
+import '../Pages/edit_profile_page.dart';
 
 import '../Pages/all_messaging_list_page.dart';
 import '../Pages/challenges_chat.dart';
+import '../Pages/contact_us_page.dart';
 import '../Pages/create_profile_page.dart';
 import '../Pages/create_profile_picture_page.dart';
 import '../Pages/dashboard.dart';
@@ -15,6 +17,8 @@ import '../Pages/head_to_head_page.dart';
 import '../Pages/home_page.dart';
 import '../Pages/league_details.dart';
 import '../Pages/my_league_list.dart';
+import '../Pages/password_change_page.dart';
+import '../Pages/password_reset_page.dart';
 import '../Pages/profile_page.dart';
 import '../Pages/recent_matches_pages.dart';
 import '../Pages/sign_in_page.dart';
@@ -30,7 +34,8 @@ import '../utils/shared_preferences_utils.dart';
 
 // final HttpLink httpLink = HttpLink('http://52.144.47.85:8000/graphql/',);
 final graphqlEndpoint = 'http://52.144.47.85:8000/graphql/';
-final subscriptionEndpoint = '';
+// final graphqlEndpoint = 'https://api.github.com/graphql'; //Test purpose
+final subscriptionEndpoint = null;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -53,12 +58,34 @@ class MyApp extends StatelessWidget {
         //     : '',
 
         getToken: () async =>
+            // 'Bearer <YOUR GIT TOKEN>' //Test purpose
             SharedPreferencesUtils.getToken != null ? '''JWT ${SharedPreferencesUtils.getToken}''' : '',
       ),
       child: AppBody(),
     );
   }
 }
+
+/*OLD*/
+//
+// void main() async {
+//   await initHiveForFlutter();
+//
+//   final HttpLink httpLink = HttpLink(
+//     'http://52.144.47.85:8000/graphql/',
+//   );
+//   final AuthLink authLink = AuthLink(
+//     getToken: () async => '',
+//   );
+//   final Link link = authLink.concat(httpLink);
+//
+//   ValueNotifier<GraphQLClient> client = ValueNotifier(
+//     GraphQLClient(link: link, cache: GraphQLCache()),
+//   );
+//   runApp(GraphQLProvider(client: client, child: const AppBody()));
+// }
+
+/*OLD*/
 
 class AppBody extends StatelessWidget {
   const AppBody({Key? key}) : super(key: key);
@@ -79,7 +106,7 @@ class AppBody extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
-        title: 'Flutter Demo',
+        title: 'Tennis Toon',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
             // This is the theme of your application.
@@ -105,7 +132,7 @@ class AppBody extends StatelessWidget {
 
         //20220223
         // initialRoute: LeagueDetails.path,
-        initialRoute: DashboardPage.path,
+        initialRoute: HomePage.path,
         onGenerateRoute: (settings) {
           if (settings.name == HomePage.path) {
             return CupertinoPageRoute(builder: (context) => HomePage(), settings: settings);
@@ -115,6 +142,10 @@ class AppBody extends StatelessWidget {
             return CupertinoPageRoute(builder: (context) => SignInPage(), settings: settings);
           } else if (settings.name == VerifyEmailPage.path) {
             return CupertinoPageRoute(builder: (context) => VerifyEmailPage(), settings: settings);
+          } else if (settings.name == PasswordResetPage.path) {
+            return CupertinoPageRoute(builder: (context) => PasswordResetPage(), settings: settings);
+          } else if (settings.name == PasswordChangePage.path) {
+            return CupertinoPageRoute(builder: (context) => PasswordChangePage(), settings: settings);
           } else if (settings.name == CreateProfilePage.path) {
             return CupertinoPageRoute(builder: (context) => CreateProfilePage(), settings: settings);
           } else if (settings.name == CreateProfilePicturePage.path) {
@@ -123,10 +154,14 @@ class AppBody extends StatelessWidget {
             return CupertinoPageRoute(builder: (context) => DashboardPage(), settings: settings);
           } else if (settings.name == LeagueDetails.path) {
             return CupertinoPageRoute(builder: (context) => LeagueDetails(), settings: settings);
+          } else if (settings.name == ContactUsPage.path) {
+            return CupertinoPageRoute(builder: (context) => ContactUsPage(), settings: settings);
           } else if (settings.name == ChallengesChat.path) {
             return CupertinoPageRoute(builder: (context) => ChallengesChat(), settings: settings);
           } else if (settings.name == ProfilePage.path) {
             return CupertinoPageRoute(builder: (context) => ProfilePage(), settings: settings);
+          } else if (settings.name == EditProfilePage.path) {
+            return CupertinoPageRoute(builder: (context) => EditProfilePage(), settings: settings);
           } else if (settings.name == AllMessagesListPage.path) {
             return CupertinoPageRoute(builder: (context) => AllMessagesListPage(), settings: settings);
           } else if (settings.name == HeadToHeadDetails.path) {
@@ -145,8 +180,6 @@ class AppBody extends StatelessWidget {
             return null;
           }
         },
-
-        // home: const LeagueDetailCompleted(), //20220222
       ),
     );
   }

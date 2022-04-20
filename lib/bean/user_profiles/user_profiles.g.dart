@@ -30,6 +30,7 @@ _$_UserProfile _$$_UserProfileFromJson(Map<String, dynamic> json) =>
       city: json['city'] as String?,
       state: json['state'] as String?,
       dob: json['dob'] as String?,
+      rating: json['rating'] as String?,
       age: json['age'] as int?,
     );
 
@@ -45,5 +46,6 @@ Map<String, dynamic> _$$_UserProfileToJson(_$_UserProfile instance) =>
       'city': instance.city,
       'state': instance.state,
       'dob': instance.dob,
+      'rating': instance.rating,
       'age': instance.age,
     };

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
 import '../components/edit_text_form_field.dart';
 import '../utils/app_colors.dart';
 
@@ -45,8 +46,7 @@ class _SetDetailsListTileState extends State<SetDetailsListTile> {
         children: [
           Text(
             widget.setName!,
-            style: TextStyle(
-                fontSize: 18.0, color: aBlack, fontWeight: FontWeight.bold),
+            style: TextStyle(fontSize: 18.0, color: aBlack, fontWeight: FontWeight.bold),
           ),
           Table(
             children: [
@@ -86,8 +86,7 @@ class _SetDetailsListTileState extends State<SetDetailsListTile> {
                     textInputType: TextInputType.number,
                     textAlign: TextAlign.center,
                     onTap: () {},
-                    onTextChange: (String? score) =>
-                        widget.player1Score!(score),
+                    onTextChange: (String? score) => widget.player1Score!(score),
                   ),
                   EditTextFormField(
                     maxLength: 3,
@@ -100,8 +99,7 @@ class _SetDetailsListTileState extends State<SetDetailsListTile> {
                     textInputType: TextInputType.number,
                     textAlign: TextAlign.center,
                     onTap: () {},
-                    onTextChange: (String? score) =>
-                        widget.player2Score!(score),
+                    onTextChange: (String? score) => widget.player2Score!(score),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -119,8 +117,7 @@ class _SetDetailsListTileState extends State<SetDetailsListTile> {
                           textInputType: TextInputType.number,
                           textAlign: TextAlign.center,
                           onTap: () {},
-                          onTextChange: (String? tie1) =>
-                              widget.tieBreak1!(tie1),
+                          onTextChange: (String? tie1) => widget.tieBreak1!(tie1),
                         ),
                         flex: 1,
                         fit: FlexFit.tight,
@@ -137,8 +134,7 @@ class _SetDetailsListTileState extends State<SetDetailsListTile> {
                           textInputType: TextInputType.number,
                           textAlign: TextAlign.center,
                           onTap: () {},
-                          onTextChange: (String? tie2) =>
-                              widget.tieBreak2!(tie2),
+                          onTextChange: (String? tie2) => widget.tieBreak2!(tie2),
                         ),
                         flex: 1,
                         fit: FlexFit.tight,

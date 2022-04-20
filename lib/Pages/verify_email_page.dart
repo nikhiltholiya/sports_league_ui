@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../Pages/base_activity.dart';
+import '../Pages/password_reset_page.dart';
 import '../Pages/sign_in_page.dart';
 import '../components/elevated_buttons.dart';
 import '../utils/app_colors.dart';
@@ -17,6 +18,8 @@ class VerifyEmailPage extends StatefulWidget {
 }
 
 class _VerifyEmailPageState extends State<VerifyEmailPage> {
+  var passData;
+
   @override
   void initState() {
     super.initState();
@@ -24,6 +27,8 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
 
   @override
   Widget build(BuildContext context) {
+    passData = ModalRoute.of(context)!.settings.arguments;
+
     return BaseWidget(
       appbar: Text(
         verifyEmail,
@@ -32,7 +37,10 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
           fontSize: 20,
         ),
       ),
+      // leading: IconButton(onPressed: () {},
+      //     icon: Icon(kIsWeb ? Icons.arrow_back : Platform.isIOS ? Icons.arrow_back_ios : Icons.arrow_back)),
       appbarHeight: kToolbarHeight,
+      onBackClick: () => onBackManage(),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: ListView(
@@ -67,12 +75,23 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
         fontSize: 25,
         radius: 0.0,
         onClick: () {
-          Navigator.pushNamed(context, SignInPage.path);
+          onBackManage();
         },
         borderColor: aGreen,
         buttonColor: aGreen,
         labelColor: aWhite,
       ),
     );
+  }
+
+  Future<void> onBackManage() async {
+    print('passData $passData');
+    if (passData != null) {
+      if (passData['for'] == forgotPassword) {
+        await Navigator.pushReplacementNamed(context, PasswordResetPage.path);
+      }
+    } else {
+      await Navigator.pushReplacementNamed(context, SignInPage.path);
+    }
   }
 }
