@@ -15,6 +15,8 @@ query (\$userId : String!) {
     state
     dob
     age
+    rating
+    picture
   }
 }
 
@@ -87,7 +89,6 @@ const String matchesQuery = """
 """;
 
 final leagueStatus = '''
-
 query (\$leagueId: String!) {
   leagueStat(leagueId: \$leagueId) {
     leagueId
@@ -104,10 +105,12 @@ query (\$leagueId: String!) {
     winnerOneId
     winnerTwoId
     userStat {
-      userName
       loss
+      picture
+      rating
       total
       userId
+      userName
       won
     }
   }
@@ -431,6 +434,35 @@ String userQuery(Map<String, dynamic>? param, Map<String, dynamic>? paramType) {
                 updatedAt
                 message
              }  
+          }
+      }
+''';
+}
+
+
+String leagueApplication(Map<String, dynamic>? param, Map<String, dynamic>? paramType) {
+  return '''
+      mutation leagueApplication(${param.toString().trim().substring(1, param.toString().trim().length - 1)}) {
+          leagueApplication(${paramType.toString().trim().substring(1, paramType.toString().trim().length - 1)}) {
+              leagueApplication {
+                id
+                leagueAppId
+                status
+                message
+              } 
+          }
+      }
+''';
+}
+
+
+String verifyToken(Map<String, dynamic>? param, Map<String, dynamic>? paramType) {
+  return '''
+      mutation verifyToken(${param.toString().trim().substring(1, param.toString().trim().length - 1)}) {
+          verifyToken(${paramType.toString().trim().substring(1, paramType.toString().trim().length - 1)}) {
+              errors
+              payload
+              success
           }
       }
 ''';

@@ -10,12 +10,14 @@ import '../Pages/base_activity.dart';
 import '../Pages/challenges_chat.dart';
 import '../bean/league_stat/league_stat.dart';
 import '../bean/user_profiles/user_profiles.dart';
+import '../components/app_dialog.dart';
 import '../components/elevated_buttons.dart';
 import '../components/league_detail_tile.dart';
 import '../components/league_details_header_tile.dart';
 import '../components/league_details_winner_tile.dart';
 import '../providers/league_id_provider.dart';
 import '../providers/user_id_provider.dart';
+import '../utils/Constants.dart';
 import '../utils/Constants.dart' as Constants;
 import '../utils/app_colors.dart';
 import '../utils/app_labels.dart';
@@ -43,6 +45,7 @@ class _LeagueDetailsState extends State<LeagueDetails> {
   double? _dynamicTotalHeight;
   List<double>? _childWidgetHeights = [];
   late List<UserStat>? userStat;
+  List<String>? errorList;
   String? currentUserId;
 
   String fetchLeague = Constants.leagueStatus;
@@ -51,9 +54,15 @@ class _LeagueDetailsState extends State<LeagueDetails> {
   late LeagueStatData? LeagueData;
   bool? isBuildWidgets = false;
 
+  Map<String, dynamic> paramSignIn = {};
+  Map<String, dynamic> paramTypeSignIn = {};
+
   @override
   void initState() {
     _scrollController = ScrollController();
+    paramSignIn = {'\$leagueId': 'String', '\$userId': 'String'};
+    paramTypeSignIn = {'leagueId': '\$leagueId', 'userId': '\$userId'};
+
     super.initState();
   }
 
@@ -192,7 +201,7 @@ class _LeagueDetailsState extends State<LeagueDetails> {
                                       IconThemeData(color: height <= scrollPosition ? Colors.black : Colors.white),
                                   flexibleSpace: FlexibleSpaceBar(
                                     background: LeagueDetailsHeaderTile(
-                                      playerName: LeagueData!.leagueStat!.name,
+                                      leagueName: LeagueData!.leagueStat!.name,
                                       leagueStatus: LeagueData?.leagueStat?.status,
                                       leagueDate: convertDate(
                                           LeagueData?.leagueStat?.startDate, LeagueData?.leagueStat?.endDate),
@@ -257,8 +266,8 @@ class _LeagueDetailsState extends State<LeagueDetails> {
                                           wonCount: profile.wonCount,
                                           matchesCount: profile.matchesCount,
                                           lostCount: profile.lostCount,
-                                          // winnerProfile: profile., //TODO Required picture
-                                          //rate: , //TODO Required Rate
+                                          rate: profile.rating,
+                                          winnerProfilePic: profile.picture,
                                         ),
                                         // try {
                                         // LeagueData = LeagueStatData.fromJson(result.data!);
@@ -288,8 +297,7 @@ class _LeagueDetailsState extends State<LeagueDetails> {
                                     games: userStat![index].total,
                                     loss: userStat![index].loss,
                                     win: userStat![index].won,
-                                    profileImg: 'assets/Ellipse 3.png',
-                                    //TODO Required picture
+                                    profileImg: userStat![index].picture,
                                     onTileClick: () {
                                       if (LeagueData!.leagueStat!.status!.toLowerCase() == 'ongoing') {
                                         Provider.of<UserIdProvider>(context, listen: false)
@@ -321,15 +329,88 @@ class _LeagueDetailsState extends State<LeagueDetails> {
             if (LeagueData!.leagueStat!.status != null &&
                 LeagueData!.leagueStat!.status!.toString() == 'ongoing' &&
                 snapshot.data.length == 0) {
-              return ElevatedButtons(
-                width: double.infinity,
-                label: joinNow,
-                fontSize: 25,
-                radius: 0.0,
-                onClick: () {},
-                borderColor: aGreen,
-                buttonColor: aGreen,
-                labelColor: aWhite,
+              return Mutation(
+                options: MutationOptions(
+                  document: gql(leagueApplication(paramSignIn, paramTypeSignIn)),
+                  // update: update,
+                  onError: (OperationException? error) {
+                    debugPrint('${LeagueDetails.path} * erroR -- $error');
+                    // Text('$error');
+                  },
+                  // _simpleAlert(context, error.toString()),
+                  onCompleted: (dynamic resultData) async {
+                    // Text('Thanks for your star!');
+
+                    debugPrint('${LeagueDetails.path} * Result -- $resultData');
+
+                    if (resultData != null) {
+                      var message = resultData['leagueApplication']['leagueApplication']['message'];
+
+                      errorList = [];
+                      errorList!.add(message);
+                      _showAlert(LeagueData!.leagueStat!.name!);
+                    }
+                    // if (resultData != null) {
+                    //   _tokenAuthData = TokenAuthData.fromJson(resultData);
+                    //   debugPrint('${LeagueDetails.path} * SUCCESS -- ${_tokenAuthData?.tokenAuth?.success}');
+                    //   errorList = [];
+                    //   if (_tokenAuthData!.tokenAuth!.success!) {
+                    //     SharedPreferencesUtils.setEmail(_tokenAuthData?.tokenAuth?.user?.email);
+                    //     SharedPreferencesUtils.setToken(_tokenAuthData?.tokenAuth?.token);
+                    //     SharedPreferencesUtils.setRefreshToken(_tokenAuthData?.tokenAuth?.refreshToken);
+                    //     SharedPreferencesUtils.setUserData(jsonEncode(_tokenAuthData!.tokenAuth?.user));
+                    //     SharedPreferencesUtils.setUserId(_tokenAuthData?.tokenAuth?.user?.userId);
+                    //
+                    //     // Provider.of<TokenProvider>(context, listen: false).setToken(_tokenAuthData?.tokenAuth?.token);
+                    //
+                    //     if (_tokenAuthData!.tokenAuth!.user!.firstName.toString().isNotEmpty) {
+                    //       Navigator.pushNamedAndRemoveUntil(context, DashboardPage.path, (route) => false);
+                    //     } else {
+                    //       Navigator.pushNamed(context, CreateProfilePage.path);
+                    //     }
+                    //     // Navigator.pushNamed(context, CreateProfilePage.path);
+                    //   } else {
+                    //     for (var errData in _tokenAuthData!.tokenAuth!.errors!.nonFieldErrors!) {
+                    //       if (errData.message != null) errorList!.add(errData.message);
+                    //     }
+                    //
+                    //     _showAlert();
+                    //   }
+                    // } else {
+                    //   // errorList = [];
+                    //   // errorList!.add('Result is Null');
+                    //   // _showAlert();
+                    // }
+                  },
+                ),
+                builder: (RunMutation _signIn, QueryResult? addResult) {
+                  final doSignIn = (result) {
+                    _signIn(result);
+                  };
+
+                  bool? anyLoading = addResult!.isLoading;
+
+                  return ElevatedButtons(
+                    width: double.infinity,
+                    label: anyLoading ? 'wait' : joinNow,
+                    fontSize: 25,
+                    radius: 0.0,
+                    onClick: () {
+                      Map<String, dynamic> passVariable = {
+                        'leagueId': Provider.of<LeagueIdProvider>(context, listen: false).leagueId,
+                        'userId': SharedPreferencesUtils.getUserId
+                      };
+
+                      debugPrint(
+                          '${LeagueDetails.path} * param -- $paramSignIn * Type -- $paramTypeSignIn -- Variable -- $passVariable');
+
+                      doSignIn(passVariable);
+                    },
+                    borderColor: aGreen,
+                    buttonColor: aGreen,
+                    labelColor: aWhite,
+                  );
+                },
               );
             } else {
               return SizedBox(
@@ -341,5 +422,37 @@ class _LeagueDetailsState extends State<LeagueDetails> {
         },
       ),
     );
+  }
+
+  _showAlert(String title) async {
+    return await showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AppDialog(
+            title: title,
+            body: [
+              ListView.builder(
+                shrinkWrap: true,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(errorList![index].toString()),
+                  );
+                },
+                itemCount: errorList!.length,
+              )
+            ],
+            isBtnPositiveAvail: false,
+            btnPositiveText: '',
+            btnNegativeText: dialogDismiss,
+            onNegativeClick: () {
+              Navigator.pop(context);
+            },
+            onPositiveClick: () {
+              Navigator.of(context).pop();
+            },
+          );
+        });
   }
 }

@@ -58,6 +58,8 @@ Map<String, dynamic> _$$_LeagueStatToJson(_$_LeagueStat instance) =>
 
 _$_UserStat _$$_UserStatFromJson(Map<String, dynamic> json) => _$_UserStat(
       loss: json['loss'] as int?,
+      picture: json['picture'] as String?,
+      rating: json['rating'] as String?,
       total: json['total'] as int?,
       userId: json['userId'] as String?,
       userName: json['userName'] as String?,
@@ -67,6 +69,8 @@ _$_UserStat _$$_UserStatFromJson(Map<String, dynamic> json) => _$_UserStat(
 Map<String, dynamic> _$$_UserStatToJson(_$_UserStat instance) =>
     <String, dynamic>{
       'loss': instance.loss,
+      'picture': instance.picture,
+      'rating': instance.rating,
       'total': instance.total,
       'userId': instance.userId,
       'userName': instance.userName,

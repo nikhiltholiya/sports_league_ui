@@ -8,25 +8,25 @@ import '../utils/app_colors.dart';
 class LeagueDetailsWinnerTile extends StatefulWidget {
   final String? winnerName;
   final String? winnerLocation;
-  final String? winnerProfile;
   final int? winnerAge;
   final int? matchesCount;
   final int? wonCount;
   final int? drawCount;
   final int? lostCount;
-  final double? rate;
+  final String? rate;
+  final String? winnerProfilePic;
 
   const LeagueDetailsWinnerTile({
     Key? key,
     this.winnerName,
     this.winnerLocation,
-    this.winnerProfile,
+    this.winnerProfilePic,
     this.winnerAge,
     this.matchesCount,
     this.wonCount,
     this.drawCount,
     this.lostCount,
-    this.rate = 0.0,
+    this.rate,
   }) : super(key: key);
 
   @override
@@ -79,7 +79,7 @@ class _LeagueDetailsWinnerTileState extends State<LeagueDetailsWinnerTile> {
                         padding: const EdgeInsets.all(8.0),
                         child: ProfilePicAvatar(
                           radius: 40,
-                          path: widget.winnerProfile,
+                          path: widget.winnerProfilePic,
                         ),
                       ),
                       Text(

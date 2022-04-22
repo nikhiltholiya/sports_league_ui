@@ -200,8 +200,9 @@ class _$UserProfilesTearOff {
       required String? city,
       required String? state,
       required String? dob,
+      required int? age,
       required String? rating,
-      required int? age}) {
+      required String? picture}) {
     return _UserProfile(
       userId: userId,
       firstName: firstName,
@@ -213,8 +214,9 @@ class _$UserProfilesTearOff {
       city: city,
       state: state,
       dob: dob,
-      rating: rating,
       age: age,
+      rating: rating,
+      picture: picture,
     );
   }
 
@@ -238,8 +240,9 @@ mixin _$UserProfiles {
   String? get city => throw _privateConstructorUsedError;
   String? get state => throw _privateConstructorUsedError;
   String? get dob => throw _privateConstructorUsedError;
-  String? get rating => throw _privateConstructorUsedError;
   int? get age => throw _privateConstructorUsedError;
+  String? get rating => throw _privateConstructorUsedError;
+  String? get picture => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -263,8 +266,9 @@ abstract class $UserProfilesCopyWith<$Res> {
       String? city,
       String? state,
       String? dob,
+      int? age,
       String? rating,
-      int? age});
+      String? picture});
 }
 
 /// @nodoc
@@ -287,8 +291,9 @@ class _$UserProfilesCopyWithImpl<$Res> implements $UserProfilesCopyWith<$Res> {
     Object? city = freezed,
     Object? state = freezed,
     Object? dob = freezed,
-    Object? rating = freezed,
     Object? age = freezed,
+    Object? rating = freezed,
+    Object? picture = freezed,
   }) {
     return _then(_value.copyWith(
       userId: userId == freezed
@@ -331,14 +336,18 @@ class _$UserProfilesCopyWithImpl<$Res> implements $UserProfilesCopyWith<$Res> {
           ? _value.dob
           : dob // ignore: cast_nullable_to_non_nullable
               as String?,
-      rating: rating == freezed
-          ? _value.rating
-          : rating // ignore: cast_nullable_to_non_nullable
-              as String?,
       age: age == freezed
           ? _value.age
           : age // ignore: cast_nullable_to_non_nullable
               as int?,
+      rating: rating == freezed
+          ? _value.rating
+          : rating // ignore: cast_nullable_to_non_nullable
+              as String?,
+      picture: picture == freezed
+          ? _value.picture
+          : picture // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -361,8 +370,9 @@ abstract class _$UserProfileCopyWith<$Res>
       String? city,
       String? state,
       String? dob,
+      int? age,
       String? rating,
-      int? age});
+      String? picture});
 }
 
 /// @nodoc
@@ -387,8 +397,9 @@ class __$UserProfileCopyWithImpl<$Res> extends _$UserProfilesCopyWithImpl<$Res>
     Object? city = freezed,
     Object? state = freezed,
     Object? dob = freezed,
-    Object? rating = freezed,
     Object? age = freezed,
+    Object? rating = freezed,
+    Object? picture = freezed,
   }) {
     return _then(_UserProfile(
       userId: userId == freezed
@@ -431,14 +442,18 @@ class __$UserProfileCopyWithImpl<$Res> extends _$UserProfilesCopyWithImpl<$Res>
           ? _value.dob
           : dob // ignore: cast_nullable_to_non_nullable
               as String?,
-      rating: rating == freezed
-          ? _value.rating
-          : rating // ignore: cast_nullable_to_non_nullable
-              as String?,
       age: age == freezed
           ? _value.age
           : age // ignore: cast_nullable_to_non_nullable
               as int?,
+      rating: rating == freezed
+          ? _value.rating
+          : rating // ignore: cast_nullable_to_non_nullable
+              as String?,
+      picture: picture == freezed
+          ? _value.picture
+          : picture // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -457,8 +472,9 @@ class _$_UserProfile implements _UserProfile {
       required this.city,
       required this.state,
       required this.dob,
+      required this.age,
       required this.rating,
-      required this.age});
+      required this.picture});
 
   factory _$_UserProfile.fromJson(Map<String, dynamic> json) =>
       _$$_UserProfileFromJson(json);
@@ -484,13 +500,15 @@ class _$_UserProfile implements _UserProfile {
   @override
   final String? dob;
   @override
+  final int? age;
+  @override
   final String? rating;
   @override
-  final int? age;
+  final String? picture;
 
   @override
   String toString() {
-    return 'UserProfiles(userId: $userId, firstName: $firstName, lastName: $lastName, matchesCount: $matchesCount, wonCount: $wonCount, drawCount: $drawCount, lostCount: $lostCount, city: $city, state: $state, dob: $dob, rating: $rating, age: $age)';
+    return 'UserProfiles(userId: $userId, firstName: $firstName, lastName: $lastName, matchesCount: $matchesCount, wonCount: $wonCount, drawCount: $drawCount, lostCount: $lostCount, city: $city, state: $state, dob: $dob, age: $age, rating: $rating, picture: $picture)';
   }
 
   @override
@@ -509,8 +527,9 @@ class _$_UserProfile implements _UserProfile {
             const DeepCollectionEquality().equals(other.city, city) &&
             const DeepCollectionEquality().equals(other.state, state) &&
             const DeepCollectionEquality().equals(other.dob, dob) &&
+            const DeepCollectionEquality().equals(other.age, age) &&
             const DeepCollectionEquality().equals(other.rating, rating) &&
-            const DeepCollectionEquality().equals(other.age, age));
+            const DeepCollectionEquality().equals(other.picture, picture));
   }
 
   @override
@@ -526,8 +545,9 @@ class _$_UserProfile implements _UserProfile {
       const DeepCollectionEquality().hash(city),
       const DeepCollectionEquality().hash(state),
       const DeepCollectionEquality().hash(dob),
+      const DeepCollectionEquality().hash(age),
       const DeepCollectionEquality().hash(rating),
-      const DeepCollectionEquality().hash(age));
+      const DeepCollectionEquality().hash(picture));
 
   @JsonKey(ignore: true)
   @override
@@ -552,8 +572,9 @@ abstract class _UserProfile implements UserProfiles {
       required String? city,
       required String? state,
       required String? dob,
+      required int? age,
       required String? rating,
-      required int? age}) = _$_UserProfile;
+      required String? picture}) = _$_UserProfile;
 
   factory _UserProfile.fromJson(Map<String, dynamic> json) =
       _$_UserProfile.fromJson;
@@ -579,9 +600,11 @@ abstract class _UserProfile implements UserProfiles {
   @override
   String? get dob;
   @override
+  int? get age;
+  @override
   String? get rating;
   @override
-  int? get age;
+  String? get picture;
   @override
   @JsonKey(ignore: true)
   _$UserProfileCopyWith<_UserProfile> get copyWith =>

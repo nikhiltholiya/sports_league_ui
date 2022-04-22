@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:provider/provider.dart';
+import '../Pages/splash_page.dart';
 import '../Pages/edit_profile_page.dart';
 
 import '../Pages/all_messaging_list_page.dart';
@@ -129,9 +130,11 @@ class AppBody extends StatelessWidget {
 
         //20220223
         // initialRoute: LeagueDetails.path,
-        initialRoute: HomePage.path,
+        initialRoute: SplashPage.path,
         onGenerateRoute: (settings) {
-          if (settings.name == HomePage.path) {
+          if (settings.name == SplashPage.path) {
+            return CupertinoPageRoute(builder: (context) => SplashPage(), settings: settings);
+          } else if (settings.name == HomePage.path) {
             return CupertinoPageRoute(builder: (context) => HomePage(), settings: settings);
           } else if (settings.name == SignUpPage.path) {
             return CupertinoPageRoute(builder: (context) => SignUpPage(), settings: settings);

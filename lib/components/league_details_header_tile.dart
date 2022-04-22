@@ -5,7 +5,7 @@ import '../components/iconic_text_view.dart';
 import '../utils/app_colors.dart';
 
 class LeagueDetailsHeaderTile extends StatefulWidget {
-  final String? playerName;
+  final String? leagueName;
   final String? leagueLocation;
   final String? leagueDate;
   final String? leagueDesc;
@@ -21,7 +21,7 @@ class LeagueDetailsHeaderTile extends StatefulWidget {
   const LeagueDetailsHeaderTile({
     Key? key,
     required this.leagueStatus,
-    required this.playerName,
+    required this.leagueName,
     required this.leagueLocation,
     required this.leagueDate,
     required this.leagueDesc,
@@ -71,7 +71,7 @@ class _LeagueDetailsHeaderTileState extends State<LeagueDetailsHeaderTile> {
                           crossAxisAlignment: WrapCrossAlignment.start,
                           children: [
                             Text(
-                              widget.playerName ?? 'playerName',
+                              widget.leagueName ?? 'playerName',
                               maxLines: 1,
                               key: widget.textTitleKey,
                               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),

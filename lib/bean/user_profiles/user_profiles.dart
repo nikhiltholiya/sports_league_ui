@@ -28,8 +28,9 @@ class UserProfiles with _$UserProfiles {
     required String? city,
     required String? state,
     required String? dob,
-    required String? rating,
     required int? age,
+    required String? rating,
+    required String? picture,
   }) = _UserProfile;
 
   factory UserProfiles.fromJson(Map<String, dynamic> userProfJson) =>

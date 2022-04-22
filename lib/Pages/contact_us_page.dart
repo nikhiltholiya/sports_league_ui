@@ -1,19 +1,15 @@
 import 'dart:convert';
-import 'dart:io';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
 import '../Pages/base_activity.dart';
 import '../bean/token_auth/token_auth.dart';
 import '../bean/user_query/user_query.dart';
 import '../components/app_dialog.dart';
-import '../components/decorated_app_header_tile.dart';
+import '../components/app_head_tile.dart';
 import '../components/elevated_buttons.dart';
-import '../components/profile_pic_avatar.dart';
 import '../utils/Constants.dart';
 import '../utils/app_colors.dart';
 import '../utils/app_labels.dart';
@@ -56,7 +52,8 @@ class _ContactUsPageState extends State<ContactUsPage> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          contactUsHeader(
+          AppHeadTile(
+            onMenuClick: () => Navigator.pop(context),
             name: data.firstName,
             userImage: data.picture,
           ),
@@ -232,63 +229,5 @@ class _ContactUsPageState extends State<ContactUsPage> {
             },
           );
         });
-  }
-}
-
-class contactUsHeader extends StatelessWidget {
-  final String? name;
-  final String? userImage;
-
-  const contactUsHeader({Key? key, this.name = 'user', this.userImage}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        DecoratedAppHeader(height: 200),
-        Positioned(
-          top: 0.0,
-          left: 0,
-          child: IconButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            icon: Icon(
-                kIsWeb
-                    ? Icons.arrow_back
-                    : Platform.isIOS
-                        ? Icons.arrow_back_ios
-                        : Icons.arrow_back,
-                color: aWhite),
-          ),
-        ),
-        Positioned(
-          top: 56.0,
-          left: 20,
-          child: RichText(
-              text: TextSpan(children: <TextSpan>[
-            TextSpan(
-              text: "Hello,\n",
-              style: GoogleFonts.poppins(
-                fontSize: 14,
-                color: aWhite,
-              ),
-            ),
-            TextSpan(
-              text: name,
-              style: GoogleFonts.poppins(
-                fontSize: 26,
-                color: aWhite,
-              ),
-            ),
-          ])),
-        ),
-        Positioned(
-          top: 50,
-          right: 20,
-          child: ProfilePicAvatar(radius: 40, path: userImage),
-        )
-      ],
-    );
   }
 }

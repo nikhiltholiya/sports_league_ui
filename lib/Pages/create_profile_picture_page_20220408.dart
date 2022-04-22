@@ -193,7 +193,6 @@
 //                 return _previewImages(snapshot.data!);
 //               }
 //
-//               //TODO CHANGE HERE
 //               return CircleAvatar(
 //                 backgroundImage:
 //                     AssetImage('assets/avatar${selectedAvatar.first}.png'),

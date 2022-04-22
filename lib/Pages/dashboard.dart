@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:provider/provider.dart';
 
@@ -15,10 +14,9 @@ import '../Pages/password_change_page.dart';
 import '../Pages/profile_page.dart';
 import '../Pages/submit_score_list.dart';
 import '../bean/all_users/all_users.dart';
+import '../components/app_head_tile.dart';
 import '../components/dashboard_drawer_list_tile.dart';
 import '../components/dashboard_grid_item.dart';
-import '../components/decorated_app_header_tile.dart';
-import '../components/profile_pic_avatar.dart';
 import '../providers/league_id_provider.dart';
 import '../providers/user_id_provider.dart';
 import '../utils/Constants.dart';
@@ -155,7 +153,8 @@ class _DashboardPageState extends State<DashboardPage> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              dashboardHeader(
+              AppHeadTile(
+                isDashboard: true,
                 name: AllUsersData.fromJson(result.data!).allUsers?.edges?.first.node?.firstName,
                 onMenuClick: () {
                   _scKey.currentState?.openDrawer();
@@ -259,89 +258,35 @@ class _DashboardPageState extends State<DashboardPage> {
         itemBuilder: (context, index) {
           return index == 0
               ? Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Image.asset('assets/tennis_toon_logo.png', height: 40, alignment: Alignment.centerLeft),
-          )
+                  padding: const EdgeInsets.all(20.0),
+                  child: Image.asset('assets/tennis_toon_logo.png', height: 40, alignment: Alignment.centerLeft),
+                )
               : DashboardDrawerListTile(
-            onMenuClick: () {
-              switch (index) {
-                case 1:
-                  Navigator.popAndPushNamed(context, ContactUsPage.path);
-                  break;
-                case 2:
-                  Navigator.pop(context);
-                  break;
-                case 3:
-                  Map<String, dynamic> passVars = {'refreshToken': '${SharedPreferencesUtils.getRefreshToken}'};
+                  onMenuClick: () {
+                    switch (index) {
+                      case 1:
+                        Navigator.popAndPushNamed(context, ContactUsPage.path);
+                        break;
+                      case 2:
+                        Navigator.pop(context);
+                        break;
+                      case 3:
+                        Map<String, dynamic> passVars = {'refreshToken': '${SharedPreferencesUtils.getRefreshToken}'};
 
-                  print('revoke -$paramRevoke :: $paramTypeRevoke :: $passVars');
-                  _revokeToken.currentState?.runMutation(passVars);
-                  break;
-              }
-            },
-            menuIcon: slidingDrawerItems[index].values.first,
-            menuName: slidingDrawerItems[index].keys.first,
-          );
+                        print('revoke -$paramRevoke :: $paramTypeRevoke :: $passVars');
+                        _revokeToken.currentState?.runMutation(passVars);
+                        break;
+                    }
+                  },
+                  menuIcon: slidingDrawerItems[index].values.first,
+                  menuName: slidingDrawerItems[index].keys.first,
+                );
         },
         itemCount: slidingDrawerItems.length,
         shrinkWrap: true,
         physics: const BouncingScrollPhysics(),
       ),
       elevation: 10.0,
-    );
-  }
-}
-
-class dashboardHeader extends StatelessWidget {
-  final String? name;
-  final String? userImage;
-  final Function? onMenuClick;
-
-  const dashboardHeader({Key? key, this.name = 'user', this.userImage, this.onMenuClick}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        DecoratedAppHeader(height: 200),
-        Positioned(
-          top: 10,
-          left: 20,
-          child: CircleAvatar(
-            backgroundColor: aWhite,
-            child: IconButton(
-              onPressed: () => onMenuClick!(),
-              icon: Icon(Icons.menu_outlined, color: aGreen),
-            ),
-          ),
-        ),
-        Positioned(
-          top: 60,
-          left: 20,
-          child: RichText(
-              text: TextSpan(children: <TextSpan>[
-                TextSpan(
-                  text: "Hello,\n",
-                  style: GoogleFonts.poppins(
-                    fontSize: 14,
-                    color: aWhite,
-                  ),
-                ),
-                TextSpan(
-                  text: name,
-                  style: GoogleFonts.poppins(
-                    fontSize: 26,
-                    color: aWhite,
-                  ),
-                ),
-              ])),
-        ),
-        Positioned(
-          top: 50,
-          right: 20,
-          child: ProfilePicAvatar(radius: 40, path: userImage),
-        )
-      ],
     );
   }
 }

@@ -179,8 +179,7 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> {
                             background: ProfileHeaderTile(
                               playerName: '${newProfile?.firstName} ${newProfile?.lastName}',
                               playerAge: newProfile?.age,
-                              playerImg: 'assets/Ellipse 1.png',
-                              //TODO Required picture
+                              playerImg: newProfile?.picture,
                               playerLocation: '${newProfile?.city}, ${newProfile?.state}',
                               stackKey: _stackKey,
                               btnKey: _btnKey,
