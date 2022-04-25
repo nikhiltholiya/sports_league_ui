@@ -22,72 +22,6 @@ query (\$userId : String!) {
 
 """;
 
-const String matchesQuery = """
-  query (\$userSearch: String!) {
-    allMatches(userSearch:\$userSearch){
-      edges {
-      node {
-        id
-        matchId
-        playerOne {
-          userId
-          aboutMe
-          active
-          city
-          country
-          dateJoined
-          deleted
-          email
-          dob
-          firstName
-          gender
-          isActive
-          id
-          isStaff
-          lastLogin
-          lastName
-          phone
-          picture
-          rating
-          state
-        }
-        playerTwo {
-          userId
-          aboutMe
-          active
-          city
-          country
-          dateJoined
-          deleted
-          email
-          dob
-          firstName
-          gender
-          isActive
-          id
-          isStaff
-          lastLogin
-          lastName
-          phone
-          picture
-          rating
-          state
-        }
-        matchSet(first: 10) {
-          edges {
-            node {
-              id
-              playerOneScore
-              playerTwoScore
-            }
-          }
-        }
-      }
-    }
-    }
-  }
-""";
-
 final leagueStatus = '''
 query (\$leagueId: String!) {
   leagueStat(leagueId: \$leagueId) {
@@ -228,6 +162,88 @@ String allMessaging(Map<String, dynamic>? param, Map<String, dynamic>? paramType
 ''';
 }
 
+String allMatches(Map<String, dynamic>? param, Map<String, dynamic>? paramType) {
+  return '''
+      query allMatches(${param.toString().trim().substring(1, param.toString().trim().length - 1)}) {
+          allMatches(${paramType.toString().trim().substring(1, paramType.toString().trim().length - 1)}) {
+              edges {
+                 node {
+                   id
+                   startDate
+                   court
+                   playerOne {
+                     userId
+                     aboutMe
+                     active
+                     city
+                     country
+                     dateJoined
+                     deleted
+                     email
+                     dob
+                     firstName
+                     gender
+                     isActive
+                     id
+                     isStaff
+                     lastLogin
+                     lastName
+                     phone
+                     picture
+                     rating
+                     state
+                   }
+                   playerTwo {
+                     userId
+                     aboutMe
+                     active
+                     city
+                     country
+                     dateJoined
+                     deleted
+                     email
+                     dob
+                     firstName
+                     gender
+                     isActive
+                     id
+                     isStaff
+                     lastLogin
+                     lastName
+                     phone
+                     picture
+                     rating
+                     state
+                   }
+                   matchSet(first: 10) {
+                     edges {
+                       node {
+                         id
+                         playerOneScore
+                         playerTwoScore
+                         matchSetId
+                         match {
+                           court
+                           id
+                         }
+                       }
+                     }
+                   }
+                 }
+               }
+          }
+      }
+''';
+}
+
+// Add additional param in match =
+// matchId
+// startDate
+// createdAt
+// endDate
+
+
+//Mutations
 String SubmitScore(Map<String, dynamic>? param, Map<String, dynamic>? paramType) {
   return '''
     mutation (${param.toString().trim().substring(1, param.toString().trim().length - 1)}) {
@@ -247,19 +263,6 @@ String SubmitScore(Map<String, dynamic>? param, Map<String, dynamic>? paramType)
     }
   ''';
 }
-
-String fetChCourts = '''
-query MyQuery {
-  allLeagues(status: "ongoing") {
-    edges {
-      node {
-        leagueId
-        name
-      }
-    }
-  }
-}
-''';
 
 String RegisterPlayer(Map<String, dynamic>? param, Map<String, dynamic>? paramType) {
   return '''
@@ -439,7 +442,6 @@ String userQuery(Map<String, dynamic>? param, Map<String, dynamic>? paramType) {
 ''';
 }
 
-
 String leagueApplication(Map<String, dynamic>? param, Map<String, dynamic>? paramType) {
   return '''
       mutation leagueApplication(${param.toString().trim().substring(1, param.toString().trim().length - 1)}) {
@@ -454,7 +456,6 @@ String leagueApplication(Map<String, dynamic>? param, Map<String, dynamic>? para
       }
 ''';
 }
-
 
 String verifyToken(Map<String, dynamic>? param, Map<String, dynamic>? paramType) {
   return '''

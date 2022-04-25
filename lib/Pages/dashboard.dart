@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:provider/provider.dart';
 
+import '../Pages/all_matches_pages.dart';
 import '../Pages/all_messaging_list_page.dart';
 import '../Pages/base_activity.dart';
 import '../Pages/contact_us_page.dart';
@@ -75,7 +76,7 @@ class _DashboardPageState extends State<DashboardPage> {
           image: 'transperent_tennis_ball_icon_blue.png',
           subtitle: 'Challenge for match',
           color: Color(0xff345891),
-          path: ''),
+          path: AllMatchesPage.path),
       GridMenuItems(
           title: 'My Profile',
           image: 'transperent_tennis_ball_icon_red.png',

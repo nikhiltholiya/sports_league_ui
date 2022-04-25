@@ -32,13 +32,55 @@ class MatchesNode with _$MatchesNode {
   const factory MatchesNode({
 
     required String? id,
-    required String? matchId,
-    required AllMatches? matchSet,
-    required int? playerOneScore,
-    required int? playerTwoScore,
+    required String? court,
+    required String? startDate,
+    required MatchSet? matchSet,
     required UserNode? playerOne,
     required UserNode? playerTwo,
   }) = _MatchesNode;
 
   factory MatchesNode.fromJson(Map<String, dynamic> MatchesNodeMap) => _$MatchesNodeFromJson(MatchesNodeMap);
+}
+
+
+@Freezed()
+class MatchSet with _$MatchSet {
+  const factory MatchSet({
+    required List<MatchSetEdges>? edges}) = _MatchSet;
+
+  factory MatchSet.fromJson(Map<String, dynamic> MatchesNodeMap) => _$MatchSetFromJson(MatchesNodeMap);
+}
+
+@Freezed()
+class MatchSetEdges with _$MatchSetEdges {
+  const factory MatchSetEdges({
+    required MatchSetNode? node}) = _MatchSetEdges;
+
+  factory MatchSetEdges.fromJson(Map<String, dynamic> MatchSetEdgesMap) => _$MatchSetEdgesFromJson(MatchSetEdgesMap);
+}
+
+@Freezed()
+class MatchSetNode with _$MatchSetNode {
+  const factory MatchSetNode({
+    required String? id,
+    required int? playerOneScore,
+    required int? playerTwoScore,
+    required String? matchSetId,
+    required MatchDetails? match,
+  }) = _MatchSetNode;
+
+  factory MatchSetNode.fromJson(Map<String, dynamic> MatchSetNodeMap) => _$MatchSetNodeFromJson(MatchSetNodeMap);
+}
+@Freezed()
+class MatchDetails with _$MatchDetails {
+  const factory MatchDetails({
+    required String? court,
+    required String? matchId,
+    required String? startDate,
+    required String? createdAt,
+    required String? endDate,
+    required String? id,
+  }) = _MatchDetails;
+
+  factory MatchDetails.fromJson(Map<String, dynamic> MatchDetailsMap) => _$MatchDetailsFromJson(MatchDetailsMap);
 }

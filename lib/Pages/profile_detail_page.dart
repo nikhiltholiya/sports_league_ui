@@ -21,9 +21,11 @@ import '../components/head_to_head_list_tile.dart';
 import '../components/profile_header_tile.dart';
 import '../components/stats_tile.dart';
 import '../providers/user_id_provider.dart';
+import '../utils/Constants.dart';
 import '../utils/Constants.dart' as Constants;
 import '../utils/app_colors.dart';
 import '../utils/app_labels.dart';
+import '../utils/common.dart';
 
 //Updated on 20220308
 class ProfileDetailPage extends StatefulWidget {
@@ -51,10 +53,17 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> {
   String? userId;
   late AllMatchesData _allMatchesData;
 
+  Map<String, dynamic> param = {};
+  Map<String, dynamic> paramType = {};
+
   @override
   void initState() {
     _scrollController = ScrollController();
     // WidgetsBinding.instance?.addPostFrameCallback(_getTotalHeight);
+
+    param = {'\$userSearch': 'String!'};
+    paramType = {'userSearch': '\$userSearch'};
+
     super.initState();
   }
 
@@ -256,6 +265,15 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> {
 
                     SliverToBoxAdapter(
                       child: Query(
+                        options: QueryOptions(
+                          document: gql(allMatches(param, paramType)),
+                          // this is the query string you just created
+                          variables: {
+                            'userSearch': userId.getUserId,
+                            // 'userSearch': '021c2515-e12e-49bd-bc08-744dc64a508c',
+                          },
+                          pollInterval: Duration(seconds: 100),
+                        ),
                         builder: (result, {fetchMore, refetch}) {
                           if (result.hasException) {
                             return Text(result.exception.toString());
@@ -300,8 +318,8 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> {
                                     ),
                                     for (int i = 0; i < 2; i++)
                                       HeadToHeadDetailsListTile(
-                                        title: 'CBS Arena',
-                                        date: 'Dec 31st 2021',
+                                        title: tempMatches[i].node?.court,
+                                        date: convertDate(tempMatches[i].node?.startDate, null),
                                         onProfileClick: () {},
                                         onTileClick: () {},
                                         player1matchScore: [5, 4, 3, 2, 1],
@@ -332,15 +350,6 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> {
                                 )
                               : SizedBox();
                         },
-                        options: QueryOptions(
-                          document: gql(Constants.matchesQuery),
-                          // this is the query string you just created
-                          variables: {
-                            'userSearch': userId.getUserId,
-                            // 'userSearch': '021c2515-e12e-49bd-bc08-744dc64a508c',
-                          },
-                          pollInterval: Duration(seconds: 100),
-                        ),
                       ),
                     ),
 

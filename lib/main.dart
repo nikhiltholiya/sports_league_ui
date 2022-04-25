@@ -4,8 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:provider/provider.dart';
-import '../Pages/splash_page.dart';
-import '../Pages/edit_profile_page.dart';
+import '../Pages/all_matches_pages.dart';
 
 import '../Pages/all_messaging_list_page.dart';
 import '../Pages/challenges_chat.dart';
@@ -13,6 +12,7 @@ import '../Pages/contact_us_page.dart';
 import '../Pages/create_profile_page.dart';
 import '../Pages/create_profile_picture_page.dart';
 import '../Pages/dashboard.dart';
+import '../Pages/edit_profile_page.dart';
 import '../Pages/head_to_head_details.dart';
 import '../Pages/head_to_head_page.dart';
 import '../Pages/home_page.dart';
@@ -24,12 +24,12 @@ import '../Pages/profile_page.dart';
 import '../Pages/recent_matches_pages.dart';
 import '../Pages/sign_in_page.dart';
 import '../Pages/sign_up_page.dart';
+import '../Pages/splash_page.dart';
 import '../Pages/submit_score_details.dart';
 import '../Pages/submit_score_list.dart';
 import '../Pages/verify_email_page.dart';
 import '../graphql/graphql_view.dart';
 import '../providers/league_id_provider.dart';
-import '../providers/profile_pic_provider.dart';
 import '../providers/user_id_provider.dart';
 import '../utils/shared_preferences_utils.dart';
 
@@ -154,6 +154,8 @@ class AppBody extends StatelessWidget {
             return CupertinoPageRoute(builder: (context) => DashboardPage(), settings: settings);
           } else if (settings.name == LeagueDetails.path) {
             return CupertinoPageRoute(builder: (context) => LeagueDetails(), settings: settings);
+          } else if (settings.name == AllMatchesPage.path) {
+            return CupertinoPageRoute(builder: (context) => AllMatchesPage(), settings: settings);
           } else if (settings.name == ContactUsPage.path) {
             return CupertinoPageRoute(builder: (context) => ContactUsPage(), settings: settings);
           } else if (settings.name == ChallengesChat.path) {
