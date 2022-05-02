@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../components/bordered_circle_avatar.dart';
+import '../components/profile_pic_avatar.dart';
 import '../components/iconic_text_view.dart';
 import '../components/stats_tile.dart';
 import '../utils/app_colors.dart';
@@ -13,18 +13,20 @@ class LeagueDetailsWinnerTile extends StatefulWidget {
   final int? wonCount;
   final int? drawCount;
   final int? lostCount;
-  final double? rate;
+  final String? rate;
+  final String? winnerProfilePic;
 
   const LeagueDetailsWinnerTile({
     Key? key,
     this.winnerName,
     this.winnerLocation,
+    this.winnerProfilePic,
     this.winnerAge,
     this.matchesCount,
     this.wonCount,
     this.drawCount,
     this.lostCount,
-    this.rate = 0.0,
+    this.rate,
   }) : super(key: key);
 
   @override
@@ -75,9 +77,9 @@ class _LeagueDetailsWinnerTileState extends State<LeagueDetailsWinnerTile> {
                     children: [
                       Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: BorderedCircleAvatar(
+                        child: ProfilePicAvatar(
                           radius: 40,
-                          path: 'assets/Ellipse 1.png',
+                          path: widget.winnerProfilePic,
                         ),
                       ),
                       Text(

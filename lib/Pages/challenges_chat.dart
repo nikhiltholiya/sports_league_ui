@@ -16,10 +16,10 @@ import '../bean/all_messaging/all_messaging.dart';
 import '../bean/all_users/all_users.dart';
 import '../bean/send_message/send_message.dart';
 import '../bean/token_auth/token_auth.dart';
-import '../components/bordered_circle_avatar.dart';
 import '../components/chatting_list_header_tile.dart';
 import '../components/chatting_list_tile.dart';
 import '../components/edit_text_form_field.dart';
+import '../components/profile_pic_avatar.dart';
 import '../components/rate_badges.dart';
 import '../providers/user_id_provider.dart';
 import '../utils/Constants.dart';
@@ -220,7 +220,6 @@ class _ChallengesChatState extends State<ChallengesChat> {
 
             variableForMsg = {'senderReceipientSearch': '${value.getUserId}|${SharedPreferencesUtils.getUserId}'};
 
-
             return Query(
               options: QueryOptions(
                 document: gql(allUsers(param, paramType)),
@@ -321,7 +320,9 @@ class _ChallengesChatState extends State<ChallengesChat> {
                                               ),
                                               Padding(
                                                 padding: const EdgeInsets.all(5.0),
-                                                child: BorderedCircleAvatar(radius: 20, path: 'assets/Ellipse 1.png'),
+                                                child: ProfilePicAvatar(
+                                                    radius: 20,
+                                                    path: _allUsersData.allUsers?.edges?.first.node?.picture),
                                               ),
                                               Expanded(
                                                 flex: 1,
@@ -388,7 +389,7 @@ class _ChallengesChatState extends State<ChallengesChat> {
 
                                           _streamController.sink.add(_chatList ?? []);
 
-                                          if(!_isLoaded!) {
+                                          if (!_isLoaded!) {
                                             _isLoaded = true;
                                             scrollToLast();
                                           }

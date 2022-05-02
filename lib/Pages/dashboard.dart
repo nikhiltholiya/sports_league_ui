@@ -2,23 +2,22 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:provider/provider.dart';
-import '../Pages/home_page.dart';
-import '../components/dashboard_drawer_list_tile.dart';
 
+import '../Pages/all_matches_pages.dart';
 import '../Pages/all_messaging_list_page.dart';
 import '../Pages/base_activity.dart';
 import '../Pages/contact_us_page.dart';
+import '../Pages/home_page.dart';
 import '../Pages/my_league_list.dart';
 import '../Pages/password_change_page.dart';
 import '../Pages/profile_page.dart';
 import '../Pages/submit_score_list.dart';
 import '../bean/all_users/all_users.dart';
-import '../components/bordered_circle_avatar.dart';
+import '../components/app_head_tile.dart';
+import '../components/dashboard_drawer_list_tile.dart';
 import '../components/dashboard_grid_item.dart';
-import '../components/decorated_app_header_tile.dart';
 import '../providers/league_id_provider.dart';
 import '../providers/user_id_provider.dart';
 import '../utils/Constants.dart';
@@ -77,7 +76,7 @@ class _DashboardPageState extends State<DashboardPage> {
           image: 'transperent_tennis_ball_icon_blue.png',
           subtitle: 'Challenge for match',
           color: Color(0xff345891),
-          path: ''),
+          path: AllMatchesPage.path),
       GridMenuItems(
           title: 'My Profile',
           image: 'transperent_tennis_ball_icon_red.png',
@@ -150,18 +149,18 @@ class _DashboardPageState extends State<DashboardPage> {
           SharedPreferencesUtils.setUserData(
               jsonEncode(AllUsersData.fromJson(result.data!).allUsers?.edges?.first.node));
 
-
-
           // print('USER DATA ${SharedPreferencesUtils.getUserData}');
           return Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              dashboardHeader(
+              AppHeadTile(
+                isDashboard: true,
                 name: AllUsersData.fromJson(result.data!).allUsers?.edges?.first.node?.firstName,
                 onMenuClick: () {
                   _scKey.currentState?.openDrawer();
                 },
+                userImage: AllUsersData.fromJson(result.data!).allUsers?.edges?.first.node?.picture,
 
                 // onMenuClick: (){
                 //   scKey.currentState?.openEndDrawer();
@@ -289,60 +288,6 @@ class _DashboardPageState extends State<DashboardPage> {
         physics: const BouncingScrollPhysics(),
       ),
       elevation: 10.0,
-    );
-  }
-}
-
-class dashboardHeader extends StatelessWidget {
-  final String? name;
-  final String? userImage;
-  final Function? onMenuClick;
-
-  const dashboardHeader({Key? key, this.name = 'user', this.userImage, this.onMenuClick}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        DecoratedAppHeader(height: 200),
-        Positioned(
-          top: 10,
-          left: 20,
-          child: CircleAvatar(
-            backgroundColor: aWhite,
-            child: IconButton(
-              onPressed: () => onMenuClick!(),
-              icon: Icon(Icons.menu_outlined, color: aGreen),
-            ),
-          ),
-        ),
-        Positioned(
-          top: 60,
-          left: 20,
-          child: RichText(
-              text: TextSpan(children: <TextSpan>[
-            TextSpan(
-              text: "Hello,\n",
-              style: GoogleFonts.poppins(
-                fontSize: 14,
-                color: aWhite,
-              ),
-            ),
-           TextSpan(
-              text: name,
-              style: GoogleFonts.poppins(
-                fontSize: 26,
-                color: aWhite,
-              ),
-            ),
-          ])),
-        ),
-        Positioned(
-          top: 50,
-          right: 20,
-          child: BorderedCircleAvatar(radius: 40, path: 'assets/Ellipse 5.png'),
-        )
-      ],
     );
   }
 }

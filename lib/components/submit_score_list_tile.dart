@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../components/bordered_circle_avatar.dart';
+import '../components/profile_pic_avatar.dart';
 import '../components/iconic_text_view.dart';
 import '../components/rate_badges.dart';
 import '../utils/app_colors.dart';
@@ -61,8 +61,8 @@ class _SubmitScoreListTileState extends State<SubmitScoreListTile> {
                       children: [
                         GestureDetector(
                           onTap: () => widget.onProfileClick!(),
-                          child: BorderedCircleAvatar(
-                            path: widget.profileImg!,
+                          child: ProfilePicAvatar(
+                            path: widget.profileImg,
                             radius: 20,
                           ),
                         ),

@@ -75,7 +75,7 @@ class _EditTextFormFieldState extends State<EditTextFormField> {
             counterStyle: TextStyle(height: 0.0),
             counterText: '',
             //Remove space for counter
-            contentPadding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 0.0),
+            contentPadding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 0.0),
             hintText: widget.hint,
             focusColor: Colors.black,
             fillColor: aWhite,

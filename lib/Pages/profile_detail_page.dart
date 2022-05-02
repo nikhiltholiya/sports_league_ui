@@ -21,9 +21,11 @@ import '../components/head_to_head_list_tile.dart';
 import '../components/profile_header_tile.dart';
 import '../components/stats_tile.dart';
 import '../providers/user_id_provider.dart';
+import '../utils/Constants.dart';
 import '../utils/Constants.dart' as Constants;
 import '../utils/app_colors.dart';
 import '../utils/app_labels.dart';
+import '../utils/common.dart';
 
 //Updated on 20220308
 class ProfileDetailPage extends StatefulWidget {
@@ -51,10 +53,17 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> {
   String? userId;
   late AllMatchesData _allMatchesData;
 
+  Map<String, dynamic> param = {};
+  Map<String, dynamic> paramType = {};
+
   @override
   void initState() {
     _scrollController = ScrollController();
     // WidgetsBinding.instance?.addPostFrameCallback(_getTotalHeight);
+
+    param = {'\$userSearch': 'String!'};
+    paramType = {'userSearch': '\$userSearch'};
+
     super.initState();
   }
 
@@ -88,6 +97,7 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> {
   @override
   void dispose() {
     _scrollController!.dispose();
+
     super.dispose();
   }
 
@@ -178,7 +188,7 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> {
                             background: ProfileHeaderTile(
                               playerName: '${newProfile?.firstName} ${newProfile?.lastName}',
                               playerAge: newProfile?.age,
-                              playerImg: 'assets/Ellipse 1.png',
+                              playerImg: newProfile?.picture,
                               playerLocation: '${newProfile?.city}, ${newProfile?.state}',
                               stackKey: _stackKey,
                               btnKey: _btnKey,
@@ -188,6 +198,8 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> {
                               btnLeft: widget.from! == ProfilePage.profileMe ? editProfile : chat,
                               btnRight: widget.from! == ProfilePage.profileMe ? messages : submitScore,
                               onLeftBtnClick: () {
+                                // Provider.of<ProfilePicProvider>(context, listen: false).setXFile(null);
+
                                 widget.from! == ProfilePage.profileMe
                                     ? Navigator.pushNamed(context, EditProfilePage.path) // 'EDIT PROFILE'
                                     : Navigator.pushReplacementNamed(context, ChallengesChat.path);
@@ -253,6 +265,15 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> {
 
                     SliverToBoxAdapter(
                       child: Query(
+                        options: QueryOptions(
+                          document: gql(allMatches(param, paramType)),
+                          // this is the query string you just created
+                          variables: {
+                            'userSearch': userId.getUserId,
+                            // 'userSearch': '021c2515-e12e-49bd-bc08-744dc64a508c',
+                          },
+                          pollInterval: Duration(seconds: 100),
+                        ),
                         builder: (result, {fetchMore, refetch}) {
                           if (result.hasException) {
                             return Text(result.exception.toString());
@@ -297,16 +318,16 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> {
                                     ),
                                     for (int i = 0; i < 2; i++)
                                       HeadToHeadDetailsListTile(
-                                        title: 'CBS Arena',
-                                        date: 'Dec 31st 2021',
+                                        title: tempMatches[i].node?.court,
+                                        date: convertDate(tempMatches[i].node?.startDate, null),
                                         onProfileClick: () {},
                                         onTileClick: () {},
                                         player1matchScore: [5, 4, 3, 2, 1],
-                                        player1Img: 'assets/Ellipse 5.png',
+                                        player1Img: tempMatches[i].node?.playerOne?.picture,
                                         player1Name: tempMatches[i].node?.playerOne?.firstName,
                                         player1Active: true,
                                         player2matchScore: [1, 2, 3, 4, 5],
-                                        player2Img: 'assets/Ellipse 2.png',
+                                        player2Img: tempMatches[i].node?.playerTwo?.picture,
                                         player2Name: tempMatches[i].node?.playerTwo?.firstName,
                                         player2Active: false,
                                       )
@@ -329,18 +350,10 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> {
                                 )
                               : SizedBox();
                         },
-                        options: QueryOptions(
-                          document: gql(Constants.matchesQuery),
-                          // this is the query string you just created
-                          variables: {
-                            'userSearch': userId.getUserId,
-                            // 'userSearch': '021c2515-e12e-49bd-bc08-744dc64a508c',
-                          },
-                          pollInterval: Duration(seconds: 100),
-                        ),
                       ),
                     ),
 
+                    //TODO API REMAINS
                     SliverToBoxAdapter(
                       child: Padding(
                         padding: const EdgeInsets.only(left: 16.0, right: 16),

@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
 
-import '../components/bordered_circle_avatar.dart';
+import '../components/profile_pic_avatar.dart';
 import '../components/decorated_app_header_tile.dart';
 
 //Created on 20220315
 class SubmitScoreDetailsHeaderTile extends StatefulWidget {
   final String? player1Name;
-  final String? player1Img;
+  final String? player1ProfileImg;
   final GlobalKey? userKey;
   final GlobalKey? stackKey;
 
   final String? player2Name;
-  final String? player2Img;
+  final String? player2ProfileImg;
 
   const SubmitScoreDetailsHeaderTile({
     Key? key,
     this.player1Name,
-    this.player1Img,
+    this.player1ProfileImg,
     this.player2Name,
-    this.player2Img,
+    this.player2ProfileImg,
     required this.userKey,
     required this.stackKey,
   }) : super(key: key);
@@ -56,8 +56,8 @@ class _SubmitScoreDetailsHeaderTileState extends State<SubmitScoreDetailsHeaderT
                       Expanded(
                         flex: 2,
                         child: UserDetails(
-                          userName: widget.player1Name!, // Novak J.
-                          imgUrl: widget.player1Img!, //'assets/Ellipse 1.png',
+                          userName: widget.player1Name!,
+                          imgUrl: widget.player1ProfileImg!,
                         ),
                       ),
                       Text(
@@ -67,8 +67,8 @@ class _SubmitScoreDetailsHeaderTileState extends State<SubmitScoreDetailsHeaderT
                       Expanded(
                         flex: 2,
                         child: UserDetails(
-                          userName: widget.player2Name!, //'Kalpesh t.',
-                          imgUrl: widget.player2Img!, //'assets/Ellipse 5.png',
+                          userName: widget.player2Name!,
+                          imgUrl: widget.player2ProfileImg!,
                         ),
                       ),
                     ],
@@ -102,7 +102,7 @@ class _UserDetailsState extends State<UserDetails> {
       children: [
         Padding(
           padding: const EdgeInsets.all(5.0),
-          child: BorderedCircleAvatar(
+          child: ProfilePicAvatar(
             path: widget.imgUrl!,
             radius: 31,
           ),

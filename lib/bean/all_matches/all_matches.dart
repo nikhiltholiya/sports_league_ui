@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:tenniston/bean/all_users/all_users.dart';
 
 part 'all_matches.g.dart';
 part 'all_matches.freezed.dart';
@@ -31,12 +32,11 @@ class MatchesNode with _$MatchesNode {
   const factory MatchesNode({
 
     required String? id,
-    required String? matchId,
-    required AllMatches? matchSet,
-    required int? playerOneScore,
-    required int? playerTwoScore,
-    required PlayerOne? playerOne,
-    required PlayerOne? playerTwo,
+    required String? court,
+    required String? startDate,
+    required MatchSet? matchSet,
+    required UserNode? playerOne,
+    required UserNode? playerTwo,
   }) = _MatchesNode;
 
   factory MatchesNode.fromJson(Map<String, dynamic> MatchesNodeMap) => _$MatchesNodeFromJson(MatchesNodeMap);
@@ -44,12 +44,43 @@ class MatchesNode with _$MatchesNode {
 
 
 @Freezed()
-class PlayerOne with _$PlayerOne {
-  const factory PlayerOne({
-    required String? firstName,
-    required String? userId,
-    required String? lastName,
-  }) = _PlayerOne;
+class MatchSet with _$MatchSet {
+  const factory MatchSet({
+    required List<MatchSetEdges>? edges}) = _MatchSet;
 
-  factory PlayerOne.fromJson(Map<String, dynamic> PlayerOneMap) => _$PlayerOneFromJson(PlayerOneMap);
+  factory MatchSet.fromJson(Map<String, dynamic> MatchesNodeMap) => _$MatchSetFromJson(MatchesNodeMap);
+}
+
+@Freezed()
+class MatchSetEdges with _$MatchSetEdges {
+  const factory MatchSetEdges({
+    required MatchSetNode? node}) = _MatchSetEdges;
+
+  factory MatchSetEdges.fromJson(Map<String, dynamic> MatchSetEdgesMap) => _$MatchSetEdgesFromJson(MatchSetEdgesMap);
+}
+
+@Freezed()
+class MatchSetNode with _$MatchSetNode {
+  const factory MatchSetNode({
+    required String? id,
+    required int? playerOneScore,
+    required int? playerTwoScore,
+    required String? matchSetId,
+    required MatchDetails? match,
+  }) = _MatchSetNode;
+
+  factory MatchSetNode.fromJson(Map<String, dynamic> MatchSetNodeMap) => _$MatchSetNodeFromJson(MatchSetNodeMap);
+}
+@Freezed()
+class MatchDetails with _$MatchDetails {
+  const factory MatchDetails({
+    required String? court,
+    required String? matchId,
+    required String? startDate,
+    required String? createdAt,
+    required String? endDate,
+    required String? id,
+  }) = _MatchDetails;
+
+  factory MatchDetails.fromJson(Map<String, dynamic> MatchDetailsMap) => _$MatchDetailsFromJson(MatchDetailsMap);
 }

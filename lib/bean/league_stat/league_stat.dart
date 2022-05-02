@@ -41,6 +41,8 @@ class LeagueStat with _$LeagueStat{
 class UserStat with _$UserStat {
   const factory UserStat({
     required int? loss,
+    required String? picture,
+    required String? rating,
     required int? total,
     required String? userId,
     required String? userName,

@@ -1,6 +1,5 @@
 const String SUCCESS_MESSAGE = " You will be contacted by us very soon.";
 
-
 //Add rating from service side
 const fetchUserProfiles = """
 query (\$userId : String!) {
@@ -16,45 +15,14 @@ query (\$userId : String!) {
     state
     dob
     age
+    rating
+    picture
   }
 }
 
 """;
 
-const String matchesQuery = """
-  query (\$userSearch: String!) {
-    allMatches(userSearch:\$userSearch){
-      edges {
-      node {
-        id
-        matchId
-        matchSet(first: 2) {
-          edges {
-            node {
-              id
-              playerOneScore
-              playerTwoScore
-            }
-          }
-        }
-        playerOne {
-          firstName
-          userId
-          lastName
-        }
-        playerTwo {
-          userId
-          lastName
-          firstName
-        }
-      }
-    }
-    }
-  }
-""";
-
 final leagueStatus = '''
-
 query (\$leagueId: String!) {
   leagueStat(leagueId: \$leagueId) {
     leagueId
@@ -71,10 +39,12 @@ query (\$leagueId: String!) {
     winnerOneId
     winnerTwoId
     userStat {
-      userName
       loss
+      picture
+      rating
       total
       userId
+      userName
       won
     }
   }
@@ -192,6 +162,88 @@ String allMessaging(Map<String, dynamic>? param, Map<String, dynamic>? paramType
 ''';
 }
 
+String allMatches(Map<String, dynamic>? param, Map<String, dynamic>? paramType) {
+  return '''
+      query allMatches(${param.toString().trim().substring(1, param.toString().trim().length - 1)}) {
+          allMatches(${paramType.toString().trim().substring(1, paramType.toString().trim().length - 1)}) {
+              edges {
+                 node {
+                   id
+                   startDate
+                   court
+                   playerOne {
+                     userId
+                     aboutMe
+                     active
+                     city
+                     country
+                     dateJoined
+                     deleted
+                     email
+                     dob
+                     firstName
+                     gender
+                     isActive
+                     id
+                     isStaff
+                     lastLogin
+                     lastName
+                     phone
+                     picture
+                     rating
+                     state
+                   }
+                   playerTwo {
+                     userId
+                     aboutMe
+                     active
+                     city
+                     country
+                     dateJoined
+                     deleted
+                     email
+                     dob
+                     firstName
+                     gender
+                     isActive
+                     id
+                     isStaff
+                     lastLogin
+                     lastName
+                     phone
+                     picture
+                     rating
+                     state
+                   }
+                   matchSet(first: 10) {
+                     edges {
+                       node {
+                         id
+                         playerOneScore
+                         playerTwoScore
+                         matchSetId
+                         match {
+                           court
+                           id
+                         }
+                       }
+                     }
+                   }
+                 }
+               }
+          }
+      }
+''';
+}
+
+// Add additional param in match =
+// matchId
+// startDate
+// createdAt
+// endDate
+
+
+//Mutations
 String SubmitScore(Map<String, dynamic>? param, Map<String, dynamic>? paramType) {
   return '''
     mutation (${param.toString().trim().substring(1, param.toString().trim().length - 1)}) {
@@ -211,19 +263,6 @@ String SubmitScore(Map<String, dynamic>? param, Map<String, dynamic>? paramType)
     }
   ''';
 }
-
-String fetChCourts = '''
-query MyQuery {
-  allLeagues(status: "ongoing") {
-    edges {
-      node {
-        leagueId
-        name
-      }
-    }
-  }
-}
-''';
 
 String RegisterPlayer(Map<String, dynamic>? param, Map<String, dynamic>? paramType) {
   return '''
@@ -320,7 +359,6 @@ String tokenAuth(Map<String, dynamic>? param, Map<String, dynamic>? paramType) {
 ''';
 }
 
-
 String updateAccount(Map<String, dynamic>? param, Map<String, dynamic>? paramType) {
   return '''
       mutation updateAccount(${param.toString().trim().substring(1, param.toString().trim().length - 1)}) {
@@ -332,6 +370,22 @@ String updateAccount(Map<String, dynamic>? param, Map<String, dynamic>? paramTyp
 ''';
 }
 
+// const String uploadImage = r'''
+// mutation($file: Upload!) {
+//   upload(file: $file)
+// }
+// ''';
+
+String uploadImage(Map<String, dynamic>? param, Map<String, dynamic>? paramType) {
+  return '''
+    mutation(${param.toString().trim().substring(1, param.toString().trim().length - 1)}) {
+      uploadImage(${paramType.toString().trim().substring(1, paramType.toString().trim().length - 1)})
+      {
+        success
+      }
+    }
+''';
+}
 
 String revokeToken(Map<String, dynamic>? param, Map<String, dynamic>? paramType) {
   return '''
@@ -344,8 +398,6 @@ String revokeToken(Map<String, dynamic>? param, Map<String, dynamic>? paramType)
     }
 ''';
 }
-
-
 
 String sendMessage(Map<String, dynamic>? param, Map<String, dynamic>? paramType) {
   return '''
@@ -375,18 +427,44 @@ String sendMessage(Map<String, dynamic>? param, Map<String, dynamic>? paramType)
 ''';
 }
 
-
-//Test purpose
-String readRepositories = '''
-  query ReadRepositories(\$nRepositories: Int!) {
-    viewer {
-      repositories(last: \$nRepositories) {
-        nodes {
-          id
-          name
-          viewerHasStarred
-        }
+String userQuery(Map<String, dynamic>? param, Map<String, dynamic>? paramType) {
+  return '''
+      mutation userQuery(${param.toString().trim().substring(1, param.toString().trim().length - 1)}) {
+          userQuery(${paramType.toString().trim().substring(1, paramType.toString().trim().length - 1)}) {
+              userQuery {
+                createdAt
+                id
+                updatedAt
+                message
+             }  
+          }
       }
-    }
-  }
 ''';
+}
+
+String leagueApplication(Map<String, dynamic>? param, Map<String, dynamic>? paramType) {
+  return '''
+      mutation leagueApplication(${param.toString().trim().substring(1, param.toString().trim().length - 1)}) {
+          leagueApplication(${paramType.toString().trim().substring(1, paramType.toString().trim().length - 1)}) {
+              leagueApplication {
+                id
+                leagueAppId
+                status
+                message
+              } 
+          }
+      }
+''';
+}
+
+String verifyToken(Map<String, dynamic>? param, Map<String, dynamic>? paramType) {
+  return '''
+      mutation verifyToken(${param.toString().trim().substring(1, param.toString().trim().length - 1)}) {
+          verifyToken(${paramType.toString().trim().substring(1, paramType.toString().trim().length - 1)}) {
+              errors
+              payload
+              success
+          }
+      }
+''';
+}

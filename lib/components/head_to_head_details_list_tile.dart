@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../components/bordered_circle_avatar.dart';
+import '../components/profile_pic_avatar.dart';
 import '../utils/app_colors.dart';
 
 //Created on 20220304
@@ -157,7 +157,7 @@ class _UserStatsState extends State<UserStats> {
               Expanded(
                 child: GestureDetector(
                   onTap: () => widget.onProfileClick!(widget.userName!),
-                  child: BorderedCircleAvatar(
+                  child: ProfilePicAvatar(
                     radius: 25,
                     path: widget.profileImg!,
                   ),

@@ -501,18 +501,16 @@ class _$MatchesNodeTearOff {
 
   _MatchesNode call(
       {required String? id,
-      required String? matchId,
-      required AllMatches? matchSet,
-      required int? playerOneScore,
-      required int? playerTwoScore,
-      required PlayerOne? playerOne,
-      required PlayerOne? playerTwo}) {
+      required String? court,
+      required String? startDate,
+      required MatchSet? matchSet,
+      required UserNode? playerOne,
+      required UserNode? playerTwo}) {
     return _MatchesNode(
       id: id,
-      matchId: matchId,
+      court: court,
+      startDate: startDate,
       matchSet: matchSet,
-      playerOneScore: playerOneScore,
-      playerTwoScore: playerTwoScore,
       playerOne: playerOne,
       playerTwo: playerTwo,
     );
@@ -529,12 +527,11 @@ const $MatchesNode = _$MatchesNodeTearOff();
 /// @nodoc
 mixin _$MatchesNode {
   String? get id => throw _privateConstructorUsedError;
-  String? get matchId => throw _privateConstructorUsedError;
-  AllMatches? get matchSet => throw _privateConstructorUsedError;
-  int? get playerOneScore => throw _privateConstructorUsedError;
-  int? get playerTwoScore => throw _privateConstructorUsedError;
-  PlayerOne? get playerOne => throw _privateConstructorUsedError;
-  PlayerOne? get playerTwo => throw _privateConstructorUsedError;
+  String? get court => throw _privateConstructorUsedError;
+  String? get startDate => throw _privateConstructorUsedError;
+  MatchSet? get matchSet => throw _privateConstructorUsedError;
+  UserNode? get playerOne => throw _privateConstructorUsedError;
+  UserNode? get playerTwo => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -549,16 +546,15 @@ abstract class $MatchesNodeCopyWith<$Res> {
       _$MatchesNodeCopyWithImpl<$Res>;
   $Res call(
       {String? id,
-      String? matchId,
-      AllMatches? matchSet,
-      int? playerOneScore,
-      int? playerTwoScore,
-      PlayerOne? playerOne,
-      PlayerOne? playerTwo});
+      String? court,
+      String? startDate,
+      MatchSet? matchSet,
+      UserNode? playerOne,
+      UserNode? playerTwo});
 
-  $AllMatchesCopyWith<$Res>? get matchSet;
-  $PlayerOneCopyWith<$Res>? get playerOne;
-  $PlayerOneCopyWith<$Res>? get playerTwo;
+  $MatchSetCopyWith<$Res>? get matchSet;
+  $UserNodeCopyWith<$Res>? get playerOne;
+  $UserNodeCopyWith<$Res>? get playerTwo;
 }
 
 /// @nodoc
@@ -572,10 +568,9 @@ class _$MatchesNodeCopyWithImpl<$Res> implements $MatchesNodeCopyWith<$Res> {
   @override
   $Res call({
     Object? id = freezed,
-    Object? matchId = freezed,
+    Object? court = freezed,
+    Object? startDate = freezed,
     Object? matchSet = freezed,
-    Object? playerOneScore = freezed,
-    Object? playerTwoScore = freezed,
     Object? playerOne = freezed,
     Object? playerTwo = freezed,
   }) {
@@ -584,62 +579,58 @@ class _$MatchesNodeCopyWithImpl<$Res> implements $MatchesNodeCopyWith<$Res> {
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String?,
-      matchId: matchId == freezed
-          ? _value.matchId
-          : matchId // ignore: cast_nullable_to_non_nullable
+      court: court == freezed
+          ? _value.court
+          : court // ignore: cast_nullable_to_non_nullable
+              as String?,
+      startDate: startDate == freezed
+          ? _value.startDate
+          : startDate // ignore: cast_nullable_to_non_nullable
               as String?,
       matchSet: matchSet == freezed
           ? _value.matchSet
           : matchSet // ignore: cast_nullable_to_non_nullable
-              as AllMatches?,
-      playerOneScore: playerOneScore == freezed
-          ? _value.playerOneScore
-          : playerOneScore // ignore: cast_nullable_to_non_nullable
-              as int?,
-      playerTwoScore: playerTwoScore == freezed
-          ? _value.playerTwoScore
-          : playerTwoScore // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as MatchSet?,
       playerOne: playerOne == freezed
           ? _value.playerOne
           : playerOne // ignore: cast_nullable_to_non_nullable
-              as PlayerOne?,
+              as UserNode?,
       playerTwo: playerTwo == freezed
           ? _value.playerTwo
           : playerTwo // ignore: cast_nullable_to_non_nullable
-              as PlayerOne?,
+              as UserNode?,
     ));
   }
 
   @override
-  $AllMatchesCopyWith<$Res>? get matchSet {
+  $MatchSetCopyWith<$Res>? get matchSet {
     if (_value.matchSet == null) {
       return null;
     }
 
-    return $AllMatchesCopyWith<$Res>(_value.matchSet!, (value) {
+    return $MatchSetCopyWith<$Res>(_value.matchSet!, (value) {
       return _then(_value.copyWith(matchSet: value));
     });
   }
 
   @override
-  $PlayerOneCopyWith<$Res>? get playerOne {
+  $UserNodeCopyWith<$Res>? get playerOne {
     if (_value.playerOne == null) {
       return null;
     }
 
-    return $PlayerOneCopyWith<$Res>(_value.playerOne!, (value) {
+    return $UserNodeCopyWith<$Res>(_value.playerOne!, (value) {
       return _then(_value.copyWith(playerOne: value));
     });
   }
 
   @override
-  $PlayerOneCopyWith<$Res>? get playerTwo {
+  $UserNodeCopyWith<$Res>? get playerTwo {
     if (_value.playerTwo == null) {
       return null;
     }
 
-    return $PlayerOneCopyWith<$Res>(_value.playerTwo!, (value) {
+    return $UserNodeCopyWith<$Res>(_value.playerTwo!, (value) {
       return _then(_value.copyWith(playerTwo: value));
     });
   }
@@ -654,19 +645,18 @@ abstract class _$MatchesNodeCopyWith<$Res>
   @override
   $Res call(
       {String? id,
-      String? matchId,
-      AllMatches? matchSet,
-      int? playerOneScore,
-      int? playerTwoScore,
-      PlayerOne? playerOne,
-      PlayerOne? playerTwo});
+      String? court,
+      String? startDate,
+      MatchSet? matchSet,
+      UserNode? playerOne,
+      UserNode? playerTwo});
 
   @override
-  $AllMatchesCopyWith<$Res>? get matchSet;
+  $MatchSetCopyWith<$Res>? get matchSet;
   @override
-  $PlayerOneCopyWith<$Res>? get playerOne;
+  $UserNodeCopyWith<$Res>? get playerOne;
   @override
-  $PlayerOneCopyWith<$Res>? get playerTwo;
+  $UserNodeCopyWith<$Res>? get playerTwo;
 }
 
 /// @nodoc
@@ -682,10 +672,9 @@ class __$MatchesNodeCopyWithImpl<$Res> extends _$MatchesNodeCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = freezed,
-    Object? matchId = freezed,
+    Object? court = freezed,
+    Object? startDate = freezed,
     Object? matchSet = freezed,
-    Object? playerOneScore = freezed,
-    Object? playerTwoScore = freezed,
     Object? playerOne = freezed,
     Object? playerTwo = freezed,
   }) {
@@ -694,30 +683,26 @@ class __$MatchesNodeCopyWithImpl<$Res> extends _$MatchesNodeCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String?,
-      matchId: matchId == freezed
-          ? _value.matchId
-          : matchId // ignore: cast_nullable_to_non_nullable
+      court: court == freezed
+          ? _value.court
+          : court // ignore: cast_nullable_to_non_nullable
+              as String?,
+      startDate: startDate == freezed
+          ? _value.startDate
+          : startDate // ignore: cast_nullable_to_non_nullable
               as String?,
       matchSet: matchSet == freezed
           ? _value.matchSet
           : matchSet // ignore: cast_nullable_to_non_nullable
-              as AllMatches?,
-      playerOneScore: playerOneScore == freezed
-          ? _value.playerOneScore
-          : playerOneScore // ignore: cast_nullable_to_non_nullable
-              as int?,
-      playerTwoScore: playerTwoScore == freezed
-          ? _value.playerTwoScore
-          : playerTwoScore // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as MatchSet?,
       playerOne: playerOne == freezed
           ? _value.playerOne
           : playerOne // ignore: cast_nullable_to_non_nullable
-              as PlayerOne?,
+              as UserNode?,
       playerTwo: playerTwo == freezed
           ? _value.playerTwo
           : playerTwo // ignore: cast_nullable_to_non_nullable
-              as PlayerOne?,
+              as UserNode?,
     ));
   }
 }
@@ -727,10 +712,9 @@ class __$MatchesNodeCopyWithImpl<$Res> extends _$MatchesNodeCopyWithImpl<$Res>
 class _$_MatchesNode implements _MatchesNode {
   const _$_MatchesNode(
       {required this.id,
-      required this.matchId,
+      required this.court,
+      required this.startDate,
       required this.matchSet,
-      required this.playerOneScore,
-      required this.playerTwoScore,
       required this.playerOne,
       required this.playerTwo});
 
@@ -740,21 +724,19 @@ class _$_MatchesNode implements _MatchesNode {
   @override
   final String? id;
   @override
-  final String? matchId;
+  final String? court;
   @override
-  final AllMatches? matchSet;
+  final String? startDate;
   @override
-  final int? playerOneScore;
+  final MatchSet? matchSet;
   @override
-  final int? playerTwoScore;
+  final UserNode? playerOne;
   @override
-  final PlayerOne? playerOne;
-  @override
-  final PlayerOne? playerTwo;
+  final UserNode? playerTwo;
 
   @override
   String toString() {
-    return 'MatchesNode(id: $id, matchId: $matchId, matchSet: $matchSet, playerOneScore: $playerOneScore, playerTwoScore: $playerTwoScore, playerOne: $playerOne, playerTwo: $playerTwo)';
+    return 'MatchesNode(id: $id, court: $court, startDate: $startDate, matchSet: $matchSet, playerOne: $playerOne, playerTwo: $playerTwo)';
   }
 
   @override
@@ -763,12 +745,9 @@ class _$_MatchesNode implements _MatchesNode {
         (other.runtimeType == runtimeType &&
             other is _MatchesNode &&
             const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality().equals(other.matchId, matchId) &&
+            const DeepCollectionEquality().equals(other.court, court) &&
+            const DeepCollectionEquality().equals(other.startDate, startDate) &&
             const DeepCollectionEquality().equals(other.matchSet, matchSet) &&
-            const DeepCollectionEquality()
-                .equals(other.playerOneScore, playerOneScore) &&
-            const DeepCollectionEquality()
-                .equals(other.playerTwoScore, playerTwoScore) &&
             const DeepCollectionEquality().equals(other.playerOne, playerOne) &&
             const DeepCollectionEquality().equals(other.playerTwo, playerTwo));
   }
@@ -777,10 +756,9 @@ class _$_MatchesNode implements _MatchesNode {
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(matchId),
+      const DeepCollectionEquality().hash(court),
+      const DeepCollectionEquality().hash(startDate),
       const DeepCollectionEquality().hash(matchSet),
-      const DeepCollectionEquality().hash(playerOneScore),
-      const DeepCollectionEquality().hash(playerTwoScore),
       const DeepCollectionEquality().hash(playerOne),
       const DeepCollectionEquality().hash(playerTwo));
 
@@ -798,12 +776,11 @@ class _$_MatchesNode implements _MatchesNode {
 abstract class _MatchesNode implements MatchesNode {
   const factory _MatchesNode(
       {required String? id,
-      required String? matchId,
-      required AllMatches? matchSet,
-      required int? playerOneScore,
-      required int? playerTwoScore,
-      required PlayerOne? playerOne,
-      required PlayerOne? playerTwo}) = _$_MatchesNode;
+      required String? court,
+      required String? startDate,
+      required MatchSet? matchSet,
+      required UserNode? playerOne,
+      required UserNode? playerTwo}) = _$_MatchesNode;
 
   factory _MatchesNode.fromJson(Map<String, dynamic> json) =
       _$_MatchesNode.fromJson;
@@ -811,136 +788,760 @@ abstract class _MatchesNode implements MatchesNode {
   @override
   String? get id;
   @override
-  String? get matchId;
+  String? get court;
   @override
-  AllMatches? get matchSet;
+  String? get startDate;
   @override
-  int? get playerOneScore;
+  MatchSet? get matchSet;
   @override
-  int? get playerTwoScore;
+  UserNode? get playerOne;
   @override
-  PlayerOne? get playerOne;
-  @override
-  PlayerOne? get playerTwo;
+  UserNode? get playerTwo;
   @override
   @JsonKey(ignore: true)
   _$MatchesNodeCopyWith<_MatchesNode> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
-PlayerOne _$PlayerOneFromJson(Map<String, dynamic> json) {
-  return _PlayerOne.fromJson(json);
+MatchSet _$MatchSetFromJson(Map<String, dynamic> json) {
+  return _MatchSet.fromJson(json);
 }
 
 /// @nodoc
-class _$PlayerOneTearOff {
-  const _$PlayerOneTearOff();
+class _$MatchSetTearOff {
+  const _$MatchSetTearOff();
 
-  _PlayerOne call(
-      {required String? firstName,
-      required String? userId,
-      required String? lastName}) {
-    return _PlayerOne(
-      firstName: firstName,
-      userId: userId,
-      lastName: lastName,
+  _MatchSet call({required List<MatchSetEdges>? edges}) {
+    return _MatchSet(
+      edges: edges,
     );
   }
 
-  PlayerOne fromJson(Map<String, Object?> json) {
-    return PlayerOne.fromJson(json);
+  MatchSet fromJson(Map<String, Object?> json) {
+    return MatchSet.fromJson(json);
   }
 }
 
 /// @nodoc
-const $PlayerOne = _$PlayerOneTearOff();
+const $MatchSet = _$MatchSetTearOff();
 
 /// @nodoc
-mixin _$PlayerOne {
-  String? get firstName => throw _privateConstructorUsedError;
-  String? get userId => throw _privateConstructorUsedError;
-  String? get lastName => throw _privateConstructorUsedError;
+mixin _$MatchSet {
+  List<MatchSetEdges>? get edges => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $PlayerOneCopyWith<PlayerOne> get copyWith =>
+  $MatchSetCopyWith<MatchSet> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $PlayerOneCopyWith<$Res> {
-  factory $PlayerOneCopyWith(PlayerOne value, $Res Function(PlayerOne) then) =
-      _$PlayerOneCopyWithImpl<$Res>;
-  $Res call({String? firstName, String? userId, String? lastName});
+abstract class $MatchSetCopyWith<$Res> {
+  factory $MatchSetCopyWith(MatchSet value, $Res Function(MatchSet) then) =
+      _$MatchSetCopyWithImpl<$Res>;
+  $Res call({List<MatchSetEdges>? edges});
 }
 
 /// @nodoc
-class _$PlayerOneCopyWithImpl<$Res> implements $PlayerOneCopyWith<$Res> {
-  _$PlayerOneCopyWithImpl(this._value, this._then);
+class _$MatchSetCopyWithImpl<$Res> implements $MatchSetCopyWith<$Res> {
+  _$MatchSetCopyWithImpl(this._value, this._then);
 
-  final PlayerOne _value;
+  final MatchSet _value;
   // ignore: unused_field
-  final $Res Function(PlayerOne) _then;
+  final $Res Function(MatchSet) _then;
 
   @override
   $Res call({
-    Object? firstName = freezed,
-    Object? userId = freezed,
-    Object? lastName = freezed,
+    Object? edges = freezed,
   }) {
     return _then(_value.copyWith(
-      firstName: firstName == freezed
-          ? _value.firstName
-          : firstName // ignore: cast_nullable_to_non_nullable
+      edges: edges == freezed
+          ? _value.edges
+          : edges // ignore: cast_nullable_to_non_nullable
+              as List<MatchSetEdges>?,
+    ));
+  }
+}
+
+/// @nodoc
+abstract class _$MatchSetCopyWith<$Res> implements $MatchSetCopyWith<$Res> {
+  factory _$MatchSetCopyWith(_MatchSet value, $Res Function(_MatchSet) then) =
+      __$MatchSetCopyWithImpl<$Res>;
+  @override
+  $Res call({List<MatchSetEdges>? edges});
+}
+
+/// @nodoc
+class __$MatchSetCopyWithImpl<$Res> extends _$MatchSetCopyWithImpl<$Res>
+    implements _$MatchSetCopyWith<$Res> {
+  __$MatchSetCopyWithImpl(_MatchSet _value, $Res Function(_MatchSet) _then)
+      : super(_value, (v) => _then(v as _MatchSet));
+
+  @override
+  _MatchSet get _value => super._value as _MatchSet;
+
+  @override
+  $Res call({
+    Object? edges = freezed,
+  }) {
+    return _then(_MatchSet(
+      edges: edges == freezed
+          ? _value.edges
+          : edges // ignore: cast_nullable_to_non_nullable
+              as List<MatchSetEdges>?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_MatchSet implements _MatchSet {
+  const _$_MatchSet({required this.edges});
+
+  factory _$_MatchSet.fromJson(Map<String, dynamic> json) =>
+      _$$_MatchSetFromJson(json);
+
+  @override
+  final List<MatchSetEdges>? edges;
+
+  @override
+  String toString() {
+    return 'MatchSet(edges: $edges)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _MatchSet &&
+            const DeepCollectionEquality().equals(other.edges, edges));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(edges));
+
+  @JsonKey(ignore: true)
+  @override
+  _$MatchSetCopyWith<_MatchSet> get copyWith =>
+      __$MatchSetCopyWithImpl<_MatchSet>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_MatchSetToJson(this);
+  }
+}
+
+abstract class _MatchSet implements MatchSet {
+  const factory _MatchSet({required List<MatchSetEdges>? edges}) = _$_MatchSet;
+
+  factory _MatchSet.fromJson(Map<String, dynamic> json) = _$_MatchSet.fromJson;
+
+  @override
+  List<MatchSetEdges>? get edges;
+  @override
+  @JsonKey(ignore: true)
+  _$MatchSetCopyWith<_MatchSet> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+MatchSetEdges _$MatchSetEdgesFromJson(Map<String, dynamic> json) {
+  return _MatchSetEdges.fromJson(json);
+}
+
+/// @nodoc
+class _$MatchSetEdgesTearOff {
+  const _$MatchSetEdgesTearOff();
+
+  _MatchSetEdges call({required MatchSetNode? node}) {
+    return _MatchSetEdges(
+      node: node,
+    );
+  }
+
+  MatchSetEdges fromJson(Map<String, Object?> json) {
+    return MatchSetEdges.fromJson(json);
+  }
+}
+
+/// @nodoc
+const $MatchSetEdges = _$MatchSetEdgesTearOff();
+
+/// @nodoc
+mixin _$MatchSetEdges {
+  MatchSetNode? get node => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $MatchSetEdgesCopyWith<MatchSetEdges> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $MatchSetEdgesCopyWith<$Res> {
+  factory $MatchSetEdgesCopyWith(
+          MatchSetEdges value, $Res Function(MatchSetEdges) then) =
+      _$MatchSetEdgesCopyWithImpl<$Res>;
+  $Res call({MatchSetNode? node});
+
+  $MatchSetNodeCopyWith<$Res>? get node;
+}
+
+/// @nodoc
+class _$MatchSetEdgesCopyWithImpl<$Res>
+    implements $MatchSetEdgesCopyWith<$Res> {
+  _$MatchSetEdgesCopyWithImpl(this._value, this._then);
+
+  final MatchSetEdges _value;
+  // ignore: unused_field
+  final $Res Function(MatchSetEdges) _then;
+
+  @override
+  $Res call({
+    Object? node = freezed,
+  }) {
+    return _then(_value.copyWith(
+      node: node == freezed
+          ? _value.node
+          : node // ignore: cast_nullable_to_non_nullable
+              as MatchSetNode?,
+    ));
+  }
+
+  @override
+  $MatchSetNodeCopyWith<$Res>? get node {
+    if (_value.node == null) {
+      return null;
+    }
+
+    return $MatchSetNodeCopyWith<$Res>(_value.node!, (value) {
+      return _then(_value.copyWith(node: value));
+    });
+  }
+}
+
+/// @nodoc
+abstract class _$MatchSetEdgesCopyWith<$Res>
+    implements $MatchSetEdgesCopyWith<$Res> {
+  factory _$MatchSetEdgesCopyWith(
+          _MatchSetEdges value, $Res Function(_MatchSetEdges) then) =
+      __$MatchSetEdgesCopyWithImpl<$Res>;
+  @override
+  $Res call({MatchSetNode? node});
+
+  @override
+  $MatchSetNodeCopyWith<$Res>? get node;
+}
+
+/// @nodoc
+class __$MatchSetEdgesCopyWithImpl<$Res>
+    extends _$MatchSetEdgesCopyWithImpl<$Res>
+    implements _$MatchSetEdgesCopyWith<$Res> {
+  __$MatchSetEdgesCopyWithImpl(
+      _MatchSetEdges _value, $Res Function(_MatchSetEdges) _then)
+      : super(_value, (v) => _then(v as _MatchSetEdges));
+
+  @override
+  _MatchSetEdges get _value => super._value as _MatchSetEdges;
+
+  @override
+  $Res call({
+    Object? node = freezed,
+  }) {
+    return _then(_MatchSetEdges(
+      node: node == freezed
+          ? _value.node
+          : node // ignore: cast_nullable_to_non_nullable
+              as MatchSetNode?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_MatchSetEdges implements _MatchSetEdges {
+  const _$_MatchSetEdges({required this.node});
+
+  factory _$_MatchSetEdges.fromJson(Map<String, dynamic> json) =>
+      _$$_MatchSetEdgesFromJson(json);
+
+  @override
+  final MatchSetNode? node;
+
+  @override
+  String toString() {
+    return 'MatchSetEdges(node: $node)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _MatchSetEdges &&
+            const DeepCollectionEquality().equals(other.node, node));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(node));
+
+  @JsonKey(ignore: true)
+  @override
+  _$MatchSetEdgesCopyWith<_MatchSetEdges> get copyWith =>
+      __$MatchSetEdgesCopyWithImpl<_MatchSetEdges>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_MatchSetEdgesToJson(this);
+  }
+}
+
+abstract class _MatchSetEdges implements MatchSetEdges {
+  const factory _MatchSetEdges({required MatchSetNode? node}) =
+      _$_MatchSetEdges;
+
+  factory _MatchSetEdges.fromJson(Map<String, dynamic> json) =
+      _$_MatchSetEdges.fromJson;
+
+  @override
+  MatchSetNode? get node;
+  @override
+  @JsonKey(ignore: true)
+  _$MatchSetEdgesCopyWith<_MatchSetEdges> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+MatchSetNode _$MatchSetNodeFromJson(Map<String, dynamic> json) {
+  return _MatchSetNode.fromJson(json);
+}
+
+/// @nodoc
+class _$MatchSetNodeTearOff {
+  const _$MatchSetNodeTearOff();
+
+  _MatchSetNode call(
+      {required String? id,
+      required int? playerOneScore,
+      required int? playerTwoScore,
+      required String? matchSetId,
+      required MatchDetails? match}) {
+    return _MatchSetNode(
+      id: id,
+      playerOneScore: playerOneScore,
+      playerTwoScore: playerTwoScore,
+      matchSetId: matchSetId,
+      match: match,
+    );
+  }
+
+  MatchSetNode fromJson(Map<String, Object?> json) {
+    return MatchSetNode.fromJson(json);
+  }
+}
+
+/// @nodoc
+const $MatchSetNode = _$MatchSetNodeTearOff();
+
+/// @nodoc
+mixin _$MatchSetNode {
+  String? get id => throw _privateConstructorUsedError;
+  int? get playerOneScore => throw _privateConstructorUsedError;
+  int? get playerTwoScore => throw _privateConstructorUsedError;
+  String? get matchSetId => throw _privateConstructorUsedError;
+  MatchDetails? get match => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $MatchSetNodeCopyWith<MatchSetNode> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $MatchSetNodeCopyWith<$Res> {
+  factory $MatchSetNodeCopyWith(
+          MatchSetNode value, $Res Function(MatchSetNode) then) =
+      _$MatchSetNodeCopyWithImpl<$Res>;
+  $Res call(
+      {String? id,
+      int? playerOneScore,
+      int? playerTwoScore,
+      String? matchSetId,
+      MatchDetails? match});
+
+  $MatchDetailsCopyWith<$Res>? get match;
+}
+
+/// @nodoc
+class _$MatchSetNodeCopyWithImpl<$Res> implements $MatchSetNodeCopyWith<$Res> {
+  _$MatchSetNodeCopyWithImpl(this._value, this._then);
+
+  final MatchSetNode _value;
+  // ignore: unused_field
+  final $Res Function(MatchSetNode) _then;
+
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? playerOneScore = freezed,
+    Object? playerTwoScore = freezed,
+    Object? matchSetId = freezed,
+    Object? match = freezed,
+  }) {
+    return _then(_value.copyWith(
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
               as String?,
-      userId: userId == freezed
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
+      playerOneScore: playerOneScore == freezed
+          ? _value.playerOneScore
+          : playerOneScore // ignore: cast_nullable_to_non_nullable
+              as int?,
+      playerTwoScore: playerTwoScore == freezed
+          ? _value.playerTwoScore
+          : playerTwoScore // ignore: cast_nullable_to_non_nullable
+              as int?,
+      matchSetId: matchSetId == freezed
+          ? _value.matchSetId
+          : matchSetId // ignore: cast_nullable_to_non_nullable
               as String?,
-      lastName: lastName == freezed
-          ? _value.lastName
-          : lastName // ignore: cast_nullable_to_non_nullable
+      match: match == freezed
+          ? _value.match
+          : match // ignore: cast_nullable_to_non_nullable
+              as MatchDetails?,
+    ));
+  }
+
+  @override
+  $MatchDetailsCopyWith<$Res>? get match {
+    if (_value.match == null) {
+      return null;
+    }
+
+    return $MatchDetailsCopyWith<$Res>(_value.match!, (value) {
+      return _then(_value.copyWith(match: value));
+    });
+  }
+}
+
+/// @nodoc
+abstract class _$MatchSetNodeCopyWith<$Res>
+    implements $MatchSetNodeCopyWith<$Res> {
+  factory _$MatchSetNodeCopyWith(
+          _MatchSetNode value, $Res Function(_MatchSetNode) then) =
+      __$MatchSetNodeCopyWithImpl<$Res>;
+  @override
+  $Res call(
+      {String? id,
+      int? playerOneScore,
+      int? playerTwoScore,
+      String? matchSetId,
+      MatchDetails? match});
+
+  @override
+  $MatchDetailsCopyWith<$Res>? get match;
+}
+
+/// @nodoc
+class __$MatchSetNodeCopyWithImpl<$Res> extends _$MatchSetNodeCopyWithImpl<$Res>
+    implements _$MatchSetNodeCopyWith<$Res> {
+  __$MatchSetNodeCopyWithImpl(
+      _MatchSetNode _value, $Res Function(_MatchSetNode) _then)
+      : super(_value, (v) => _then(v as _MatchSetNode));
+
+  @override
+  _MatchSetNode get _value => super._value as _MatchSetNode;
+
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? playerOneScore = freezed,
+    Object? playerTwoScore = freezed,
+    Object? matchSetId = freezed,
+    Object? match = freezed,
+  }) {
+    return _then(_MatchSetNode(
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String?,
+      playerOneScore: playerOneScore == freezed
+          ? _value.playerOneScore
+          : playerOneScore // ignore: cast_nullable_to_non_nullable
+              as int?,
+      playerTwoScore: playerTwoScore == freezed
+          ? _value.playerTwoScore
+          : playerTwoScore // ignore: cast_nullable_to_non_nullable
+              as int?,
+      matchSetId: matchSetId == freezed
+          ? _value.matchSetId
+          : matchSetId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      match: match == freezed
+          ? _value.match
+          : match // ignore: cast_nullable_to_non_nullable
+              as MatchDetails?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_MatchSetNode implements _MatchSetNode {
+  const _$_MatchSetNode(
+      {required this.id,
+      required this.playerOneScore,
+      required this.playerTwoScore,
+      required this.matchSetId,
+      required this.match});
+
+  factory _$_MatchSetNode.fromJson(Map<String, dynamic> json) =>
+      _$$_MatchSetNodeFromJson(json);
+
+  @override
+  final String? id;
+  @override
+  final int? playerOneScore;
+  @override
+  final int? playerTwoScore;
+  @override
+  final String? matchSetId;
+  @override
+  final MatchDetails? match;
+
+  @override
+  String toString() {
+    return 'MatchSetNode(id: $id, playerOneScore: $playerOneScore, playerTwoScore: $playerTwoScore, matchSetId: $matchSetId, match: $match)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _MatchSetNode &&
+            const DeepCollectionEquality().equals(other.id, id) &&
+            const DeepCollectionEquality()
+                .equals(other.playerOneScore, playerOneScore) &&
+            const DeepCollectionEquality()
+                .equals(other.playerTwoScore, playerTwoScore) &&
+            const DeepCollectionEquality()
+                .equals(other.matchSetId, matchSetId) &&
+            const DeepCollectionEquality().equals(other.match, match));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(id),
+      const DeepCollectionEquality().hash(playerOneScore),
+      const DeepCollectionEquality().hash(playerTwoScore),
+      const DeepCollectionEquality().hash(matchSetId),
+      const DeepCollectionEquality().hash(match));
+
+  @JsonKey(ignore: true)
+  @override
+  _$MatchSetNodeCopyWith<_MatchSetNode> get copyWith =>
+      __$MatchSetNodeCopyWithImpl<_MatchSetNode>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_MatchSetNodeToJson(this);
+  }
+}
+
+abstract class _MatchSetNode implements MatchSetNode {
+  const factory _MatchSetNode(
+      {required String? id,
+      required int? playerOneScore,
+      required int? playerTwoScore,
+      required String? matchSetId,
+      required MatchDetails? match}) = _$_MatchSetNode;
+
+  factory _MatchSetNode.fromJson(Map<String, dynamic> json) =
+      _$_MatchSetNode.fromJson;
+
+  @override
+  String? get id;
+  @override
+  int? get playerOneScore;
+  @override
+  int? get playerTwoScore;
+  @override
+  String? get matchSetId;
+  @override
+  MatchDetails? get match;
+  @override
+  @JsonKey(ignore: true)
+  _$MatchSetNodeCopyWith<_MatchSetNode> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+MatchDetails _$MatchDetailsFromJson(Map<String, dynamic> json) {
+  return _MatchDetails.fromJson(json);
+}
+
+/// @nodoc
+class _$MatchDetailsTearOff {
+  const _$MatchDetailsTearOff();
+
+  _MatchDetails call(
+      {required String? court,
+      required String? matchId,
+      required String? startDate,
+      required String? createdAt,
+      required String? endDate,
+      required String? id}) {
+    return _MatchDetails(
+      court: court,
+      matchId: matchId,
+      startDate: startDate,
+      createdAt: createdAt,
+      endDate: endDate,
+      id: id,
+    );
+  }
+
+  MatchDetails fromJson(Map<String, Object?> json) {
+    return MatchDetails.fromJson(json);
+  }
+}
+
+/// @nodoc
+const $MatchDetails = _$MatchDetailsTearOff();
+
+/// @nodoc
+mixin _$MatchDetails {
+  String? get court => throw _privateConstructorUsedError;
+  String? get matchId => throw _privateConstructorUsedError;
+  String? get startDate => throw _privateConstructorUsedError;
+  String? get createdAt => throw _privateConstructorUsedError;
+  String? get endDate => throw _privateConstructorUsedError;
+  String? get id => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $MatchDetailsCopyWith<MatchDetails> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $MatchDetailsCopyWith<$Res> {
+  factory $MatchDetailsCopyWith(
+          MatchDetails value, $Res Function(MatchDetails) then) =
+      _$MatchDetailsCopyWithImpl<$Res>;
+  $Res call(
+      {String? court,
+      String? matchId,
+      String? startDate,
+      String? createdAt,
+      String? endDate,
+      String? id});
+}
+
+/// @nodoc
+class _$MatchDetailsCopyWithImpl<$Res> implements $MatchDetailsCopyWith<$Res> {
+  _$MatchDetailsCopyWithImpl(this._value, this._then);
+
+  final MatchDetails _value;
+  // ignore: unused_field
+  final $Res Function(MatchDetails) _then;
+
+  @override
+  $Res call({
+    Object? court = freezed,
+    Object? matchId = freezed,
+    Object? startDate = freezed,
+    Object? createdAt = freezed,
+    Object? endDate = freezed,
+    Object? id = freezed,
+  }) {
+    return _then(_value.copyWith(
+      court: court == freezed
+          ? _value.court
+          : court // ignore: cast_nullable_to_non_nullable
+              as String?,
+      matchId: matchId == freezed
+          ? _value.matchId
+          : matchId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      startDate: startDate == freezed
+          ? _value.startDate
+          : startDate // ignore: cast_nullable_to_non_nullable
+              as String?,
+      createdAt: createdAt == freezed
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as String?,
+      endDate: endDate == freezed
+          ? _value.endDate
+          : endDate // ignore: cast_nullable_to_non_nullable
+              as String?,
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
   }
 }
 
 /// @nodoc
-abstract class _$PlayerOneCopyWith<$Res> implements $PlayerOneCopyWith<$Res> {
-  factory _$PlayerOneCopyWith(
-          _PlayerOne value, $Res Function(_PlayerOne) then) =
-      __$PlayerOneCopyWithImpl<$Res>;
+abstract class _$MatchDetailsCopyWith<$Res>
+    implements $MatchDetailsCopyWith<$Res> {
+  factory _$MatchDetailsCopyWith(
+          _MatchDetails value, $Res Function(_MatchDetails) then) =
+      __$MatchDetailsCopyWithImpl<$Res>;
   @override
-  $Res call({String? firstName, String? userId, String? lastName});
+  $Res call(
+      {String? court,
+      String? matchId,
+      String? startDate,
+      String? createdAt,
+      String? endDate,
+      String? id});
 }
 
 /// @nodoc
-class __$PlayerOneCopyWithImpl<$Res> extends _$PlayerOneCopyWithImpl<$Res>
-    implements _$PlayerOneCopyWith<$Res> {
-  __$PlayerOneCopyWithImpl(_PlayerOne _value, $Res Function(_PlayerOne) _then)
-      : super(_value, (v) => _then(v as _PlayerOne));
+class __$MatchDetailsCopyWithImpl<$Res> extends _$MatchDetailsCopyWithImpl<$Res>
+    implements _$MatchDetailsCopyWith<$Res> {
+  __$MatchDetailsCopyWithImpl(
+      _MatchDetails _value, $Res Function(_MatchDetails) _then)
+      : super(_value, (v) => _then(v as _MatchDetails));
 
   @override
-  _PlayerOne get _value => super._value as _PlayerOne;
+  _MatchDetails get _value => super._value as _MatchDetails;
 
   @override
   $Res call({
-    Object? firstName = freezed,
-    Object? userId = freezed,
-    Object? lastName = freezed,
+    Object? court = freezed,
+    Object? matchId = freezed,
+    Object? startDate = freezed,
+    Object? createdAt = freezed,
+    Object? endDate = freezed,
+    Object? id = freezed,
   }) {
-    return _then(_PlayerOne(
-      firstName: firstName == freezed
-          ? _value.firstName
-          : firstName // ignore: cast_nullable_to_non_nullable
+    return _then(_MatchDetails(
+      court: court == freezed
+          ? _value.court
+          : court // ignore: cast_nullable_to_non_nullable
               as String?,
-      userId: userId == freezed
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
+      matchId: matchId == freezed
+          ? _value.matchId
+          : matchId // ignore: cast_nullable_to_non_nullable
               as String?,
-      lastName: lastName == freezed
-          ? _value.lastName
-          : lastName // ignore: cast_nullable_to_non_nullable
+      startDate: startDate == freezed
+          ? _value.startDate
+          : startDate // ignore: cast_nullable_to_non_nullable
+              as String?,
+      createdAt: createdAt == freezed
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as String?,
+      endDate: endDate == freezed
+          ? _value.endDate
+          : endDate // ignore: cast_nullable_to_non_nullable
+              as String?,
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
   }
@@ -948,70 +1549,96 @@ class __$PlayerOneCopyWithImpl<$Res> extends _$PlayerOneCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_PlayerOne implements _PlayerOne {
-  const _$_PlayerOne(
-      {required this.firstName, required this.userId, required this.lastName});
+class _$_MatchDetails implements _MatchDetails {
+  const _$_MatchDetails(
+      {required this.court,
+      required this.matchId,
+      required this.startDate,
+      required this.createdAt,
+      required this.endDate,
+      required this.id});
 
-  factory _$_PlayerOne.fromJson(Map<String, dynamic> json) =>
-      _$$_PlayerOneFromJson(json);
+  factory _$_MatchDetails.fromJson(Map<String, dynamic> json) =>
+      _$$_MatchDetailsFromJson(json);
 
   @override
-  final String? firstName;
+  final String? court;
   @override
-  final String? userId;
+  final String? matchId;
   @override
-  final String? lastName;
+  final String? startDate;
+  @override
+  final String? createdAt;
+  @override
+  final String? endDate;
+  @override
+  final String? id;
 
   @override
   String toString() {
-    return 'PlayerOne(firstName: $firstName, userId: $userId, lastName: $lastName)';
+    return 'MatchDetails(court: $court, matchId: $matchId, startDate: $startDate, createdAt: $createdAt, endDate: $endDate, id: $id)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _PlayerOne &&
-            const DeepCollectionEquality().equals(other.firstName, firstName) &&
-            const DeepCollectionEquality().equals(other.userId, userId) &&
-            const DeepCollectionEquality().equals(other.lastName, lastName));
+            other is _MatchDetails &&
+            const DeepCollectionEquality().equals(other.court, court) &&
+            const DeepCollectionEquality().equals(other.matchId, matchId) &&
+            const DeepCollectionEquality().equals(other.startDate, startDate) &&
+            const DeepCollectionEquality().equals(other.createdAt, createdAt) &&
+            const DeepCollectionEquality().equals(other.endDate, endDate) &&
+            const DeepCollectionEquality().equals(other.id, id));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(firstName),
-      const DeepCollectionEquality().hash(userId),
-      const DeepCollectionEquality().hash(lastName));
+      const DeepCollectionEquality().hash(court),
+      const DeepCollectionEquality().hash(matchId),
+      const DeepCollectionEquality().hash(startDate),
+      const DeepCollectionEquality().hash(createdAt),
+      const DeepCollectionEquality().hash(endDate),
+      const DeepCollectionEquality().hash(id));
 
   @JsonKey(ignore: true)
   @override
-  _$PlayerOneCopyWith<_PlayerOne> get copyWith =>
-      __$PlayerOneCopyWithImpl<_PlayerOne>(this, _$identity);
+  _$MatchDetailsCopyWith<_MatchDetails> get copyWith =>
+      __$MatchDetailsCopyWithImpl<_MatchDetails>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_PlayerOneToJson(this);
+    return _$$_MatchDetailsToJson(this);
   }
 }
 
-abstract class _PlayerOne implements PlayerOne {
-  const factory _PlayerOne(
-      {required String? firstName,
-      required String? userId,
-      required String? lastName}) = _$_PlayerOne;
+abstract class _MatchDetails implements MatchDetails {
+  const factory _MatchDetails(
+      {required String? court,
+      required String? matchId,
+      required String? startDate,
+      required String? createdAt,
+      required String? endDate,
+      required String? id}) = _$_MatchDetails;
 
-  factory _PlayerOne.fromJson(Map<String, dynamic> json) =
-      _$_PlayerOne.fromJson;
+  factory _MatchDetails.fromJson(Map<String, dynamic> json) =
+      _$_MatchDetails.fromJson;
 
   @override
-  String? get firstName;
+  String? get court;
   @override
-  String? get userId;
+  String? get matchId;
   @override
-  String? get lastName;
+  String? get startDate;
+  @override
+  String? get createdAt;
+  @override
+  String? get endDate;
+  @override
+  String? get id;
   @override
   @JsonKey(ignore: true)
-  _$PlayerOneCopyWith<_PlayerOne> get copyWith =>
+  _$MatchDetailsCopyWith<_MatchDetails> get copyWith =>
       throw _privateConstructorUsedError;
 }

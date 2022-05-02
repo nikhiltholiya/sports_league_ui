@@ -645,12 +645,16 @@ class _$UserStatTearOff {
 
   _UserStat call(
       {required int? loss,
+      required String? picture,
+      required String? rating,
       required int? total,
       required String? userId,
       required String? userName,
       required int? won}) {
     return _UserStat(
       loss: loss,
+      picture: picture,
+      rating: rating,
       total: total,
       userId: userId,
       userName: userName,
@@ -669,6 +673,8 @@ const $UserStat = _$UserStatTearOff();
 /// @nodoc
 mixin _$UserStat {
   int? get loss => throw _privateConstructorUsedError;
+  String? get picture => throw _privateConstructorUsedError;
+  String? get rating => throw _privateConstructorUsedError;
   int? get total => throw _privateConstructorUsedError;
   String? get userId => throw _privateConstructorUsedError;
   String? get userName => throw _privateConstructorUsedError;
@@ -685,7 +691,13 @@ abstract class $UserStatCopyWith<$Res> {
   factory $UserStatCopyWith(UserStat value, $Res Function(UserStat) then) =
       _$UserStatCopyWithImpl<$Res>;
   $Res call(
-      {int? loss, int? total, String? userId, String? userName, int? won});
+      {int? loss,
+      String? picture,
+      String? rating,
+      int? total,
+      String? userId,
+      String? userName,
+      int? won});
 }
 
 /// @nodoc
@@ -699,6 +711,8 @@ class _$UserStatCopyWithImpl<$Res> implements $UserStatCopyWith<$Res> {
   @override
   $Res call({
     Object? loss = freezed,
+    Object? picture = freezed,
+    Object? rating = freezed,
     Object? total = freezed,
     Object? userId = freezed,
     Object? userName = freezed,
@@ -709,6 +723,14 @@ class _$UserStatCopyWithImpl<$Res> implements $UserStatCopyWith<$Res> {
           ? _value.loss
           : loss // ignore: cast_nullable_to_non_nullable
               as int?,
+      picture: picture == freezed
+          ? _value.picture
+          : picture // ignore: cast_nullable_to_non_nullable
+              as String?,
+      rating: rating == freezed
+          ? _value.rating
+          : rating // ignore: cast_nullable_to_non_nullable
+              as String?,
       total: total == freezed
           ? _value.total
           : total // ignore: cast_nullable_to_non_nullable
@@ -735,7 +757,13 @@ abstract class _$UserStatCopyWith<$Res> implements $UserStatCopyWith<$Res> {
       __$UserStatCopyWithImpl<$Res>;
   @override
   $Res call(
-      {int? loss, int? total, String? userId, String? userName, int? won});
+      {int? loss,
+      String? picture,
+      String? rating,
+      int? total,
+      String? userId,
+      String? userName,
+      int? won});
 }
 
 /// @nodoc
@@ -750,6 +778,8 @@ class __$UserStatCopyWithImpl<$Res> extends _$UserStatCopyWithImpl<$Res>
   @override
   $Res call({
     Object? loss = freezed,
+    Object? picture = freezed,
+    Object? rating = freezed,
     Object? total = freezed,
     Object? userId = freezed,
     Object? userName = freezed,
@@ -760,6 +790,14 @@ class __$UserStatCopyWithImpl<$Res> extends _$UserStatCopyWithImpl<$Res>
           ? _value.loss
           : loss // ignore: cast_nullable_to_non_nullable
               as int?,
+      picture: picture == freezed
+          ? _value.picture
+          : picture // ignore: cast_nullable_to_non_nullable
+              as String?,
+      rating: rating == freezed
+          ? _value.rating
+          : rating // ignore: cast_nullable_to_non_nullable
+              as String?,
       total: total == freezed
           ? _value.total
           : total // ignore: cast_nullable_to_non_nullable
@@ -785,6 +823,8 @@ class __$UserStatCopyWithImpl<$Res> extends _$UserStatCopyWithImpl<$Res>
 class _$_UserStat implements _UserStat {
   const _$_UserStat(
       {required this.loss,
+      required this.picture,
+      required this.rating,
       required this.total,
       required this.userId,
       required this.userName,
@@ -796,6 +836,10 @@ class _$_UserStat implements _UserStat {
   @override
   final int? loss;
   @override
+  final String? picture;
+  @override
+  final String? rating;
+  @override
   final int? total;
   @override
   final String? userId;
@@ -806,7 +850,7 @@ class _$_UserStat implements _UserStat {
 
   @override
   String toString() {
-    return 'UserStat(loss: $loss, total: $total, userId: $userId, userName: $userName, won: $won)';
+    return 'UserStat(loss: $loss, picture: $picture, rating: $rating, total: $total, userId: $userId, userName: $userName, won: $won)';
   }
 
   @override
@@ -815,6 +859,8 @@ class _$_UserStat implements _UserStat {
         (other.runtimeType == runtimeType &&
             other is _UserStat &&
             const DeepCollectionEquality().equals(other.loss, loss) &&
+            const DeepCollectionEquality().equals(other.picture, picture) &&
+            const DeepCollectionEquality().equals(other.rating, rating) &&
             const DeepCollectionEquality().equals(other.total, total) &&
             const DeepCollectionEquality().equals(other.userId, userId) &&
             const DeepCollectionEquality().equals(other.userName, userName) &&
@@ -825,6 +871,8 @@ class _$_UserStat implements _UserStat {
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(loss),
+      const DeepCollectionEquality().hash(picture),
+      const DeepCollectionEquality().hash(rating),
       const DeepCollectionEquality().hash(total),
       const DeepCollectionEquality().hash(userId),
       const DeepCollectionEquality().hash(userName),
@@ -844,6 +892,8 @@ class _$_UserStat implements _UserStat {
 abstract class _UserStat implements UserStat {
   const factory _UserStat(
       {required int? loss,
+      required String? picture,
+      required String? rating,
       required int? total,
       required String? userId,
       required String? userName,
@@ -853,6 +903,10 @@ abstract class _UserStat implements UserStat {
 
   @override
   int? get loss;
+  @override
+  String? get picture;
+  @override
+  String? get rating;
   @override
   int? get total;
   @override
