@@ -115,7 +115,7 @@ class _SplashPageState extends State<SplashPage> with SingleTickerProviderStateM
       curve: Curves.bounceIn,
       width: _animController.value * 200,
       height: _animController.value * 200,
-      child: Image.asset('assets/avatar0.png'),
+      child: Image.asset('assets/app_icon.png'),
     );
   }
 }

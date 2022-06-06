@@ -7,6 +7,7 @@
    <application
         android:label="TennisTon"
         android:icon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher_round"
        android:usesCleartextTraffic="true"
        android:networkSecurityConfig="@xml/network_security_config">
         <activity

@@ -56,6 +56,18 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
   late CreateProfileData _createProfileData;
   var _streamController = StreamController<bool?>();
 
+
+
+  FocusNode? fnameFocusNode;
+  FocusNode? lnameFocusNode;
+  FocusNode? mobFocusNode;
+  FocusNode? bdateFocusNode;
+  FocusNode? cityFocusNode;
+  FocusNode? stateFocusNode;
+  FocusNode? ratingFocusNode;
+  FocusNode? submitFocusNode;
+
+
   @override
   void initState() {
     rate = [];
@@ -89,9 +101,30 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
     };
 
     _streamController.sink.add(true);
+
+    fnameFocusNode = FocusNode();
+    lnameFocusNode = FocusNode();
+    mobFocusNode = FocusNode();
+    bdateFocusNode = FocusNode();
+    cityFocusNode = FocusNode();
+    stateFocusNode = FocusNode();
+    ratingFocusNode = FocusNode();
+    submitFocusNode = FocusNode();
     super.initState();
   }
 
+  @override
+  void dispose() {
+    fnameFocusNode!.dispose();
+    lnameFocusNode!.dispose();
+    mobFocusNode!.dispose();
+    bdateFocusNode!.dispose();
+    cityFocusNode!.dispose();
+    stateFocusNode!.dispose();
+    ratingFocusNode!.dispose();
+    submitFocusNode!.dispose();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<bool?>(
@@ -130,28 +163,41 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 5),
                       child: EditTextFormField(
+                        focusNode: fnameFocusNode,
                         isEnable: isEnabled.data!,
                         validator: RequiredValidator(errorText: errFirstName),
                         inputFormatter: [FilteringTextInputFormatter(RegExp(r'[a-zA-Z]'), allow: true)],
-                        textInputAction: TextInputAction.send,
+                        textInputAction: TextInputAction.next,
                         onTextChange: (value) {
                           firstNameValue = value;
                         },
+                        onFieldSubmitted: (action){
+                          print(action);
+                          fnameFocusNode!.unfocus();
+                          FocusScope.of(context).requestFocus(lnameFocusNode);
+                        },
                         onTap: () {},
+
                         hint: firstName,
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 5),
                       child: EditTextFormField(
+                        focusNode: lnameFocusNode,
                         isEnable: isEnabled.data!,
                         validator: RequiredValidator(errorText: errLastName),
                         inputFormatter: [FilteringTextInputFormatter(RegExp(r'[a-zA-Z]'), allow: true)],
-                        textInputAction: TextInputAction.send,
+                        textInputAction: TextInputAction.next,
                         onTextChange: (value) {
                           lastNameValue = value;
                         },
                         onTap: () {},
+                        onFieldSubmitted: (action){
+                          print(action);
+                          lnameFocusNode!.unfocus();
+                          FocusScope.of(context).requestFocus(mobFocusNode);
+                        },
                         hint: lastName,
                       ),
                     ),
@@ -168,8 +214,9 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 5),
                       child: EditTextFormField(
+                        focusNode: mobFocusNode,
                         isEnable: isEnabled.data!,
-                        textInputAction: TextInputAction.send,
+                        textInputAction: TextInputAction.next,
                         validator: RequiredValidator(errorText: errMobNo),
                         textInputType: TextInputType.number,
                         inputFormatter: [
@@ -182,6 +229,11 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
                           mobileNoValue = value;
                         },
                         onTap: () {},
+                        onFieldSubmitted: (action){
+                          print(action);
+                          mobFocusNode!.unfocus();
+                          FocusScope.of(context).requestFocus(cityFocusNode);
+                        },
                         hint: phoneNo,
                       ),
                     ),
@@ -204,6 +256,10 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
                             onConfirm: (date) {
                               bDate = date.toString();
                               debugPrint('${CreateProfilePage.path} * confirm $date');
+                              setState(() {
+                                mobFocusNode!.unfocus();
+                                FocusScope.of(context).requestFocus(cityFocusNode);
+                              });
                             },
                             currentTime: datePickerDate(bDate == 'Date of Birth' ? DateTime.now().toString() : bDate),
                           );
@@ -226,14 +282,19 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 5),
                       child: EditTextFormField(
+                        focusNode: cityFocusNode,
                         isEnable: isEnabled.data!,
                         validator: RequiredValidator(errorText: errCity),
                         inputFormatter: [FilteringTextInputFormatter(RegExp(r'[a-zA-Z]'), allow: true)],
-                        textInputAction: TextInputAction.send,
+                        textInputAction: TextInputAction.next,
                         onTextChange: (value) {
                           cityValue = value;
                         },
                         onTap: () {},
+                        onFieldSubmitted: (action){
+                          print(action);
+                          cityFocusNode!.unfocus();
+                        },
                         hint: city,
                       ),
                     ),

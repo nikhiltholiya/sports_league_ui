@@ -55,6 +55,7 @@ const String searchPlayer = 'Search Player';
 const String submitMatchScore = 'Submit Match Score';
 const String noPlayerFound = 'No Player Found';
 const String noMsgFound = 'No Message Found';
+const String noMatchesFound = 'No Matches Found';
 const String gameDetail = 'Game Details';
 const String matchWinner = 'Match Winner';
 const String matchDateTime = 'Match Date & Time';

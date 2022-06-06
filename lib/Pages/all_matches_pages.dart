@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:tenniston/components/no_data_list_tile.dart';
 
 import '../Pages/base_activity.dart';
 import '../bean/all_matches/all_matches.dart';
@@ -59,42 +60,59 @@ class _AllMatchesPageState extends State<AllMatchesPage> {
             return const Center(child: CupertinoActivityIndicator());
           }
 
+          debugPrint('RESULT :: ${result.data!}');
+
           _allMatchesData = AllMatchesData.fromJson(result.data!);
 
           List<MatchesEdges>? allMatches = [];
-          if (_allMatchesData.allMatches!.edges!.length > 0) {
-            allMatches = _allMatchesData.allMatches!.edges;
+          if (_allMatchesData.allMatches!.edges != null) {
+            if (_allMatchesData.allMatches!.edges!.length > 0) {
+              allMatches = _allMatchesData.allMatches!.edges;
+            }
           }
-
-          return ListView.builder(
-            itemBuilder: (context, index) {
-              return index == 0
-                  ? Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Text(
-                        show10Matches,
-                        style: GoogleFonts.poppins(color: Colors.black, fontWeight: FontWeight.w500, fontSize: 16),
+          return allMatches!.length > 0
+              ? ListView.builder(
+                  itemBuilder: (context, index) {
+                    return index == 0
+                        ? Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Text(
+                              show10Matches,
+                              style:
+                                  GoogleFonts.poppins(color: Colors.black, fontWeight: FontWeight.w500, fontSize: 16),
+                            ),
+                          )
+                        : HeadToHeadDetailsListTile(
+                            title: allMatches?[index].node?.court,
+                            date: convertDate(allMatches?[index].node?.startDate, null),
+                            onProfileClick: () {},
+                            onTileClick: () {},
+                            player1matchScore: [5, 4, 3, 2, 1],
+                            player1Img: allMatches?[index].node?.playerOne?.picture,
+                            player1Name: allMatches?[index].node?.playerOne?.firstName,
+                            player1Active: true,
+                            player2matchScore: [1, 2, 3, 4, 5],
+                            player2Img: allMatches?[index].node?.playerTwo?.picture,
+                            player2Name: allMatches?[index].node?.playerTwo?.firstName,
+                            player2Active: false,
+                          );
+                  },
+                  shrinkWrap: true,
+                  physics: BouncingScrollPhysics(),
+                  itemCount: allMatches.length > 10 ? 10 : allMatches.length,
+                )
+              : Wrap(
+                  children: [
+                    SizedBox(
+                      width: double.infinity,
+                      child: NoDataListTile(
+                        onTileClick: () {},
+                        noCaption: noMatchesFound,
+                        noMsg: '',
                       ),
-                    )
-                  : HeadToHeadDetailsListTile(
-                      title: allMatches?[index].node?.court,
-                      date: convertDate(allMatches?[index].node?.startDate, null),
-                      onProfileClick: () {},
-                      onTileClick: () {},
-                      player1matchScore: [5, 4, 3, 2, 1],
-                      player1Img: allMatches?[index].node?.playerOne?.picture,
-                      player1Name: allMatches?[index].node?.playerOne?.firstName,
-                      player1Active: true,
-                      player2matchScore: [1, 2, 3, 4, 5],
-                      player2Img: allMatches?[index].node?.playerTwo?.picture,
-                      player2Name: allMatches?[index].node?.playerTwo?.firstName,
-                      player2Active: false,
-                    );
-            },
-            shrinkWrap: true,
-            physics: BouncingScrollPhysics(),
-            itemCount: 10,
-          );
+                    ),
+                  ],
+                );
         },
       ),
     );
