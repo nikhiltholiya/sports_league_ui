@@ -4,8 +4,10 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:provider/provider.dart';
-import '../Pages/all_matches_pages.dart';
+import 'package:tenniston/Pages/latest_score_pages.dart';
+import 'package:tenniston/providers/internet_provider.dart';
 
+import '../Pages/all_matches_pages.dart';
 import '../Pages/all_messaging_list_page.dart';
 import '../Pages/challenges_chat.dart';
 import '../Pages/contact_us_page.dart';
@@ -96,6 +98,9 @@ class AppBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider<InternetProvider>(
+          create: (context) => InternetProvider(),
+        ),
         ChangeNotifierProvider<UserIdProvider>(
           create: (context) => UserIdProvider(),
         ),
@@ -178,6 +183,8 @@ class AppBody extends StatelessWidget {
             return CupertinoPageRoute(builder: (context) => SubmitScoreList(), settings: settings);
           } else if (settings.name == SubmitScoreDetails.path) {
             return CupertinoPageRoute(builder: (context) => SubmitScoreDetails(), settings: settings);
+          } else if (settings.name == LatestScorePage.path) {
+            return CupertinoPageRoute(builder: (context) => LatestScorePage(), settings: settings);
           } else {
             return null;
           }

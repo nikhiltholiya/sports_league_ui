@@ -1,17 +1,22 @@
 import 'dart:convert';
 
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:provider/provider.dart';
 
 import '../Pages/base_activity.dart';
 import '../Pages/create_profile_page.dart';
 import '../Pages/dashboard.dart';
+import '../Pages/no_internet_page.dart';
 import '../Pages/verify_email_page.dart';
 import '../bean/token_auth/token_auth.dart';
 import '../components/app_dialog.dart';
 import '../components/edit_text_form_field.dart';
 import '../components/elevated_buttons.dart';
+import '../providers/internet_provider.dart';
 import '../utils/Constants.dart';
+import '../utils/Internet.dart';
 import '../utils/app_colors.dart';
 import '../utils/app_labels.dart';
 import '../utils/shared_preferences_utils.dart';
@@ -28,7 +33,7 @@ class SignInPage extends StatefulWidget {
   State<SignInPage> createState() => _SignInPageState();
 }
 
-class _SignInPageState extends State<SignInPage> {
+class _SignInPageState extends State<SignInPage> with isInternetConnection {
   late TokenAuthData? _tokenAuthData;
   bool? obSecure = true;
   String? email = '';
@@ -63,221 +68,234 @@ class _SignInPageState extends State<SignInPage> {
     resetLinkMail = SharedPreferencesUtils.getEmail ?? '';
     // _streamController.sink.add(true);
     // _stream =  _streamController.stream;
+    initInternet(context);
     super.initState();
   }
 
   @override
-  void dispose() {
-    // _streamController.close();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return Form(
-      key: _formKey,
-      child: BaseWidget(
-        appbar: Text(
-          signInAc,
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 20,
-          ),
-        ),
-        appbarHeight: kToolbarHeight,
-        onBackClick: () => Navigator.pop(context),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: ListView(
-            shrinkWrap: true,
-            physics: const BouncingScrollPhysics(),
-            children: [
-              SizedBox(
-                height: 50,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 5),
-                child: EditTextFormField(
-                  isEnable: isEnable!,
-                  // key: keyEmail,
-                  textInputType: TextInputType.emailAddress,
-                  validator: emailValidator,
-                  textInputAction: TextInputAction.next,
-                  onTap: () {},
-                  hint: emailLabel,
-                  onTextChange: (value) {
-                    email = value;
-                  },
+    return Consumer<InternetProvider>(
+      builder: (context, valueNet, child) {
+        print(valueNet.isConnectivity);
+        if (valueNet.getConnected != ConnectivityResult.none) {
+          return Form(
+            key: _formKey,
+            child: BaseWidget(
+              appbar: Text(
+                signInAc,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 5),
-                child: EditTextFormField(
-                  isEnable: isEnable!,
-                  textInputAction: TextInputAction.next,
-                  onTextChange: (value) {
-                    password = value;
-                  },
-                  onTap: () {},
-                  isObscure: obSecure,
-                  validator: passwordValidator,
-                  hint: passwordLabel,
-                  suffixIcon: IconButton(
-                      icon: Icon(
-                        obSecure! ? Icons.remove_red_eye_rounded : Icons.visibility_off_rounded,
-                        color: aGreen,
-                      ),
-                      onPressed: () {
-                        obSecure = !obSecure!;
-                        setState(() {});
-                      }),
-                ),
-              ),
-              SizedBox(
-                height: 30,
-              ),
-              Center(
-                child: GestureDetector(
-                  onTap: () {
-                    showBottomSheetView();
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.all(5.0),
-                    child: Text(
-                      forgotPassword,
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, color: aGreen, decoration: TextDecoration.underline),
+              appbarHeight: kToolbarHeight,
+              onBackClick: () => Navigator.pop(context),
+              body: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: ListView(
+                  shrinkWrap: true,
+                  physics: const BouncingScrollPhysics(),
+                  children: [
+                    SizedBox(
+                      height: 50,
                     ),
-                  ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 5),
+                      child: EditTextFormField(
+                        isEnable: isEnable!,
+                        // key: keyEmail,
+                        textInputType: TextInputType.emailAddress,
+                        validator: emailValidator,
+                        textInputAction: TextInputAction.next,
+                        onTap: () {},
+                        hint: emailLabel,
+                        onTextChange: (value) {
+                          email = value;
+                        },
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 5),
+                      child: EditTextFormField(
+                        isEnable: isEnable!,
+                        textInputAction: TextInputAction.next,
+                        onTextChange: (value) {
+                          password = value;
+                        },
+                        onTap: () {},
+                        isObscure: obSecure,
+                        validator: passwordValidator,
+                        hint: passwordLabel,
+                        suffixIcon: IconButton(
+                            icon: Icon(
+                              obSecure! ? Icons.remove_red_eye_rounded : Icons.visibility_off_rounded,
+                              color: aGreen,
+                            ),
+                            onPressed: () {
+                              obSecure = !obSecure!;
+                              setState(() {});
+                            }),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    Center(
+                      child: GestureDetector(
+                        onTap: () {
+                          showBottomSheetView();
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(5.0),
+                          child: Text(
+                            forgotPassword,
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, color: aGreen, decoration: TextDecoration.underline),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Mutation(
+                      key: mutationSendMail,
+                      options: MutationOptions(
+                        document: gql(sendPasswordResetEmail(paramForgotPass, paramTypeForgotPass)),
+                        // update: update,
+                        onError: (OperationException? error) {
+                          debugPrint('${SignInPage.path} * erroR -- $error');
+                          // isEnableForgotPass = true;
+                          // setState(() {});
+
+                          // _streamController.sink.add(true);
+                          // Text('$error');
+                        },
+                        // _simpleAlert(context, error.toString()),
+                        onCompleted: (dynamic resultData) async {
+                          // Text('Thanks for your star!');
+
+                          // isEnableForgotPass = true;
+                          // setState(() {});
+                          // _streamController.sink.add(true);
+
+                          if (resultData != null) {
+                            var data = resultData['sendPasswordResetEmail']['success'];
+
+                            if (data) {
+                              Navigator.popAndPushNamed(context, VerifyEmailPage.path,
+                                  arguments: {'for': forgotPassword});
+                            }
+                          }
+                        },
+                        // 'Sorry you changed your mind!',
+                      ),
+                      builder: (RunMutation _resetEmail, QueryResult? addResult) {
+                        final sendResetEmail = (result) {
+                          _resetEmail(result);
+                        };
+
+                        // _streamController.sink.add(addResult!.isLoading);
+                        return SizedBox();
+                      },
+                    ),
+                  ],
                 ),
               ),
-              Mutation(
-                key: mutationSendMail,
+              bottomBar: Mutation(
                 options: MutationOptions(
-                  document: gql(sendPasswordResetEmail(paramForgotPass, paramTypeForgotPass)),
+                  document: gql(tokenAuth(paramSignIn, paramTypeSignIn)),
                   // update: update,
                   onError: (OperationException? error) {
                     debugPrint('${SignInPage.path} * erroR -- $error');
-                    // isEnableForgotPass = true;
-                    // setState(() {});
-
-                    // _streamController.sink.add(true);
+                    isEnable = true;
+                    setState(() {});
                     // Text('$error');
                   },
                   // _simpleAlert(context, error.toString()),
                   onCompleted: (dynamic resultData) async {
                     // Text('Thanks for your star!');
 
-                    // isEnableForgotPass = true;
-                    // setState(() {});
-                    // _streamController.sink.add(true);
+                    isEnable = true;
+                    setState(() {});
+                    debugPrint('${SignInPage.path} * Result -- $resultData');
 
                     if (resultData != null) {
-                      var data = resultData['sendPasswordResetEmail']['success'];
+                      _tokenAuthData = TokenAuthData.fromJson(resultData);
+                      debugPrint('${SignInPage.path} * SUCCESS -- ${_tokenAuthData?.tokenAuth?.success}');
+                      errorList = [];
+                      if (_tokenAuthData!.tokenAuth!.success!) {
+                        SharedPreferencesUtils.setEmail(_tokenAuthData?.tokenAuth?.user?.email);
+                        SharedPreferencesUtils.setToken(_tokenAuthData?.tokenAuth?.token);
+                        SharedPreferencesUtils.setRefreshToken(_tokenAuthData?.tokenAuth?.refreshToken);
+                        SharedPreferencesUtils.setUserData(jsonEncode(_tokenAuthData!.tokenAuth?.user));
+                        SharedPreferencesUtils.setUserId(_tokenAuthData?.tokenAuth?.user?.userId);
 
-                      if (data) {
-                        Navigator.popAndPushNamed(context, VerifyEmailPage.path, arguments: {'for': forgotPassword});
+                        // Provider.of<TokenProvider>(context, listen: false).setToken(_tokenAuthData?.tokenAuth?.token);
+
+                        if (_tokenAuthData!.tokenAuth!.user!.firstName.toString().isNotEmpty) {
+                          Navigator.pushNamedAndRemoveUntil(context, DashboardPage.path, (route) => false);
+                        } else {
+                          Navigator.pushNamed(context, CreateProfilePage.path);
+                        }
+                        // Navigator.pushNamed(context, CreateProfilePage.path);
+                      } else {
+                        for (var errData in _tokenAuthData!.tokenAuth!.errors!.nonFieldErrors!) {
+                          if (errData.message != null) errorList!.add(errData.message);
+                        }
+
+                        _showAlert();
                       }
+                    } else {
+                      // errorList = [];
+                      // errorList!.add('Result is Null');
+                      // _showAlert();
                     }
                   },
                   // 'Sorry you changed your mind!',
                 ),
-                builder: (RunMutation _resetEmail, QueryResult? addResult) {
-                  final sendResetEmail = (result) {
-                    _resetEmail(result);
+                builder: (RunMutation _signIn, QueryResult? addResult) {
+                  final doSignIn = (result) {
+                    _signIn(result);
                   };
 
-                  // _streamController.sink.add(addResult!.isLoading);
-                  return SizedBox();
+                  bool? anyLoading = addResult!.isLoading;
+
+                  return ElevatedButtons(
+                    width: double.infinity,
+                    label: anyLoading ? 'wait' : next,
+                    fontSize: 25,
+                    radius: 0.0,
+                    onClick: () {
+                      if (_formKey.currentState!.validate()) {
+                        Map<String, dynamic> passVariable = {'email': email, 'pass': password};
+
+                        debugPrint(
+                            '${SignInPage.path} * param -- $paramSignIn * Type -- $paramTypeSignIn -- Variable -- $passVariable');
+
+                        doSignIn(passVariable);
+                        isEnable = false;
+                        setState(() {});
+                      }
+                    },
+                    borderColor: aGreen,
+                    buttonColor: aGreen,
+                    labelColor: aWhite,
+                  );
                 },
               ),
-            ],
-          ),
-        ),
-        bottomBar: Mutation(
-          options: MutationOptions(
-            document: gql(tokenAuth(paramSignIn, paramTypeSignIn)),
-            // update: update,
-            onError: (OperationException? error) {
-              debugPrint('${SignInPage.path} * erroR -- $error');
-              isEnable = true;
-              setState(() {});
-              // Text('$error');
-            },
-            // _simpleAlert(context, error.toString()),
-            onCompleted: (dynamic resultData) async {
-              // Text('Thanks for your star!');
-
-              isEnable = true;
-              setState(() {});
-              debugPrint('${SignInPage.path} * Result -- $resultData');
-
-              if (resultData != null) {
-                _tokenAuthData = TokenAuthData.fromJson(resultData);
-                debugPrint('${SignInPage.path} * SUCCESS -- ${_tokenAuthData?.tokenAuth?.success}');
-                errorList = [];
-                if (_tokenAuthData!.tokenAuth!.success!) {
-                  SharedPreferencesUtils.setEmail(_tokenAuthData?.tokenAuth?.user?.email);
-                  SharedPreferencesUtils.setToken(_tokenAuthData?.tokenAuth?.token);
-                  SharedPreferencesUtils.setRefreshToken(_tokenAuthData?.tokenAuth?.refreshToken);
-                  SharedPreferencesUtils.setUserData(jsonEncode(_tokenAuthData!.tokenAuth?.user));
-                  SharedPreferencesUtils.setUserId(_tokenAuthData?.tokenAuth?.user?.userId);
-
-                  // Provider.of<TokenProvider>(context, listen: false).setToken(_tokenAuthData?.tokenAuth?.token);
-
-                  if (_tokenAuthData!.tokenAuth!.user!.firstName.toString().isNotEmpty) {
-                    Navigator.pushNamedAndRemoveUntil(context, DashboardPage.path, (route) => false);
-                  } else {
-                    Navigator.pushNamed(context, CreateProfilePage.path);
-                  }
-                  // Navigator.pushNamed(context, CreateProfilePage.path);
-                } else {
-                  for (var errData in _tokenAuthData!.tokenAuth!.errors!.nonFieldErrors!) {
-                    if (errData.message != null) errorList!.add(errData.message);
-                  }
-
-                  _showAlert();
-                }
-              } else {
-                // errorList = [];
-                // errorList!.add('Result is Null');
-                // _showAlert();
-              }
-            },
-            // 'Sorry you changed your mind!',
-          ),
-          builder: (RunMutation _signIn, QueryResult? addResult) {
-            final doSignIn = (result) {
-              _signIn(result);
-            };
-
-            bool? anyLoading = addResult!.isLoading;
-
-            return ElevatedButtons(
-              width: double.infinity,
-              label: anyLoading ? 'wait' : next,
-              fontSize: 25,
-              radius: 0.0,
-              onClick: () {
-                if (_formKey.currentState!.validate()) {
-                  Map<String, dynamic> passVariable = {'email': email, 'pass': password};
-
-                  debugPrint(
-                      '${SignInPage.path} * param -- $paramSignIn * Type -- $paramTypeSignIn -- Variable -- $passVariable');
-
-                  doSignIn(passVariable);
-                  isEnable = false;
-                  setState(() {});
-                }
-              },
-              borderColor: aGreen,
-              buttonColor: aGreen,
-              labelColor: aWhite,
-            );
-          },
-        ),
-      ),
+            ),
+          );
+        } else {
+          return NoInternetPage(
+            onClick: () {},
+          );
+        }
+      },
     );
+  }
+
+  @override
+  void dispose() {
+    disposeInternet();
+    super.dispose();
   }
 
   _showAlert() async {

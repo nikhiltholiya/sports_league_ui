@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -12,14 +13,18 @@ import 'package:http_parser/http_parser.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:provider/provider.dart';
 
 import '../Pages/base_activity.dart';
 import '../Pages/dashboard.dart';
+import '../Pages/no_internet_page.dart';
 import '../bean/create_profile/create_profile_data.dart';
 import '../bean/token_auth/token_auth.dart';
 import '../components/app_dialog.dart';
 import '../components/elevated_buttons.dart';
+import '../providers/internet_provider.dart';
 import '../utils/Constants.dart';
+import '../utils/Internet.dart';
 import '../utils/app_colors.dart';
 import '../utils/app_labels.dart';
 import '../utils/shared_preferences_utils.dart';
@@ -40,7 +45,7 @@ enum imgState {
   cropped,
 }
 
-class _CreateProfilePicturePageState extends State<CreateProfilePicturePage> {
+class _CreateProfilePicturePageState extends State<CreateProfilePicturePage> with isInternetConnection {
   var userData = LoggedUser.fromJson(jsonDecode(SharedPreferencesUtils.getUserData.toString()));
 
   List<int?> selectedAvatar = [0];
@@ -50,7 +55,7 @@ class _CreateProfilePicturePageState extends State<CreateProfilePicturePage> {
 
   Map<String, dynamic> paramImgUpload = {};
   Map<String, dynamic> paramTypeImgUpload = {};
-  var _streamImgState = StreamController<imgState>();
+  var _streamImgState;
 
   // late imgState state;
   File? imageFile;
@@ -58,6 +63,7 @@ class _CreateProfilePicturePageState extends State<CreateProfilePicturePage> {
 
   @override
   void initState() {
+    initInternet(context);
     paramImgUpload = {
       '\$file': 'Upload!',
       '\$userId': 'String',
@@ -67,6 +73,7 @@ class _CreateProfilePicturePageState extends State<CreateProfilePicturePage> {
       'userid': '\$userId',
     };
 
+    _streamImgState = StreamController<imgState>();
     _streamImgState.sink.add(imgState.free);
     // state = imgState.free;
 
@@ -75,6 +82,7 @@ class _CreateProfilePicturePageState extends State<CreateProfilePicturePage> {
 
   @override
   void dispose() {
+    disposeInternet();
     _streamImgState.close();
     super.dispose();
   }
@@ -177,196 +185,211 @@ class _CreateProfilePicturePageState extends State<CreateProfilePicturePage> {
 
   @override
   Widget build(BuildContext context) {
-    return BaseWidget(
-        appbar: Text(
-          uploadProfilePic,
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 20,
-          ),
-        ),
-        appbarHeight: kToolbarHeight,
-        onBackClick: () => Navigator.pop(context),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: StreamBuilder(
-            stream: _streamImgState.stream,
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                return ListView(
-                  shrinkWrap: true,
-                  physics: const BouncingScrollPhysics(),
-                  children: [
-                    Text(
-                      takeOrUploadLine,
-                      softWrap: true,
-                      maxLines: 3,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.normal),
-                      textAlign: TextAlign.center,
-                    ),
-                    SizedBox(
-                      height: 30,
-                    ),
-                    Stack(
-                      alignment: Alignment.bottomCenter,
-                      fit: StackFit.loose,
-                      children: [
-                        // selectedAvatar.isNotEmpty
+    return Consumer<InternetProvider>(
+      builder: (context, valueNet, child) {
+        print(valueNet.isConnectivity);
+        if (valueNet.getConnected != ConnectivityResult.none) {
+          return BaseWidget(
+              appbar: Text(
+                uploadProfilePic,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                ),
+              ),
+              appbarHeight: kToolbarHeight,
+              onBackClick: () => Navigator.pop(context),
+              body: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: StreamBuilder(
+                  stream: _streamImgState.stream,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      return ListView(
+                        shrinkWrap: true,
+                        physics: const BouncingScrollPhysics(),
+                        children: [
+                          Text(
+                            takeOrUploadLine,
+                            softWrap: true,
+                            maxLines: 3,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.normal),
+                            textAlign: TextAlign.center,
+                          ),
+                          SizedBox(
+                            height: 30,
+                          ),
+                          Stack(
+                            alignment: Alignment.bottomCenter,
+                            fit: StackFit.loose,
+                            children: [
+                              // selectedAvatar.isNotEmpty
 
-                        imagePreview(),
+                              imagePreview(),
 
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            CircleAvatar(
-                              backgroundColor: aGreen,
-                              radius: 20,
-                              child: IconButton(
-                                onPressed: () {
-                                  // _clearImage();
-                                  _pickImage(ImageSource.gallery);
-                                },
-                                icon: Icon(
-                                  Icons.add_photo_alternate,
-                                  color: aWhite,
-                                ),
-                              ),
-                            ),
-                            CircleAvatar(
-                              backgroundColor: aGreen,
-                              radius: 20,
-                              child: IconButton(
-                                onPressed: () {
-                                  _pickImage(ImageSource.camera);
-                                },
-                                icon: Icon(
-                                  Icons.camera_alt_rounded,
-                                  color: aWhite,
-                                ),
-                              ),
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        'or',
-                        softWrap: true,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.normal),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                    Text(
-                      chooseAvatar,
-                      softWrap: true,
-                      maxLines: 3,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.normal),
-                      textAlign: TextAlign.start,
-                    ),
-                    GridView.builder(
-                      physics: const BouncingScrollPhysics(),
-                      shrinkWrap: true,
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 4,
-                      ),
-                      itemCount: 12,
-                      itemBuilder: (BuildContext context, int index) {
-                        return Padding(
-                          padding: const EdgeInsets.all(5.0),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(100),
-                            child: GestureDetector(
-                              onTap: () {
-                                selectedAvatar = [];
-                                selectedAvatar.add(index);
-                                _clearImage();
-                              },
-                              child: Stack(
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                 children: [
-                                  Container(
-                                    color: aWhite,
-                                    child: Center(
-                                      child: Image.asset('assets/avatar$index.png'),
+                                  CircleAvatar(
+                                    backgroundColor: aGreen,
+                                    radius: 20,
+                                    child: IconButton(
+                                      onPressed: () {
+                                        // _clearImage();
+                                        _pickImage(ImageSource.gallery);
+                                      },
+                                      icon: Icon(
+                                        Icons.add_photo_alternate,
+                                        color: aWhite,
+                                      ),
                                     ),
                                   ),
-                                  if (selectedAvatar.contains(index))
-                                    Container(
-                                      alignment: Alignment.center,
-                                      color: aGreen20,
-                                      child: Icon(Icons.check_outlined, color: aGreen, size: 30),
+                                  CircleAvatar(
+                                    backgroundColor: aGreen,
+                                    radius: 20,
+                                    child: IconButton(
+                                      onPressed: () {
+                                        _pickImage(ImageSource.camera);
+                                      },
+                                      icon: Icon(
+                                        Icons.camera_alt_rounded,
+                                        color: aWhite,
+                                      ),
                                     ),
+                                  ),
                                 ],
-                              ),
+                              )
+                            ],
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              'or',
+                              softWrap: true,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.normal),
+                              textAlign: TextAlign.center,
                             ),
                           ),
-                        );
-                      },
-                    ),
-                  ],
-                );
-              }
-              return Center(
-                child: CupertinoActivityIndicator(),
-              );
-            },
-          ),
-        ),
-        bottomBar: Mutation(
-          options: MutationOptions(
-              document: gql(uploadImage(paramImgUpload, paramTypeImgUpload)),
-              onCompleted: (dynamic resultData) {
-                print('**** RESULT * $resultData');
-                if (resultData != null) {
-                  errorList = [];
-                  var result = resultData['uploadImage']['success'];
-                  errorList!.add(result ? 'DONE' : 'some problem for update picture');
-                  _showAlert();
-                }
-              },
-              onError: (OperationException? error) {
-                print('erroR -- $error');
-              }),
-          builder: (runMutation, result) {
-            final anyLoading = result!.isLoading;
-            return ElevatedButtons(
-              width: double.infinity,
-              label: anyLoading ? 'wait' : next,
-              fontSize: 25,
-              radius: 0.0,
-              onClick: () async {
-                // var _image = imageFile != null ? imageFile : getImageFileFromAssets('path');
-                // var byteData;
-                // if(imageFile != null){
-                var byteData = imageFile != null
-                    ? imageFile!.readAsBytesSync()
-                    : await getImageFileFromAssets('avatar${selectedAvatar.first}.png')
-                        .then((value) => value.readAsBytesSync());
+                          Text(
+                            chooseAvatar,
+                            softWrap: true,
+                            maxLines: 3,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.normal),
+                            textAlign: TextAlign.start,
+                          ),
+                          GridView.builder(
+                            physics: const BouncingScrollPhysics(),
+                            shrinkWrap: true,
+                            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 4,
+                            ),
+                            itemCount: 12,
+                            itemBuilder: (BuildContext context, int index) {
+                              return Padding(
+                                padding: const EdgeInsets.all(5.0),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(100),
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      selectedAvatar = [];
+                                      selectedAvatar.add(index);
+                                      _clearImage();
+                                    },
+                                    child: Stack(
+                                      children: [
+                                        Container(
+                                          color: aWhite,
+                                          child: Center(
+                                            child: Image.asset('assets/avatar$index.png'),
+                                          ),
+                                        ),
+                                        if (selectedAvatar.contains(index))
+                                          Container(
+                                            alignment: Alignment.center,
+                                            color: aGreen20,
+                                            child: Icon(Icons.check_outlined, color: aGreen, size: 30),
+                                          ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ],
+                      );
+                    }
+                    return Center(
+                      child: CupertinoActivityIndicator(),
+                    );
+                  },
+                ),
+              ),
+              bottomBar: Mutation(
+                options: MutationOptions(
+                    document: gql(uploadImage(paramImgUpload, paramTypeImgUpload)),
+                    onCompleted: (dynamic resultData) {
+                      print('**** RESULT * $resultData');
+                      if (resultData != null) {
+                        errorList = [];
+                        var result = resultData['uploadImage']['success'];
+                        errorList!.add(result ? 'DONE' : 'some problem for update picture');
+                        _showAlert();
+                      }
+                    },
+                    onError: (OperationException? error) {
+                      print('erroR -- $error');
+                    }),
+                builder: (runMutation, result) {
+                  final anyLoading = result!.isLoading;
+                  return ElevatedButtons(
+                    width: double.infinity,
+                    label: anyLoading ? 'wait' : next,
+                    fontSize: 25,
+                    radius: 0.0,
+                    onClick: () async {
+                      // var _image = imageFile != null ? imageFile : getImageFileFromAssets('path');
+                      // var byteData;
+                      // if(imageFile != null){
+                      var byteData = imageFile != null
+                          ? imageFile!.readAsBytesSync()
+                          : await getImageFileFromAssets('avatar${selectedAvatar.first}.png')
+                              .then((value) => value.readAsBytesSync());
 
-                var multipartFile = http.MultipartFile.fromBytes(
-                  'photo',
-                  byteData,
-                  filename: '${DateTime.now().second}.jpg',
-                  contentType: MediaType('image', 'jpg'),
-                );
+                      var multipartFile = http.MultipartFile.fromBytes(
+                        'photo',
+                        byteData,
+                        filename: '${DateTime.now().second}.jpg',
+                        contentType: MediaType('image', 'jpg'),
+                      );
 
-                runMutation(<String, dynamic>{
-                  'file': multipartFile,
-                  'userId': '${userData.userId}',
-                });
-              },
-              borderColor: aGreen,
-              buttonColor: aGreen,
-              labelColor: aWhite,
-            );
-          },
-        ));
+                      runMutation(<String, dynamic>{
+                        'file': multipartFile,
+                        'userId': '${userData.userId}',
+                      });
+                    },
+                    borderColor: aGreen,
+                    buttonColor: aGreen,
+                    labelColor: aWhite,
+                  );
+                },
+              ));
+        } else {
+          _streamImgState.close();
+          _streamImgState = StreamController<imgState>();
+          _streamImgState.sink.add(imgState.free);
+          // isLoaded = false;
+          return NoInternetPage(
+            onClick: () {},
+          );
+        }
+      },
+    );
   }
 
   _showAlert() async {

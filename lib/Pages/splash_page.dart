@@ -1,10 +1,15 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:provider/provider.dart';
 
 import '../Pages/base_activity.dart';
 import '../Pages/dashboard.dart';
 import '../Pages/home_page.dart';
+import '../Pages/no_internet_page.dart';
+import '../providers/internet_provider.dart';
 import '../utils/Constants.dart';
+import '../utils/Internet.dart';
 import '../utils/app_colors.dart';
 import '../utils/shared_preferences_utils.dart';
 
@@ -18,7 +23,7 @@ class SplashPage extends StatefulWidget {
   State<SplashPage> createState() => _SplashPageState();
 }
 
-class _SplashPageState extends State<SplashPage> with SingleTickerProviderStateMixin {
+class _SplashPageState extends State<SplashPage> with SingleTickerProviderStateMixin, isInternetConnection {
   late AnimationController _animController;
   var _mutationVerifyToken = GlobalKey<MutationState>();
   Map<String, dynamic> paramVerifyToken = {};
@@ -51,61 +56,77 @@ class _SplashPageState extends State<SplashPage> with SingleTickerProviderStateM
 
     paramVerifyToken = {'\$token': 'String!'};
     paramTypeVerifyToken = {'token': '\$token'};
+
+    initInternet(context);
+  }
+
+  @override
+  void dispose() {
+    disposeInternet();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BaseWidget(
-      appbarHeight: 0.0,
-      appbar: Text(''),
-      body: Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            fit: BoxFit.fill,
-            image: AssetImage('assets/splash_screen.png'),
-          ),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            AnimatedIcon(),
-            Mutation(
-              key: _mutationVerifyToken,
-              options: MutationOptions(
-                document: gql(verifyToken(paramVerifyToken, paramTypeVerifyToken)),
-                // update: update,
-                onError: (OperationException? error) {
-                  debugPrint('${SplashPage.path} * erroR -- $error');
-                },
-                // _simpleAlert(context, error.toString()),
-                onCompleted: (dynamic resultData) async {
-                  if (resultData != null) {
-                    print(resultData);
-                    var success = resultData['verifyToken']['success'];
-                    Navigator.pushReplacementNamed(context, success ? DashboardPage.path : HomePage.path);
-                  }
-                },
-                // 'Sorry you changed your mind!',
+    return Consumer<InternetProvider>(builder: (context, valueNet, child) {
+      if (valueNet.getConnected != ConnectivityResult.none) {
+        return BaseWidget(
+          appbarHeight: 0.0,
+          appbar: Text(''),
+          body: Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                fit: BoxFit.fill,
+                image: AssetImage('assets/splash_screen.png'),
               ),
-              builder: (RunMutation _resetEmail, QueryResult? addResult) {
-                final sendResetEmail = (result) {
-                  _resetEmail(result);
-                };
-
-                bool? anyLoading = addResult!.isLoading;
-                // _streamController.sink.add(addResult!.isLoading);
-                return anyLoading
-                    ? Center(
-                        child: CupertinoActivityIndicator(color: aWhite),
-                      )
-                    : SizedBox();
-              },
             ),
-          ],
-        ),
-      ),
-    );
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                AnimatedIcon(),
+                Mutation(
+                  key: _mutationVerifyToken,
+                  options: MutationOptions(
+                    document: gql(verifyToken(paramVerifyToken, paramTypeVerifyToken)),
+                    // update: update,
+                    onError: (OperationException? error) {
+                      debugPrint('${SplashPage.path} * erroR -- $error');
+                    },
+                    // _simpleAlert(context, error.toString()),
+                    onCompleted: (dynamic resultData) async {
+                      if (resultData != null) {
+                        print(resultData);
+                        var success = resultData['verifyToken']['success'];
+                        Navigator.pushReplacementNamed(context, success ? DashboardPage.path : HomePage.path);
+                      }
+                    },
+                    // 'Sorry you changed your mind!',
+                  ),
+                  builder: (RunMutation _resetEmail, QueryResult? addResult) {
+                    final sendResetEmail = (result) {
+                      _resetEmail(result);
+                    };
+
+                    bool? anyLoading = addResult!.isLoading;
+                    // _streamController.sink.add(addResult!.isLoading);
+                    return anyLoading
+                        ? Center(
+                            child: CupertinoActivityIndicator(color: aWhite),
+                          )
+                        : SizedBox();
+                  },
+                ),
+              ],
+            ),
+          ),
+        );
+      } else {
+        return NoInternetPage(
+          onClick: () {},
+        );
+      }
+    });
   }
 
   Widget AnimatedIcon() {

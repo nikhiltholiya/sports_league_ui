@@ -15,19 +15,18 @@ import '../utils/Constants.dart';
 import '../utils/Internet.dart';
 import '../utils/app_labels.dart';
 import '../utils/common.dart';
-import '../utils/shared_preferences_utils.dart';
 
-//Updated on 20220425
-class AllMatchesPage extends StatefulWidget {
-  static const String path = 'allMatchesPage';
+//Created on 20220608
+class LatestScorePage extends StatefulWidget {
+  static const String path = 'latestScorePage';
 
-  const AllMatchesPage({Key? key}) : super(key: key);
+  const LatestScorePage({Key? key}) : super(key: key);
 
   @override
-  _AllMatchesPageState createState() => _AllMatchesPageState();
+  _LatestScorePageState createState() => _LatestScorePageState();
 }
 
-class _AllMatchesPageState extends State<AllMatchesPage> with isInternetConnection {
+class _LatestScorePageState extends State<LatestScorePage> with isInternetConnection {
   Map<String, dynamic> param = {};
   Map<String, dynamic> paramType = {};
   late AllMatchesData _allMatchesData;
@@ -35,8 +34,8 @@ class _AllMatchesPageState extends State<AllMatchesPage> with isInternetConnecti
   @override
   void initState() {
     initInternet(context);
-    param = {'\$orderby': 'String', '\$userSearch': 'String'};
-    paramType = {'orderBy': '\$orderby', 'userSearch': '\$userSearch'};
+    param = {'\$orderby': 'String', '\$first': 'Int'};
+    paramType = {'orderBy': '\$orderby', 'first': '\$first'};
     super.initState();
   }
 
@@ -50,14 +49,14 @@ class _AllMatchesPageState extends State<AllMatchesPage> with isInternetConnecti
             appbarHeight: kToolbarHeight,
             onBackClick: () => Navigator.pop(context),
             appbar: Text(
-              allMatchesTitle,
+              latestScoreTitle,
               style: GoogleFonts.poppins(color: Colors.black, fontSize: 20, fontWeight: FontWeight.w600),
             ),
             body: Query(
               options: QueryOptions(
                 document: gql(allMatches(param, paramType)),
                 // this is the query string you just created
-                variables: {'orderby': 'createdAt', 'userSearch': '${SharedPreferencesUtils.getUserId!}'},
+                variables: {'orderby': 'createdAt', 'first': 10},
                 pollInterval: Duration(seconds: 100),
               ),
               builder: (result, {fetchMore, refetch}) {

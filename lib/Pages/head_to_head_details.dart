@@ -1,11 +1,16 @@
 import 'dart:io';
 
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../Pages/base_activity.dart';
+import '../Pages/no_internet_page.dart';
 import '../components/head_to_head_details_header_tile.dart';
 import '../components/head_to_head_details_list_tile.dart';
+import '../providers/internet_provider.dart';
+import '../utils/Internet.dart';
 
 //Edited on 20220307- Redesign with scroll
 class HeadToHeadDetails extends StatefulWidget {
@@ -17,7 +22,7 @@ class HeadToHeadDetails extends StatefulWidget {
   _HeadToHeadDetailsState createState() => _HeadToHeadDetailsState();
 }
 
-class _HeadToHeadDetailsState extends State<HeadToHeadDetails> {
+class _HeadToHeadDetailsState extends State<HeadToHeadDetails> with isInternetConnection {
   ScrollController? _scrollController;
 
   GlobalKey? _stackKey = GlobalKey();
@@ -53,6 +58,7 @@ class _HeadToHeadDetailsState extends State<HeadToHeadDetails> {
 
   @override
   void initState() {
+    initInternet(context);
     _scrollController = ScrollController();
     _chatNode = FocusNode();
     WidgetsBinding.instance?.addPostFrameCallback(_getTotalHeight);
@@ -72,55 +78,53 @@ class _HeadToHeadDetailsState extends State<HeadToHeadDetails> {
   }
 
   @override
-  void dispose() {
-    _chatNode?.dispose();
-    _scrollController?.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return BaseWidget(
-      appbar: AppBar(
-        centerTitle: true,
-        // title: SizedBox(
-        //   child: HeadToHeadDetailsHeaderTile(),
-        //   key: _headerContentSize,
-        // ), // This is used for getting dynamic height of contents!!!
-        toolbarHeight: 0.0,
-      ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Expanded(
-              child: CustomScrollView(
-                controller: _scrollController,
-                keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-                physics: const BouncingScrollPhysics(),
-                shrinkWrap: true,
-                slivers: <Widget>[
-                  SliverAppBar(
-                    automaticallyImplyLeading: false,
-                    elevation: _isSilverCollapsed! ? 2 : 0,
-                    snap: false,
-                    pinned: true,
-                    floating: false,
-                    stretch: true,
-                    centerTitle: true,
-                    leading: IconButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      icon: Icon(kIsWeb
-                          ? Icons.arrow_back
-                          : Platform.isIOS
-                              ? Icons.arrow_back_ios
-                              : Icons.arrow_back),
-                    ),
-                    titleTextStyle: TextStyle(fontSize: 10, color: _isSilverCollapsed! ? Colors.black : Colors.white),
-                    iconTheme: IconThemeData(color: _isSilverCollapsed! ? Colors.black : Colors.white),
-                    /* titleTextStyle: TextStyle(
+    return Consumer<InternetProvider>(
+      builder: (context, valueNet, child) {
+        print(valueNet.isConnectivity);
+        if (valueNet.getConnected != ConnectivityResult.none) {
+          return BaseWidget(
+            appbar: AppBar(
+              centerTitle: true,
+              // title: SizedBox(
+              //   child: HeadToHeadDetailsHeaderTile(),
+              //   key: _headerContentSize,
+              // ), // This is used for getting dynamic height of contents!!!
+              toolbarHeight: 0.0,
+            ),
+            body: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Expanded(
+                    child: CustomScrollView(
+                      controller: _scrollController,
+                      keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+                      physics: const BouncingScrollPhysics(),
+                      shrinkWrap: true,
+                      slivers: <Widget>[
+                        SliverAppBar(
+                          automaticallyImplyLeading: false,
+                          elevation: _isSilverCollapsed! ? 2 : 0,
+                          snap: false,
+                          pinned: true,
+                          floating: false,
+                          stretch: true,
+                          centerTitle: true,
+                          leading: IconButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            icon: Icon(kIsWeb
+                                ? Icons.arrow_back
+                                : Platform.isIOS
+                                    ? Icons.arrow_back_ios
+                                    : Icons.arrow_back),
+                          ),
+                          titleTextStyle:
+                              TextStyle(fontSize: 10, color: _isSilverCollapsed! ? Colors.black : Colors.white),
+                          iconTheme: IconThemeData(color: _isSilverCollapsed! ? Colors.black : Colors.white),
+                          /* titleTextStyle: TextStyle(
                             fontSize: 10.0,
                             color: scrollPosition >= _totalHeight
                                 ? Colors.black
@@ -129,59 +133,74 @@ class _HeadToHeadDetailsState extends State<HeadToHeadDetails> {
                             color:  scrollPosition >= _totalHeight
                                 ? Colors.black
                                 : Colors.white),*/
-                    flexibleSpace: FlexibleSpaceBar(
-                      background: HeadToHeadDetailsHeaderTile(
-                        stackKey: _stackKey,
-                        usersKey: _usersKey,
-                        player1Name: 'John s.',
-                        player1Img: null,
-                        player1win: '0',
-                        player1Score: '0',
-                        player1Loss: '11',
-                        player2Name: 'Kalpesh T.',
-                        player2Img: null,
-                        player2win: '10',
-                        player2Score: '11',
-                        player2Loss: '0',
-                      ),
-                      centerTitle: true,
-                      title: _isSilverCollapsed! ? Text('Head to Head') : SizedBox(),
-                    ),
-                    expandedHeight: _dynamicTotalHeight,
-                    backgroundColor: Colors.white,
-                  ),
+                          flexibleSpace: FlexibleSpaceBar(
+                            background: HeadToHeadDetailsHeaderTile(
+                              stackKey: _stackKey,
+                              usersKey: _usersKey,
+                              player1Name: 'John s.',
+                              player1Img: 'default.png',
+                              player1win: '0',
+                              player1Score: '0',
+                              player1Loss: '11',
+                              player2Name: 'Kalpesh T.',
+                              player2Img: 'default.png',
+                              player2win: '10',
+                              player2Score: '11',
+                              player2Loss: '0',
+                            ),
+                            centerTitle: true,
+                            title: _isSilverCollapsed! ? Text('Head to Head') : SizedBox(),
+                          ),
+                          expandedHeight: _dynamicTotalHeight,
+                          backgroundColor: Colors.white,
+                        ),
 
-                  // SliverToBoxAdapter(
-                  //   child: Padding(
-                  //     padding: EdgeInsets.all(8.0),
-                  //     child: Text('Participating Players'),
-                  //   ),
-                  // ),
+                        // SliverToBoxAdapter(
+                        //   child: Padding(
+                        //     padding: EdgeInsets.all(8.0),
+                        //     child: Text('Participating Players'),
+                        //   ),
+                        // ),
 
-                  SliverList(
-                    delegate: SliverChildBuilderDelegate(
-                      (context, index) => HeadToHeadDetailsListTile(
-                        title: 'CBS Arena',
-                        date: 'Dec 31st 2021',
-                        onProfileClick: () {},
-                        onTileClick: () {},
-                        player1matchScore: [5, 4, 3, 2, 1],
-                        player1Img: null,
-                        player1Name: 'Novak J.',
-                        player1Active: true,
-                        player2matchScore: [1, 2, 3, 4, 5],
-                        player2Img: null,
-                        player2Name: 'Kalpesh T.',
-                        player2Active: false,
-                      ),
-                      childCount: 10,
+                        SliverList(
+                          delegate: SliverChildBuilderDelegate(
+                            (context, index) => HeadToHeadDetailsListTile(
+                              title: 'CBS Arena',
+                              date: 'Dec 31st 2021',
+                              onProfileClick: () {},
+                              onTileClick: () {},
+                              player1matchScore: [5, 4, 3, 2, 1],
+                              player1Img: 'default.png',
+                              player1Name: 'Novak J.',
+                              player1Active: true,
+                              player2matchScore: [1, 2, 3, 4, 5],
+                              player2Img: 'default.png',
+                              player2Name: 'Kalpesh T.',
+                              player2Active: false,
+                            ),
+                            childCount: 10,
+                          ),
+                        )
+                      ], //<Widget>[]
                     ),
-                  )
-                ], //<Widget>[]
-              ),
-              flex: 1),
-        ],
-      ),
+                    flex: 1),
+              ],
+            ),
+          );
+        } else {
+          return NoInternetPage(
+            onClick: () {},
+          );
+        }
+      },
     );
+  }
+
+  @override
+  void dispose() {
+    _chatNode?.dispose();
+    _scrollController?.dispose();
+    disposeInternet();
+    super.dispose();
   }
 }
