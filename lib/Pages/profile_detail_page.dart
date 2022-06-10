@@ -65,9 +65,8 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> with isInternetCo
     initInternet(context);
     _scrollController = ScrollController();
     // WidgetsBinding.instance?.addPostFrameCallback(_getTotalHeight);
-
-    param = {'\$userSearch': 'String!'};
-    paramType = {'userSearch': '\$userSearch'};
+    param = {'\$orderby': 'String', '\$userSearch': 'String', '\$first': 'Int'};
+    paramType = {'orderBy': '\$orderby', 'userSearch': '\$userSearch', 'first': '\$first'};
 
     super.initState();
   }
@@ -271,6 +270,8 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> with isInternetCo
                                 document: gql(allMatches(param, paramType)),
                                 // this is the query string you just created
                                 variables: {
+                                  'orderby': '-createdAt',
+                                  'first': 2,
                                   'userSearch': userId.getUserId,
                                   // 'userSearch': '021c2515-e12e-49bd-bc08-744dc64a508c',
                                 },
@@ -333,21 +334,6 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> with isInternetCo
                                               player2Name: tempMatches[i].node?.playerTwo?.firstName,
                                               player2Active: false,
                                             )
-                                          // Padding(
-                                          //   padding: const EdgeInsets.only(
-                                          //       left: 16.0, right: 16, top: 10),
-                                          //   child: MatchCard(
-                                          //     scores: result.data!["allMatches"]
-                                          //     ["edges"][i]["node"]["matchSet"]
-                                          //     ["edges"],
-                                          //     playerOneName: result.data!["allMatches"]
-                                          //     ["edges"][i]["node"]["playerOne"]
-                                          //     ["firstName"],
-                                          //     playerTwoName: result.data!["allMatches"]
-                                          //     ["edges"][i]["node"]["playerTwo"]
-                                          //     ["firstName"],
-                                          //   ),
-                                          // ),
                                         ],
                                       )
                                     : SizedBox();
@@ -381,8 +367,8 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> with isInternetCo
                               child: Padding(
                                 padding: const EdgeInsets.only(top: 10),
                                 child: HeadToHeadListTile(
-                                  onTileClick: (){},
-                                    onProfileClick: (){},
+                                    onTileClick: () {},
+                                    onProfileClick: () {},
                                     title: 'CBS Arena',
                                     date: 'Dec 31st 2021',
                                     profileImg: 'assets/Ellipse 5.png',

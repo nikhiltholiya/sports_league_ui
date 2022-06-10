@@ -56,7 +56,7 @@ class _LatestScorePageState extends State<LatestScorePage> with isInternetConnec
               options: QueryOptions(
                 document: gql(allMatches(param, paramType)),
                 // this is the query string you just created
-                variables: {'orderby': 'createdAt', 'first': 10},
+                variables: {'orderby': '-createdAt', 'first': 10},
                 pollInterval: Duration(seconds: 100),
               ),
               builder: (result, {fetchMore, refetch}) {

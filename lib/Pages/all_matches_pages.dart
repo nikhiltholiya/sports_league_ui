@@ -57,7 +57,7 @@ class _AllMatchesPageState extends State<AllMatchesPage> with isInternetConnecti
               options: QueryOptions(
                 document: gql(allMatches(param, paramType)),
                 // this is the query string you just created
-                variables: {'orderby': 'createdAt', 'userSearch': '${SharedPreferencesUtils.getUserId!}'},
+                variables: {'orderby': '-createdAt', 'userSearch': '${SharedPreferencesUtils.getUserId!}'},
                 pollInterval: Duration(seconds: 100),
               ),
               builder: (result, {fetchMore, refetch}) {
