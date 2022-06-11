@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -12,15 +13,19 @@ import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 
 import '../Pages/base_activity.dart';
+import '../Pages/no_internet_page.dart';
 import '../bean/create_profile/create_profile_data.dart';
 import '../bean/token_auth/token_auth.dart';
 import '../components/app_dialog.dart';
 import '../components/drop_down_view.dart';
 import '../components/edit_text_form_field.dart';
 import '../components/elevated_buttons.dart';
+import '../providers/internet_provider.dart';
 import '../utils/Constants.dart';
+import '../utils/Internet.dart';
 import '../utils/app_colors.dart';
 import '../utils/app_labels.dart';
 import '../utils/common.dart';
@@ -42,7 +47,7 @@ class EditProfilePage extends StatefulWidget {
   State<EditProfilePage> createState() => _EditProfilePageState();
 }
 
-class _EditProfilePageState extends State<EditProfilePage> {
+class _EditProfilePageState extends State<EditProfilePage> with isInternetConnection {
   var userData = LoggedUser.fromJson(jsonDecode(SharedPreferencesUtils.getUserData.toString()));
 
   String? bDate;
@@ -70,13 +75,14 @@ class _EditProfilePageState extends State<EditProfilePage> {
   late List<String?>? errorList = [];
   late CreateProfileData _createProfileData;
 
-  var _streamFormController = StreamController<bool?>();
-  var _streamImgState = StreamController<imgState>();
+  var _streamFormController;
+  var _streamImgState;
   File? imageFile;
   dynamic _pickImageError;
 
   @override
   void initState() {
+    initInternet(context);
     rate = [];
     for (int i = 3; i <= 10; i++) {
       rate?.add('$i.0');
@@ -129,6 +135,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
       'userid': '\$userId',
     };
 
+    _streamFormController = StreamController<bool?>();
+    _streamImgState = StreamController<imgState>();
     _streamImgState.sink.add(imgState.free);
     _streamFormController.sink.add(true);
 
@@ -139,333 +147,354 @@ class _EditProfilePageState extends State<EditProfilePage> {
   void dispose() {
     _streamImgState.close();
     _streamFormController.close();
+    disposeInternet();
+
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: _formKey,
-      child: BaseWidget(
-        appbar: Text(
-          updateProfileTitle,
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 20,
-          ),
-        ),
-        appbarHeight: kToolbarHeight,
-        onBackClick: () => Navigator.pop(context),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: ListView(
-            shrinkWrap: true,
-            physics: const BouncingScrollPhysics(),
-            children: [
-              SizedBox(
-                height: 10,
+    return Consumer<InternetProvider>(
+      builder: (context, valueNet, child) {
+        print(valueNet.isConnectivity);
+        if (valueNet.getConnected != ConnectivityResult.none) {
+          return Form(
+            key: _formKey,
+            child: BaseWidget(
+              appbar: Text(
+                updateProfileTitle,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                ),
               ),
-              StreamBuilder(
-                stream: _streamImgState.stream,
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    return Stack(
-                      alignment: Alignment.bottomCenter,
-                      fit: StackFit.loose,
-                      children: [
-                        imagePreview(),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            CircleAvatar(
-                              backgroundColor: aGreen,
-                              radius: 20,
-                              child: IconButton(
-                                onPressed: () {
-                                  _pickImage(ImageSource.gallery);
-                                },
-                                icon: Icon(
-                                  Icons.add_photo_alternate,
-                                  color: aWhite,
-                                ),
-                              ),
-                            ),
-                            CircleAvatar(
-                              backgroundColor: aGreen,
-                              radius: 20,
-                              child: IconButton(
-                                onPressed: () {
-                                  _pickImage(ImageSource.camera);
-                                },
-                                icon: Icon(
-                                  Icons.camera_alt_rounded,
-                                  color: aWhite,
-                                ),
-                              ),
-                            ),
-                          ],
-                        )
-                      ],
-                    );
-                  }
-                  return Center(
-                    child: CupertinoActivityIndicator(),
-                  );
-                },
-              ),
-              StreamBuilder<bool?>(
-                stream: _streamFormController.stream,
-                builder: (context, isEnabled) {
-                  if (isEnabled.hasData) {
-                    return Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 5),
-                          child: EditTextFormField(
-                            textController: TextEditingController(text: firstNameValue),
-                            isEnable: isEnabled.data!,
-                            validator: RequiredValidator(errorText: errFirstName),
-                            inputFormatter: [FilteringTextInputFormatter(RegExp(r'[a-zA-Z]'), allow: true)],
-                            textInputAction: TextInputAction.send,
-                            onTextChange: (value) {
-                              firstNameValue = value;
-                            },
-                            onTap: () {},
-                            hint: firstName,
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 5),
-                          child: EditTextFormField(
-                            textController: TextEditingController(text: lastNameValue),
-                            isEnable: isEnabled.data!,
-                            validator: RequiredValidator(errorText: errLastName),
-                            inputFormatter: [FilteringTextInputFormatter(RegExp(r'[a-zA-Z]'), allow: true)],
-                            textInputAction: TextInputAction.send,
-                            onTextChange: (value) {
-                              lastNameValue = value;
-                            },
-                            onTap: () {},
-                            hint: lastName,
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 5),
-                          child: EditTextFormField(
-                            isEnable: false,
-                            textInputAction: TextInputAction.next,
-                            onTextChange: (value) {},
-                            onTap: () {},
-                            hint: SharedPreferencesUtils.getEmail!,
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 5),
-                          child: EditTextFormField(
-                            textController: TextEditingController(text: mobileNoValue),
-                            isEnable: isEnabled.data!,
-                            textInputAction: TextInputAction.send,
-                            validator: RequiredValidator(errorText: errMobNo),
-                            textInputType: TextInputType.number,
-                            inputFormatter: [
-                              FilteringTextInputFormatter.allow(
-                                RegExp(r'^\d+?\d*'),
+              appbarHeight: kToolbarHeight,
+              onBackClick: () => Navigator.pop(context),
+              body: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: ListView(
+                  shrinkWrap: true,
+                  physics: const BouncingScrollPhysics(),
+                  children: [
+                    SizedBox(
+                      height: 10,
+                    ),
+                    StreamBuilder(
+                      stream: _streamImgState.stream,
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          return Stack(
+                            alignment: Alignment.bottomCenter,
+                            fit: StackFit.loose,
+                            children: [
+                              imagePreview(),
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  CircleAvatar(
+                                    backgroundColor: aGreen,
+                                    radius: 20,
+                                    child: IconButton(
+                                      onPressed: () {
+                                        _pickImage(ImageSource.gallery);
+                                      },
+                                      icon: Icon(
+                                        Icons.add_photo_alternate,
+                                        color: aWhite,
+                                      ),
+                                    ),
+                                  ),
+                                  CircleAvatar(
+                                    backgroundColor: aGreen,
+                                    radius: 20,
+                                    child: IconButton(
+                                      onPressed: () {
+                                        _pickImage(ImageSource.camera);
+                                      },
+                                      icon: Icon(
+                                        Icons.camera_alt_rounded,
+                                        color: aWhite,
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               )
                             ],
-                            maxLength: 12,
-                            onTextChange: (value) {
-                              mobileNoValue = value;
-                            },
-                            onTap: () {},
-                            hint: phoneNo,
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 5),
-                          child: Container(
-                            margin: EdgeInsets.symmetric(vertical: 2, horizontal: 5),
-                            decoration: ShapeDecoration(
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(70), side: BorderSide(color: aPartGray30))),
-                            child: Padding(
-                              padding: const EdgeInsets.all(12.0),
-                              child: Text(
-                                '${bDate == 'Date of Birth' ? bDate : convertDate(bDate ?? DateTime.now().toString(), null)}',
-                                style: TextStyle(fontSize: 16.0, color: aLightGray),
+                          );
+                        }
+                        return Center(
+                          child: CupertinoActivityIndicator(),
+                        );
+                      },
+                    ),
+                    StreamBuilder<bool?>(
+                      stream: _streamFormController.stream,
+                      builder: (context, isEnabled) {
+                        if (isEnabled.hasData) {
+                          return Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.symmetric(vertical: 5),
+                                child: EditTextFormField(
+                                  textController: TextEditingController(text: firstNameValue),
+                                  isEnable: isEnabled.data!,
+                                  validator: RequiredValidator(errorText: errFirstName),
+                                  inputFormatter: [FilteringTextInputFormatter(RegExp(r'[a-zA-Z]'), allow: true)],
+                                  textInputAction: TextInputAction.send,
+                                  onTextChange: (value) {
+                                    firstNameValue = value;
+                                  },
+                                  onTap: () {},
+                                  hint: firstName,
+                                ),
                               ),
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 5),
-                          child: EditTextFormField(
-                            textController: TextEditingController(text: cityValue),
-                            isEnable: isEnabled.data!,
-                            validator: RequiredValidator(errorText: errCity),
-                            inputFormatter: [FilteringTextInputFormatter(RegExp(r'[a-zA-Z]'), allow: true)],
-                            textInputAction: TextInputAction.send,
-                            onTextChange: (value) {
-                              cityValue = value;
-                            },
-                            onTap: () {},
-                            hint: city,
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-                          child: DropDownView(
-                            dropList: [
-                              // 'Portland, Oregon',
-                              // 'Los Angeles, California',
-                              // 'Atlanta, Georgia'
-                              'Oregon',
-                              'California',
-                              'Georgia'
+                              Padding(
+                                padding: const EdgeInsets.symmetric(vertical: 5),
+                                child: EditTextFormField(
+                                  textController: TextEditingController(text: lastNameValue),
+                                  isEnable: isEnabled.data!,
+                                  validator: RequiredValidator(errorText: errLastName),
+                                  inputFormatter: [FilteringTextInputFormatter(RegExp(r'[a-zA-Z]'), allow: true)],
+                                  textInputAction: TextInputAction.send,
+                                  onTextChange: (value) {
+                                    lastNameValue = value;
+                                  },
+                                  onTap: () {},
+                                  hint: lastName,
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(vertical: 5),
+                                child: EditTextFormField(
+                                  isEnable: false,
+                                  textInputAction: TextInputAction.next,
+                                  onTextChange: (value) {},
+                                  onTap: () {},
+                                  hint: SharedPreferencesUtils.getEmail!,
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(vertical: 5),
+                                child: EditTextFormField(
+                                  textController: TextEditingController(text: mobileNoValue),
+                                  isEnable: isEnabled.data!,
+                                  textInputAction: TextInputAction.send,
+                                  validator: RequiredValidator(errorText: errMobNo),
+                                  textInputType: TextInputType.number,
+                                  inputFormatter: [
+                                    FilteringTextInputFormatter.allow(
+                                      RegExp(r'^\d+?\d*'),
+                                    )
+                                  ],
+                                  maxLength: 12,
+                                  onTextChange: (value) {
+                                    mobileNoValue = value;
+                                  },
+                                  onTap: () {},
+                                  hint: phoneNo,
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(vertical: 5),
+                                child: Container(
+                                  margin: EdgeInsets.symmetric(vertical: 2, horizontal: 5),
+                                  decoration: ShapeDecoration(
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(70),
+                                          side: BorderSide(color: aPartGray30))),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(12.0),
+                                    child: Text(
+                                      '${bDate == 'Date of Birth' ? bDate : convertDate(bDate ?? DateTime.now().toString(), null)}',
+                                      style: TextStyle(fontSize: 16.0, color: aLightGray),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(vertical: 5),
+                                child: EditTextFormField(
+                                  textController: TextEditingController(text: cityValue),
+                                  isEnable: isEnabled.data!,
+                                  validator: RequiredValidator(errorText: errCity),
+                                  inputFormatter: [FilteringTextInputFormatter(RegExp(r'[a-zA-Z]'), allow: true)],
+                                  textInputAction: TextInputAction.send,
+                                  onTextChange: (value) {
+                                    cityValue = value;
+                                  },
+                                  onTap: () {},
+                                  hint: city,
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+                                child: DropDownView(
+                                  dropList: [
+                                    // 'Portland, Oregon',
+                                    // 'Los Angeles, California',
+                                    // 'Atlanta, Georgia'
+                                    'Oregon',
+                                    'California',
+                                    'Georgia'
+                                  ],
+                                  hint: selectState,
+                                  dropdownValue: dropDownValueCity,
+                                  onValueChange: (value) {
+                                    dropDownValueCity = value;
+                                    // final split = value.split(',');
+                                    // selectedCity = split![0].toString().trim();
+                                    // selectedState = split![1].toString().trim();
+                                    selectedState = value;
+                                  },
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+                                child: DropDownView(
+                                  dropList: rate,
+                                  hint: selectRate,
+                                  dropdownValue: dropDownValueRate,
+                                  onValueChange: (value) {
+                                    dropDownValueRate = value;
+                                    selectedRate = value;
+                                  },
+                                ),
+                              ),
+                              Mutation(
+                                key: _profileImgMutation,
+                                options: MutationOptions(
+                                    document: gql(uploadImage(paramImgUpload, paramTypeImgUpload)),
+                                    onCompleted: (dynamic resultData) {
+                                      if (resultData != null) {
+                                        // errorList = [];
+                                        // var result = resultData['uploadImage']['success'];
+                                        // errorList!.add(result ? 'DONE' : 'some problem for update picture');
+                                        // _showAlert();
+                                      }
+                                    },
+                                    onError: (OperationException? error) {
+                                      print('erroR -- $error');
+                                    }),
+                                builder: (runMutation, result) {
+                                  return SizedBox();
+                                },
+                              ),
                             ],
-                            hint: selectState,
-                            dropdownValue: dropDownValueCity,
-                            onValueChange: (value) {
-                              dropDownValueCity = value;
-                              // final split = value.split(',');
-                              // selectedCity = split![0].toString().trim();
-                              // selectedState = split![1].toString().trim();
-                              selectedState = value;
-                            },
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-                          child: DropDownView(
-                            dropList: rate,
-                            hint: selectRate,
-                            dropdownValue: dropDownValueRate,
-                            onValueChange: (value) {
-                              dropDownValueRate = value;
-                              selectedRate = value;
-                            },
-                          ),
-                        ),
-                        Mutation(
-                          key: _profileImgMutation,
-                          options: MutationOptions(
-                              document: gql(uploadImage(paramImgUpload, paramTypeImgUpload)),
-                              onCompleted: (dynamic resultData) {
-                                if (resultData != null) {
-                                  // errorList = [];
-                                  // var result = resultData['uploadImage']['success'];
-                                  // errorList!.add(result ? 'DONE' : 'some problem for update picture');
-                                  // _showAlert();
-                                }
-                              },
-                              onError: (OperationException? error) {
-                                print('erroR -- $error');
-                              }),
-                          builder: (runMutation, result) {
-                            return SizedBox();
-                          },
-                        ),
-                      ],
-                    );
-                  }
-                  return Center(
-                    child: CupertinoActivityIndicator(),
+                          );
+                        }
+                        return Center(
+                          child: CupertinoActivityIndicator(),
+                        );
+                      },
+                    )
+                  ],
+                ),
+              ),
+              bottomBar: Mutation(
+                options: MutationOptions(
+                  document: gql(
+                    updateAccount(paramUpdateProfile, paramTypeUpdateProfile),
+                  ),
+                  onError: (OperationException? error) {
+                    debugPrint('${EditProfilePage.path} * erroR -- $error');
+                    _streamFormController.sink.add(true);
+                    errorList = [];
+                    errorList!.add('$error');
+                    if (errorList!.isNotEmpty) _showAlert();
+                    // Text('$error');
+                  },
+                  // _simpleAlert(context, error.toString()),
+                  onCompleted: (dynamic resultData) {
+                    // Text('Thanks for your star!');
+                    _streamFormController.sink.add(true);
+                    debugPrint('${EditProfilePage.path} **** RESULT * $resultData');
+
+                    if (resultData != null) {
+                      _createProfileData = CreateProfileData.fromJson(resultData);
+                      errorList = [];
+                      if (_createProfileData.updateAccount!.success!) {
+                        errorList!.add('DONE');
+                        // Navigator.pushNamed(context, CreateProfilePicturePage.path);
+                      } else {
+                        if (_createProfileData.updateAccount!.errors!.nonFieldErrors != null)
+                          errorList!.add(_createProfileData.updateAccount!.errors?.nonFieldErrors?.first.message);
+
+                        if (_createProfileData.updateAccount!.errors!.dob != null)
+                          errorList!.add(_createProfileData.updateAccount!.errors?.dob?.first.message);
+                      }
+
+                      imageUploadProgress();
+
+                      print('After');
+                      if (errorList!.isNotEmpty) _showAlert();
+                    }
+                  },
+                  // 'Sorry you changed your mind!',
+                ),
+                builder: (RunMutation _updateProfile, QueryResult? addResult) {
+                  final doUpdateProfile = (result) {
+                    _updateProfile(result);
+                  };
+
+                  final anyLoading = addResult!.isLoading;
+
+                  return ElevatedButtons(
+                    width: double.infinity,
+                    label: anyLoading ? 'wait' : next,
+                    fontSize: 25,
+                    radius: 0.0,
+                    onClick: () {
+                      if (selectedState!.isEmpty) {
+                        return ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text(errState),
+                        ));
+                      }
+
+                      if (selectedRate!.isEmpty) {
+                        return ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text(errRate),
+                        ));
+                      }
+
+                      Map<String, dynamic> passVariable = {
+                        'userId': '${userData.userId}',
+                        'city': cityValue,
+                        'fName': firstNameValue,
+                        'lName': lastNameValue,
+                        'phone': mobileNoValue,
+                        'rating': selectedRate,
+                        'state': selectedState,
+                        'picture': picture,
+                        'dob': bDate,
+                      };
+
+                      doUpdateProfile(passVariable);
+                      _streamFormController.sink.add(false);
+                    },
+                    borderColor: aGreen,
+                    buttonColor: aGreen,
+                    labelColor: aWhite,
                   );
                 },
-              )
-            ],
-          ),
-        ),
-        bottomBar: Mutation(
-          options: MutationOptions(
-            document: gql(
-              updateAccount(paramUpdateProfile, paramTypeUpdateProfile),
+              ),
             ),
-            onError: (OperationException? error) {
-              debugPrint('${EditProfilePage.path} * erroR -- $error');
-              _streamFormController.sink.add(true);
-              errorList = [];
-              errorList!.add('$error');
-              if (errorList!.isNotEmpty) _showAlert();
-              // Text('$error');
-            },
-            // _simpleAlert(context, error.toString()),
-            onCompleted: (dynamic resultData) {
-              // Text('Thanks for your star!');
-              _streamFormController.sink.add(true);
-              debugPrint('${EditProfilePage.path} **** RESULT * $resultData');
+          );
+        } else {
+          _streamImgState.close();
+          _streamFormController.close();
+          _streamFormController = StreamController<bool?>();
+          _streamImgState = StreamController<imgState>();
+          _streamImgState.sink.add(imgState.free);
+          _streamFormController.sink.add(true);
 
-              if (resultData != null) {
-                _createProfileData = CreateProfileData.fromJson(resultData);
-                errorList = [];
-                if (_createProfileData.updateAccount!.success!) {
-                  errorList!.add('DONE');
-                  // Navigator.pushNamed(context, CreateProfilePicturePage.path);
-                } else {
-                  if (_createProfileData.updateAccount!.errors!.nonFieldErrors != null)
-                    errorList!.add(_createProfileData.updateAccount!.errors?.nonFieldErrors?.first.message);
-
-                  if (_createProfileData.updateAccount!.errors!.dob != null)
-                    errorList!.add(_createProfileData.updateAccount!.errors?.dob?.first.message);
-                }
-
-                imageUploadProgress();
-
-                print('After');
-                if (errorList!.isNotEmpty) _showAlert();
-              }
-            },
-            // 'Sorry you changed your mind!',
-          ),
-          builder: (RunMutation _updateProfile, QueryResult? addResult) {
-            final doUpdateProfile = (result) {
-              _updateProfile(result);
-            };
-
-            final anyLoading = addResult!.isLoading;
-
-            return ElevatedButtons(
-              width: double.infinity,
-              label: anyLoading ? 'wait' : next,
-              fontSize: 25,
-              radius: 0.0,
-              onClick: () {
-                if (selectedState!.isEmpty) {
-                  return ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                    content: Text(errState),
-                  ));
-                }
-
-                if (selectedRate!.isEmpty) {
-                  return ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                    content: Text(errRate),
-                  ));
-                }
-
-                Map<String, dynamic> passVariable = {
-                  'userId': '${userData.userId}',
-                  'city': cityValue,
-                  'fName': firstNameValue,
-                  'lName': lastNameValue,
-                  'phone': mobileNoValue,
-                  'rating': selectedRate,
-                  'state': selectedState,
-                  'picture': picture,
-                  'dob': bDate,
-                };
-
-                doUpdateProfile(passVariable);
-                _streamFormController.sink.add(false);
-              },
-              borderColor: aGreen,
-              buttonColor: aGreen,
-              labelColor: aWhite,
-            );
-          },
-        ),
-      ),
+          return NoInternetPage(
+            onClick: () {},
+          );
+        }
+      },
     );
   }
 

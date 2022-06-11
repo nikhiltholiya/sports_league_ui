@@ -8,6 +8,7 @@ class EditTextFormField extends StatefulWidget {
   final TextEditingController? textController;
   final Function? onTextChange;
   final Function? onTap;
+  final Function? onFieldSubmitted;
   final String? hint;
   final Widget? suffixIcon;
   final Widget? prefixIcon;
@@ -20,23 +21,23 @@ class EditTextFormField extends StatefulWidget {
   final TextInputAction? textInputAction;
   final bool? isEnable;
 
-  const EditTextFormField(
-      {Key? key,
-      this.focusNode,
-      this.textController,
-      required this.onTextChange,
-      required this.onTap,
-      this.hint,
-      this.suffixIcon,
-      this.prefixIcon,
-      this.textInputType = TextInputType.text,
-      this.textAlign = TextAlign.justify,
-      this.inputFormatter,
-      this.maxLength = 999,
-      this.isObscure = false,
-      this.validator = null,
-      this.textInputAction = TextInputAction.none,
-      this.isEnable = true})
+  const EditTextFormField({Key? key,
+    this.focusNode,
+    this.textController,
+    required this.onTextChange,
+    required this.onTap,
+    this.hint,
+    this.suffixIcon,
+    this.prefixIcon,
+    this.textInputType = TextInputType.text,
+    this.textAlign = TextAlign.justify,
+    this.inputFormatter,
+    this.maxLength = 999,
+    this.isObscure = false,
+    this.validator = null,
+    this.textInputAction = TextInputAction.none,
+    this.isEnable = true,
+    this.onFieldSubmitted})
       : super(key: key);
 
   @override
@@ -63,6 +64,7 @@ class _EditTextFormFieldState extends State<EditTextFormField> {
         //     )
         // ],
 
+        onFieldSubmitted: (String action) => widget.onFieldSubmitted ?? null,
         maxLength: widget.maxLength,
         keyboardType: widget.textInputType,
         focusNode: widget.focusNode,
@@ -75,7 +77,7 @@ class _EditTextFormFieldState extends State<EditTextFormField> {
             counterStyle: TextStyle(height: 0.0),
             counterText: '',
             //Remove space for counter
-            contentPadding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 0.0),
+            contentPadding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 0.0),
             hintText: widget.hint,
             focusColor: Colors.black,
             fillColor: aWhite,

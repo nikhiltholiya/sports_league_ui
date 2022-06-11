@@ -23,6 +23,7 @@ const String changePassword = 'Change password';
 const String passwordChanged = 'Your Password changed successfully';
 const String verifyEmail = 'Verify your Email';
 const String createProfileTitle = 'Create your Profile';
+const String provideDetails = 'Provide your personal details';
 const String updateProfileTitle = 'Update your Profile';
 const String uploadProfilePic = 'Upload Profile Pic';
 const String takeOrUploadLine = 'Take or Upload your picture';
@@ -55,6 +56,7 @@ const String searchPlayer = 'Search Player';
 const String submitMatchScore = 'Submit Match Score';
 const String noPlayerFound = 'No Player Found';
 const String noMsgFound = 'No Message Found';
+const String noMatchesFound = 'No Matches Found';
 const String gameDetail = 'Game Details';
 const String matchWinner = 'Match Winner';
 const String matchDateTime = 'Match Date & Time';
@@ -88,5 +90,6 @@ const String enterQuery = 'Enter your query';
 const String errQuery = 'Please enter your query';
 const String thankYou = 'Thank you';
 const String allMatchesTitle = 'All Matches';
-const String show10Matches = 'Showing 10 Matches';
+const String latestScoreTitle = 'Latest Score';
+
 
