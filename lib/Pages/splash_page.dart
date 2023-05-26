@@ -23,9 +23,12 @@ class SplashPage extends StatefulWidget {
   State<SplashPage> createState() => _SplashPageState();
 }
 
-class _SplashPageState extends State<SplashPage> with SingleTickerProviderStateMixin, isInternetConnection {
+class _SplashPageState extends State<SplashPage>
+    with SingleTickerProviderStateMixin, isInternetConnection {
   late AnimationController _animController;
-  var _mutationVerifyToken = GlobalKey<MutationState>();
+  // TODO GHOST #
+  // var _mutationVerifyToken = GlobalKey<MutationState>();
+  late RunMutation _mutationVerifyToken;
   Map<String, dynamic> paramVerifyToken = {};
   Map<String, dynamic> paramTypeVerifyToken = {};
   late Future<void> getDelay;
@@ -34,23 +37,30 @@ class _SplashPageState extends State<SplashPage> with SingleTickerProviderStateM
   void initState() {
     super.initState();
 
-    _animController = AnimationController(vsync: this, duration: const Duration(seconds: 1));
+    _animController =
+        AnimationController(vsync: this, duration: const Duration(seconds: 1));
 
     _animController.addListener(() {
       setState(() {});
     });
 
-    _animController.addStatusListener((status) {
-      setState(() {
-        if (status == AnimationStatus.completed) {
-          getDelay = Future.delayed(const Duration(seconds: 2));
-          if (SharedPreferencesUtils.getToken != null) {
-            getDelay.then(
-                (value) => _mutationVerifyToken.currentState!.runMutation({'token': SharedPreferencesUtils.getToken}));
-          } else {
-            getDelay.then((value) => Navigator.pushReplacementNamed(context, HomePage.path));
+    _animController.addStatusListener((status) async {
+      await Future.delayed(Duration(milliseconds: 500), () async {
+        setState(() async {
+          if (status == AnimationStatus.completed) {
+            getDelay = await Future.delayed(const Duration(seconds: 2));
+            if (SharedPreferencesUtils.getToken != null) {
+              // TODO GHOST #
+              getDelay.then((value) => _mutationVerifyToken(
+                  {'token': SharedPreferencesUtils.getToken}));
+              // getDelay.then((value) => _mutationVerifyToken.currentState!
+              //     .runMutation({'token': SharedPreferencesUtils.getToken}));
+            } else {
+              getDelay.then((value) =>
+                  Navigator.pushReplacementNamed(context, HomePage.path));
+            }
           }
-        }
+        });
       });
     });
 
@@ -86,9 +96,11 @@ class _SplashPageState extends State<SplashPage> with SingleTickerProviderStateM
               children: [
                 AnimatedIcon(),
                 Mutation(
-                  key: _mutationVerifyToken,
+                  // TODO GHOST #
+                  // key: _mutationVerifyToken,
                   options: MutationOptions(
-                    document: gql(verifyToken(paramVerifyToken, paramTypeVerifyToken)),
+                    document: gql(
+                        verifyToken(paramVerifyToken, paramTypeVerifyToken)),
                     // update: update,
                     onError: (OperationException? error) {
                       debugPrint('${SplashPage.path} * erroR -- $error');
@@ -98,7 +110,8 @@ class _SplashPageState extends State<SplashPage> with SingleTickerProviderStateM
                       if (resultData != null) {
                         print(resultData);
                         var success = resultData['verifyToken']['success'];
-                        Navigator.pushReplacementNamed(context, success ? DashboardPage.path : HomePage.path);
+                        Navigator.pushReplacementNamed(context,
+                            success ? DashboardPage.path : HomePage.path);
                       }
                     },
                     // 'Sorry you changed your mind!',

@@ -38,7 +38,8 @@ class LeagueDetails extends StatefulWidget {
   _LeagueDetailsState createState() => _LeagueDetailsState();
 }
 
-class _LeagueDetailsState extends State<LeagueDetails> with isInternetConnection {
+class _LeagueDetailsState extends State<LeagueDetails>
+    with isInternetConnection {
   ScrollController? _scrollController;
   GlobalKey? _stackKey = GlobalKey();
   GlobalKey? _textTitleKey = GlobalKey();
@@ -75,7 +76,8 @@ class _LeagueDetailsState extends State<LeagueDetails> with isInternetConnection
     var contain = null;
 
     // await getUserId().then((value) {
-    contain = userStat?.where((element) => element.userId == SharedPreferencesUtils.getUserId);
+    contain = userStat?.where(
+        (element) => element.userId == SharedPreferencesUtils.getUserId);
     // isContain = contain!.length > 1 ;
     // print('$isContain  -${contain.length}-#- $contain');
     // });
@@ -83,7 +85,8 @@ class _LeagueDetailsState extends State<LeagueDetails> with isInternetConnection
   }
 
   double _getWidgetHeight(GlobalKey? key) {
-    final RenderBox renderBoxRed = key?.currentContext?.findRenderObject() as RenderBox;
+    final RenderBox renderBoxRed =
+        key?.currentContext?.findRenderObject() as RenderBox;
     return renderBoxRed.size.height;
   }
 
@@ -101,7 +104,8 @@ class _LeagueDetailsState extends State<LeagueDetails> with isInternetConnection
     for (double height in _childWidgetHeights!) {
       _dynamicTotalHeight = height + _dynamicTotalHeight!;
     }
-    debugPrint('${LeagueDetails.path} * _childWidgetHeights - $_childWidgetHeights');
+    debugPrint(
+        '${LeagueDetails.path} * _childWidgetHeights - $_childWidgetHeights');
 
     setState(() {
       _dynamicTotalHeight = _dynamicTotalHeight! + kToolbarHeight;
@@ -132,7 +136,8 @@ class _LeagueDetailsState extends State<LeagueDetails> with isInternetConnection
               color: aWhite,
               child: Consumer<LeagueIdProvider>(
                 builder: (context, value, child) {
-                  debugPrint('${LeagueDetails.path} * LeagueId : ${value.leagueId}');
+                  debugPrint(
+                      '${LeagueDetails.path} * LeagueId : ${value.leagueId}');
                   return Query(
                     options: QueryOptions(
                       document: gql(fetchLeague),
@@ -148,7 +153,8 @@ class _LeagueDetailsState extends State<LeagueDetails> with isInternetConnection
                       }
 
                       if (result.isLoading && result.data == null) {
-                        return const Center(child: CupertinoActivityIndicator());
+                        return const Center(
+                            child: CupertinoActivityIndicator());
                       }
 
                       try {
@@ -162,7 +168,8 @@ class _LeagueDetailsState extends State<LeagueDetails> with isInternetConnection
 
                         if (!isBuildWidgets!) {
                           isBuildWidgets = true;
-                          WidgetsBinding.instance?.addPostFrameCallback(_getTotalHeight);
+                          WidgetsBinding.instance
+                              .addPostFrameCallback(_getTotalHeight);
                         }
                       } catch (e) {
                         debugPrint('${LeagueDetails.path} - Exception -- $e');
@@ -180,7 +187,9 @@ class _LeagueDetailsState extends State<LeagueDetails> with isInternetConnection
                                 slivers: <Widget>[
                                   SliverLayoutBuilder(
                                     builder: (context, constraints) {
-                                      scrollPosition = constraints.scrollOffset + kToolbarHeight;
+                                      scrollPosition =
+                                          constraints.scrollOffset +
+                                              kToolbarHeight;
                                       return SliverAppBar(
                                         elevation: 0,
                                         snap: false,
@@ -199,16 +208,26 @@ class _LeagueDetailsState extends State<LeagueDetails> with isInternetConnection
                                                   : Icons.arrow_back),
                                         ),
                                         titleTextStyle: TextStyle(
-                                            color: height <= scrollPosition ? Colors.black : Colors.transparent),
+                                            color: height <= scrollPosition
+                                                ? Colors.black
+                                                : Colors.transparent),
                                         iconTheme: IconThemeData(
-                                            color: height <= scrollPosition ? Colors.black : Colors.white),
+                                            color: height <= scrollPosition
+                                                ? Colors.black
+                                                : Colors.white),
                                         flexibleSpace: FlexibleSpaceBar(
                                           background: LeagueDetailsHeaderTile(
-                                            leagueName: LeagueData!.leagueStat!.name,
-                                            leagueStatus: LeagueData?.leagueStat?.status,
+                                            leagueName:
+                                                LeagueData!.leagueStat!.name,
+                                            leagueStatus:
+                                                LeagueData?.leagueStat?.status,
                                             leagueDate: convertDate(
-                                                LeagueData?.leagueStat?.startDate, LeagueData?.leagueStat?.endDate),
-                                            leagueDesc: LeagueData?.leagueStat?.description,
+                                                LeagueData
+                                                    ?.leagueStat?.startDate,
+                                                LeagueData
+                                                    ?.leagueStat?.endDate),
+                                            leagueDesc: LeagueData
+                                                ?.leagueStat?.description,
                                             leagueLocation:
                                                 '${LeagueData?.leagueStat?.city}, ${LeagueData?.leagueStat?.state}, ${LeagueData?.leagueStat?.country}',
                                             stackKey: _stackKey,
@@ -220,7 +239,9 @@ class _LeagueDetailsState extends State<LeagueDetails> with isInternetConnection
                                           ),
                                           centerTitle: true,
                                           // title: size.height / 2 <= constraints.scrollOffset ? Text('Participating Players') : SizedBox(),
-                                          title: height <= scrollPosition ? Text(participatingPlayer) : SizedBox(),
+                                          title: height <= scrollPosition
+                                              ? Text(participatingPlayer)
+                                              : SizedBox(),
                                         ),
                                         expandedHeight: _dynamicTotalHeight,
                                         backgroundColor: Colors.white,
@@ -228,33 +249,44 @@ class _LeagueDetailsState extends State<LeagueDetails> with isInternetConnection
                                     },
                                   ),
                                   if (LeagueData!.leagueStat!.status != null &&
-                                      LeagueData!.leagueStat!.status!.toString() != 'ongoing')
+                                      LeagueData!.leagueStat!.status!
+                                              .toString() !=
+                                          'ongoing')
                                     SliverToBoxAdapter(
                                       child: Query(
                                         options: QueryOptions(
                                           document: gql(fetchUsers),
                                           // this is the query string you just created
                                           variables: {
-                                            'userId': '${LeagueData!.leagueStat!.winnerOneId}',
+                                            'userId':
+                                                '${LeagueData!.leagueStat!.winnerOneId}',
                                             // 'userId': '${LeagueData!.leagueStat!.winnerOneId}',
                                           },
                                           pollInterval: Duration(seconds: 100),
                                         ),
-                                        builder: (winnerResult, {fetchMore, refetch}) {
+                                        builder: (winnerResult,
+                                            {fetchMore, refetch}) {
                                           late UserProfiles? profile;
                                           if (winnerResult.hasException) {
-                                            return Text(winnerResult.exception.toString());
+                                            return Text(winnerResult.exception
+                                                .toString());
                                           }
 
                                           if (winnerResult.isLoading) {
-                                            return Center(child: CupertinoActivityIndicator());
+                                            return Center(
+                                                child:
+                                                    CupertinoActivityIndicator());
                                           }
 
-                                          profile = UserProfileData.fromJson(winnerResult.data!).userProfiles!;
+                                          profile = UserProfileData.fromJson(
+                                                  winnerResult.data!)
+                                              .userProfiles!;
 
                                           return Column(
-                                            mainAxisAlignment: MainAxisAlignment.center,
-                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
                                             children: [
                                               Padding(
                                                 padding: EdgeInsets.all(8.0),
@@ -262,15 +294,19 @@ class _LeagueDetailsState extends State<LeagueDetails> with isInternetConnection
                                               ),
 
                                               LeagueDetailsWinnerTile(
-                                                winnerName: '${profile.firstName} ${profile.lastName} ',
-                                                winnerLocation: '${profile.city}, ${profile.state}',
+                                                winnerName:
+                                                    '${profile.firstName} ${profile.lastName} ',
+                                                winnerLocation:
+                                                    '${profile.city}, ${profile.state}',
                                                 winnerAge: profile.age,
                                                 drawCount: profile.drawCount,
                                                 wonCount: profile.wonCount,
-                                                matchesCount: profile.matchesCount,
+                                                matchesCount:
+                                                    profile.matchesCount,
                                                 lostCount: profile.lostCount,
                                                 rate: profile.rating,
-                                                winnerProfilePic: profile.picture,
+                                                winnerProfilePic:
+                                                    profile.picture,
                                               ),
                                               // try {
                                               // LeagueData = LeagueStatData.fromJson(result.data!);
@@ -302,10 +338,16 @@ class _LeagueDetailsState extends State<LeagueDetails> with isInternetConnection
                                           win: userStat![index].won,
                                           profileImg: userStat![index].picture,
                                           onTileClick: () {
-                                            if (LeagueData!.leagueStat!.status!.toLowerCase() == 'ongoing') {
-                                              Provider.of<UserIdProvider>(context, listen: false)
-                                                  .setUserId(userStat![index].userId);
-                                              Navigator.pushNamed(context, ChallengesChat.path);
+                                            if (LeagueData!.leagueStat!.status!
+                                                    .toLowerCase() ==
+                                                'ongoing') {
+                                              Provider.of<UserIdProvider>(
+                                                      context,
+                                                      listen: false)
+                                                  .setUserId(
+                                                      userStat![index].userId);
+                                              Navigator.pushNamed(
+                                                  context, ChallengesChat.path);
                                             }
                                           },
                                           onProfileClick: () {},
@@ -334,7 +376,8 @@ class _LeagueDetailsState extends State<LeagueDetails> with isInternetConnection
                       snapshot.data.length == 0) {
                     return Mutation(
                       options: MutationOptions(
-                        document: gql(leagueApplication(paramSignIn, paramTypeSignIn)),
+                        document: gql(
+                            leagueApplication(paramSignIn, paramTypeSignIn)),
                         // update: update,
                         onError: (OperationException? error) {
                           debugPrint('${LeagueDetails.path} * erroR -- $error');
@@ -344,10 +387,12 @@ class _LeagueDetailsState extends State<LeagueDetails> with isInternetConnection
                         onCompleted: (dynamic resultData) async {
                           // Text('Thanks for your star!');
 
-                          debugPrint('${LeagueDetails.path} * Result -- $resultData');
+                          debugPrint(
+                              '${LeagueDetails.path} * Result -- $resultData');
 
                           if (resultData != null) {
-                            var message = resultData['leagueApplication']['leagueApplication']['message'];
+                            var message = resultData['leagueApplication']
+                                ['leagueApplication']['message'];
 
                             errorList = [];
                             errorList!.add(message);
@@ -400,7 +445,9 @@ class _LeagueDetailsState extends State<LeagueDetails> with isInternetConnection
                           radius: 0.0,
                           onClick: () {
                             Map<String, dynamic> passVariable = {
-                              'leagueId': Provider.of<LeagueIdProvider>(context, listen: false).leagueId,
+                              'leagueId': Provider.of<LeagueIdProvider>(context,
+                                      listen: false)
+                                  .leagueId,
                               'userId': SharedPreferencesUtils.getUserId
                             };
 

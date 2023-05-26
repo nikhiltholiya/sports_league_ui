@@ -47,8 +47,10 @@ class EditProfilePage extends StatefulWidget {
   State<EditProfilePage> createState() => _EditProfilePageState();
 }
 
-class _EditProfilePageState extends State<EditProfilePage> with isInternetConnection {
-  var userData = LoggedUser.fromJson(jsonDecode(SharedPreferencesUtils.getUserData.toString()));
+class _EditProfilePageState extends State<EditProfilePage>
+    with isInternetConnection {
+  var userData = LoggedUser.fromJson(
+      jsonDecode(SharedPreferencesUtils.getUserData.toString()));
 
   String? bDate;
   String? dropDownValueCity;
@@ -71,7 +73,10 @@ class _EditProfilePageState extends State<EditProfilePage> with isInternetConnec
   Map<String, dynamic> paramTypeImgUpload = {};
 
   var _formKey = GlobalKey<FormState>();
-  var _profileImgMutation = GlobalKey<MutationState>();
+  // TODO GHOST #
+  // var _profileImgMutation = GlobalKey<MutationState>();
+  late RunMutation _profileImgMutation;
+
   late List<String?>? errorList = [];
   late CreateProfileData _createProfileData;
 
@@ -190,7 +195,8 @@ class _EditProfilePageState extends State<EditProfilePage> with isInternetConnec
                               imagePreview(),
                               Row(
                                 crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
                                 children: [
                                   CircleAvatar(
                                     backgroundColor: aGreen,
@@ -237,12 +243,19 @@ class _EditProfilePageState extends State<EditProfilePage> with isInternetConnec
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
                               Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 5),
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 5),
                                 child: EditTextFormField(
-                                  textController: TextEditingController(text: firstNameValue),
+                                  textController: TextEditingController(
+                                      text: firstNameValue),
                                   isEnable: isEnabled.data!,
-                                  validator: RequiredValidator(errorText: errFirstName),
-                                  inputFormatter: [FilteringTextInputFormatter(RegExp(r'[a-zA-Z]'), allow: true)],
+                                  validator: RequiredValidator(
+                                      errorText: errFirstName),
+                                  inputFormatter: [
+                                    FilteringTextInputFormatter(
+                                        RegExp(r'[a-zA-Z]'),
+                                        allow: true)
+                                  ],
                                   textInputAction: TextInputAction.send,
                                   onTextChange: (value) {
                                     firstNameValue = value;
@@ -252,12 +265,19 @@ class _EditProfilePageState extends State<EditProfilePage> with isInternetConnec
                                 ),
                               ),
                               Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 5),
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 5),
                                 child: EditTextFormField(
-                                  textController: TextEditingController(text: lastNameValue),
+                                  textController: TextEditingController(
+                                      text: lastNameValue),
                                   isEnable: isEnabled.data!,
-                                  validator: RequiredValidator(errorText: errLastName),
-                                  inputFormatter: [FilteringTextInputFormatter(RegExp(r'[a-zA-Z]'), allow: true)],
+                                  validator:
+                                      RequiredValidator(errorText: errLastName),
+                                  inputFormatter: [
+                                    FilteringTextInputFormatter(
+                                        RegExp(r'[a-zA-Z]'),
+                                        allow: true)
+                                  ],
                                   textInputAction: TextInputAction.send,
                                   onTextChange: (value) {
                                     lastNameValue = value;
@@ -267,7 +287,8 @@ class _EditProfilePageState extends State<EditProfilePage> with isInternetConnec
                                 ),
                               ),
                               Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 5),
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 5),
                                 child: EditTextFormField(
                                   isEnable: false,
                                   textInputAction: TextInputAction.next,
@@ -277,12 +298,15 @@ class _EditProfilePageState extends State<EditProfilePage> with isInternetConnec
                                 ),
                               ),
                               Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 5),
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 5),
                                 child: EditTextFormField(
-                                  textController: TextEditingController(text: mobileNoValue),
+                                  textController: TextEditingController(
+                                      text: mobileNoValue),
                                   isEnable: isEnabled.data!,
                                   textInputAction: TextInputAction.send,
-                                  validator: RequiredValidator(errorText: errMobNo),
+                                  validator:
+                                      RequiredValidator(errorText: errMobNo),
                                   textInputType: TextInputType.number,
                                   inputFormatter: [
                                     FilteringTextInputFormatter.allow(
@@ -298,29 +322,41 @@ class _EditProfilePageState extends State<EditProfilePage> with isInternetConnec
                                 ),
                               ),
                               Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 5),
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 5),
                                 child: Container(
-                                  margin: EdgeInsets.symmetric(vertical: 2, horizontal: 5),
+                                  margin: EdgeInsets.symmetric(
+                                      vertical: 2, horizontal: 5),
                                   decoration: ShapeDecoration(
                                       shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(70),
-                                          side: BorderSide(color: aPartGray30))),
+                                          borderRadius:
+                                              BorderRadius.circular(70),
+                                          side:
+                                              BorderSide(color: aPartGray30))),
                                   child: Padding(
                                     padding: const EdgeInsets.all(12.0),
                                     child: Text(
                                       '${bDate == 'Date of Birth' ? bDate : convertDate(bDate ?? DateTime.now().toString(), null)}',
-                                      style: TextStyle(fontSize: 16.0, color: aLightGray),
+                                      style: TextStyle(
+                                          fontSize: 16.0, color: aLightGray),
                                     ),
                                   ),
                                 ),
                               ),
                               Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 5),
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 5),
                                 child: EditTextFormField(
-                                  textController: TextEditingController(text: cityValue),
+                                  textController:
+                                      TextEditingController(text: cityValue),
                                   isEnable: isEnabled.data!,
-                                  validator: RequiredValidator(errorText: errCity),
-                                  inputFormatter: [FilteringTextInputFormatter(RegExp(r'[a-zA-Z]'), allow: true)],
+                                  validator:
+                                      RequiredValidator(errorText: errCity),
+                                  inputFormatter: [
+                                    FilteringTextInputFormatter(
+                                        RegExp(r'[a-zA-Z]'),
+                                        allow: true)
+                                  ],
                                   textInputAction: TextInputAction.send,
                                   onTextChange: (value) {
                                     cityValue = value;
@@ -330,7 +366,8 @@ class _EditProfilePageState extends State<EditProfilePage> with isInternetConnec
                                 ),
                               ),
                               Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 5, horizontal: 5),
                                 child: DropDownView(
                                   dropList: [
                                     // 'Portland, Oregon',
@@ -352,7 +389,8 @@ class _EditProfilePageState extends State<EditProfilePage> with isInternetConnec
                                 ),
                               ),
                               Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 5, horizontal: 5),
                                 child: DropDownView(
                                   dropList: rate,
                                   hint: selectRate,
@@ -364,9 +402,11 @@ class _EditProfilePageState extends State<EditProfilePage> with isInternetConnec
                                 ),
                               ),
                               Mutation(
-                                key: _profileImgMutation,
+                                // TODO GHOST #
+                                // key: _profileImgMutation,
                                 options: MutationOptions(
-                                    document: gql(uploadImage(paramImgUpload, paramTypeImgUpload)),
+                                    document: gql(uploadImage(
+                                        paramImgUpload, paramTypeImgUpload)),
                                     onCompleted: (dynamic resultData) {
                                       if (resultData != null) {
                                         // errorList = [];
@@ -410,20 +450,27 @@ class _EditProfilePageState extends State<EditProfilePage> with isInternetConnec
                   onCompleted: (dynamic resultData) {
                     // Text('Thanks for your star!');
                     _streamFormController.sink.add(true);
-                    debugPrint('${EditProfilePage.path} **** RESULT * $resultData');
+                    debugPrint(
+                        '${EditProfilePage.path} **** RESULT * $resultData');
 
                     if (resultData != null) {
-                      _createProfileData = CreateProfileData.fromJson(resultData);
+                      _createProfileData =
+                          CreateProfileData.fromJson(resultData);
                       errorList = [];
                       if (_createProfileData.updateAccount!.success!) {
                         errorList!.add('DONE');
                         // Navigator.pushNamed(context, CreateProfilePicturePage.path);
                       } else {
-                        if (_createProfileData.updateAccount!.errors!.nonFieldErrors != null)
-                          errorList!.add(_createProfileData.updateAccount!.errors?.nonFieldErrors?.first.message);
+                        if (_createProfileData
+                                .updateAccount!.errors!.nonFieldErrors !=
+                            null)
+                          errorList!.add(_createProfileData.updateAccount!
+                              .errors?.nonFieldErrors?.first.message);
 
-                        if (_createProfileData.updateAccount!.errors!.dob != null)
-                          errorList!.add(_createProfileData.updateAccount!.errors?.dob?.first.message);
+                        if (_createProfileData.updateAccount!.errors!.dob !=
+                            null)
+                          errorList!.add(_createProfileData
+                              .updateAccount!.errors?.dob?.first.message);
                       }
 
                       imageUploadProgress();
@@ -448,13 +495,15 @@ class _EditProfilePageState extends State<EditProfilePage> with isInternetConnec
                     radius: 0.0,
                     onClick: () {
                       if (selectedState!.isEmpty) {
-                        return ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        return ScaffoldMessenger.of(context)
+                            .showSnackBar(SnackBar(
                           content: Text(errState),
                         ));
                       }
 
                       if (selectedRate!.isEmpty) {
-                        return ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        return ScaffoldMessenger.of(context)
+                            .showSnackBar(SnackBar(
                           content: Text(errRate),
                         ));
                       }
@@ -513,11 +562,16 @@ class _EditProfilePageState extends State<EditProfilePage> with isInternetConnec
         contentType: MediaType('image', 'jpg'),
       );
 
-      var resp = await _profileImgMutation.currentState?.runMutation(<String, dynamic>{
+      // TODO GHOST #
+      // var resp =
+      //     await _profileImgMutation.currentState?.runMutation(<String, dynamic>{
+      //   'file': multipartFile,
+      //   'userId': '${userData.userId}',
+      // });
+      var resp = await _profileImgMutation(<String, dynamic>{
         'file': multipartFile,
         'userId': '${userData.userId}',
       });
-
       print('resp 522 *$resp');
     }
   }
@@ -533,7 +587,8 @@ class _EditProfilePageState extends State<EditProfilePage> with isInternetConnec
             ? CircleAvatar(backgroundImage: FileImage(imageFile!), radius: 100)
             : picture != null
                 ? CircleAvatar(
-                    backgroundImage: NetworkImage('http://52.144.47.85:8000/$picture'),
+                    backgroundImage:
+                        NetworkImage('http://52.144.47.85:8000/$picture'),
                     radius: 100,
                   )
                 : CircleAvatar(

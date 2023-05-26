@@ -22,7 +22,8 @@ class HeadToHeadDetails extends StatefulWidget {
   _HeadToHeadDetailsState createState() => _HeadToHeadDetailsState();
 }
 
-class _HeadToHeadDetailsState extends State<HeadToHeadDetails> with isInternetConnection {
+class _HeadToHeadDetailsState extends State<HeadToHeadDetails>
+    with isInternetConnection {
   ScrollController? _scrollController;
 
   GlobalKey? _stackKey = GlobalKey();
@@ -39,7 +40,8 @@ class _HeadToHeadDetailsState extends State<HeadToHeadDetails> with isInternetCo
 
   double? _getHeight(GlobalKey? gKey) {
     try {
-      final RenderBox? rBox = gKey?.currentContext?.findRenderObject() as RenderBox;
+      final RenderBox? rBox =
+          gKey?.currentContext?.findRenderObject() as RenderBox;
       return rBox?.size.height;
     } catch (e) {}
   }
@@ -61,10 +63,11 @@ class _HeadToHeadDetailsState extends State<HeadToHeadDetails> with isInternetCo
     initInternet(context);
     _scrollController = ScrollController();
     _chatNode = FocusNode();
-    WidgetsBinding.instance?.addPostFrameCallback(_getTotalHeight);
+    WidgetsBinding.instance.addPostFrameCallback(_getTotalHeight);
     _scrollController!.addListener(() {
       // collapsing
-      if (_scrollController!.offset > 100 /*&&
+      if (_scrollController!.offset >
+              100 /*&&
           !_scrollController!.position.outOfRange*/
           ) {
         _isSilverCollapsed = true;
@@ -99,7 +102,8 @@ class _HeadToHeadDetailsState extends State<HeadToHeadDetails> with isInternetCo
                 Expanded(
                     child: CustomScrollView(
                       controller: _scrollController,
-                      keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+                      keyboardDismissBehavior:
+                          ScrollViewKeyboardDismissBehavior.onDrag,
                       physics: const BouncingScrollPhysics(),
                       shrinkWrap: true,
                       slivers: <Widget>[
@@ -121,9 +125,15 @@ class _HeadToHeadDetailsState extends State<HeadToHeadDetails> with isInternetCo
                                     ? Icons.arrow_back_ios
                                     : Icons.arrow_back),
                           ),
-                          titleTextStyle:
-                              TextStyle(fontSize: 10, color: _isSilverCollapsed! ? Colors.black : Colors.white),
-                          iconTheme: IconThemeData(color: _isSilverCollapsed! ? Colors.black : Colors.white),
+                          titleTextStyle: TextStyle(
+                              fontSize: 10,
+                              color: _isSilverCollapsed!
+                                  ? Colors.black
+                                  : Colors.white),
+                          iconTheme: IconThemeData(
+                              color: _isSilverCollapsed!
+                                  ? Colors.black
+                                  : Colors.white),
                           /* titleTextStyle: TextStyle(
                             fontSize: 10.0,
                             color: scrollPosition >= _totalHeight
@@ -149,7 +159,9 @@ class _HeadToHeadDetailsState extends State<HeadToHeadDetails> with isInternetCo
                               player2Loss: '0',
                             ),
                             centerTitle: true,
-                            title: _isSilverCollapsed! ? Text('Head to Head') : SizedBox(),
+                            title: _isSilverCollapsed!
+                                ? Text('Head to Head')
+                                : SizedBox(),
                           ),
                           expandedHeight: _dynamicTotalHeight,
                           backgroundColor: Colors.white,

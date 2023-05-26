@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
@@ -28,7 +30,8 @@ class PasswordChangePage extends StatefulWidget {
   State<PasswordChangePage> createState() => _PasswordChangePageState();
 }
 
-class _PasswordChangePageState extends State<PasswordChangePage> with isInternetConnection {
+class _PasswordChangePageState extends State<PasswordChangePage>
+    with isInternetConnection {
   bool? obSecureOld = true;
   bool? obSecure = true;
   bool? obSecureRetype = true;
@@ -44,13 +47,23 @@ class _PasswordChangePageState extends State<PasswordChangePage> with isInternet
 
   late List<String?>? errorList = [];
   bool? isEnable = true;
-  final mutationSendMail = GlobalKey<MutationState>();
+  // TODO GHOST #
+  // final mutationSendMail = GlobalKey<MutationState>();
+  late RunMutation mutationSendMail;
 
   @override
   void initState() {
     initInternet(context);
-    param = {'\$oldPassword': 'String!', '\$pass1': 'String!', '\$pass2': 'String!'};
-    paramType = {'oldPassword': '\$oldPassword', 'newPassword1': '\$pass1', 'newPassword2': '\$pass2'};
+    param = {
+      '\$oldPassword': 'String!',
+      '\$pass1': 'String!',
+      '\$pass2': 'String!'
+    };
+    paramType = {
+      'oldPassword': '\$oldPassword',
+      'newPassword1': '\$pass1',
+      'newPassword2': '\$pass2'
+    };
 
     super.initState();
   }
@@ -95,7 +108,9 @@ class _PasswordChangePageState extends State<PasswordChangePage> with isInternet
                         },
                         suffixIcon: IconButton(
                             icon: Icon(
-                              obSecureOld! ? Icons.remove_red_eye_rounded : Icons.visibility_off_rounded,
+                              obSecureOld!
+                                  ? Icons.remove_red_eye_rounded
+                                  : Icons.visibility_off_rounded,
                               color: aGreen,
                             ),
                             onPressed: () {
@@ -118,7 +133,9 @@ class _PasswordChangePageState extends State<PasswordChangePage> with isInternet
                         hint: enterNewRePass,
                         suffixIcon: IconButton(
                             icon: Icon(
-                              obSecure! ? Icons.remove_red_eye_rounded : Icons.visibility_off_rounded,
+                              obSecure!
+                                  ? Icons.remove_red_eye_rounded
+                                  : Icons.visibility_off_rounded,
                               color: aGreen,
                             ),
                             onPressed: () {
@@ -138,11 +155,14 @@ class _PasswordChangePageState extends State<PasswordChangePage> with isInternet
                         onTap: () {},
                         isObscure: obSecureRetype,
                         validator: (val) =>
-                            MatchValidator(errorText: 'Password do not match').validateMatch(val!, newPassword!),
+                            MatchValidator(errorText: 'Password do not match')
+                                .validateMatch(val!, newPassword!),
                         hint: enterNewRePass,
                         suffixIcon: IconButton(
                             icon: Icon(
-                              obSecureRetype! ? Icons.remove_red_eye_rounded : Icons.visibility_off_rounded,
+                              obSecureRetype!
+                                  ? Icons.remove_red_eye_rounded
+                                  : Icons.visibility_off_rounded,
                               color: aGreen,
                             ),
                             onPressed: () {
@@ -173,17 +193,23 @@ class _PasswordChangePageState extends State<PasswordChangePage> with isInternet
                     debugPrint('${PasswordChangePage.path}**** $resultData');
 
                     if (resultData != null) {
-                      _passwordChangeData = PasswordChangeData.fromJson(resultData);
+                      _passwordChangeData =
+                          PasswordChangeData.fromJson(resultData);
                       errorList = [];
 
                       if (_passwordChangeData.passwordChange!.success!) {
-                        SharedPreferencesUtils.setToken(_passwordChangeData.passwordChange?.token);
-                        SharedPreferencesUtils.setRefreshToken(_passwordChangeData.passwordChange?.refreshToken);
+                        SharedPreferencesUtils.setToken(
+                            _passwordChangeData.passwordChange?.token);
+                        SharedPreferencesUtils.setRefreshToken(
+                            _passwordChangeData.passwordChange?.refreshToken);
 
                         errorList!.add(passwordChanged);
                       } else {
-                        if (_passwordChangeData.passwordChange?.errors?.oldPassword! != null)
-                          errorList!.add(_passwordChangeData.passwordChange?.errors?.oldPassword!.first.message);
+                        if (_passwordChangeData
+                                .passwordChange?.errors?.oldPassword! !=
+                            null)
+                          errorList!.add(_passwordChangeData.passwordChange
+                              ?.errors?.oldPassword!.first.message);
 
                         // if (_passwordChangeData.passwordChange?.errors?.newPassword! != null)
                         //   errorList!.add(_passwordChangeData.passwordChange?.errors?.newPassword!.first.message);

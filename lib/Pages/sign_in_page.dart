@@ -52,7 +52,9 @@ class _SignInPageState extends State<SignInPage> with isInternetConnection {
 
   late List<String?>? errorList = [];
   bool? isEnable = true;
-  final mutationSendMail = GlobalKey<MutationState>();
+  // TODO GHOST #
+  // final mutationSendMail = GlobalKey<MutationState>();
+  late RunMutation mutationSendMail;
 
   // late StreamController<bool?> _streamController =  StreamController<bool?>();
 
@@ -128,7 +130,9 @@ class _SignInPageState extends State<SignInPage> with isInternetConnection {
                         hint: passwordLabel,
                         suffixIcon: IconButton(
                             icon: Icon(
-                              obSecure! ? Icons.remove_red_eye_rounded : Icons.visibility_off_rounded,
+                              obSecure!
+                                  ? Icons.remove_red_eye_rounded
+                                  : Icons.visibility_off_rounded,
                               color: aGreen,
                             ),
                             onPressed: () {
@@ -150,15 +154,19 @@ class _SignInPageState extends State<SignInPage> with isInternetConnection {
                           child: Text(
                             forgotPassword,
                             style: TextStyle(
-                                fontWeight: FontWeight.bold, color: aGreen, decoration: TextDecoration.underline),
+                                fontWeight: FontWeight.bold,
+                                color: aGreen,
+                                decoration: TextDecoration.underline),
                           ),
                         ),
                       ),
                     ),
                     Mutation(
-                      key: mutationSendMail,
+                      // TODO GHOST #
+                      // key: mutationSendMail,
                       options: MutationOptions(
-                        document: gql(sendPasswordResetEmail(paramForgotPass, paramTypeForgotPass)),
+                        document: gql(sendPasswordResetEmail(
+                            paramForgotPass, paramTypeForgotPass)),
                         // update: update,
                         onError: (OperationException? error) {
                           debugPrint('${SignInPage.path} * erroR -- $error');
@@ -177,17 +185,20 @@ class _SignInPageState extends State<SignInPage> with isInternetConnection {
                           // _streamController.sink.add(true);
 
                           if (resultData != null) {
-                            var data = resultData['sendPasswordResetEmail']['success'];
+                            var data =
+                                resultData['sendPasswordResetEmail']['success'];
 
                             if (data) {
-                              Navigator.popAndPushNamed(context, VerifyEmailPage.path,
+                              Navigator.popAndPushNamed(
+                                  context, VerifyEmailPage.path,
                                   arguments: {'for': forgotPassword});
                             }
                           }
                         },
                         // 'Sorry you changed your mind!',
                       ),
-                      builder: (RunMutation _resetEmail, QueryResult? addResult) {
+                      builder:
+                          (RunMutation _resetEmail, QueryResult? addResult) {
                         final sendResetEmail = (result) {
                           _resetEmail(result);
                         };
@@ -219,26 +230,37 @@ class _SignInPageState extends State<SignInPage> with isInternetConnection {
 
                     if (resultData != null) {
                       _tokenAuthData = TokenAuthData.fromJson(resultData);
-                      debugPrint('${SignInPage.path} * SUCCESS -- ${_tokenAuthData?.tokenAuth?.success}');
+                      debugPrint(
+                          '${SignInPage.path} * SUCCESS -- ${_tokenAuthData?.tokenAuth?.success}');
                       errorList = [];
                       if (_tokenAuthData!.tokenAuth!.success!) {
-                        SharedPreferencesUtils.setEmail(_tokenAuthData?.tokenAuth?.user?.email);
-                        SharedPreferencesUtils.setToken(_tokenAuthData?.tokenAuth?.token);
-                        SharedPreferencesUtils.setRefreshToken(_tokenAuthData?.tokenAuth?.refreshToken);
-                        SharedPreferencesUtils.setUserData(jsonEncode(_tokenAuthData!.tokenAuth?.user));
-                        SharedPreferencesUtils.setUserId(_tokenAuthData?.tokenAuth?.user?.userId);
+                        SharedPreferencesUtils.setEmail(
+                            _tokenAuthData?.tokenAuth?.user?.email);
+                        SharedPreferencesUtils.setToken(
+                            _tokenAuthData?.tokenAuth?.token);
+                        SharedPreferencesUtils.setRefreshToken(
+                            _tokenAuthData?.tokenAuth?.refreshToken);
+                        SharedPreferencesUtils.setUserData(
+                            jsonEncode(_tokenAuthData!.tokenAuth?.user));
+                        SharedPreferencesUtils.setUserId(
+                            _tokenAuthData?.tokenAuth?.user?.userId);
 
                         // Provider.of<TokenProvider>(context, listen: false).setToken(_tokenAuthData?.tokenAuth?.token);
 
-                        if (_tokenAuthData!.tokenAuth!.user!.firstName.toString().isNotEmpty) {
-                          Navigator.pushNamedAndRemoveUntil(context, DashboardPage.path, (route) => false);
+                        if (_tokenAuthData!.tokenAuth!.user!.firstName
+                            .toString()
+                            .isNotEmpty) {
+                          Navigator.pushNamedAndRemoveUntil(
+                              context, DashboardPage.path, (route) => false);
                         } else {
                           Navigator.pushNamed(context, CreateProfilePage.path);
                         }
                         // Navigator.pushNamed(context, CreateProfilePage.path);
                       } else {
-                        for (var errData in _tokenAuthData!.tokenAuth!.errors!.nonFieldErrors!) {
-                          if (errData.message != null) errorList!.add(errData.message);
+                        for (var errData in _tokenAuthData!
+                            .tokenAuth!.errors!.nonFieldErrors!) {
+                          if (errData.message != null)
+                            errorList!.add(errData.message);
                         }
 
                         _showAlert();
@@ -265,7 +287,10 @@ class _SignInPageState extends State<SignInPage> with isInternetConnection {
                     radius: 0.0,
                     onClick: () {
                       if (_formKey.currentState!.validate()) {
-                        Map<String, dynamic> passVariable = {'email': email, 'pass': password};
+                        Map<String, dynamic> passVariable = {
+                          'email': email,
+                          'pass': password
+                        };
 
                         debugPrint(
                             '${SignInPage.path} * param -- $paramSignIn * Type -- $paramTypeSignIn -- Variable -- $passVariable');
@@ -334,7 +359,8 @@ class _SignInPageState extends State<SignInPage> with isInternetConnection {
 
   Future<void> showBottomSheetView() async {
     await showModalBottomSheet(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(12.0))),
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(12.0))),
       backgroundColor: Colors.white,
       // isDismissible: await isEnableForgotPass!,
       isDismissible: true,
@@ -358,7 +384,8 @@ class _SignInPageState extends State<SignInPage> with isInternetConnection {
               alignment: Alignment.center,
               child: Text(
                 forgotPassword,
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: aWhite),
+                style: TextStyle(
+                    fontWeight: FontWeight.bold, fontSize: 20, color: aWhite),
               ),
               height: 56,
               width: double.infinity,
@@ -387,8 +414,9 @@ class _SignInPageState extends State<SignInPage> with isInternetConnection {
               onClick: () {
                 if (_formKeyForgotPass.currentState!.validate()) {
                   Map<String, dynamic> passVariable = {'email': resetLinkMail};
-                  mutationSendMail.currentState?.runMutation(passVariable);
-
+                  // TODO GHOST #
+                  // mutationSendMail.currentState?.runMutation(passVariable);
+                  mutationSendMail(passVariable);
                   // _streamController.sink.add(false);
                   // isEnableForgotPass = false;
                   // setState(() {});
@@ -398,7 +426,9 @@ class _SignInPageState extends State<SignInPage> with isInternetConnection {
               borderColor: aLightGray,
               labelColor: aLightGray,
             ),
-            Padding(padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom)),
+            Padding(
+                padding: EdgeInsets.only(
+                    bottom: MediaQuery.of(context).viewInsets.bottom)),
             SizedBox(height: 20),
           ],
         ),

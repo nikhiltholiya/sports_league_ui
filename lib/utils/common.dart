@@ -1,13 +1,14 @@
 import 'package:date_format/date_format.dart';
 import 'package:flutter/cupertino.dart';
 
-
 DateTime? datePickerDate(String? date) {
   String? parsed = '${formatDate(DateTime.parse(date!), [
-    yyyy, ','
-    m, ','
-    dd,
-  ])}';
+        yyyy,
+        ',',
+        m,
+        ',',
+        dd,
+      ])}';
 
   var pars = parsed.split(',');
 
@@ -16,16 +17,17 @@ DateTime? datePickerDate(String? date) {
 
 DateTime? datePickerTime(String? time) {
   String? parsed = '${formatDate(DateTime.parse(time!), [
-    hh, ','
-    nn, ','
-    am,
-  ])}';
+        hh,
+        ',',
+        nn,
+        ',',
+        am,
+      ])}';
 
   var pars = parsed.split(',');
 
   return DateTime(0, 0, 0, int.parse(pars[0]), int.parse(pars[1]));
 }
-
 
 String? convertTime(String? fromTime, String? toTime) {
   String? sTime = '';
@@ -33,19 +35,21 @@ String? convertTime(String? fromTime, String? toTime) {
   try {
     if (fromTime != null)
       sTime = '${formatDate(DateTime.parse(fromTime), [
-        hh,
-        ' : ',
-        nn, ' ',
-        am,
-      ])}';
+            hh,
+            ' : ',
+            nn,
+            ' ',
+            am,
+          ])}';
 
     if (toTime != null)
       eTime = '${formatDate(DateTime.parse(toTime), [
-        hh,
-        ' : ',
-        nn, ' ',
-        am,
-      ])}';
+            hh,
+            ' : ',
+            nn,
+            ' ',
+            am,
+          ])}';
   } catch (e) {
     debugPrint(e.toString());
   }
@@ -54,20 +58,23 @@ String? convertTime(String? fromTime, String? toTime) {
   else
     return '$sTime';
 }
+
 //mm/dd/yyyy
 String? convertDateMMDDYYYY(String? startDate) {
   String? sDate = '';
   try {
     if (startDate != null)
       sDate = '${formatDate(DateTime.parse(startDate), [
-        mm, '/',
-        dd, '/',
-        yyyy,
-      ])}';
-  }catch(e){
+            mm,
+            '/',
+            dd,
+            '/',
+            yyyy,
+          ])}';
+  } catch (e) {
     debugPrint('Exception in convertDateMMDDYYYY -- $e');
   }
-    return '$sDate';
+  return '$sDate';
 }
 
 //Used for convert Date as 2022-03-23 YYYY-MM-DD
@@ -77,21 +84,21 @@ String? convertDateYYYYMMDD(String? startDate, String? endDate) {
   try {
     if (startDate != null)
       sDate = '${formatDate(DateTime.parse(startDate), [
-        yyyy,
-        '-',
-        mm,
-        '-',
-        dd,
-      ])}';
+            yyyy,
+            '-',
+            mm,
+            '-',
+            dd,
+          ])}';
 
     if (endDate != null)
       eDate = '${formatDate(DateTime.parse(endDate), [
-        yyyy,
-        '-',
-        mm,
-        '-',
-        dd,
-      ])}';
+            yyyy,
+            '-',
+            mm,
+            '-',
+            dd,
+          ])}';
   } catch (e) {
     debugPrint(e.toString());
   }
@@ -101,8 +108,6 @@ String? convertDateYYYYMMDD(String? startDate, String? endDate) {
     return '$sDate';
 }
 
-
-
 //Used for convert Date as sat 12th Mar 2022
 String? convertDate(String? startDate, String? endDate) {
   String? sDate = '';
@@ -110,27 +115,27 @@ String? convertDate(String? startDate, String? endDate) {
   try {
     if (startDate != null)
       sDate = '${formatDate(DateTime.parse(startDate), [
-        D,
-        ' ',
-        dd,
-        '${datePrefix(formatDate(DateTime.parse(startDate), [dd]))}',
-        ' ',
-        M,
-        ' ',
-        yyyy
-      ])}';
+            D,
+            ' ',
+            dd,
+            '${datePrefix(formatDate(DateTime.parse(startDate), [dd]))}',
+            ' ',
+            M,
+            ' ',
+            yyyy
+          ])}';
 
     if (endDate != null)
       eDate = '${formatDate(DateTime.parse(endDate), [
-        D,
-        ' ',
-        dd,
-        '${datePrefix(formatDate(DateTime.parse(endDate), [dd]))}',
-        ' ',
-        M,
-        ' ',
-        yyyy
-      ])}';
+            D,
+            ' ',
+            dd,
+            '${datePrefix(formatDate(DateTime.parse(endDate), [dd]))}',
+            ' ',
+            M,
+            ' ',
+            yyyy
+          ])}';
   } catch (e) {
     debugPrint(e.toString());
   }
@@ -165,8 +170,8 @@ class SilverDelegates extends SliverPersistentHeaderDelegate {
   SilverDelegates({this.child});
 
   @override
-  Widget build(BuildContext context, double shrinkOffset,
-      bool overlapsContent) {
+  Widget build(
+      BuildContext context, double shrinkOffset, bool overlapsContent) {
     return child!;
   }
 

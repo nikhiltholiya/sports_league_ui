@@ -41,7 +41,8 @@ class ProfileDetailPage extends StatefulWidget {
   _ProfileDetailPageState createState() => _ProfileDetailPageState();
 }
 
-class _ProfileDetailPageState extends State<ProfileDetailPage> with isInternetConnection {
+class _ProfileDetailPageState extends State<ProfileDetailPage>
+    with isInternetConnection {
   String readRepositories = Constants.fetchUserProfiles;
 
   ScrollController? _scrollController;
@@ -66,13 +67,18 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> with isInternetCo
     _scrollController = ScrollController();
     // WidgetsBinding.instance?.addPostFrameCallback(_getTotalHeight);
     param = {'\$orderby': 'String', '\$userSearch': 'String', '\$first': 'Int'};
-    paramType = {'orderBy': '\$orderby', 'userSearch': '\$userSearch', 'first': '\$first'};
+    paramType = {
+      'orderBy': '\$orderby',
+      'userSearch': '\$userSearch',
+      'first': '\$first'
+    };
 
     super.initState();
   }
 
   double _getWidgetHeight(GlobalKey? key) {
-    final RenderBox renderBoxRed = key?.currentContext?.findRenderObject() as RenderBox;
+    final RenderBox renderBoxRed =
+        key?.currentContext?.findRenderObject() as RenderBox;
     return renderBoxRed.size.height;
   }
 
@@ -92,7 +98,8 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> with isInternetCo
 
     // print(_childWidgetHeights);
     setState(() {
-      _dynamicTotalHeight = _dynamicTotalHeight! + kToolbarHeight + kToolbarHeight;
+      _dynamicTotalHeight =
+          _dynamicTotalHeight! + kToolbarHeight + kToolbarHeight;
     });
 
     return _dynamicTotalHeight;
@@ -143,16 +150,19 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> with isInternetCo
                       }
 
                       if (userResult.isLoading && userResult.data == null) {
-                        return const Center(child: CupertinoActivityIndicator());
+                        return const Center(
+                            child: CupertinoActivityIndicator());
                       } else {
                         if (!isLoaded!) {
                           isLoaded = true;
-                          WidgetsBinding.instance?.addPostFrameCallback(_getTotalHeight);
+                          WidgetsBinding.instance
+                              .addPostFrameCallback(_getTotalHeight);
                         }
                       }
 
                       try {
-                        newProfile = UserProfileData.fromJson(userResult.data!).userProfiles!;
+                        newProfile = UserProfileData.fromJson(userResult.data!)
+                            .userProfiles!;
                       } catch (e) {
                         debugPrint('Exception -- $e');
                       }
@@ -182,36 +192,57 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> with isInternetCo
                                           ? Icons.arrow_back_ios
                                           : Icons.arrow_back),
                                 ),
-                                titleTextStyle:
-                                    TextStyle(color: height <= scrollPosition ? Colors.black : Colors.transparent),
-                                iconTheme: IconThemeData(color: height <= scrollPosition ? Colors.black : Colors.white),
+                                titleTextStyle: TextStyle(
+                                    color: height <= scrollPosition
+                                        ? Colors.black
+                                        : Colors.transparent),
+                                iconTheme: IconThemeData(
+                                    color: height <= scrollPosition
+                                        ? Colors.black
+                                        : Colors.white),
                                 flexibleSpace: FlexibleSpaceBar(
                                   background: ProfileHeaderTile(
-                                    playerName: '${newProfile?.firstName} ${newProfile?.lastName}',
+                                    playerName:
+                                        '${newProfile?.firstName} ${newProfile?.lastName}',
                                     playerAge: newProfile?.age,
                                     playerImg: newProfile?.picture,
-                                    playerLocation: '${newProfile?.city}, ${newProfile?.state}',
+                                    playerLocation:
+                                        '${newProfile?.city}, ${newProfile?.state}',
                                     stackKey: _stackKey,
                                     btnKey: _btnKey,
                                     imgLocationKey: _imgLocationKey,
                                     playerNameKey: _playerNameKey,
                                     profileImgKey: _profileImgKey,
-                                    btnLeft: widget.from! == ProfilePage.profileMe ? editProfile : chat,
-                                    btnRight: widget.from! == ProfilePage.profileMe ? messages : submitScore,
+                                    btnLeft:
+                                        widget.from! == ProfilePage.profileMe
+                                            ? editProfile
+                                            : chat,
+                                    btnRight:
+                                        widget.from! == ProfilePage.profileMe
+                                            ? messages
+                                            : submitScore,
                                     onLeftBtnClick: () {
                                       // Provider.of<ProfilePicProvider>(context, listen: false).setXFile(null);
 
                                       widget.from! == ProfilePage.profileMe
-                                          ? Navigator.pushNamed(context, EditProfilePage.path) // 'EDIT PROFILE'
-                                          : Navigator.pushReplacementNamed(context, ChallengesChat.path);
+                                          ? Navigator.pushNamed(
+                                              context,
+                                              EditProfilePage
+                                                  .path) // 'EDIT PROFILE'
+                                          : Navigator.pushReplacementNamed(
+                                              context, ChallengesChat.path);
                                       // :Navigator.pushNamedAndRemoveUntil(context,ChallengesChat.path,ModalRoute.withName(LeagueDetails.path));
                                     },
                                     onRightBtnClick: () {
                                       widget.from! == ProfilePage.profileMe
-                                          ? Navigator.pushNamed(context, AllMessagesListPage.path) // 'MESSAGES'
+                                          ? Navigator.pushNamed(
+                                              context,
+                                              AllMessagesListPage
+                                                  .path) // 'MESSAGES'
                                           :
                                           // Navigator.pushNamedAndRemoveUntil(context,LeagueDetails.path,ModalRoute.withName(DashboardPage.path));
-                                          Navigator.pushNamed(context, SubmitScoreDetails.path);
+                                          Navigator.pushNamed(
+                                              context, SubmitScoreDetails.path);
                                     },
                                   ),
                                   centerTitle: true,
@@ -236,14 +267,19 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> with isInternetCo
                               child: Container(
                                 color: aWhite,
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
                                   children: [
                                     StatsTile(
                                       title: "Matches",
                                       subtitle: '${newProfile?.matchesCount}',
                                     ),
-                                    StatsTile(title: "Victories", subtitle: '${newProfile?.wonCount}'),
-                                    StatsTile(title: "Defeats", subtitle: '${newProfile?.lostCount}'),
+                                    StatsTile(
+                                        title: "Victories",
+                                        subtitle: '${newProfile?.wonCount}'),
+                                    StatsTile(
+                                        title: "Defeats",
+                                        subtitle: '${newProfile?.lostCount}'),
                                     StatsTile(
                                       title: "Rating",
                                       subtitle: '${newProfile?.rating}',
@@ -288,32 +324,45 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> with isInternetCo
                                   );
                                 }
 
-                                _allMatchesData = AllMatchesData.fromJson(result.data!);
+                                _allMatchesData =
+                                    AllMatchesData.fromJson(result.data!);
 
                                 List<MatchesEdges>? tempMatches = [];
-                                if (_allMatchesData.allMatches!.edges!.length > 0) {
-                                  tempMatches.add(_allMatchesData.allMatches!.edges![0]);
+                                if (_allMatchesData.allMatches!.edges!.length >
+                                    0) {
+                                  tempMatches.add(
+                                      _allMatchesData.allMatches!.edges![0]);
                                 }
 
-                                if (_allMatchesData.allMatches!.edges!.length > 1) {
-                                  tempMatches.add(_allMatchesData.allMatches!.edges![1]);
+                                if (_allMatchesData.allMatches!.edges!.length >
+                                    1) {
+                                  tempMatches.add(
+                                      _allMatchesData.allMatches!.edges![1]);
                                 }
 
                                 return tempMatches.length > 0
                                     ? Column(
                                         children: [
                                           Padding(
-                                            padding: const EdgeInsets.only(left: 16.0, right: 16),
+                                            padding: const EdgeInsets.only(
+                                                left: 16.0, right: 16),
                                             child: Row(
-                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
                                               children: [
                                                 Text(
                                                   "Recent Matches",
-                                                  style: GoogleFonts.poppins(fontSize: 16, color: Color(0xff263238)),
+                                                  style: GoogleFonts.poppins(
+                                                      fontSize: 16,
+                                                      color: Color(0xff263238)),
                                                 ),
                                                 GestureDetector(
                                                     onTap: () {
-                                                      Navigator.pushNamed(context, RecentMatchesPage.path);
+                                                      Navigator.pushNamed(
+                                                          context,
+                                                          RecentMatchesPage
+                                                              .path);
                                                     },
                                                     child: Text("See All"))
                                               ],
@@ -322,16 +371,44 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> with isInternetCo
                                           for (int i = 0; i < 2; i++)
                                             HeadToHeadDetailsListTile(
                                               title: tempMatches[i].node?.court,
-                                              date: convertDate(tempMatches[i].node?.startDate, null),
+                                              date: convertDate(
+                                                  tempMatches[i]
+                                                      .node
+                                                      ?.startDate,
+                                                  null),
                                               onProfileClick: () {},
                                               onTileClick: () {},
-                                              player1matchScore: [5, 4, 3, 2, 1],
-                                              player1Img: tempMatches[i].node?.playerOne?.picture,
-                                              player1Name: tempMatches[i].node?.playerOne?.firstName,
+                                              player1matchScore: [
+                                                5,
+                                                4,
+                                                3,
+                                                2,
+                                                1
+                                              ],
+                                              player1Img: tempMatches[i]
+                                                  .node
+                                                  ?.playerOne
+                                                  ?.picture,
+                                              player1Name: tempMatches[i]
+                                                  .node
+                                                  ?.playerOne
+                                                  ?.firstName,
                                               player1Active: true,
-                                              player2matchScore: [1, 2, 3, 4, 5],
-                                              player2Img: tempMatches[i].node?.playerTwo?.picture,
-                                              player2Name: tempMatches[i].node?.playerTwo?.firstName,
+                                              player2matchScore: [
+                                                1,
+                                                2,
+                                                3,
+                                                4,
+                                                5
+                                              ],
+                                              player2Img: tempMatches[i]
+                                                  .node
+                                                  ?.playerTwo
+                                                  ?.picture,
+                                              player2Name: tempMatches[i]
+                                                  .node
+                                                  ?.playerTwo
+                                                  ?.firstName,
                                               player2Active: false,
                                             )
                                         ],
@@ -344,17 +421,24 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> with isInternetCo
                           //TODO API REMAINS
                           SliverToBoxAdapter(
                             child: Padding(
-                              padding: const EdgeInsets.only(left: 16.0, right: 16),
+                              padding:
+                                  const EdgeInsets.only(left: 16.0, right: 16),
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
                                     "Head to Heads",
-                                    style: GoogleFonts.poppins(fontSize: 16, color: Color(0xff263238)),
+                                    style: GoogleFonts.poppins(
+                                        fontSize: 16, color: Color(0xff263238)),
                                   ),
                                   GestureDetector(
                                       onTap: () {
-                                        Navigator.push(context, MaterialPageRoute(builder: (_) => HeadtoHeadpage()));
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (_) =>
+                                                    HeadtoHeadpage()));
                                       },
                                       child: Text("See All"))
                                 ],
@@ -405,7 +489,8 @@ class Delegate extends SliverPersistentHeaderDelegate {
   Delegate({this.child});
 
   @override
-  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
+  Widget build(
+      BuildContext context, double shrinkOffset, bool overlapsContent) {
     return child!;
   }
 

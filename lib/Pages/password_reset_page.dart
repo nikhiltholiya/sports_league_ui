@@ -28,7 +28,8 @@ class PasswordResetPage extends StatefulWidget {
   State<PasswordResetPage> createState() => _PasswordResetPageState();
 }
 
-class _PasswordResetPageState extends State<PasswordResetPage> with isInternetConnection {
+class _PasswordResetPageState extends State<PasswordResetPage>
+    with isInternetConnection {
   bool? obSecure = true;
   bool? obSecureRetype = true;
   String? token = '';
@@ -43,12 +44,18 @@ class _PasswordResetPageState extends State<PasswordResetPage> with isInternetCo
 
   late List<String?>? errorList = [];
   bool? isEnable = true;
-  final mutationSendMail = GlobalKey<MutationState>();
+  // TODO GHOST #
+  // final mutationSendMail = GlobalKey<MutationState>();
+  late RunMutation mutationSendMail;
 
   @override
   void initState() {
     param = {'\$token': 'String!', '\$pass1': 'String!', '\$pass2': 'String!'};
-    paramType = {'token': '\$token', 'newPassword1': '\$pass1', 'newPassword2': '\$pass2'};
+    paramType = {
+      'token': '\$token',
+      'newPassword1': '\$pass1',
+      'newPassword2': '\$pass2'
+    };
     initInternet(context);
     super.initState();
   }
@@ -94,7 +101,9 @@ class _PasswordResetPageState extends State<PasswordResetPage> with isInternetCo
                         hint: enterNewRePass,
                         suffixIcon: IconButton(
                             icon: Icon(
-                              obSecure! ? Icons.remove_red_eye_rounded : Icons.visibility_off_rounded,
+                              obSecure!
+                                  ? Icons.remove_red_eye_rounded
+                                  : Icons.visibility_off_rounded,
                               color: aGreen,
                             ),
                             onPressed: () {
@@ -114,11 +123,14 @@ class _PasswordResetPageState extends State<PasswordResetPage> with isInternetCo
                         onTap: () {},
                         isObscure: obSecureRetype,
                         validator: (val) =>
-                            MatchValidator(errorText: 'Password do not match').validateMatch(val!, password!),
+                            MatchValidator(errorText: 'Password do not match')
+                                .validateMatch(val!, password!),
                         hint: enterNewRePass,
                         suffixIcon: IconButton(
                             icon: Icon(
-                              obSecureRetype! ? Icons.remove_red_eye_rounded : Icons.visibility_off_rounded,
+                              obSecureRetype!
+                                  ? Icons.remove_red_eye_rounded
+                                  : Icons.visibility_off_rounded,
                               color: aGreen,
                             ),
                             onPressed: () {
@@ -162,26 +174,37 @@ class _PasswordResetPageState extends State<PasswordResetPage> with isInternetCo
                     debugPrint('${PasswordResetPage.path}**** $resultData');
 
                     _registerData = RegisterData.fromJson(resultData);
-                    debugPrint('${PasswordResetPage.path} SUCCESS -- ${_registerData.register?.success}');
+                    debugPrint(
+                        '${PasswordResetPage.path} SUCCESS -- ${_registerData.register?.success}');
                     errorList = [];
                     if (_registerData.register!.success!) {
                       // SharedPreferencesUtils.setEmail(email);
-                      SharedPreferencesUtils.setToken(_registerData.register?.token);
-                      SharedPreferencesUtils.setRefreshToken(_registerData.register?.refreshToken);
+                      SharedPreferencesUtils.setToken(
+                          _registerData.register?.token);
+                      SharedPreferencesUtils.setRefreshToken(
+                          _registerData.register?.refreshToken);
 
                       // Provider.of<TokenProvider>(context,listen: false).setToken(_registerData.register?.token);
 
                       // send email
-
                     } else {
-                      if (_registerData.register?.errors?.email?.first.message != null)
-                        errorList!.add(_registerData.register?.errors?.email?.first.message);
+                      if (_registerData
+                              .register?.errors?.email?.first.message !=
+                          null)
+                        errorList!.add(_registerData
+                            .register?.errors?.email?.first.message);
 
-                      if (_registerData.register?.errors?.password1?.first.message != null)
-                        errorList!.add(_registerData.register?.errors?.password1?.first.message);
+                      if (_registerData
+                              .register?.errors?.password1?.first.message !=
+                          null)
+                        errorList!.add(_registerData
+                            .register?.errors?.password1?.first.message);
 
-                      if (_registerData.register?.errors?.password2?.first.message != null)
-                        errorList!.add(_registerData.register?.errors?.password2?.first.message);
+                      if (_registerData
+                              .register?.errors?.password2?.first.message !=
+                          null)
+                        errorList!.add(_registerData
+                            .register?.errors?.password2?.first.message);
 
                       _showAlert();
                     }
@@ -202,7 +225,11 @@ class _PasswordResetPageState extends State<PasswordResetPage> with isInternetCo
                     radius: 0.0,
                     onClick: () {
                       if (_formKey.currentState!.validate()) {
-                        Map<String, dynamic> passVariable = {'token': token, 'pass1': password, 'pass2': rePassword};
+                        Map<String, dynamic> passVariable = {
+                          'token': token,
+                          'pass1': password,
+                          'pass2': rePassword
+                        };
 
                         doResetPass(passVariable);
                         isEnable = false;

@@ -49,13 +49,23 @@ class _SignUpPageState extends State<SignUpPage> with isInternetConnection {
 
   late List<String?>? errorList = [];
   bool? isEnable = true;
-  final mutationSendMail = GlobalKey<MutationState>();
+  // TODO GHOST #
+  // final mutationSendMail = GlobalKey<MutationState>();
+  late RunMutation mutationSendMail;
 
   @override
   void initState() {
     initInternet(context);
-    paramRegister = {'\$email': 'String!', '\$pass1': 'String!', '\$pass2': 'String!'};
-    paramTypeRegister = {'email': '\$email', 'password1': '\$pass1', 'password2': '\$pass2'};
+    paramRegister = {
+      '\$email': 'String!',
+      '\$pass1': 'String!',
+      '\$pass2': 'String!'
+    };
+    paramTypeRegister = {
+      'email': '\$email',
+      'password1': '\$pass1',
+      'password2': '\$pass2'
+    };
 
     paramSendMail = {'\$email': 'String!'};
     paramTypeSendMail = {'email': '\$email'};
@@ -118,7 +128,9 @@ class _SignUpPageState extends State<SignUpPage> with isInternetConnection {
                         hint: passwordLabel,
                         suffixIcon: IconButton(
                             icon: Icon(
-                              obSecure! ? Icons.remove_red_eye_rounded : Icons.visibility_off_rounded,
+                              obSecure!
+                                  ? Icons.remove_red_eye_rounded
+                                  : Icons.visibility_off_rounded,
                               color: aGreen,
                             ),
                             onPressed: () {
@@ -138,11 +150,14 @@ class _SignUpPageState extends State<SignUpPage> with isInternetConnection {
                         onTap: () {},
                         isObscure: obSecureRetype,
                         validator: (val) =>
-                            MatchValidator(errorText: 'Password do not match').validateMatch(val!, password!),
+                            MatchValidator(errorText: 'Password do not match')
+                                .validateMatch(val!, password!),
                         hint: rePasswordLabel,
                         suffixIcon: IconButton(
                             icon: Icon(
-                              obSecureRetype! ? Icons.remove_red_eye_rounded : Icons.visibility_off_rounded,
+                              obSecureRetype!
+                                  ? Icons.remove_red_eye_rounded
+                                  : Icons.visibility_off_rounded,
                               color: aGreen,
                             ),
                             onPressed: () {
@@ -154,9 +169,11 @@ class _SignUpPageState extends State<SignUpPage> with isInternetConnection {
 
                     // Mutation for sendmail
                     Mutation(
-                      key: mutationSendMail,
+                      // TODO GHOST #
+                      // key: mutationSendMail,
                       options: MutationOptions(
-                        document: gql(resendActivationEmail(paramSendMail, paramTypeSendMail)),
+                        document: gql(resendActivationEmail(
+                            paramSendMail, paramTypeSendMail)),
                         // update: update,
                         onError: (OperationException? error) {
                           debugPrint('**Maill -- erroR*** -- $error');
@@ -167,19 +184,29 @@ class _SignUpPageState extends State<SignUpPage> with isInternetConnection {
                         onCompleted: (dynamic resultData) async {
                           debugPrint('**Maill** $resultData');
 
-                          ResendActivationMailData data = ResendActivationMailData.fromJson(resultData);
+                          ResendActivationMailData data =
+                              ResendActivationMailData.fromJson(resultData);
                           errorList = [];
                           if (data.resendActivationEmail!.success!) {
                             Navigator.pushNamed(context, VerifyEmailPage.path);
                           } else {
-                            if (data.resendActivationEmail?.errors?.email?.first.message != null)
-                              errorList!.add(data.resendActivationEmail?.errors?.email?.first.message);
+                            if (data.resendActivationEmail?.errors?.email?.first
+                                    .message !=
+                                null)
+                              errorList!.add(data.resendActivationEmail?.errors
+                                  ?.email?.first.message);
 
-                            if (data.resendActivationEmail?.errors?.password1?.first.message != null)
-                              errorList!.add(data.resendActivationEmail?.errors?.password1?.first.message);
+                            if (data.resendActivationEmail?.errors?.password1
+                                    ?.first.message !=
+                                null)
+                              errorList!.add(data.resendActivationEmail?.errors
+                                  ?.password1?.first.message);
 
-                            if (data.resendActivationEmail?.errors?.password2?.first.message != null)
-                              errorList!.add(data.resendActivationEmail?.errors?.password2?.first.message);
+                            if (data.resendActivationEmail?.errors?.password2
+                                    ?.first.message !=
+                                null)
+                              errorList!.add(data.resendActivationEmail?.errors
+                                  ?.password2?.first.message);
 
                             _showAlert();
                           }
@@ -198,7 +225,8 @@ class _SignUpPageState extends State<SignUpPage> with isInternetConnection {
               ),
               bottomBar: Mutation(
                 options: MutationOptions(
-                  document: gql(RegisterPlayer(paramRegister, paramTypeRegister)),
+                  document:
+                      gql(RegisterPlayer(paramRegister, paramTypeRegister)),
                   // update: update,
                   onError: (OperationException? error) {
                     debugPrint('${SignUpPage.path} erroR -- $error');
@@ -215,12 +243,15 @@ class _SignUpPageState extends State<SignUpPage> with isInternetConnection {
                     debugPrint('${SignUpPage.path}**** $resultData');
 
                     _registerData = RegisterData.fromJson(resultData);
-                    debugPrint('${SignUpPage.path} SUCCESS -- ${_registerData.register?.success}');
+                    debugPrint(
+                        '${SignUpPage.path} SUCCESS -- ${_registerData.register?.success}');
                     errorList = [];
                     if (_registerData.register!.success!) {
                       SharedPreferencesUtils.setEmail(email);
-                      SharedPreferencesUtils.setToken(_registerData.register?.token);
-                      SharedPreferencesUtils.setRefreshToken(_registerData.register?.refreshToken);
+                      SharedPreferencesUtils.setToken(
+                          _registerData.register?.token);
+                      SharedPreferencesUtils.setRefreshToken(
+                          _registerData.register?.refreshToken);
 
                       // Provider.of<TokenProvider>(context,listen: false).setToken(_registerData.register?.token);
 
@@ -228,16 +259,27 @@ class _SignUpPageState extends State<SignUpPage> with isInternetConnection {
                       Map<String, dynamic> passEmail = {
                         'email': email,
                       };
-                      mutationSendMail.currentState?.runMutation(passEmail);
+                      // TODO GHOST #
+                      // mutationSendMail.currentState?.runMutation(passEmail);
+                      mutationSendMail(passEmail);
                     } else {
-                      if (_registerData.register?.errors?.email?.first.message != null)
-                        errorList!.add(_registerData.register?.errors?.email?.first.message);
+                      if (_registerData
+                              .register?.errors?.email?.first.message !=
+                          null)
+                        errorList!.add(_registerData
+                            .register?.errors?.email?.first.message);
 
-                      if (_registerData.register?.errors?.password1?.first.message != null)
-                        errorList!.add(_registerData.register?.errors?.password1?.first.message);
+                      if (_registerData
+                              .register?.errors?.password1?.first.message !=
+                          null)
+                        errorList!.add(_registerData
+                            .register?.errors?.password1?.first.message);
 
-                      if (_registerData.register?.errors?.password2?.first.message != null)
-                        errorList!.add(_registerData.register?.errors?.password2?.first.message);
+                      if (_registerData
+                              .register?.errors?.password2?.first.message !=
+                          null)
+                        errorList!.add(_registerData
+                            .register?.errors?.password2?.first.message);
 
                       _showAlert();
                     }
@@ -258,7 +300,11 @@ class _SignUpPageState extends State<SignUpPage> with isInternetConnection {
                     radius: 0.0,
                     onClick: () {
                       if (_formKey.currentState!.validate()) {
-                        Map<String, dynamic> passVariable = {'email': email, 'pass1': password, 'pass2': rePassword};
+                        Map<String, dynamic> passVariable = {
+                          'email': email,
+                          'pass1': password,
+                          'pass2': rePassword
+                        };
 
                         doRegister(passVariable);
                         isEnable = false;
