@@ -13,6 +13,7 @@ import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../Pages/base_activity.dart';
@@ -47,10 +48,8 @@ class EditProfilePage extends StatefulWidget {
   State<EditProfilePage> createState() => _EditProfilePageState();
 }
 
-class _EditProfilePageState extends State<EditProfilePage>
-    with isInternetConnection {
-  var userData = LoggedUser.fromJson(
-      jsonDecode(SharedPreferencesUtils.getUserData.toString()));
+class _EditProfilePageState extends State<EditProfilePage> with isInternetConnection {
+  var userData = LoggedUser.fromJson(jsonDecode(SharedPreferencesUtils.getUserData.toString()));
 
   String? bDate;
   String? dropDownValueCity;
@@ -73,6 +72,7 @@ class _EditProfilePageState extends State<EditProfilePage>
   Map<String, dynamic> paramTypeImgUpload = {};
 
   var _formKey = GlobalKey<FormState>();
+
   // TODO GHOST #
   // var _profileImgMutation = GlobalKey<MutationState>();
   late RunMutation _profileImgMutation;
@@ -82,8 +82,11 @@ class _EditProfilePageState extends State<EditProfilePage>
 
   var _streamFormController;
   var _streamImgState;
-  File? imageFile;
+
+  //20230530 Resolve issue of profile picture
   dynamic _pickImageError;
+  XFile? _pickedFile;
+  CroppedFile? _croppedFile;
 
   @override
   void initState() {
@@ -195,8 +198,7 @@ class _EditProfilePageState extends State<EditProfilePage>
                               imagePreview(),
                               Row(
                                 crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                 children: [
                                   CircleAvatar(
                                     backgroundColor: aGreen,
@@ -243,19 +245,12 @@ class _EditProfilePageState extends State<EditProfilePage>
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
                               Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 5),
+                                padding: const EdgeInsets.symmetric(vertical: 5),
                                 child: EditTextFormField(
-                                  textController: TextEditingController(
-                                      text: firstNameValue),
+                                  textController: TextEditingController(text: firstNameValue),
                                   isEnable: isEnabled.data!,
-                                  validator: RequiredValidator(
-                                      errorText: errFirstName),
-                                  inputFormatter: [
-                                    FilteringTextInputFormatter(
-                                        RegExp(r'[a-zA-Z]'),
-                                        allow: true)
-                                  ],
+                                  validator: RequiredValidator(errorText: errFirstName),
+                                  inputFormatter: [FilteringTextInputFormatter(RegExp(r'[a-zA-Z]'), allow: true)],
                                   textInputAction: TextInputAction.send,
                                   onTextChange: (value) {
                                     firstNameValue = value;
@@ -265,19 +260,12 @@ class _EditProfilePageState extends State<EditProfilePage>
                                 ),
                               ),
                               Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 5),
+                                padding: const EdgeInsets.symmetric(vertical: 5),
                                 child: EditTextFormField(
-                                  textController: TextEditingController(
-                                      text: lastNameValue),
+                                  textController: TextEditingController(text: lastNameValue),
                                   isEnable: isEnabled.data!,
-                                  validator:
-                                      RequiredValidator(errorText: errLastName),
-                                  inputFormatter: [
-                                    FilteringTextInputFormatter(
-                                        RegExp(r'[a-zA-Z]'),
-                                        allow: true)
-                                  ],
+                                  validator: RequiredValidator(errorText: errLastName),
+                                  inputFormatter: [FilteringTextInputFormatter(RegExp(r'[a-zA-Z]'), allow: true)],
                                   textInputAction: TextInputAction.send,
                                   onTextChange: (value) {
                                     lastNameValue = value;
@@ -287,8 +275,7 @@ class _EditProfilePageState extends State<EditProfilePage>
                                 ),
                               ),
                               Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 5),
+                                padding: const EdgeInsets.symmetric(vertical: 5),
                                 child: EditTextFormField(
                                   isEnable: false,
                                   textInputAction: TextInputAction.next,
@@ -298,15 +285,12 @@ class _EditProfilePageState extends State<EditProfilePage>
                                 ),
                               ),
                               Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 5),
+                                padding: const EdgeInsets.symmetric(vertical: 5),
                                 child: EditTextFormField(
-                                  textController: TextEditingController(
-                                      text: mobileNoValue),
+                                  textController: TextEditingController(text: mobileNoValue),
                                   isEnable: isEnabled.data!,
                                   textInputAction: TextInputAction.send,
-                                  validator:
-                                      RequiredValidator(errorText: errMobNo),
+                                  validator: RequiredValidator(errorText: errMobNo),
                                   textInputType: TextInputType.number,
                                   inputFormatter: [
                                     FilteringTextInputFormatter.allow(
@@ -322,41 +306,29 @@ class _EditProfilePageState extends State<EditProfilePage>
                                 ),
                               ),
                               Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 5),
+                                padding: const EdgeInsets.symmetric(vertical: 5),
                                 child: Container(
-                                  margin: EdgeInsets.symmetric(
-                                      vertical: 2, horizontal: 5),
+                                  margin: EdgeInsets.symmetric(vertical: 2, horizontal: 5),
                                   decoration: ShapeDecoration(
                                       shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(70),
-                                          side:
-                                              BorderSide(color: aPartGray30))),
+                                          borderRadius: BorderRadius.circular(70),
+                                          side: BorderSide(color: aPartGray30))),
                                   child: Padding(
                                     padding: const EdgeInsets.all(12.0),
                                     child: Text(
                                       '${bDate == 'Date of Birth' ? bDate : convertDate(bDate ?? DateTime.now().toString(), null)}',
-                                      style: TextStyle(
-                                          fontSize: 16.0, color: aLightGray),
+                                      style: TextStyle(fontSize: 16.0, color: aLightGray),
                                     ),
                                   ),
                                 ),
                               ),
                               Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 5),
+                                padding: const EdgeInsets.symmetric(vertical: 5),
                                 child: EditTextFormField(
-                                  textController:
-                                      TextEditingController(text: cityValue),
+                                  textController: TextEditingController(text: cityValue),
                                   isEnable: isEnabled.data!,
-                                  validator:
-                                      RequiredValidator(errorText: errCity),
-                                  inputFormatter: [
-                                    FilteringTextInputFormatter(
-                                        RegExp(r'[a-zA-Z]'),
-                                        allow: true)
-                                  ],
+                                  validator: RequiredValidator(errorText: errCity),
+                                  inputFormatter: [FilteringTextInputFormatter(RegExp(r'[a-zA-Z]'), allow: true)],
                                   textInputAction: TextInputAction.send,
                                   onTextChange: (value) {
                                     cityValue = value;
@@ -366,8 +338,7 @@ class _EditProfilePageState extends State<EditProfilePage>
                                 ),
                               ),
                               Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 5, horizontal: 5),
+                                padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
                                 child: DropDownView(
                                   dropList: [
                                     // 'Portland, Oregon',
@@ -389,8 +360,7 @@ class _EditProfilePageState extends State<EditProfilePage>
                                 ),
                               ),
                               Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 5, horizontal: 5),
+                                padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
                                 child: DropDownView(
                                   dropList: rate,
                                   hint: selectRate,
@@ -405,8 +375,7 @@ class _EditProfilePageState extends State<EditProfilePage>
                                 // TODO GHOST #
                                 // key: _profileImgMutation,
                                 options: MutationOptions(
-                                    document: gql(uploadImage(
-                                        paramImgUpload, paramTypeImgUpload)),
+                                    document: gql(uploadImage(paramImgUpload, paramTypeImgUpload)),
                                     onCompleted: (dynamic resultData) {
                                       if (resultData != null) {
                                         // errorList = [];
@@ -450,27 +419,20 @@ class _EditProfilePageState extends State<EditProfilePage>
                   onCompleted: (dynamic resultData) {
                     // Text('Thanks for your star!');
                     _streamFormController.sink.add(true);
-                    debugPrint(
-                        '${EditProfilePage.path} **** RESULT * $resultData');
+                    debugPrint('${EditProfilePage.path} **** RESULT * $resultData');
 
                     if (resultData != null) {
-                      _createProfileData =
-                          CreateProfileData.fromJson(resultData);
+                      _createProfileData = CreateProfileData.fromJson(resultData);
                       errorList = [];
                       if (_createProfileData.updateAccount!.success!) {
                         errorList!.add('DONE');
                         // Navigator.pushNamed(context, CreateProfilePicturePage.path);
                       } else {
-                        if (_createProfileData
-                                .updateAccount!.errors!.nonFieldErrors !=
-                            null)
-                          errorList!.add(_createProfileData.updateAccount!
-                              .errors?.nonFieldErrors?.first.message);
+                        if (_createProfileData.updateAccount!.errors!.nonFieldErrors != null)
+                          errorList!.add(_createProfileData.updateAccount!.errors?.nonFieldErrors?.first.message);
 
-                        if (_createProfileData.updateAccount!.errors!.dob !=
-                            null)
-                          errorList!.add(_createProfileData
-                              .updateAccount!.errors?.dob?.first.message);
+                        if (_createProfileData.updateAccount!.errors!.dob != null)
+                          errorList!.add(_createProfileData.updateAccount!.errors?.dob?.first.message);
                       }
 
                       imageUploadProgress();
@@ -495,15 +457,13 @@ class _EditProfilePageState extends State<EditProfilePage>
                     radius: 0.0,
                     onClick: () {
                       if (selectedState!.isEmpty) {
-                        return ScaffoldMessenger.of(context)
-                            .showSnackBar(SnackBar(
+                        return ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                           content: Text(errState),
                         ));
                       }
 
                       if (selectedRate!.isEmpty) {
-                        return ScaffoldMessenger.of(context)
-                            .showSnackBar(SnackBar(
+                        return ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                           content: Text(errRate),
                         ));
                       }
@@ -552,126 +512,137 @@ class _EditProfilePageState extends State<EditProfilePage>
     //     ? imageFile!.readAsBytesSync()
     //     : await getImageFileFromAssets('avatar${selectedAvatar.first}.png').then((value) => value.readAsBytesSync());
 
-    if (imageFile != null) {
-      var byteData = imageFile!.readAsBytesSync();
+    var byteData = _croppedFile != null
+        ? await _croppedFile!.readAsBytes()
+        : await getImageFileFromAssets('avatar0.png').then((value) => value.readAsBytesSync());
 
-      var multipartFile = http.MultipartFile.fromBytes(
-        'photo',
-        byteData,
-        filename: '${DateTime.now().second}.jpg',
-        contentType: MediaType('image', 'jpg'),
-      );
+    var multipartFile = http.MultipartFile.fromBytes(
+      'photo',
+      byteData,
+      filename: '${DateTime.now().second}.jpg',
+      contentType: MediaType('image', 'jpg'),
+    );
 
-      // TODO GHOST #
-      // var resp =
-      //     await _profileImgMutation.currentState?.runMutation(<String, dynamic>{
-      //   'file': multipartFile,
-      //   'userId': '${userData.userId}',
-      // });
-      var resp = await _profileImgMutation(<String, dynamic>{
-        'file': multipartFile,
-        'userId': '${userData.userId}',
-      });
-      print('resp 522 *$resp');
-    }
+    // TODO GHOST #
+    // var resp =
+    //     await _profileImgMutation.currentState?.runMutation(<String, dynamic>{
+    //   'file': multipartFile,
+    //   'userId': '${userData.userId}',
+    // });
+    var resp = await _profileImgMutation(<String, dynamic>{
+      'file': multipartFile,
+      'userId': '${userData.userId}',
+    });
+    print('resp 522 *$resp');
   }
 
-  //IMAGE
+
+  Future<File> getImageFileFromAssets(String path) async {
+    final byteData = await rootBundle.load('assets/$path');
+
+    final file = File('${(await getTemporaryDirectory()).path}/$path');
+    await file.writeAsBytes(byteData.buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
+
+    return file;
+  }
+
   Widget imagePreview() {
-    return kIsWeb
-        ? CircleAvatar(
-            backgroundImage: NetworkImage(imageFile!.path),
-            radius: 100,
-          )
-        : imageFile != null
-            ? CircleAvatar(backgroundImage: FileImage(imageFile!), radius: 100)
-            : picture != null
-                ? CircleAvatar(
-                    backgroundImage:
-                        NetworkImage('http://52.144.47.85:8000/$picture'),
-                    radius: 100,
-                  )
-                : CircleAvatar(
-                    backgroundImage: AssetImage('assets/avatar0.png'),
-                    radius: 100,
-                  );
+    if (_croppedFile != null) {
+      final path = _croppedFile!.path;
+      return kIsWeb
+          ? CircleAvatar(
+              backgroundImage: NetworkImage(path),
+              radius: 100,
+            )
+          : CircleAvatar(backgroundImage: FileImage(File(path)), radius: 100);
+    } else if (_pickedFile != null) {
+      final path = _pickedFile!.path;
+      return kIsWeb
+          ? CircleAvatar(
+              backgroundImage: NetworkImage(path),
+              radius: 100,
+            )
+          : CircleAvatar(backgroundImage: FileImage(File(path)), radius: 100);
+    } else {
+      return CircleAvatar(
+        backgroundImage: AssetImage('assets/avatar0.png'),
+        radius: 100,
+      );
+    }
   }
 
   Future<Null> _pickImage(ImageSource source) async {
     try {
-      final pickedImage = await ImagePicker().pickImage(
+      final pickedFile = await ImagePicker().pickImage(
         source: source,
         maxWidth: 1000,
         maxHeight: 1000,
         imageQuality: 100,
       );
-      imageFile = pickedImage != null ? File(pickedImage.path) : null;
-      if (imageFile != null) {
+      if (pickedFile != null) {
         // setState(() {
-        //   state = imgState.picked;
-        // });
-
         _streamImgState.sink.add(imgState.picked);
+        _pickedFile = pickedFile;
         if (!kIsWeb) {
           _cropImage();
         }
+        // });
       }
     } catch (e) {
       _pickImageError = e;
     }
   }
 
-  Future<Null> _cropImage() async {
-    File? croppedFile = await ImageCropper().cropImage(
-        sourcePath: imageFile!.path,
+  Future<void> _cropImage() async {
+    if (_pickedFile != null) {
+      final croppedFile = await ImageCropper().cropImage(
+        sourcePath: _pickedFile!.path,
         cropStyle: CropStyle.circle,
-
-        // aspectRatioPresets: Platform.isAndroid
-        //     ? [
-        //         CropAspectRatioPreset.square,
-        //         CropAspectRatioPreset.ratio3x2,
-        //         CropAspectRatioPreset.original,
-        //         CropAspectRatioPreset.ratio4x3,
-        //         CropAspectRatioPreset.ratio16x9
-        //       ]
-        //     : [
-        //         CropAspectRatioPreset.square,
-        //         CropAspectRatioPreset.original,
-        //         CropAspectRatioPreset.ratio3x2,
-        //         CropAspectRatioPreset.ratio4x3,
-        //         CropAspectRatioPreset.ratio5x3,
-        //         CropAspectRatioPreset.ratio5x4,
-        //         CropAspectRatioPreset.ratio7x5,
-        //         CropAspectRatioPreset.ratio16x9
-        //       ],
-        androidUiSettings: const AndroidUiSettings(
-          toolbarTitle: 'Cropper',
-          toolbarColor: aWhite,
-          toolbarWidgetColor: aBlack,
-          activeControlsWidgetColor: aGreen,
-          initAspectRatio: CropAspectRatioPreset.square,
-          lockAspectRatio: true,
-          showCropGrid: false,
-          hideBottomControls: true,
-          cropFrameColor: Colors.transparent,
-        ),
-        iosUiSettings: const IOSUiSettings(
-          aspectRatioLockEnabled: true,
-          aspectRatioPickerButtonHidden: true,
-          title: 'Cropper',
-        ));
-    if (croppedFile != null) {
-      imageFile = croppedFile;
-      _streamImgState.sink.add(imgState.cropped);
-
-      // setState(() {
-      //   state = imgState.cropped;
-      // });
+        compressFormat: ImageCompressFormat.jpg,
+        compressQuality: 100,
+        uiSettings: [
+          AndroidUiSettings(
+            toolbarTitle: 'Cropper',
+            toolbarColor: aWhite,
+            toolbarWidgetColor: aBlack,
+            activeControlsWidgetColor: aGreen,
+            initAspectRatio: CropAspectRatioPreset.square,
+            lockAspectRatio: true,
+            showCropGrid: false,
+            hideBottomControls: true,
+            cropFrameColor: Colors.transparent,
+          ),
+          IOSUiSettings(
+            aspectRatioLockEnabled: true,
+            aspectRatioPickerButtonHidden: true,
+            title: 'Cropper',
+          ),
+          WebUiSettings(
+            context: context,
+            presentStyle: CropperPresentStyle.dialog,
+            boundary: const CroppieBoundary(
+              width: 520,
+              height: 520,
+            ),
+            viewPort: const CroppieViewPort(width: 480, height: 480, type: 'circle'),
+            enableExif: true,
+            enableZoom: true,
+            showZoomer: true,
+          ),
+        ],
+      );
+      if (croppedFile != null) {
+        // setState(() {
+        _croppedFile = croppedFile;
+        _streamImgState.sink.add(imgState.cropped);
+        // });
+      }
     }
   }
 
   void _clearImage() {
-    imageFile = null;
+    _pickedFile = null;
+    _croppedFile = null;
     _streamImgState.sink.add(imgState.free);
     // setState(() {
     //   state = imgState.free;
