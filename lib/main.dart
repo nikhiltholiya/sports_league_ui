@@ -36,7 +36,8 @@ import '../providers/user_id_provider.dart';
 import '../utils/shared_preferences_utils.dart';
 
 // final HttpLink httpLink = HttpLink('http://52.144.47.85:8000/graphql/',);
-final graphqlEndpoint = 'http://52.144.47.85:8000/graphql/';
+// final graphqlEndpoint = 'http://52.144.47.85:8000/graphql/';//OLD
+final graphqlEndpoint = 'http://104.238.213.60:8000/graphql/';
 // final graphqlEndpoint = 'https://api.github.com/graphql'; //Test purpose
 final subscriptionEndpoint = null;
 

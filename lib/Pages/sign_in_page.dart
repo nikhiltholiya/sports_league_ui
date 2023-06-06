@@ -54,7 +54,7 @@ class _SignInPageState extends State<SignInPage> with isInternetConnection {
   bool? isEnable = true;
   // TODO GHOST #
   // final mutationSendMail = GlobalKey<MutationState>();
-  late RunMutation mutationSendMail;
+  late RunMutation _mutationResetEmail;
 
   // late StreamController<bool?> _streamController =  StreamController<bool?>();
 
@@ -199,9 +199,10 @@ class _SignInPageState extends State<SignInPage> with isInternetConnection {
                       ),
                       builder:
                           (RunMutation _resetEmail, QueryResult? addResult) {
-                        final sendResetEmail = (result) {
-                          _resetEmail(result);
-                        };
+                        // final sendResetEmail = (result) {
+                        //   _resetEmail(result);
+                        // };
+                            this._mutationResetEmail = _resetEmail;
 
                         // _streamController.sink.add(addResult!.isLoading);
                         return SizedBox();
@@ -416,7 +417,7 @@ class _SignInPageState extends State<SignInPage> with isInternetConnection {
                   Map<String, dynamic> passVariable = {'email': resetLinkMail};
                   // TODO GHOST #
                   // mutationSendMail.currentState?.runMutation(passVariable);
-                  mutationSendMail(passVariable);
+                  _mutationResetEmail(passVariable);
                   // _streamController.sink.add(false);
                   // isEnableForgotPass = false;
                   // setState(() {});
