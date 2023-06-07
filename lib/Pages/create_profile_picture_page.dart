@@ -57,9 +57,10 @@ class _CreateProfilePicturePageState extends State<CreateProfilePicturePage> wit
   Map<String, dynamic> paramTypeImgUpload = {};
   var _streamImgState;
 
-  // late imgState state;
-  File? imageFile;
+  //20230530 Resolve issue of profile picture
   dynamic _pickImageError;
+  XFile? _pickedFile;
+  CroppedFile? _croppedFile;
 
   @override
   void initState() {
@@ -88,95 +89,103 @@ class _CreateProfilePicturePageState extends State<CreateProfilePicturePage> wit
   }
 
   Widget imagePreview() {
-    return kIsWeb
-        ? CircleAvatar(
-            backgroundImage: NetworkImage(imageFile!.path),
-            radius: 100,
-          )
-        : imageFile != null
-            ? CircleAvatar(backgroundImage: FileImage(imageFile!), radius: 100)
-            : CircleAvatar(
-                backgroundImage: AssetImage('assets/avatar${selectedAvatar.first}.png'),
-                radius: 100,
-              );
+    if (_croppedFile != null) {
+      final path = _croppedFile!.path;
+      return kIsWeb
+          ? CircleAvatar(
+              backgroundImage: NetworkImage(path),
+              radius: 100,
+            )
+          : CircleAvatar(backgroundImage: FileImage(File(path)), radius: 100);
+    } else if (_pickedFile != null) {
+      final path = _pickedFile!.path;
+      return kIsWeb
+          ? CircleAvatar(
+              backgroundImage: NetworkImage(path),
+              radius: 100,
+            )
+          : CircleAvatar(backgroundImage: FileImage(File(path)), radius: 100);
+    } else {
+      return CircleAvatar(
+        backgroundImage: AssetImage('assets/avatar${selectedAvatar.first}.png'),
+        radius: 100,
+      );
+    }
   }
 
   Future<Null> _pickImage(ImageSource source) async {
     try {
-      final pickedImage = await ImagePicker().pickImage(
+      final pickedFile = await ImagePicker().pickImage(
         source: source,
         maxWidth: 1000,
         maxHeight: 1000,
         imageQuality: 100,
       );
-      imageFile = pickedImage != null ? File(pickedImage.path) : null;
-      if (imageFile != null) {
-        selectedAvatar = [];
+      if (pickedFile != null) {
         // setState(() {
-        //   state = imgState.picked;
-        // });
-
+        selectedAvatar = [];
         _streamImgState.sink.add(imgState.picked);
+        _pickedFile = pickedFile;
         if (!kIsWeb) {
           _cropImage();
         }
+        // });
       }
     } catch (e) {
       _pickImageError = e;
     }
   }
 
-  Future<Null> _cropImage() async {
-    File? croppedFile = await ImageCropper().cropImage(
-        sourcePath: imageFile!.path,
+  Future<void> _cropImage() async {
+    if (_pickedFile != null) {
+      final croppedFile = await ImageCropper().cropImage(
+        sourcePath: _pickedFile!.path,
         cropStyle: CropStyle.circle,
-
-        // aspectRatioPresets: Platform.isAndroid
-        //     ? [
-        //         CropAspectRatioPreset.square,
-        //         CropAspectRatioPreset.ratio3x2,
-        //         CropAspectRatioPreset.original,
-        //         CropAspectRatioPreset.ratio4x3,
-        //         CropAspectRatioPreset.ratio16x9
-        //       ]
-        //     : [
-        //         CropAspectRatioPreset.square,
-        //         CropAspectRatioPreset.original,
-        //         CropAspectRatioPreset.ratio3x2,
-        //         CropAspectRatioPreset.ratio4x3,
-        //         CropAspectRatioPreset.ratio5x3,
-        //         CropAspectRatioPreset.ratio5x4,
-        //         CropAspectRatioPreset.ratio7x5,
-        //         CropAspectRatioPreset.ratio16x9
-        //       ],
-        androidUiSettings: const AndroidUiSettings(
-          toolbarTitle: 'Cropper',
-          toolbarColor: aWhite,
-          toolbarWidgetColor: aBlack,
-          activeControlsWidgetColor: aGreen,
-          initAspectRatio: CropAspectRatioPreset.square,
-          lockAspectRatio: true,
-          showCropGrid: false,
-          hideBottomControls: true,
-          cropFrameColor: Colors.transparent,
-        ),
-        iosUiSettings: const IOSUiSettings(
-          aspectRatioLockEnabled: true,
-          aspectRatioPickerButtonHidden: true,
-          title: 'Cropper',
-        ));
-    if (croppedFile != null) {
-      imageFile = croppedFile;
-      _streamImgState.sink.add(imgState.cropped);
-
-      // setState(() {
-      //   state = imgState.cropped;
-      // });
+        compressFormat: ImageCompressFormat.jpg,
+        compressQuality: 100,
+        uiSettings: [
+          AndroidUiSettings(
+            toolbarTitle: 'Cropper',
+            toolbarColor: aWhite,
+            toolbarWidgetColor: aBlack,
+            activeControlsWidgetColor: aGreen,
+            initAspectRatio: CropAspectRatioPreset.square,
+            lockAspectRatio: true,
+            showCropGrid: false,
+            hideBottomControls: true,
+            cropFrameColor: Colors.transparent,
+          ),
+          IOSUiSettings(
+            aspectRatioLockEnabled: true,
+            aspectRatioPickerButtonHidden: true,
+            title: 'Cropper',
+          ),
+          WebUiSettings(
+            context: context,
+            presentStyle: CropperPresentStyle.dialog,
+            boundary: const CroppieBoundary(
+              width: 520,
+              height: 520,
+            ),
+            viewPort: const CroppieViewPort(width: 480, height: 480, type: 'circle'),
+            enableExif: true,
+            enableZoom: true,
+            showZoomer: true,
+          ),
+        ],
+      );
+      if (croppedFile != null) {
+        // setState(() {
+          _croppedFile = croppedFile;
+          _streamImgState.sink.add(imgState.cropped);
+        // });
+      }
     }
   }
 
   void _clearImage() {
-    imageFile = null;
+    _pickedFile = null;
+    _croppedFile = null;
     _streamImgState.sink.add(imgState.free);
     // setState(() {
     //   state = imgState.free;
@@ -356,8 +365,9 @@ class _CreateProfilePicturePageState extends State<CreateProfilePicturePage> wit
                       // var _image = imageFile != null ? imageFile : getImageFileFromAssets('path');
                       // var byteData;
                       // if(imageFile != null){
-                      var byteData = imageFile != null
-                          ? imageFile!.readAsBytesSync()
+                      var byteData = _croppedFile != null
+                          // ? _croppedFile!.readAsBytesSync()
+                          ? await _croppedFile!.readAsBytes()
                           : await getImageFileFromAssets('avatar${selectedAvatar.first}.png')
                               .then((value) => value.readAsBytesSync());
 

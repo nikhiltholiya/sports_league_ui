@@ -5,7 +5,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart' as dpicker; //20230530 Resolve error
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:provider/provider.dart';
@@ -251,9 +251,9 @@ class _CreateProfilePageState extends State<CreateProfilePage> with isInternetCo
                             padding: const EdgeInsets.symmetric(vertical: 5),
                             child: GestureDetector(
                               onTap: () {
-                                DatePicker.showDatePicker(
+                                dpicker.DatePicker.showDatePicker(
                                   context,
-                                  theme: DatePickerTheme(
+                                  theme: dpicker.DatePickerTheme(
                                     backgroundColor: aWhite,
                                     itemStyle: TextStyle(color: aLightGray),
                                   ),
