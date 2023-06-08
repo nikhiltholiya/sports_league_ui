@@ -49,7 +49,7 @@ class _LeagueDetailsState extends State<LeagueDetails>
   GlobalKey? _textStatusKey = GlobalKey();
   double? _dynamicTotalHeight;
   List<double>? _childWidgetHeights = [];
-  late List<UserStat>? userStat;
+  List<UserStat>? userStat = [];
   List<String>? errorList;
   String? currentUserId;
 

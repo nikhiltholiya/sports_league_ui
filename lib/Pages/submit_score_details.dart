@@ -5,7 +5,8 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart' as dpicker;//20230530 Resolve error
+import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart'
+    as dpicker; //20230530 Resolve error
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:provider/provider.dart';
 
@@ -39,7 +40,8 @@ class SubmitScoreDetails extends StatefulWidget {
   _SubmitScoreDetailsState createState() => _SubmitScoreDetailsState();
 }
 
-class _SubmitScoreDetailsState extends State<SubmitScoreDetails> with isInternetConnection {
+class _SubmitScoreDetailsState extends State<SubmitScoreDetails>
+    with isInternetConnection {
   ScrollController? _scrollController;
   GlobalKey? _stackKey = GlobalKey();
   GlobalKey? _userKey = GlobalKey();
@@ -90,7 +92,8 @@ class _SubmitScoreDetailsState extends State<SubmitScoreDetails> with isInternet
   bool? isLoaded = false;
 
   double _getWidgetHeight(GlobalKey? key) {
-    final RenderBox renderBoxRed = key?.currentContext?.findRenderObject() as RenderBox;
+    final RenderBox renderBoxRed =
+        key?.currentContext?.findRenderObject() as RenderBox;
     return renderBoxRed.size.height;
   }
 
@@ -144,7 +147,8 @@ class _SubmitScoreDetailsState extends State<SubmitScoreDetails> with isInternet
       tie2.add('0');
     }
 
-    player1 = UserNode.fromJson(jsonDecode(SharedPreferencesUtils.getUserData!));
+    player1 =
+        UserNode.fromJson(jsonDecode(SharedPreferencesUtils.getUserData!));
 
     debugPrint('${SubmitScoreDetails.path} * Player 1 - $player1');
     super.initState();
@@ -152,7 +156,8 @@ class _SubmitScoreDetailsState extends State<SubmitScoreDetails> with isInternet
 
   @override
   Widget build(BuildContext context) {
-    debugPrint('${SubmitScoreDetails.path} * matchGameType -- ${matchGameType} -- $selectedGameType');
+    debugPrint(
+        '${SubmitScoreDetails.path} * matchGameType -- ${matchGameType} -- $selectedGameType');
     return Consumer<InternetProvider>(
       builder: (context, valueNet, child) {
         print(valueNet.isConnectivity);
@@ -175,7 +180,9 @@ class _SubmitScoreDetailsState extends State<SubmitScoreDetails> with isInternet
                     'userId': '\$userId',
                   };
 
-                  Map<String, dynamic> passVariable = {'userId': '${value.getUserId}'};
+                  Map<String, dynamic> passVariable = {
+                    'userId': '${value.getUserId}'
+                  };
 
                   return Query(
                     options: QueryOptions(
@@ -190,15 +197,21 @@ class _SubmitScoreDetailsState extends State<SubmitScoreDetails> with isInternet
                       }
 
                       if (result.isLoading && result.data == null) {
-                        return const Center(child: CupertinoActivityIndicator());
+                        return const Center(
+                            child: CupertinoActivityIndicator());
                       }
 
                       // player2 = UserNode.fromJson(jsonDecode(data));
-                      player2 = AllUsersData.fromJson(result.data!).allUsers!.edges!.first.node!;
+                      player2 = AllUsersData.fromJson(result.data!)
+                          .allUsers!
+                          .edges!
+                          .first
+                          .node!;
 
                       if (!isLoaded!) {
                         isLoaded = true;
-                        WidgetsBinding.instance.addPostFrameCallback(_getTotalHeight);
+                        WidgetsBinding.instance
+                            .addPostFrameCallback(_getTotalHeight);
 
                         players = [];
                         selectedPlayer = [];
@@ -206,19 +219,23 @@ class _SubmitScoreDetailsState extends State<SubmitScoreDetails> with isInternet
                         players.add(player1);
                         players.add(player2);
 
-                        for (var data in players) displayPlayer.add(data?.firstName);
+                        for (var data in players)
+                          displayPlayer.add(data?.firstName);
 
                         // players.add(
                         //     player1.allUsers?.edges?.first.node?.firstName);
                         // players.add(
                         //     player2.allUsers?.edges?.first.node?.firstName);
-                        for (int i = 0; i < players.length; i++) selectedPlayer.add(false);
+                        for (int i = 0; i < players.length; i++)
+                          selectedPlayer.add(false);
 
                         selectedGameType = [];
-                        for (int i = 0; i < gameType.length; i++) selectedGameType.add(false);
+                        for (int i = 0; i < gameType.length; i++)
+                          selectedGameType.add(false);
 
                         selectedMatchStatus = [];
-                        for (int i = 0; i < matchStatus.length; i++) selectedMatchStatus.add(false);
+                        for (int i = 0; i < matchStatus.length; i++)
+                          selectedMatchStatus.add(false);
                       }
                       return CustomScrollView(
                         controller: _scrollController,
@@ -227,7 +244,8 @@ class _SubmitScoreDetailsState extends State<SubmitScoreDetails> with isInternet
                         slivers: <Widget>[
                           SliverLayoutBuilder(
                             builder: (context, constraints) {
-                              scrollPosition = constraints.scrollOffset + kToolbarHeight;
+                              scrollPosition =
+                                  constraints.scrollOffset + kToolbarHeight;
                               return SliverAppBar(
                                 elevation: 0,
                                 snap: false,
@@ -246,9 +264,15 @@ class _SubmitScoreDetailsState extends State<SubmitScoreDetails> with isInternet
                                           : Icons.arrow_back),
                                 ),
                                 titleTextStyle: TextStyle(
-                                    color: _dynamicTotalHeight! <= scrollPosition ? Colors.black : Colors.transparent),
+                                    color:
+                                        _dynamicTotalHeight! <= scrollPosition
+                                            ? Colors.black
+                                            : Colors.transparent),
                                 iconTheme: IconThemeData(
-                                    color: _dynamicTotalHeight! <= scrollPosition ? Colors.black : Colors.white),
+                                    color:
+                                        _dynamicTotalHeight! <= scrollPosition
+                                            ? Colors.black
+                                            : Colors.white),
                                 flexibleSpace: FlexibleSpaceBar(
                                   background: SubmitScoreDetailsHeaderTile(
                                     stackKey: _stackKey,
@@ -260,7 +284,9 @@ class _SubmitScoreDetailsState extends State<SubmitScoreDetails> with isInternet
                                   ),
                                   centerTitle: true,
                                   // title: size.height / 2 <= constraints.scrollOffset ? Text('Participating Players') : SizedBox(),
-                                  title: _dynamicTotalHeight! <= scrollPosition ? Text(submitScore) : SizedBox(),
+                                  title: _dynamicTotalHeight! <= scrollPosition
+                                      ? Text(submitScore)
+                                      : SizedBox(),
                                 ),
                                 expandedHeight: _dynamicTotalHeight,
                                 backgroundColor: Colors.white,
@@ -269,61 +295,84 @@ class _SubmitScoreDetailsState extends State<SubmitScoreDetails> with isInternet
                           ),
                           SliverToBoxAdapter(
                             child: Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 5, horizontal: 10),
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.stretch,
                                 children: [
                                   Text(
                                     gameDetail,
-                                    style: TextStyle(color: aLightGray, fontWeight: FontWeight.bold, fontSize: 16.0),
+                                    style: TextStyle(
+                                        color: aLightGray,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16.0),
                                   ),
                                   Padding(
-                                    padding: const EdgeInsets.only(top: 20, bottom: 5),
+                                    padding: const EdgeInsets.only(
+                                        top: 20, bottom: 5),
                                     child: Text(
                                       matchWinner,
-                                      style: TextStyle(color: aLightGray, fontSize: 12.0, fontWeight: FontWeight.bold),
+                                      style: TextStyle(
+                                          color: aLightGray,
+                                          fontSize: 12.0,
+                                          fontWeight: FontWeight.bold),
                                     ),
                                   ),
 
                                   chips(displayPlayer, selectedPlayer),
 
                                   Padding(
-                                    padding: const EdgeInsets.only(top: 20, bottom: 5),
+                                    padding: const EdgeInsets.only(
+                                        top: 20, bottom: 5),
                                     child: Text(
                                       matchDateTime,
-                                      style: TextStyle(color: aLightGray, fontSize: 12.0, fontWeight: FontWeight.bold),
+                                      style: TextStyle(
+                                          color: aLightGray,
+                                          fontSize: 12.0,
+                                          fontWeight: FontWeight.bold),
                                     ),
                                   ),
                                   Wrap(
-                                    crossAxisAlignment: WrapCrossAlignment.center,
+                                    crossAxisAlignment:
+                                        WrapCrossAlignment.center,
                                     alignment: WrapAlignment.start,
                                     children: [
                                       AppChip(
                                         iconData: Icons.calendar_today,
                                         isAvatar: true,
                                         isChipActive: false,
-                                        Label: convertDate(matchDate ?? DateTime.now().toString(), null),
+                                        Label: convertDate(
+                                            matchDate ??
+                                                DateTime.now().toString(),
+                                            null),
                                         onChipTap: () {
                                           dpicker.DatePicker.showDatePicker(
                                             context,
                                             theme: dpicker.DatePickerTheme(
                                               backgroundColor: aWhite,
-                                              itemStyle: TextStyle(color: aLightGray),
+                                              itemStyle:
+                                                  TextStyle(color: aLightGray),
                                             ),
                                             showTitleActions: true,
                                             minTime: DateTime(
-                                                DateTime.now().year - 5, DateTime.now().month, DateTime.now().day),
+                                                DateTime.now().year - 5,
+                                                DateTime.now().month,
+                                                DateTime.now().day),
                                             maxTime: DateTime.now(),
                                             onChanged: (date) {
-                                              debugPrint('${SubmitScoreDetails.path}  * change $date');
+                                              debugPrint(
+                                                  '${SubmitScoreDetails.path}  * change $date');
                                             },
                                             onConfirm: (date) {
                                               matchDate = date.toString();
                                               setState(() {});
-                                              debugPrint('${SubmitScoreDetails.path}  * confirm $date');
+                                              debugPrint(
+                                                  '${SubmitScoreDetails.path}  * confirm $date');
                                             },
-                                            currentTime: datePickerDate(matchDate ?? DateTime.now().toString()),
+                                            currentTime: datePickerDate(
+                                                matchDate ??
+                                                    DateTime.now().toString()),
                                           );
                                         },
                                       ),
@@ -331,34 +380,46 @@ class _SubmitScoreDetailsState extends State<SubmitScoreDetails> with isInternet
                                         iconData: Icons.access_time,
                                         isAvatar: true,
                                         isChipActive: false,
-                                        Label: convertTime(matchTime ?? DateTime.now().toString(), null),
+                                        Label: convertTime(
+                                            matchTime ??
+                                                DateTime.now().toString(),
+                                            null),
                                         onChipTap: () {
                                           dpicker.DatePicker.showTime12hPicker(
                                             context,
                                             theme: dpicker.DatePickerTheme(
                                               backgroundColor: aWhite,
-                                              itemStyle: TextStyle(color: aLightGray),
+                                              itemStyle:
+                                                  TextStyle(color: aLightGray),
                                             ),
                                             showTitleActions: true,
                                             onChanged: (date) {
-                                              debugPrint('${SubmitScoreDetails.path}  * changeTime $date');
+                                              debugPrint(
+                                                  '${SubmitScoreDetails.path}  * changeTime $date');
                                             },
                                             onConfirm: (date) {
                                               matchTime = date.toString();
                                               setState(() {});
-                                              debugPrint('${SubmitScoreDetails.path}  * confirmTime $date');
+                                              debugPrint(
+                                                  '${SubmitScoreDetails.path}  * confirmTime $date');
                                             },
-                                            currentTime: datePickerTime(matchTime ?? DateTime.now().toString()),
+                                            currentTime: datePickerTime(
+                                                matchTime ??
+                                                    DateTime.now().toString()),
                                           );
                                         },
                                       ),
                                     ],
                                   ),
                                   Padding(
-                                    padding: const EdgeInsets.only(top: 20, bottom: 5),
+                                    padding: const EdgeInsets.only(
+                                        top: 20, bottom: 5),
                                     child: Text(
                                       matchCourt,
-                                      style: TextStyle(color: aLightGray, fontSize: 12.0, fontWeight: FontWeight.bold),
+                                      style: TextStyle(
+                                          color: aLightGray,
+                                          fontSize: 12.0,
+                                          fontWeight: FontWeight.bold),
                                     ),
                                   ),
                                   // DropDownView(
@@ -383,34 +444,48 @@ class _SubmitScoreDetailsState extends State<SubmitScoreDetails> with isInternet
                                     onTextChange: (value) {
                                       matchCourtName = value;
                                     },
-                                    suffixIcon: Icon(Icons.arrow_drop_down_sharp),
+                                    suffixIcon:
+                                        Icon(Icons.arrow_drop_down_sharp),
                                   ),
                                   Padding(
-                                    padding: const EdgeInsets.only(top: 20, bottom: 5),
+                                    padding: const EdgeInsets.only(
+                                        top: 20, bottom: 5),
                                     child: Text(
                                       gameTypeLabel,
-                                      style: TextStyle(color: aLightGray, fontSize: 12.0, fontWeight: FontWeight.bold),
+                                      style: TextStyle(
+                                          color: aLightGray,
+                                          fontSize: 12.0,
+                                          fontWeight: FontWeight.bold),
                                     ),
                                   ),
                                   chips(gameType, selectedGameType),
                                   Padding(
-                                    padding: const EdgeInsets.only(top: 20, bottom: 5),
+                                    padding: const EdgeInsets.only(
+                                        top: 20, bottom: 5),
                                     child: Text(
                                       status,
-                                      style: TextStyle(color: aLightGray, fontSize: 12.0, fontWeight: FontWeight.bold),
+                                      style: TextStyle(
+                                          color: aLightGray,
+                                          fontSize: 12.0,
+                                          fontWeight: FontWeight.bold),
                                     ),
                                   ),
                                   chips(matchStatus, selectedMatchStatus),
                                   Padding(
-                                    padding: const EdgeInsets.only(top: 20, bottom: 5),
+                                    padding: const EdgeInsets.only(
+                                        top: 20, bottom: 5),
                                     child: Text(
                                       leagueOpt,
-                                      style: TextStyle(color: aLightGray, fontSize: 12.0, fontWeight: FontWeight.bold),
+                                      style: TextStyle(
+                                          color: aLightGray,
+                                          fontSize: 12.0,
+                                          fontWeight: FontWeight.bold),
                                     ),
                                   ),
 
                                   // DropDownView(
-                                  //   cityList: [],
+                                  //   dropList: [],
+                                  //   // cityList: [],
                                   //   hint: leagueOpt,
                                   //   dropdownValue: dropDownValue,
                                   //   onValueChange: (value) {
@@ -429,7 +504,8 @@ class _SubmitScoreDetailsState extends State<SubmitScoreDetails> with isInternet
                                           '\$status': 'String!',
                                           '\$league_Status': 'String!',
                                         }, {
-                                          'applicant_UserId': '\$applicant_UserId',
+                                          'applicant_UserId':
+                                              '\$applicant_UserId',
                                           'status': '\$status',
                                           'league_Status': '\$league_Status',
                                         }),
@@ -443,43 +519,64 @@ class _SubmitScoreDetailsState extends State<SubmitScoreDetails> with isInternet
                                     ),
                                     builder: (result, {fetchMore, refetch}) {
                                       if (result.hasException) {
-                                        return Text(result.exception.toString());
+                                        return Text(
+                                            result.exception.toString());
                                       }
 
-                                      if (result.isLoading && result.data == null) {
-                                        return const Center(child: CupertinoActivityIndicator());
+                                      if (result.isLoading &&
+                                          result.data == null) {
+                                        return const Center(
+                                            child:
+                                                CupertinoActivityIndicator());
                                       }
 
-                                      AllLeaguesApps allLeaguesApps = AllLeaguesApps.fromJson(result.data!);
+                                      AllLeaguesApps allLeaguesApps =
+                                          AllLeaguesApps.fromJson(result.data!);
 
                                       _leaguesList = [];
-                                      _leaguesList = allLeaguesApps.allLeagueApplications?.edges;
+                                      _leaguesList = allLeaguesApps
+                                          .allLeagueApplications?.edges;
 
                                       List<String>? leagueListTemp = [];
                                       for (var data in _leaguesList!) {
-                                        leagueListTemp.add(data.node!.league!.name!);
+                                        leagueListTemp
+                                            .add(data.node!.league!.name!);
                                       }
 
-                                      var exist = _leaguesList!.where((LeagueEdges) =>
-                                          _leaguesList?.first.node?.league?.leagueId! ==
-                                          Provider.of<LeagueIdProvider>(context, listen: false).getLeagueId);
+                                      var exist = _leaguesList!.where(
+                                          (LeagueEdges) =>
+                                              _leaguesList?.first.node?.league
+                                                  ?.leagueId! ==
+                                              Provider.of<LeagueIdProvider>(
+                                                      context,
+                                                      listen: false)
+                                                  .getLeagueId);
 
                                       return Padding(
-                                        padding: const EdgeInsets.symmetric(horizontal: 5),
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 5),
                                         child: DropDownView(
                                           dropList: leagueListTemp,
-                                          hint: exist.isEmpty ? leagueOptHint : exist.first.node!.league!.name!,
+                                          hint: exist.isEmpty
+                                              ? leagueOptHint
+                                              : exist.first.node!.league!.name!,
                                           dropdownValue: dropDownValue,
                                           onValueChange: (value) {
                                             dropDownValue = value;
 
-                                            var data =
-                                                _leaguesList!.where((element) => element.node?.league?.name == value);
+                                            var data = _leaguesList!.where(
+                                                (element) =>
+                                                    element
+                                                        .node?.league?.name ==
+                                                    value);
                                             // print('Selected -- $data');
                                             // print('Selected -- ${data.first.node?.league?.leagueId}');
 
-                                            Provider.of<LeagueIdProvider>(context, listen: false)
-                                                .setLeagueId(data.first.node?.league?.leagueId);
+                                            Provider.of<LeagueIdProvider>(
+                                                    context,
+                                                    listen: false)
+                                                .setLeagueId(data.first.node
+                                                    ?.league?.leagueId);
 
                                             // final split = value.split(',');
                                             // selectedCity = split![0].toString().trim();
@@ -582,10 +679,14 @@ class _SubmitScoreDetailsState extends State<SubmitScoreDetails> with isInternet
                                   // ),
 
                                   Padding(
-                                    padding: const EdgeInsets.only(top: 30, bottom: 10),
+                                    padding: const EdgeInsets.only(
+                                        top: 30, bottom: 10),
                                     child: Text(
                                       setDetails,
-                                      style: TextStyle(color: aLightGray, fontWeight: FontWeight.bold, fontSize: 16.0),
+                                      style: TextStyle(
+                                          color: aLightGray,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16.0),
                                     ),
                                   ),
                                 ],
@@ -593,7 +694,8 @@ class _SubmitScoreDetailsState extends State<SubmitScoreDetails> with isInternet
                             ),
                           ),
                           SliverPadding(
-                            padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 5, horizontal: 10),
                             sliver: SliverList(
                               delegate: SliverChildBuilderDelegate(
                                 (context, index) => SetDetailsListTile(
@@ -604,22 +706,26 @@ class _SubmitScoreDetailsState extends State<SubmitScoreDetails> with isInternet
                                     player1Sets.setAll(index, [value]);
                                     // print('$index - $value');
                                   },
-                                  player1Controller: TextEditingController(text: player1Sets[index]),
+                                  player1Controller: TextEditingController(
+                                      text: player1Sets[index]),
                                   player2Score: (value) {
                                     player2Sets.setAll(index, [value]);
                                     // print('$index - $value');
                                   },
-                                  player2Controller: TextEditingController(text: player2Sets[index]),
+                                  player2Controller: TextEditingController(
+                                      text: player2Sets[index]),
                                   tieBreak1: (value) {
                                     tie1.setAll(index, [value]);
                                     // print('$index - $value');
                                   },
-                                  tie1Controller: TextEditingController(text: tie1[index]),
+                                  tie1Controller:
+                                      TextEditingController(text: tie1[index]),
                                   tieBreak2: (value) {
                                     tie2.setAll(index, [value]);
                                     // print('$index - $value');
                                   },
-                                  tie2Controller: TextEditingController(text: tie2[index]),
+                                  tie2Controller:
+                                      TextEditingController(text: tie2[index]),
                                 ),
                                 childCount: setListSize,
                               ),
@@ -663,22 +769,26 @@ class _SubmitScoreDetailsState extends State<SubmitScoreDetails> with isInternet
                                 // Map<String, dynamic> passVariable = {'passParam': passMap};
                                 Mutation(
                                   options: MutationOptions(
-                                    document: gql(SubmitScore(paramSubmitScore, paramTypeSubmitScore)),
+                                    document: gql(SubmitScore(paramSubmitScore,
+                                        paramTypeSubmitScore)),
                                     // update: update,
                                     onError: (OperationException? error) {
-                                      debugPrint('${SubmitScoreDetails.path}  * erroR -- $error');
+                                      debugPrint(
+                                          '${SubmitScoreDetails.path}  * erroR -- $error');
                                       // Text('$error');
                                     },
                                     // _simpleAlert(context, error.toString()),
                                     onCompleted: (dynamic resultData) {
                                       // Text('Thanks for your star!');
-                                      debugPrint('${SubmitScoreDetails.path}  * Result -- $resultData');
+                                      debugPrint(
+                                          '${SubmitScoreDetails.path}  * Result -- $resultData');
 
                                       _showMyDialog(submitSuccess);
                                     },
                                     // 'Sorry you changed your mind!',
                                   ),
-                                  builder: (RunMutation _submitScore, QueryResult? addResult) {
+                                  builder: (RunMutation _submitScore,
+                                      QueryResult? addResult) {
                                     final submitScoreApi = (result) {
                                       _submitScore(result);
                                     };
@@ -691,74 +801,112 @@ class _SubmitScoreDetailsState extends State<SubmitScoreDetails> with isInternet
                                       labelColor: aWhite,
                                       fontSize: 16,
                                       onClick: () {
-                                        matchGameStatus = selectedMatchStatus.contains(true)
-                                            ? matchStatus[selectedMatchStatus.indexOf(true)]
+                                        matchGameStatus = selectedMatchStatus
+                                                .contains(true)
+                                            ? matchStatus[selectedMatchStatus
+                                                    .indexOf(true)]
                                                 .toString()
                                                 .trim()
                                                 .toLowerCase()
                                             : '';
-                                        matchWinnerName = selectedPlayer.contains(true)
-                                            ? displayPlayer[selectedPlayer.indexOf(true)]
-                                                .toString()
-                                                .trim()
-                                                .toLowerCase()
-                                            : '';
-                                        matchGameType = selectedGameType.contains(true)
-                                            ? gameType[selectedGameType.indexOf(true)].toString().trim().toLowerCase()
-                                            : '';
+                                        matchWinnerName =
+                                            selectedPlayer.contains(true)
+                                                ? displayPlayer[selectedPlayer
+                                                        .indexOf(true)]
+                                                    .toString()
+                                                    .trim()
+                                                    .toLowerCase()
+                                                : '';
+                                        matchGameType =
+                                            selectedGameType.contains(true)
+                                                ? gameType[selectedGameType
+                                                        .indexOf(true)]
+                                                    .toString()
+                                                    .trim()
+                                                    .toLowerCase()
+                                                : '';
 
                                         debugPrint(
                                             '${SubmitScoreDetails.path}  * matchGameStatus : $matchGameStatus ** matchWinnerName : $matchWinnerName ** matchGameType : $matchGameType');
 
                                         if (matchGameStatus!.isEmpty)
-                                          return ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                          return ScaffoldMessenger.of(context)
+                                              .showSnackBar(SnackBar(
                                             content: Text(errStatus),
                                           ));
 
-                                        if (matchGameStatus != 'draw' && matchWinnerName!.isEmpty) {
-                                          return ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                        if (matchGameStatus != 'draw' &&
+                                            matchWinnerName!.isEmpty) {
+                                          return ScaffoldMessenger.of(context)
+                                              .showSnackBar(SnackBar(
                                             content: Text(errPlayer),
                                           ));
                                         }
 
                                         if (matchGameType!.isEmpty)
-                                          return ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                          return ScaffoldMessenger.of(context)
+                                              .showSnackBar(SnackBar(
                                             content: Text(errGame),
                                           ));
 
-                                        if (Provider.of<LeagueIdProvider>(context, listen: false).getLeagueId! == '')
-                                          return ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                        if (Provider.of<LeagueIdProvider>(
+                                                    context,
+                                                    listen: false)
+                                                .getLeagueId! ==
+                                            '')
+                                          return ScaffoldMessenger.of(context)
+                                              .showSnackBar(SnackBar(
                                             content: Text(errLeague),
                                           ));
 
                                         Map<String, dynamic> passMap = {
                                           'court': matchCourtName ?? '',
-                                          'endDate': convertDateYYYYMMDD(matchDate ?? DateTime.now().toString(), null),
-                                          'startDate':
-                                              convertDateYYYYMMDD(matchDate ?? DateTime.now().toString(), null),
-                                          'league': Provider.of<LeagueIdProvider>(context, listen: false).getLeagueId,
+                                          'endDate': convertDateYYYYMMDD(
+                                              matchDate ??
+                                                  DateTime.now().toString(),
+                                              null),
+                                          'startDate': convertDateYYYYMMDD(
+                                              matchDate ??
+                                                  DateTime.now().toString(),
+                                              null),
+                                          'league':
+                                              Provider.of<LeagueIdProvider>(
+                                                      context,
+                                                      listen: false)
+                                                  .getLeagueId,
                                           'matchStatus': matchGameStatus,
                                           'format': matchGameType,
                                           'playerOneId': player1.userId ?? '',
                                           'playerTwoId': player2.userId ?? '',
                                           'winnerOne': matchGameStatus != 'draw'
-                                              ? players[selectedPlayer.indexOf(true)]?.userId
+                                              ? players[selectedPlayer
+                                                      .indexOf(true)]
+                                                  ?.userId
                                               : '',
-                                          for (int i = 0; i < player1Sets.length; i++)
+                                          for (int i = 0;
+                                              i < player1Sets.length;
+                                              i++)
                                             'set${i + 1}': {
-                                              'playerOneScore': int.parse(player1Sets[i] ?? '0'),
-                                              'playerOneTbScore': int.parse(tie1[i] ?? '0'),
-                                              'playerTwoScore': int.parse(player2Sets[i] ?? '0'),
-                                              'playerTwoTbScore': int.parse(tie2[i] ?? '0')
+                                              'playerOneScore': int.parse(
+                                                  player1Sets[i] ?? '0'),
+                                              'playerOneTbScore':
+                                                  int.parse(tie1[i] ?? '0'),
+                                              'playerTwoScore': int.parse(
+                                                  player2Sets[i] ?? '0'),
+                                              'playerTwoTbScore':
+                                                  int.parse(tie2[i] ?? '0')
                                             }
                                         };
 
                                         // var resBody = {};
                                         // resBody['passParam'] = passMap;
 
-                                        passVariableSubmitScore = {'passParam': passMap};
+                                        passVariableSubmitScore = {
+                                          'passParam': passMap
+                                        };
 
-                                        debugPrint('${SubmitScoreDetails.path}  * passMap $passMap');
+                                        debugPrint(
+                                            '${SubmitScoreDetails.path}  * passMap $passMap');
                                         submitScoreApi(passVariableSubmitScore);
                                       },
                                       label: anyLoading ? 'wait' : submit,
@@ -817,7 +965,8 @@ class _SubmitScoreDetailsState extends State<SubmitScoreDetails> with isInternet
             isChipActive: isChipSelected[i],
             Label: chipLabel[i],
             onChipTap: () {
-              for (int j = 0; j < isChipSelected.length; j++) isChipSelected.setAll(j, [false]);
+              for (int j = 0; j < isChipSelected.length; j++)
+                isChipSelected.setAll(j, [false]);
 
               isChipSelected.setAll(i, [true]);
               setState(() {});

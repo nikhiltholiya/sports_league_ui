@@ -42,7 +42,12 @@ class _BaseWidgetState extends State<BaseWidget> {
       minimum: EdgeInsets.only(bottom: 2.0),
       child: Scaffold(
         key: widget.scKey,
-        body: SafeArea(top: true, right: true, left: true, bottom: true, child: widget.body!),
+        body: SafeArea(
+            top: true,
+            right: true,
+            left: true,
+            bottom: true,
+            child: widget.body!),
         appBar: AppBar(
           leading: IconButton(
               icon: Icon(kIsWeb

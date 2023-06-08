@@ -81,7 +81,9 @@ class _ChallengesChatState extends State<ChallengesChat>
       final RenderBox? rBox =
           gKey?.currentContext?.findRenderObject() as RenderBox;
       return rBox?.size.height;
-    } catch (e) {}
+    } catch (e) {
+      return null;
+    }
   }
 
   void _getTotalHeight(_) {

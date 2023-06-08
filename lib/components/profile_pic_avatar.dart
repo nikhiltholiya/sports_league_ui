@@ -7,7 +7,11 @@ class ProfilePicAvatar extends StatelessWidget {
   final double? radius;
   final String? path;
 
-  const ProfilePicAvatar({Key? key, this.backColor = aLightGray, required this.radius, required this.path})
+  const ProfilePicAvatar(
+      {Key? key,
+      this.backColor = aLightGray,
+      required this.radius,
+      required this.path})
       : super(key: key);
 
   @override
@@ -15,9 +19,14 @@ class ProfilePicAvatar extends StatelessWidget {
     return CircleAvatar(
       backgroundColor: backColor,
       radius: radius,
-      child: (path == null || path!.contains('asset') || path!.contains('default.png'))
+      child: (path == null ||
+              path!.contains('asset') ||
+              path!.contains('default.png'))
           ? CircleAvatar(
-              backgroundImage: AssetImage(path == null || path!.contains('default.png') ? 'assets/avatar0.png' : path!) ,
+              backgroundImage: AssetImage(
+                  path == null || path!.contains('default.png')
+                      ? 'assets/avatar0.png'
+                      : path!),
               radius: (radius! - 1),
               backgroundColor: aWhite,
             )

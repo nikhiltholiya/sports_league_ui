@@ -51,7 +51,8 @@ class _HomePageState extends State<HomePage> with isInternetConnection {
                   padding: const EdgeInsets.all(10.0),
                   child: Text(
                     welcomeText,
-                    style: TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold),
+                    style:
+                        TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold),
                     textAlign: TextAlign.center,
                   ),
                 ),
@@ -63,7 +64,8 @@ class _HomePageState extends State<HomePage> with isInternetConnection {
                   softWrap: true,
                   maxLines: 3,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.normal),
+                  style:
+                      TextStyle(fontSize: 14.0, fontWeight: FontWeight.normal),
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(
@@ -106,7 +108,9 @@ class _HomePageState extends State<HomePage> with isInternetConnection {
                         child: Text(
                           signIn,
                           style: TextStyle(
-                              fontWeight: FontWeight.bold, color: aGreen, decoration: TextDecoration.underline),
+                              fontWeight: FontWeight.bold,
+                              color: aGreen,
+                              decoration: TextDecoration.underline),
                         ),
                       ),
                     )

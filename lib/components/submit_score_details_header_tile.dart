@@ -24,10 +24,12 @@ class SubmitScoreDetailsHeaderTile extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<SubmitScoreDetailsHeaderTile> createState() => _SubmitScoreDetailsHeaderTileState();
+  State<SubmitScoreDetailsHeaderTile> createState() =>
+      _SubmitScoreDetailsHeaderTileState();
 }
 
-class _SubmitScoreDetailsHeaderTileState extends State<SubmitScoreDetailsHeaderTile> {
+class _SubmitScoreDetailsHeaderTileState
+    extends State<SubmitScoreDetailsHeaderTile> {
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -62,7 +64,8 @@ class _SubmitScoreDetailsHeaderTileState extends State<SubmitScoreDetailsHeaderT
                       ),
                       Text(
                         'VS',
-                        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.bold),
                       ),
                       Expanded(
                         flex: 2,

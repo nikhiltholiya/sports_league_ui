@@ -63,7 +63,9 @@ class MyApp extends StatelessWidget {
 
         getToken: () async =>
             // 'Bearer <YOUR GIT TOKEN>' //Test purpose
-            SharedPreferencesUtils.getToken != null ? '''JWT ${SharedPreferencesUtils.getToken}''' : '',
+            SharedPreferencesUtils.getToken != null
+                ? '''JWT ${SharedPreferencesUtils.getToken}'''
+                : '',
       ),
       child: AppBody(),
     );
@@ -123,8 +125,10 @@ class AppBody extends StatelessWidget {
             // Notice that the counter didn't reset back to zero; the application
             // is not restarted.
             primarySwatch: Colors.blue,
-            textTheme: GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme),
-            primaryTextTheme: GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme),
+            textTheme:
+                GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme),
+            primaryTextTheme:
+                GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme),
             appBarTheme: AppBarTheme(
                 systemOverlayStyle: SystemUiOverlayStyle.dark,
                 backgroundColor: Colors.white,
@@ -138,54 +142,81 @@ class AppBody extends StatelessWidget {
         // initialRoute: LeagueDetails.path,
         initialRoute: SplashPage.path,
         onGenerateRoute: (settings) {
+          debugPrint('------->${settings.name}');
           if (settings.name == SplashPage.path) {
-            return CupertinoPageRoute(builder: (context) => SplashPage(), settings: settings);
+            return CupertinoPageRoute(
+                builder: (context) => SplashPage(), settings: settings);
           } else if (settings.name == HomePage.path) {
-            return CupertinoPageRoute(builder: (context) => HomePage(), settings: settings);
+            return CupertinoPageRoute(
+                builder: (context) => HomePage(), settings: settings);
           } else if (settings.name == SignUpPage.path) {
-            return CupertinoPageRoute(builder: (context) => SignUpPage(), settings: settings);
+            return CupertinoPageRoute(
+                builder: (context) => SignUpPage(), settings: settings);
           } else if (settings.name == SignInPage.path) {
-            return CupertinoPageRoute(builder: (context) => SignInPage(), settings: settings);
+            return CupertinoPageRoute(
+                builder: (context) => SignInPage(), settings: settings);
           } else if (settings.name == VerifyEmailPage.path) {
-            return CupertinoPageRoute(builder: (context) => VerifyEmailPage(), settings: settings);
+            return CupertinoPageRoute(
+                builder: (context) => VerifyEmailPage(), settings: settings);
           } else if (settings.name == PasswordResetPage.path) {
-            return CupertinoPageRoute(builder: (context) => PasswordResetPage(), settings: settings);
+            return CupertinoPageRoute(
+                builder: (context) => PasswordResetPage(), settings: settings);
           } else if (settings.name == PasswordChangePage.path) {
-            return CupertinoPageRoute(builder: (context) => PasswordChangePage(), settings: settings);
+            return CupertinoPageRoute(
+                builder: (context) => PasswordChangePage(), settings: settings);
           } else if (settings.name == CreateProfilePage.path) {
-            return CupertinoPageRoute(builder: (context) => CreateProfilePage(), settings: settings);
+            return CupertinoPageRoute(
+                builder: (context) => CreateProfilePage(), settings: settings);
           } else if (settings.name == CreateProfilePicturePage.path) {
-            return CupertinoPageRoute(builder: (context) => CreateProfilePicturePage(), settings: settings);
+            return CupertinoPageRoute(
+                builder: (context) => CreateProfilePicturePage(),
+                settings: settings);
           } else if (settings.name == DashboardPage.path) {
-            return CupertinoPageRoute(builder: (context) => DashboardPage(), settings: settings);
+            return CupertinoPageRoute(
+                builder: (context) => DashboardPage(), settings: settings);
           } else if (settings.name == LeagueDetails.path) {
-            return CupertinoPageRoute(builder: (context) => LeagueDetails(), settings: settings);
+            return CupertinoPageRoute(
+                builder: (context) => LeagueDetails(), settings: settings);
           } else if (settings.name == AllMatchesPage.path) {
-            return CupertinoPageRoute(builder: (context) => AllMatchesPage(), settings: settings);
+            return CupertinoPageRoute(
+                builder: (context) => AllMatchesPage(), settings: settings);
           } else if (settings.name == ContactUsPage.path) {
-            return CupertinoPageRoute(builder: (context) => ContactUsPage(), settings: settings);
+            return CupertinoPageRoute(
+                builder: (context) => ContactUsPage(), settings: settings);
           } else if (settings.name == ChallengesChat.path) {
-            return CupertinoPageRoute(builder: (context) => ChallengesChat(), settings: settings);
+            return CupertinoPageRoute(
+                builder: (context) => ChallengesChat(), settings: settings);
           } else if (settings.name == ProfilePage.path) {
-            return CupertinoPageRoute(builder: (context) => ProfilePage(), settings: settings);
+            return CupertinoPageRoute(
+                builder: (context) => ProfilePage(), settings: settings);
           } else if (settings.name == EditProfilePage.path) {
-            return CupertinoPageRoute(builder: (context) => EditProfilePage(), settings: settings);
+            return CupertinoPageRoute(
+                builder: (context) => EditProfilePage(), settings: settings);
           } else if (settings.name == AllMessagesListPage.path) {
-            return CupertinoPageRoute(builder: (context) => AllMessagesListPage(), settings: settings);
+            return CupertinoPageRoute(
+                builder: (context) => AllMessagesListPage(),
+                settings: settings);
           } else if (settings.name == HeadToHeadDetails.path) {
-            return CupertinoPageRoute(builder: (context) => HeadToHeadDetails(), settings: settings);
+            return CupertinoPageRoute(
+                builder: (context) => HeadToHeadDetails(), settings: settings);
           } else if (settings.name == HeadtoHeadpage.path) {
-            return CupertinoPageRoute(builder: (context) => HeadtoHeadpage(), settings: settings);
+            return CupertinoPageRoute(
+                builder: (context) => HeadtoHeadpage(), settings: settings);
           } else if (settings.name == RecentMatchesPage.path) {
-            return CupertinoPageRoute(builder: (context) => RecentMatchesPage(), settings: settings);
+            return CupertinoPageRoute(
+                builder: (context) => RecentMatchesPage(), settings: settings);
           } else if (settings.name == MyLeagueList.path) {
-            return CupertinoPageRoute(builder: (context) => MyLeagueList(), settings: settings);
+            return CupertinoPageRoute(
+                builder: (context) => MyLeagueList(), settings: settings);
           } else if (settings.name == SubmitScoreList.path) {
-            return CupertinoPageRoute(builder: (context) => SubmitScoreList(), settings: settings);
+            return CupertinoPageRoute(
+                builder: (context) => SubmitScoreList(), settings: settings);
           } else if (settings.name == SubmitScoreDetails.path) {
-            return CupertinoPageRoute(builder: (context) => SubmitScoreDetails(), settings: settings);
+            return CupertinoPageRoute(
+                builder: (context) => SubmitScoreDetails(), settings: settings);
           } else if (settings.name == LatestScorePage.path) {
-            return CupertinoPageRoute(builder: (context) => LatestScorePage(), settings: settings);
+            return CupertinoPageRoute(
+                builder: (context) => LatestScorePage(), settings: settings);
           } else {
             return null;
           }
