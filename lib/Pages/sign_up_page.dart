@@ -51,7 +51,7 @@ class _SignUpPageState extends State<SignUpPage> with isInternetConnection {
   bool? isEnable = true;
   // TODO GHOST #
   // final mutationSendMail = GlobalKey<MutationState>();
-  late RunMutation mutationSendMail;
+  late RunMutation _mutationSendMail;
 
   @override
   void initState() {
@@ -213,9 +213,10 @@ class _SignUpPageState extends State<SignUpPage> with isInternetConnection {
                         },
                       ),
                       builder: (RunMutation _sendMail, QueryResult? addResult) {
-                        final doSendmail = (result) {
-                          _sendMail(result);
-                        };
+                        // final doSendmail = (result) {
+                        //   _sendMail(result);
+                        // };
+                        this._mutationSendMail = _sendMail;
                         // Future.delayed(const Duration(milliseconds: 200)).then((value) => doSendmail(passVariable));
                         return SizedBox();
                       },
@@ -261,7 +262,7 @@ class _SignUpPageState extends State<SignUpPage> with isInternetConnection {
                       };
                       // TODO GHOST #
                       // mutationSendMail.currentState?.runMutation(passEmail);
-                      mutationSendMail(passEmail);
+                      _mutationSendMail(passEmail);
                     } else {
                       if (_registerData
                               .register?.errors?.email?.first.message !=
