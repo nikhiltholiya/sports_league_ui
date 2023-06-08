@@ -48,12 +48,12 @@ class _MyLeagueListState extends State<MyLeagueList> with isInternetConnection {
   bool? isParams = false;
 
   var streamController;
+  int completed = 0;
 
   @override
   void initState() {
     _scrollController = ScrollController();
 
-    // getUserId().then((value) {
     param = {
       '\$applicant_UserId': 'UUID',
     };
@@ -61,6 +61,21 @@ class _MyLeagueListState extends State<MyLeagueList> with isInternetConnection {
       'applicant_UserId': '\$applicant_UserId',
     };
     passVariable = {'applicant_UserId': '${SharedPreferencesUtils.getUserId}'};
+
+    if (SharedPreferencesUtils.getLastCity != null) {
+      dropDownValue = SharedPreferencesUtils.getLastCity;
+      final split = SharedPreferencesUtils.getLastCity?.split(',');
+      selectedCity = split?[0].toString().trim();
+      selectedState = split?[1].toString().trim();
+
+      // setState(() {
+      param = {'\$league_State': 'String!', '\$league_City': 'String!'};
+      paramType = {'league_State': '\$league_State', 'league_City': '\$league_City'};
+      passVariable = {
+        'league_State': selectedState ?? '',
+        'league_City': selectedCity ?? '',
+      };
+    }
 
     streamController = StreamController<Map<String, dynamic>>();
     streamController.sink.add(passVariable);
@@ -111,9 +126,17 @@ class _MyLeagueListState extends State<MyLeagueList> with isInternetConnection {
                         allLeaguesApps = AllLeaguesApps.fromJson(result.data!);
 
                         applicantsList = [];
+                        completed = 0;
                         for (var data in allLeaguesApps!.allLeagueApplications!.edges!) {
                           if (data.node!.status!.toLowerCase() == 'approved') {
-                            applicantsList!.add(data);
+                            if (data.node!.league!.status!.toLowerCase() != 'ongoing') {
+                              if (completed < 5) {
+                                applicantsList!.add(data);
+                                completed++;
+                              }
+                            } else {
+                              applicantsList!.add(data);
+                            }
                           }
                         }
 
@@ -146,6 +169,8 @@ class _MyLeagueListState extends State<MyLeagueList> with isInternetConnection {
                                           'league_State': selectedState ?? '',
                                           'league_City': selectedCity ?? '',
                                         };
+
+                                        SharedPreferencesUtils.setLastCity(value); //20230608
 
                                         streamController.sink.add(passVariable);
                                         // });

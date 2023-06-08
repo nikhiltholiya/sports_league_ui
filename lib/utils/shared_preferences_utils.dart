@@ -42,6 +42,13 @@ class SharedPreferencesUtils {
   }
 
   static String? get getUserId => _sharedPreferences?.getString('userId');
+
+  //20230608 Adding last city
+  static void setLastCity(String? lastCity) {
+    _sharedPreferences?.setString('lastCity', lastCity ?? '');
+  }
+
+  static String? get getLastCity => _sharedPreferences?.getString('lastCity');
 }
 
 // mixin SharedPrefUtils {
