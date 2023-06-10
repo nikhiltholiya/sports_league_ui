@@ -9,7 +9,7 @@ import 'package:provider/provider.dart';
 import '../Pages/base_activity.dart';
 import '../Pages/league_details.dart';
 import '../Pages/no_internet_page.dart';
-import '../bean/all_league_Applications/all_leagues_applications.dart';
+import '../bean/all_leagues/all_leagues.dart';
 import '../components/drop_down_view.dart';
 import '../components/my_league_list_tile.dart';
 import '../components/no_data_list_tile.dart';
@@ -35,7 +35,7 @@ class MyLeagueList extends StatefulWidget {
 class _MyLeagueListState extends State<MyLeagueList> with isInternetConnection {
   ScrollController? _scrollController;
 
-  late AllLeaguesApps? allLeaguesApps;
+  late AllLeaguesData? allLeaguesApps;
   late List<LeagueEdges>? applicantsList;
   late String? selectedCity = '';
   late String? selectedState = '';
@@ -54,13 +54,19 @@ class _MyLeagueListState extends State<MyLeagueList> with isInternetConnection {
   void initState() {
     _scrollController = ScrollController();
 
-    param = {
-      '\$applicant_UserId': 'UUID',
-    };
-    paramType = {
-      'applicant_UserId': '\$applicant_UserId',
-    };
-    passVariable = {'applicant_UserId': '${SharedPreferencesUtils.getUserId}'};
+    // param = {
+    //   '\$applicant_UserId': 'UUID',
+    // };
+    // paramType = {
+    //   'applicant_UserId': '\$applicant_UserId',
+    // };
+    // passVariable = {
+    //   'applicant_UserId': '${SharedPreferencesUtils.getUserId}'
+    // };
+
+    //20230610 Adding New Param and Query.
+    param = {'\$orderby': 'String','\$league_State': 'String', '\$league_City': 'String'};
+    paramType = {'orderBy': '\$orderby','state': '\$league_State', 'city': '\$league_City'};
 
     if (SharedPreferencesUtils.getLastCity != null) {
       dropDownValue = SharedPreferencesUtils.getLastCity;
@@ -68,12 +74,16 @@ class _MyLeagueListState extends State<MyLeagueList> with isInternetConnection {
       selectedCity = split?[0].toString().trim();
       selectedState = split?[1].toString().trim();
 
-      // setState(() {
-      param = {'\$league_State': 'String!', '\$league_City': 'String!'};
-      paramType = {'league_State': '\$league_State', 'league_City': '\$league_City'};
       passVariable = {
+        'orderBy': '-createdAt',
         'league_State': selectedState ?? '',
         'league_City': selectedCity ?? '',
+      };
+    } else {
+      passVariable = {
+        'orderBy': '-createdAt',
+        'league_State': '',
+        'league_City': '',
       };
     }
 
@@ -110,7 +120,7 @@ class _MyLeagueListState extends State<MyLeagueList> with isInternetConnection {
                   if (streamSnapshot.hasData) {
                     return Query(
                       options: QueryOptions(
-                        document: gql(allLeagueApplicationsQuery(param, paramType)),
+                        document: gql(allLeaguesQuery(param, paramType)),
                         variables: passVariable,
                         pollInterval: Duration(seconds: 100),
                       ),
@@ -123,22 +133,23 @@ class _MyLeagueListState extends State<MyLeagueList> with isInternetConnection {
                           return const Center(child: CupertinoActivityIndicator());
                         }
 
-                        allLeaguesApps = AllLeaguesApps.fromJson(result.data!);
-
+                        allLeaguesApps = AllLeaguesData.fromJson(result.data!);
                         applicantsList = [];
-                        completed = 0;
-                        for (var data in allLeaguesApps!.allLeagueApplications!.edges!) {
-                          if (data.node!.status!.toLowerCase() == 'approved') {
-                            if (data.node!.league!.status!.toLowerCase() != 'ongoing') {
-                              if (completed < 5) {
-                                applicantsList!.add(data);
-                                completed++;
-                              }
-                            } else {
-                              applicantsList!.add(data);
-                            }
-                          }
-                        }
+                        applicantsList!.addAll(allLeaguesApps!.allLeagues!.edges!);
+
+                        // completed = 0;
+                        // for (var data in allLeaguesApps!.allLeagueApplications!.edges!) {
+                        //   if (data.node!.status!.toLowerCase() == 'approved') {
+                        //     if (data.node!.league!.status!.toLowerCase() != 'ongoing') {
+                        //       if (completed < 5) {
+                        //         applicantsList!.add(data);
+                        //         completed++;
+                        //       }
+                        //     } else {
+                        //       applicantsList!.add(data);
+                        //     }
+                        //   }
+                        // }
 
                         return CustomScrollView(
                           controller: _scrollController,
@@ -163,11 +174,12 @@ class _MyLeagueListState extends State<MyLeagueList> with isInternetConnection {
                                         selectedState = split![1].toString().trim();
 
                                         // setState(() {
-                                        param = {'\$league_State': 'String!', '\$league_City': 'String!'};
-                                        paramType = {'league_State': '\$league_State', 'league_City': '\$league_City'};
+                                        // param = {'\$league_State': 'String!', '\$league_City': 'String!'};
+                                        // paramType = {'league_State': '\$league_State', 'league_City': '\$league_City'};
                                         passVariable = {
                                           'league_State': selectedState ?? '',
                                           'league_City': selectedCity ?? '',
+                                          'orderBy': '-createdAt',
                                         };
 
                                         SharedPreferencesUtils.setLastCity(value); //20230608
@@ -182,7 +194,7 @@ class _MyLeagueListState extends State<MyLeagueList> with isInternetConnection {
                               floating: false,
                               pinned: true,
                             ),
-                            (applicantsList!.length <= 0)
+                            (applicantsList!.isEmpty)
                                 ? SliverToBoxAdapter(
                                     child: NoDataListTile(
                                       onTileClick: () {},
@@ -193,23 +205,41 @@ class _MyLeagueListState extends State<MyLeagueList> with isInternetConnection {
                                 : SliverList(
                                     delegate: SliverChildBuilderDelegate(
                                       (context, index) => MyLeagueListTile(
-                                        leagueStatus: applicantsList![index].node!.league!.status,
-                                        profileImg: 'assets/winner_cup.png',
-                                        leagueLocation:
-                                            '${applicantsList![index].node!.league!.city}, ${applicantsList![index].node!.league!.state}, ${applicantsList![index].node!.league!.country}',
-                                        leagueDate: convertDate(applicantsList?[index].node?.league?.startDate,
-                                            applicantsList?[index].node?.league?.endDate),
-                                        leagueTitle: applicantsList![index].node!.league!.name,
-                                        onTileClick: () {
-                                          Provider.of<LeagueIdProvider>(context, listen: false)
-                                              .setLeagueId(applicantsList![index].node!.league!.leagueId);
-                                          Navigator.pushNamed(
-                                            context,
-                                            LeagueDetails.path, /*arguments: applicantsList![index].node*/
-                                          );
-                                        },
-                                        onProfileClick: () {},
-                                      ),
+                                            leagueStatus: applicantsList![index].node!.status,
+                                            profileImg: 'assets/winner_cup.png',
+                                            leagueLocation:
+                                            '${applicantsList![index].node!.city}, ${applicantsList![index].node!.state}, ${applicantsList![index].node!.country}',
+                                            leagueDate: convertDate(applicantsList?[index].node?.startDate,
+                                                applicantsList?[index].node?.endDate),
+                                            leagueTitle: applicantsList![index].node!.name,
+                                            onTileClick: () {
+                                              Provider.of<LeagueIdProvider>(context, listen: false)
+                                                  .setLeagueId(applicantsList![index].node!.leagueId);
+                                              Navigator.pushNamed(
+                                                context,
+                                                LeagueDetails.path, /*arguments: applicantsList![index].node*/
+                                              );
+                                            },
+                                            onProfileClick: () {},
+                                          ),
+                                      //     MyLeagueListTile(
+                                      //   leagueStatus: applicantsList![index].node!.league!.status,
+                                      //   profileImg: 'assets/winner_cup.png',
+                                      //   leagueLocation:
+                                      //       '${applicantsList![index].node!.league!.city}, ${applicantsList![index].node!.league!.state}, ${applicantsList![index].node!.league!.country}',
+                                      //   leagueDate: convertDate(applicantsList?[index].node?.league?.startDate,
+                                      //       applicantsList?[index].node?.league?.endDate),
+                                      //   leagueTitle: applicantsList![index].node!.league!.name,
+                                      //   onTileClick: () {
+                                      //     Provider.of<LeagueIdProvider>(context, listen: false)
+                                      //         .setLeagueId(applicantsList![index].node!.league!.leagueId);
+                                      //     Navigator.pushNamed(
+                                      //       context,
+                                      //       LeagueDetails.path, /*arguments: applicantsList![index].node*/
+                                      //     );
+                                      //   },
+                                      //   onProfileClick: () {},
+                                      // ),
                                       childCount: applicantsList?.length,
                                     ),
                                   )

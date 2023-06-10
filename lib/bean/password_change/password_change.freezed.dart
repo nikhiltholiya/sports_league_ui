@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'password_change.dart';
 
@@ -12,29 +12,11 @@ part of 'password_change.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 PasswordChangeData _$PasswordChangeDataFromJson(Map<String, dynamic> json) {
   return _PasswordChangeData.fromJson(json);
 }
-
-/// @nodoc
-class _$PasswordChangeDataTearOff {
-  const _$PasswordChangeDataTearOff();
-
-  _PasswordChangeData call({required PasswordChange? passwordChange}) {
-    return _PasswordChangeData(
-      passwordChange: passwordChange,
-    );
-  }
-
-  PasswordChangeData fromJson(Map<String, Object?> json) {
-    return PasswordChangeData.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $PasswordChangeData = _$PasswordChangeDataTearOff();
 
 /// @nodoc
 mixin _$PasswordChangeData {
@@ -50,52 +32,57 @@ mixin _$PasswordChangeData {
 abstract class $PasswordChangeDataCopyWith<$Res> {
   factory $PasswordChangeDataCopyWith(
           PasswordChangeData value, $Res Function(PasswordChangeData) then) =
-      _$PasswordChangeDataCopyWithImpl<$Res>;
+      _$PasswordChangeDataCopyWithImpl<$Res, PasswordChangeData>;
+  @useResult
   $Res call({PasswordChange? passwordChange});
 
   $PasswordChangeCopyWith<$Res>? get passwordChange;
 }
 
 /// @nodoc
-class _$PasswordChangeDataCopyWithImpl<$Res>
+class _$PasswordChangeDataCopyWithImpl<$Res, $Val extends PasswordChangeData>
     implements $PasswordChangeDataCopyWith<$Res> {
   _$PasswordChangeDataCopyWithImpl(this._value, this._then);
 
-  final PasswordChangeData _value;
   // ignore: unused_field
-  final $Res Function(PasswordChangeData) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? passwordChange = freezed,
   }) {
     return _then(_value.copyWith(
-      passwordChange: passwordChange == freezed
+      passwordChange: freezed == passwordChange
           ? _value.passwordChange
           : passwordChange // ignore: cast_nullable_to_non_nullable
               as PasswordChange?,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $PasswordChangeCopyWith<$Res>? get passwordChange {
     if (_value.passwordChange == null) {
       return null;
     }
 
     return $PasswordChangeCopyWith<$Res>(_value.passwordChange!, (value) {
-      return _then(_value.copyWith(passwordChange: value));
+      return _then(_value.copyWith(passwordChange: value) as $Val);
     });
   }
 }
 
 /// @nodoc
-abstract class _$PasswordChangeDataCopyWith<$Res>
+abstract class _$$_PasswordChangeDataCopyWith<$Res>
     implements $PasswordChangeDataCopyWith<$Res> {
-  factory _$PasswordChangeDataCopyWith(
-          _PasswordChangeData value, $Res Function(_PasswordChangeData) then) =
-      __$PasswordChangeDataCopyWithImpl<$Res>;
+  factory _$$_PasswordChangeDataCopyWith(_$_PasswordChangeData value,
+          $Res Function(_$_PasswordChangeData) then) =
+      __$$_PasswordChangeDataCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({PasswordChange? passwordChange});
 
   @override
@@ -103,22 +90,20 @@ abstract class _$PasswordChangeDataCopyWith<$Res>
 }
 
 /// @nodoc
-class __$PasswordChangeDataCopyWithImpl<$Res>
-    extends _$PasswordChangeDataCopyWithImpl<$Res>
-    implements _$PasswordChangeDataCopyWith<$Res> {
-  __$PasswordChangeDataCopyWithImpl(
-      _PasswordChangeData _value, $Res Function(_PasswordChangeData) _then)
-      : super(_value, (v) => _then(v as _PasswordChangeData));
+class __$$_PasswordChangeDataCopyWithImpl<$Res>
+    extends _$PasswordChangeDataCopyWithImpl<$Res, _$_PasswordChangeData>
+    implements _$$_PasswordChangeDataCopyWith<$Res> {
+  __$$_PasswordChangeDataCopyWithImpl(
+      _$_PasswordChangeData _value, $Res Function(_$_PasswordChangeData) _then)
+      : super(_value, _then);
 
-  @override
-  _PasswordChangeData get _value => super._value as _PasswordChangeData;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? passwordChange = freezed,
   }) {
-    return _then(_PasswordChangeData(
-      passwordChange: passwordChange == freezed
+    return _then(_$_PasswordChangeData(
+      passwordChange: freezed == passwordChange
           ? _value.passwordChange
           : passwordChange // ignore: cast_nullable_to_non_nullable
               as PasswordChange?,
@@ -146,29 +131,33 @@ class _$_PasswordChangeData implements _PasswordChangeData {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _PasswordChangeData &&
-            const DeepCollectionEquality()
-                .equals(other.passwordChange, passwordChange));
+            other is _$_PasswordChangeData &&
+            (identical(other.passwordChange, passwordChange) ||
+                other.passwordChange == passwordChange));
   }
-
-  @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(passwordChange));
 
   @JsonKey(ignore: true)
   @override
-  _$PasswordChangeDataCopyWith<_PasswordChangeData> get copyWith =>
-      __$PasswordChangeDataCopyWithImpl<_PasswordChangeData>(this, _$identity);
+  int get hashCode => Object.hash(runtimeType, passwordChange);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_PasswordChangeDataCopyWith<_$_PasswordChangeData> get copyWith =>
+      __$$_PasswordChangeDataCopyWithImpl<_$_PasswordChangeData>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_PasswordChangeDataToJson(this);
+    return _$$_PasswordChangeDataToJson(
+      this,
+    );
   }
 }
 
 abstract class _PasswordChangeData implements PasswordChangeData {
-  const factory _PasswordChangeData({required PasswordChange? passwordChange}) =
-      _$_PasswordChangeData;
+  const factory _PasswordChangeData(
+      {required final PasswordChange? passwordChange}) = _$_PasswordChangeData;
 
   factory _PasswordChangeData.fromJson(Map<String, dynamic> json) =
       _$_PasswordChangeData.fromJson;
@@ -177,38 +166,13 @@ abstract class _PasswordChangeData implements PasswordChangeData {
   PasswordChange? get passwordChange;
   @override
   @JsonKey(ignore: true)
-  _$PasswordChangeDataCopyWith<_PasswordChangeData> get copyWith =>
+  _$$_PasswordChangeDataCopyWith<_$_PasswordChangeData> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 PasswordChange _$PasswordChangeFromJson(Map<String, dynamic> json) {
   return _PasswordChange.fromJson(json);
 }
-
-/// @nodoc
-class _$PasswordChangeTearOff {
-  const _$PasswordChangeTearOff();
-
-  _PasswordChange call(
-      {required bool? success,
-      required String? refreshToken,
-      required Errors? errors,
-      required String? token}) {
-    return _PasswordChange(
-      success: success,
-      refreshToken: refreshToken,
-      errors: errors,
-      token: token,
-    );
-  }
-
-  PasswordChange fromJson(Map<String, Object?> json) {
-    return PasswordChange.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $PasswordChange = _$PasswordChangeTearOff();
 
 /// @nodoc
 mixin _$PasswordChange {
@@ -227,7 +191,8 @@ mixin _$PasswordChange {
 abstract class $PasswordChangeCopyWith<$Res> {
   factory $PasswordChangeCopyWith(
           PasswordChange value, $Res Function(PasswordChange) then) =
-      _$PasswordChangeCopyWithImpl<$Res>;
+      _$PasswordChangeCopyWithImpl<$Res, PasswordChange>;
+  @useResult
   $Res call(
       {bool? success, String? refreshToken, Errors? errors, String? token});
 
@@ -235,14 +200,16 @@ abstract class $PasswordChangeCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$PasswordChangeCopyWithImpl<$Res>
+class _$PasswordChangeCopyWithImpl<$Res, $Val extends PasswordChange>
     implements $PasswordChangeCopyWith<$Res> {
   _$PasswordChangeCopyWithImpl(this._value, this._then);
 
-  final PasswordChange _value;
   // ignore: unused_field
-  final $Res Function(PasswordChange) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? success = freezed,
@@ -251,44 +218,46 @@ class _$PasswordChangeCopyWithImpl<$Res>
     Object? token = freezed,
   }) {
     return _then(_value.copyWith(
-      success: success == freezed
+      success: freezed == success
           ? _value.success
           : success // ignore: cast_nullable_to_non_nullable
               as bool?,
-      refreshToken: refreshToken == freezed
+      refreshToken: freezed == refreshToken
           ? _value.refreshToken
           : refreshToken // ignore: cast_nullable_to_non_nullable
               as String?,
-      errors: errors == freezed
+      errors: freezed == errors
           ? _value.errors
           : errors // ignore: cast_nullable_to_non_nullable
               as Errors?,
-      token: token == freezed
+      token: freezed == token
           ? _value.token
           : token // ignore: cast_nullable_to_non_nullable
               as String?,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $ErrorsCopyWith<$Res>? get errors {
     if (_value.errors == null) {
       return null;
     }
 
     return $ErrorsCopyWith<$Res>(_value.errors!, (value) {
-      return _then(_value.copyWith(errors: value));
+      return _then(_value.copyWith(errors: value) as $Val);
     });
   }
 }
 
 /// @nodoc
-abstract class _$PasswordChangeCopyWith<$Res>
+abstract class _$$_PasswordChangeCopyWith<$Res>
     implements $PasswordChangeCopyWith<$Res> {
-  factory _$PasswordChangeCopyWith(
-          _PasswordChange value, $Res Function(_PasswordChange) then) =
-      __$PasswordChangeCopyWithImpl<$Res>;
+  factory _$$_PasswordChangeCopyWith(
+          _$_PasswordChange value, $Res Function(_$_PasswordChange) then) =
+      __$$_PasswordChangeCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {bool? success, String? refreshToken, Errors? errors, String? token});
 
@@ -297,16 +266,14 @@ abstract class _$PasswordChangeCopyWith<$Res>
 }
 
 /// @nodoc
-class __$PasswordChangeCopyWithImpl<$Res>
-    extends _$PasswordChangeCopyWithImpl<$Res>
-    implements _$PasswordChangeCopyWith<$Res> {
-  __$PasswordChangeCopyWithImpl(
-      _PasswordChange _value, $Res Function(_PasswordChange) _then)
-      : super(_value, (v) => _then(v as _PasswordChange));
+class __$$_PasswordChangeCopyWithImpl<$Res>
+    extends _$PasswordChangeCopyWithImpl<$Res, _$_PasswordChange>
+    implements _$$_PasswordChangeCopyWith<$Res> {
+  __$$_PasswordChangeCopyWithImpl(
+      _$_PasswordChange _value, $Res Function(_$_PasswordChange) _then)
+      : super(_value, _then);
 
-  @override
-  _PasswordChange get _value => super._value as _PasswordChange;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? success = freezed,
@@ -314,20 +281,20 @@ class __$PasswordChangeCopyWithImpl<$Res>
     Object? errors = freezed,
     Object? token = freezed,
   }) {
-    return _then(_PasswordChange(
-      success: success == freezed
+    return _then(_$_PasswordChange(
+      success: freezed == success
           ? _value.success
           : success // ignore: cast_nullable_to_non_nullable
               as bool?,
-      refreshToken: refreshToken == freezed
+      refreshToken: freezed == refreshToken
           ? _value.refreshToken
           : refreshToken // ignore: cast_nullable_to_non_nullable
               as String?,
-      errors: errors == freezed
+      errors: freezed == errors
           ? _value.errors
           : errors // ignore: cast_nullable_to_non_nullable
               as Errors?,
-      token: token == freezed
+      token: freezed == token
           ? _value.token
           : token // ignore: cast_nullable_to_non_nullable
               as String?,
@@ -365,39 +332,39 @@ class _$_PasswordChange implements _PasswordChange {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _PasswordChange &&
-            const DeepCollectionEquality().equals(other.success, success) &&
-            const DeepCollectionEquality()
-                .equals(other.refreshToken, refreshToken) &&
-            const DeepCollectionEquality().equals(other.errors, errors) &&
-            const DeepCollectionEquality().equals(other.token, token));
+            other is _$_PasswordChange &&
+            (identical(other.success, success) || other.success == success) &&
+            (identical(other.refreshToken, refreshToken) ||
+                other.refreshToken == refreshToken) &&
+            (identical(other.errors, errors) || other.errors == errors) &&
+            (identical(other.token, token) || other.token == token));
   }
-
-  @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(success),
-      const DeepCollectionEquality().hash(refreshToken),
-      const DeepCollectionEquality().hash(errors),
-      const DeepCollectionEquality().hash(token));
 
   @JsonKey(ignore: true)
   @override
-  _$PasswordChangeCopyWith<_PasswordChange> get copyWith =>
-      __$PasswordChangeCopyWithImpl<_PasswordChange>(this, _$identity);
+  int get hashCode =>
+      Object.hash(runtimeType, success, refreshToken, errors, token);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_PasswordChangeCopyWith<_$_PasswordChange> get copyWith =>
+      __$$_PasswordChangeCopyWithImpl<_$_PasswordChange>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_PasswordChangeToJson(this);
+    return _$$_PasswordChangeToJson(
+      this,
+    );
   }
 }
 
 abstract class _PasswordChange implements PasswordChange {
   const factory _PasswordChange(
-      {required bool? success,
-      required String? refreshToken,
-      required Errors? errors,
-      required String? token}) = _$_PasswordChange;
+      {required final bool? success,
+      required final String? refreshToken,
+      required final Errors? errors,
+      required final String? token}) = _$_PasswordChange;
 
   factory _PasswordChange.fromJson(Map<String, dynamic> json) =
       _$_PasswordChange.fromJson;
@@ -412,34 +379,13 @@ abstract class _PasswordChange implements PasswordChange {
   String? get token;
   @override
   @JsonKey(ignore: true)
-  _$PasswordChangeCopyWith<_PasswordChange> get copyWith =>
+  _$$_PasswordChangeCopyWith<_$_PasswordChange> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 Errors _$ErrorsFromJson(Map<String, dynamic> json) {
   return _Errors.fromJson(json);
 }
-
-/// @nodoc
-class _$ErrorsTearOff {
-  const _$ErrorsTearOff();
-
-  _Errors call(
-      {required List<PasswordCriteria>? oldPassword,
-      required List<PasswordCriteria>? newPassword}) {
-    return _Errors(
-      oldPassword: oldPassword,
-      newPassword: newPassword,
-    );
-  }
-
-  Errors fromJson(Map<String, Object?> json) {
-    return Errors.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $Errors = _$ErrorsTearOff();
 
 /// @nodoc
 mixin _$Errors {
@@ -454,69 +400,73 @@ mixin _$Errors {
 /// @nodoc
 abstract class $ErrorsCopyWith<$Res> {
   factory $ErrorsCopyWith(Errors value, $Res Function(Errors) then) =
-      _$ErrorsCopyWithImpl<$Res>;
+      _$ErrorsCopyWithImpl<$Res, Errors>;
+  @useResult
   $Res call(
       {List<PasswordCriteria>? oldPassword,
       List<PasswordCriteria>? newPassword});
 }
 
 /// @nodoc
-class _$ErrorsCopyWithImpl<$Res> implements $ErrorsCopyWith<$Res> {
+class _$ErrorsCopyWithImpl<$Res, $Val extends Errors>
+    implements $ErrorsCopyWith<$Res> {
   _$ErrorsCopyWithImpl(this._value, this._then);
 
-  final Errors _value;
   // ignore: unused_field
-  final $Res Function(Errors) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? oldPassword = freezed,
     Object? newPassword = freezed,
   }) {
     return _then(_value.copyWith(
-      oldPassword: oldPassword == freezed
+      oldPassword: freezed == oldPassword
           ? _value.oldPassword
           : oldPassword // ignore: cast_nullable_to_non_nullable
               as List<PasswordCriteria>?,
-      newPassword: newPassword == freezed
+      newPassword: freezed == newPassword
           ? _value.newPassword
           : newPassword // ignore: cast_nullable_to_non_nullable
               as List<PasswordCriteria>?,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$ErrorsCopyWith<$Res> implements $ErrorsCopyWith<$Res> {
-  factory _$ErrorsCopyWith(_Errors value, $Res Function(_Errors) then) =
-      __$ErrorsCopyWithImpl<$Res>;
+abstract class _$$_ErrorsCopyWith<$Res> implements $ErrorsCopyWith<$Res> {
+  factory _$$_ErrorsCopyWith(_$_Errors value, $Res Function(_$_Errors) then) =
+      __$$_ErrorsCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {List<PasswordCriteria>? oldPassword,
       List<PasswordCriteria>? newPassword});
 }
 
 /// @nodoc
-class __$ErrorsCopyWithImpl<$Res> extends _$ErrorsCopyWithImpl<$Res>
-    implements _$ErrorsCopyWith<$Res> {
-  __$ErrorsCopyWithImpl(_Errors _value, $Res Function(_Errors) _then)
-      : super(_value, (v) => _then(v as _Errors));
+class __$$_ErrorsCopyWithImpl<$Res>
+    extends _$ErrorsCopyWithImpl<$Res, _$_Errors>
+    implements _$$_ErrorsCopyWith<$Res> {
+  __$$_ErrorsCopyWithImpl(_$_Errors _value, $Res Function(_$_Errors) _then)
+      : super(_value, _then);
 
-  @override
-  _Errors get _value => super._value as _Errors;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? oldPassword = freezed,
     Object? newPassword = freezed,
   }) {
-    return _then(_Errors(
-      oldPassword: oldPassword == freezed
-          ? _value.oldPassword
+    return _then(_$_Errors(
+      oldPassword: freezed == oldPassword
+          ? _value._oldPassword
           : oldPassword // ignore: cast_nullable_to_non_nullable
               as List<PasswordCriteria>?,
-      newPassword: newPassword == freezed
-          ? _value.newPassword
+      newPassword: freezed == newPassword
+          ? _value._newPassword
           : newPassword // ignore: cast_nullable_to_non_nullable
               as List<PasswordCriteria>?,
     ));
@@ -526,15 +476,34 @@ class __$ErrorsCopyWithImpl<$Res> extends _$ErrorsCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_Errors implements _Errors {
-  const _$_Errors({required this.oldPassword, required this.newPassword});
+  const _$_Errors(
+      {required final List<PasswordCriteria>? oldPassword,
+      required final List<PasswordCriteria>? newPassword})
+      : _oldPassword = oldPassword,
+        _newPassword = newPassword;
 
   factory _$_Errors.fromJson(Map<String, dynamic> json) =>
       _$$_ErrorsFromJson(json);
 
+  final List<PasswordCriteria>? _oldPassword;
   @override
-  final List<PasswordCriteria>? oldPassword;
+  List<PasswordCriteria>? get oldPassword {
+    final value = _oldPassword;
+    if (value == null) return null;
+    if (_oldPassword is EqualUnmodifiableListView) return _oldPassword;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  final List<PasswordCriteria>? _newPassword;
   @override
-  final List<PasswordCriteria>? newPassword;
+  List<PasswordCriteria>? get newPassword {
+    final value = _newPassword;
+    if (value == null) return null;
+    if (_newPassword is EqualUnmodifiableListView) return _newPassword;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
 
   @override
   String toString() {
@@ -545,34 +514,38 @@ class _$_Errors implements _Errors {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _Errors &&
+            other is _$_Errors &&
             const DeepCollectionEquality()
-                .equals(other.oldPassword, oldPassword) &&
+                .equals(other._oldPassword, _oldPassword) &&
             const DeepCollectionEquality()
-                .equals(other.newPassword, newPassword));
+                .equals(other._newPassword, _newPassword));
   }
-
-  @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(oldPassword),
-      const DeepCollectionEquality().hash(newPassword));
 
   @JsonKey(ignore: true)
   @override
-  _$ErrorsCopyWith<_Errors> get copyWith =>
-      __$ErrorsCopyWithImpl<_Errors>(this, _$identity);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(_oldPassword),
+      const DeepCollectionEquality().hash(_newPassword));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_ErrorsCopyWith<_$_Errors> get copyWith =>
+      __$$_ErrorsCopyWithImpl<_$_Errors>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_ErrorsToJson(this);
+    return _$$_ErrorsToJson(
+      this,
+    );
   }
 }
 
 abstract class _Errors implements Errors {
   const factory _Errors(
-      {required List<PasswordCriteria>? oldPassword,
-      required List<PasswordCriteria>? newPassword}) = _$_Errors;
+      {required final List<PasswordCriteria>? oldPassword,
+      required final List<PasswordCriteria>? newPassword}) = _$_Errors;
 
   factory _Errors.fromJson(Map<String, dynamic> json) = _$_Errors.fromJson;
 
@@ -582,31 +555,13 @@ abstract class _Errors implements Errors {
   List<PasswordCriteria>? get newPassword;
   @override
   @JsonKey(ignore: true)
-  _$ErrorsCopyWith<_Errors> get copyWith => throw _privateConstructorUsedError;
+  _$$_ErrorsCopyWith<_$_Errors> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 PasswordCriteria _$PasswordCriteriaFromJson(Map<String, dynamic> json) {
   return _PasswordCriteria.fromJson(json);
 }
-
-/// @nodoc
-class _$PasswordCriteriaTearOff {
-  const _$PasswordCriteriaTearOff();
-
-  _PasswordCriteria call({required String? message, required String? code}) {
-    return _PasswordCriteria(
-      message: message,
-      code: code,
-    );
-  }
-
-  PasswordCriteria fromJson(Map<String, Object?> json) {
-    return PasswordCriteria.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $PasswordCriteria = _$PasswordCriteriaTearOff();
 
 /// @nodoc
 mixin _$PasswordCriteria {
@@ -623,69 +578,71 @@ mixin _$PasswordCriteria {
 abstract class $PasswordCriteriaCopyWith<$Res> {
   factory $PasswordCriteriaCopyWith(
           PasswordCriteria value, $Res Function(PasswordCriteria) then) =
-      _$PasswordCriteriaCopyWithImpl<$Res>;
+      _$PasswordCriteriaCopyWithImpl<$Res, PasswordCriteria>;
+  @useResult
   $Res call({String? message, String? code});
 }
 
 /// @nodoc
-class _$PasswordCriteriaCopyWithImpl<$Res>
+class _$PasswordCriteriaCopyWithImpl<$Res, $Val extends PasswordCriteria>
     implements $PasswordCriteriaCopyWith<$Res> {
   _$PasswordCriteriaCopyWithImpl(this._value, this._then);
 
-  final PasswordCriteria _value;
   // ignore: unused_field
-  final $Res Function(PasswordCriteria) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? message = freezed,
     Object? code = freezed,
   }) {
     return _then(_value.copyWith(
-      message: message == freezed
+      message: freezed == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String?,
-      code: code == freezed
+      code: freezed == code
           ? _value.code
           : code // ignore: cast_nullable_to_non_nullable
               as String?,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$PasswordCriteriaCopyWith<$Res>
+abstract class _$$_PasswordCriteriaCopyWith<$Res>
     implements $PasswordCriteriaCopyWith<$Res> {
-  factory _$PasswordCriteriaCopyWith(
-          _PasswordCriteria value, $Res Function(_PasswordCriteria) then) =
-      __$PasswordCriteriaCopyWithImpl<$Res>;
+  factory _$$_PasswordCriteriaCopyWith(
+          _$_PasswordCriteria value, $Res Function(_$_PasswordCriteria) then) =
+      __$$_PasswordCriteriaCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({String? message, String? code});
 }
 
 /// @nodoc
-class __$PasswordCriteriaCopyWithImpl<$Res>
-    extends _$PasswordCriteriaCopyWithImpl<$Res>
-    implements _$PasswordCriteriaCopyWith<$Res> {
-  __$PasswordCriteriaCopyWithImpl(
-      _PasswordCriteria _value, $Res Function(_PasswordCriteria) _then)
-      : super(_value, (v) => _then(v as _PasswordCriteria));
+class __$$_PasswordCriteriaCopyWithImpl<$Res>
+    extends _$PasswordCriteriaCopyWithImpl<$Res, _$_PasswordCriteria>
+    implements _$$_PasswordCriteriaCopyWith<$Res> {
+  __$$_PasswordCriteriaCopyWithImpl(
+      _$_PasswordCriteria _value, $Res Function(_$_PasswordCriteria) _then)
+      : super(_value, _then);
 
-  @override
-  _PasswordCriteria get _value => super._value as _PasswordCriteria;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? message = freezed,
     Object? code = freezed,
   }) {
-    return _then(_PasswordCriteria(
-      message: message == freezed
+    return _then(_$_PasswordCriteria(
+      message: freezed == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String?,
-      code: code == freezed
+      code: freezed == code
           ? _value.code
           : code // ignore: cast_nullable_to_non_nullable
               as String?,
@@ -715,31 +672,33 @@ class _$_PasswordCriteria implements _PasswordCriteria {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _PasswordCriteria &&
-            const DeepCollectionEquality().equals(other.message, message) &&
-            const DeepCollectionEquality().equals(other.code, code));
+            other is _$_PasswordCriteria &&
+            (identical(other.message, message) || other.message == message) &&
+            (identical(other.code, code) || other.code == code));
   }
-
-  @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(message),
-      const DeepCollectionEquality().hash(code));
 
   @JsonKey(ignore: true)
   @override
-  _$PasswordCriteriaCopyWith<_PasswordCriteria> get copyWith =>
-      __$PasswordCriteriaCopyWithImpl<_PasswordCriteria>(this, _$identity);
+  int get hashCode => Object.hash(runtimeType, message, code);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_PasswordCriteriaCopyWith<_$_PasswordCriteria> get copyWith =>
+      __$$_PasswordCriteriaCopyWithImpl<_$_PasswordCriteria>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_PasswordCriteriaToJson(this);
+    return _$$_PasswordCriteriaToJson(
+      this,
+    );
   }
 }
 
 abstract class _PasswordCriteria implements PasswordCriteria {
   const factory _PasswordCriteria(
-      {required String? message, required String? code}) = _$_PasswordCriteria;
+      {required final String? message,
+      required final String? code}) = _$_PasswordCriteria;
 
   factory _PasswordCriteria.fromJson(Map<String, dynamic> json) =
       _$_PasswordCriteria.fromJson;
@@ -750,6 +709,6 @@ abstract class _PasswordCriteria implements PasswordCriteria {
   String? get code;
   @override
   @JsonKey(ignore: true)
-  _$PasswordCriteriaCopyWith<_PasswordCriteria> get copyWith =>
+  _$$_PasswordCriteriaCopyWith<_$_PasswordCriteria> get copyWith =>
       throw _privateConstructorUsedError;
 }

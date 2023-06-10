@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'resend_activation_mail.dart';
 
@@ -12,31 +12,12 @@ part of 'resend_activation_mail.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 ResendActivationMailData _$ResendActivationMailDataFromJson(
     Map<String, dynamic> json) {
   return _ResendActivationMailData.fromJson(json);
 }
-
-/// @nodoc
-class _$ResendActivationMailDataTearOff {
-  const _$ResendActivationMailDataTearOff();
-
-  _ResendActivationMailData call(
-      {required ResendActivationEmail? resendActivationEmail}) {
-    return _ResendActivationMailData(
-      resendActivationEmail: resendActivationEmail,
-    );
-  }
-
-  ResendActivationMailData fromJson(Map<String, Object?> json) {
-    return ResendActivationMailData.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $ResendActivationMailData = _$ResendActivationMailDataTearOff();
 
 /// @nodoc
 mixin _$ResendActivationMailData {
@@ -53,34 +34,39 @@ mixin _$ResendActivationMailData {
 abstract class $ResendActivationMailDataCopyWith<$Res> {
   factory $ResendActivationMailDataCopyWith(ResendActivationMailData value,
           $Res Function(ResendActivationMailData) then) =
-      _$ResendActivationMailDataCopyWithImpl<$Res>;
+      _$ResendActivationMailDataCopyWithImpl<$Res, ResendActivationMailData>;
+  @useResult
   $Res call({ResendActivationEmail? resendActivationEmail});
 
   $ResendActivationEmailCopyWith<$Res>? get resendActivationEmail;
 }
 
 /// @nodoc
-class _$ResendActivationMailDataCopyWithImpl<$Res>
+class _$ResendActivationMailDataCopyWithImpl<$Res,
+        $Val extends ResendActivationMailData>
     implements $ResendActivationMailDataCopyWith<$Res> {
   _$ResendActivationMailDataCopyWithImpl(this._value, this._then);
 
-  final ResendActivationMailData _value;
   // ignore: unused_field
-  final $Res Function(ResendActivationMailData) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? resendActivationEmail = freezed,
   }) {
     return _then(_value.copyWith(
-      resendActivationEmail: resendActivationEmail == freezed
+      resendActivationEmail: freezed == resendActivationEmail
           ? _value.resendActivationEmail
           : resendActivationEmail // ignore: cast_nullable_to_non_nullable
               as ResendActivationEmail?,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $ResendActivationEmailCopyWith<$Res>? get resendActivationEmail {
     if (_value.resendActivationEmail == null) {
       return null;
@@ -88,18 +74,20 @@ class _$ResendActivationMailDataCopyWithImpl<$Res>
 
     return $ResendActivationEmailCopyWith<$Res>(_value.resendActivationEmail!,
         (value) {
-      return _then(_value.copyWith(resendActivationEmail: value));
+      return _then(_value.copyWith(resendActivationEmail: value) as $Val);
     });
   }
 }
 
 /// @nodoc
-abstract class _$ResendActivationMailDataCopyWith<$Res>
+abstract class _$$_ResendActivationMailDataCopyWith<$Res>
     implements $ResendActivationMailDataCopyWith<$Res> {
-  factory _$ResendActivationMailDataCopyWith(_ResendActivationMailData value,
-          $Res Function(_ResendActivationMailData) then) =
-      __$ResendActivationMailDataCopyWithImpl<$Res>;
+  factory _$$_ResendActivationMailDataCopyWith(
+          _$_ResendActivationMailData value,
+          $Res Function(_$_ResendActivationMailData) then) =
+      __$$_ResendActivationMailDataCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({ResendActivationEmail? resendActivationEmail});
 
   @override
@@ -107,23 +95,21 @@ abstract class _$ResendActivationMailDataCopyWith<$Res>
 }
 
 /// @nodoc
-class __$ResendActivationMailDataCopyWithImpl<$Res>
-    extends _$ResendActivationMailDataCopyWithImpl<$Res>
-    implements _$ResendActivationMailDataCopyWith<$Res> {
-  __$ResendActivationMailDataCopyWithImpl(_ResendActivationMailData _value,
-      $Res Function(_ResendActivationMailData) _then)
-      : super(_value, (v) => _then(v as _ResendActivationMailData));
+class __$$_ResendActivationMailDataCopyWithImpl<$Res>
+    extends _$ResendActivationMailDataCopyWithImpl<$Res,
+        _$_ResendActivationMailData>
+    implements _$$_ResendActivationMailDataCopyWith<$Res> {
+  __$$_ResendActivationMailDataCopyWithImpl(_$_ResendActivationMailData _value,
+      $Res Function(_$_ResendActivationMailData) _then)
+      : super(_value, _then);
 
-  @override
-  _ResendActivationMailData get _value =>
-      super._value as _ResendActivationMailData;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? resendActivationEmail = freezed,
   }) {
-    return _then(_ResendActivationMailData(
-      resendActivationEmail: resendActivationEmail == freezed
+    return _then(_$_ResendActivationMailData(
+      resendActivationEmail: freezed == resendActivationEmail
           ? _value.resendActivationEmail
           : resendActivationEmail // ignore: cast_nullable_to_non_nullable
               as ResendActivationEmail?,
@@ -151,30 +137,33 @@ class _$_ResendActivationMailData implements _ResendActivationMailData {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _ResendActivationMailData &&
-            const DeepCollectionEquality()
-                .equals(other.resendActivationEmail, resendActivationEmail));
+            other is _$_ResendActivationMailData &&
+            (identical(other.resendActivationEmail, resendActivationEmail) ||
+                other.resendActivationEmail == resendActivationEmail));
   }
-
-  @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(resendActivationEmail));
 
   @JsonKey(ignore: true)
   @override
-  _$ResendActivationMailDataCopyWith<_ResendActivationMailData> get copyWith =>
-      __$ResendActivationMailDataCopyWithImpl<_ResendActivationMailData>(
-          this, _$identity);
+  int get hashCode => Object.hash(runtimeType, resendActivationEmail);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_ResendActivationMailDataCopyWith<_$_ResendActivationMailData>
+      get copyWith => __$$_ResendActivationMailDataCopyWithImpl<
+          _$_ResendActivationMailData>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_ResendActivationMailDataToJson(this);
+    return _$$_ResendActivationMailDataToJson(
+      this,
+    );
   }
 }
 
 abstract class _ResendActivationMailData implements ResendActivationMailData {
   const factory _ResendActivationMailData(
-          {required ResendActivationEmail? resendActivationEmail}) =
+          {required final ResendActivationEmail? resendActivationEmail}) =
       _$_ResendActivationMailData;
 
   factory _ResendActivationMailData.fromJson(Map<String, dynamic> json) =
@@ -184,34 +173,14 @@ abstract class _ResendActivationMailData implements ResendActivationMailData {
   ResendActivationEmail? get resendActivationEmail;
   @override
   @JsonKey(ignore: true)
-  _$ResendActivationMailDataCopyWith<_ResendActivationMailData> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$_ResendActivationMailDataCopyWith<_$_ResendActivationMailData>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 ResendActivationEmail _$ResendActivationEmailFromJson(
     Map<String, dynamic> json) {
   return _ResendActivationEmail.fromJson(json);
 }
-
-/// @nodoc
-class _$ResendActivationEmailTearOff {
-  const _$ResendActivationEmailTearOff();
-
-  _ResendActivationEmail call(
-      {required bool? success, required Errors? errors}) {
-    return _ResendActivationEmail(
-      success: success,
-      errors: errors,
-    );
-  }
-
-  ResendActivationEmail fromJson(Map<String, Object?> json) {
-    return ResendActivationEmail.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $ResendActivationEmail = _$ResendActivationEmailTearOff();
 
 /// @nodoc
 mixin _$ResendActivationEmail {
@@ -228,57 +197,63 @@ mixin _$ResendActivationEmail {
 abstract class $ResendActivationEmailCopyWith<$Res> {
   factory $ResendActivationEmailCopyWith(ResendActivationEmail value,
           $Res Function(ResendActivationEmail) then) =
-      _$ResendActivationEmailCopyWithImpl<$Res>;
+      _$ResendActivationEmailCopyWithImpl<$Res, ResendActivationEmail>;
+  @useResult
   $Res call({bool? success, Errors? errors});
 
   $ErrorsCopyWith<$Res>? get errors;
 }
 
 /// @nodoc
-class _$ResendActivationEmailCopyWithImpl<$Res>
+class _$ResendActivationEmailCopyWithImpl<$Res,
+        $Val extends ResendActivationEmail>
     implements $ResendActivationEmailCopyWith<$Res> {
   _$ResendActivationEmailCopyWithImpl(this._value, this._then);
 
-  final ResendActivationEmail _value;
   // ignore: unused_field
-  final $Res Function(ResendActivationEmail) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? success = freezed,
     Object? errors = freezed,
   }) {
     return _then(_value.copyWith(
-      success: success == freezed
+      success: freezed == success
           ? _value.success
           : success // ignore: cast_nullable_to_non_nullable
               as bool?,
-      errors: errors == freezed
+      errors: freezed == errors
           ? _value.errors
           : errors // ignore: cast_nullable_to_non_nullable
               as Errors?,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $ErrorsCopyWith<$Res>? get errors {
     if (_value.errors == null) {
       return null;
     }
 
     return $ErrorsCopyWith<$Res>(_value.errors!, (value) {
-      return _then(_value.copyWith(errors: value));
+      return _then(_value.copyWith(errors: value) as $Val);
     });
   }
 }
 
 /// @nodoc
-abstract class _$ResendActivationEmailCopyWith<$Res>
+abstract class _$$_ResendActivationEmailCopyWith<$Res>
     implements $ResendActivationEmailCopyWith<$Res> {
-  factory _$ResendActivationEmailCopyWith(_ResendActivationEmail value,
-          $Res Function(_ResendActivationEmail) then) =
-      __$ResendActivationEmailCopyWithImpl<$Res>;
+  factory _$$_ResendActivationEmailCopyWith(_$_ResendActivationEmail value,
+          $Res Function(_$_ResendActivationEmail) then) =
+      __$$_ResendActivationEmailCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({bool? success, Errors? errors});
 
   @override
@@ -286,27 +261,25 @@ abstract class _$ResendActivationEmailCopyWith<$Res>
 }
 
 /// @nodoc
-class __$ResendActivationEmailCopyWithImpl<$Res>
-    extends _$ResendActivationEmailCopyWithImpl<$Res>
-    implements _$ResendActivationEmailCopyWith<$Res> {
-  __$ResendActivationEmailCopyWithImpl(_ResendActivationEmail _value,
-      $Res Function(_ResendActivationEmail) _then)
-      : super(_value, (v) => _then(v as _ResendActivationEmail));
+class __$$_ResendActivationEmailCopyWithImpl<$Res>
+    extends _$ResendActivationEmailCopyWithImpl<$Res, _$_ResendActivationEmail>
+    implements _$$_ResendActivationEmailCopyWith<$Res> {
+  __$$_ResendActivationEmailCopyWithImpl(_$_ResendActivationEmail _value,
+      $Res Function(_$_ResendActivationEmail) _then)
+      : super(_value, _then);
 
-  @override
-  _ResendActivationEmail get _value => super._value as _ResendActivationEmail;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? success = freezed,
     Object? errors = freezed,
   }) {
-    return _then(_ResendActivationEmail(
-      success: success == freezed
+    return _then(_$_ResendActivationEmail(
+      success: freezed == success
           ? _value.success
           : success // ignore: cast_nullable_to_non_nullable
               as bool?,
-      errors: errors == freezed
+      errors: freezed == errors
           ? _value.errors
           : errors // ignore: cast_nullable_to_non_nullable
               as Errors?,
@@ -336,33 +309,34 @@ class _$_ResendActivationEmail implements _ResendActivationEmail {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _ResendActivationEmail &&
-            const DeepCollectionEquality().equals(other.success, success) &&
-            const DeepCollectionEquality().equals(other.errors, errors));
+            other is _$_ResendActivationEmail &&
+            (identical(other.success, success) || other.success == success) &&
+            (identical(other.errors, errors) || other.errors == errors));
   }
-
-  @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(success),
-      const DeepCollectionEquality().hash(errors));
 
   @JsonKey(ignore: true)
   @override
-  _$ResendActivationEmailCopyWith<_ResendActivationEmail> get copyWith =>
-      __$ResendActivationEmailCopyWithImpl<_ResendActivationEmail>(
+  int get hashCode => Object.hash(runtimeType, success, errors);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_ResendActivationEmailCopyWith<_$_ResendActivationEmail> get copyWith =>
+      __$$_ResendActivationEmailCopyWithImpl<_$_ResendActivationEmail>(
           this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_ResendActivationEmailToJson(this);
+    return _$$_ResendActivationEmailToJson(
+      this,
+    );
   }
 }
 
 abstract class _ResendActivationEmail implements ResendActivationEmail {
   const factory _ResendActivationEmail(
-      {required bool? success,
-      required Errors? errors}) = _$_ResendActivationEmail;
+      {required final bool? success,
+      required final Errors? errors}) = _$_ResendActivationEmail;
 
   factory _ResendActivationEmail.fromJson(Map<String, dynamic> json) =
       _$_ResendActivationEmail.fromJson;
@@ -373,36 +347,13 @@ abstract class _ResendActivationEmail implements ResendActivationEmail {
   Errors? get errors;
   @override
   @JsonKey(ignore: true)
-  _$ResendActivationEmailCopyWith<_ResendActivationEmail> get copyWith =>
+  _$$_ResendActivationEmailCopyWith<_$_ResendActivationEmail> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 Errors _$ErrorsFromJson(Map<String, dynamic> json) {
   return _Errors.fromJson(json);
 }
-
-/// @nodoc
-class _$ErrorsTearOff {
-  const _$ErrorsTearOff();
-
-  _Errors call(
-      {required List<ErrorMsg>? email,
-      required List<ErrorMsg>? password1,
-      required List<ErrorMsg>? password2}) {
-    return _Errors(
-      email: email,
-      password1: password1,
-      password2: password2,
-    );
-  }
-
-  Errors fromJson(Map<String, Object?> json) {
-    return Errors.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $Errors = _$ErrorsTearOff();
 
 /// @nodoc
 mixin _$Errors {
@@ -418,7 +369,8 @@ mixin _$Errors {
 /// @nodoc
 abstract class $ErrorsCopyWith<$Res> {
   factory $ErrorsCopyWith(Errors value, $Res Function(Errors) then) =
-      _$ErrorsCopyWithImpl<$Res>;
+      _$ErrorsCopyWithImpl<$Res, Errors>;
+  @useResult
   $Res call(
       {List<ErrorMsg>? email,
       List<ErrorMsg>? password1,
@@ -426,13 +378,16 @@ abstract class $ErrorsCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$ErrorsCopyWithImpl<$Res> implements $ErrorsCopyWith<$Res> {
+class _$ErrorsCopyWithImpl<$Res, $Val extends Errors>
+    implements $ErrorsCopyWith<$Res> {
   _$ErrorsCopyWithImpl(this._value, this._then);
 
-  final Errors _value;
   // ignore: unused_field
-  final $Res Function(Errors) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? email = freezed,
@@ -440,27 +395,28 @@ class _$ErrorsCopyWithImpl<$Res> implements $ErrorsCopyWith<$Res> {
     Object? password2 = freezed,
   }) {
     return _then(_value.copyWith(
-      email: email == freezed
+      email: freezed == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as List<ErrorMsg>?,
-      password1: password1 == freezed
+      password1: freezed == password1
           ? _value.password1
           : password1 // ignore: cast_nullable_to_non_nullable
               as List<ErrorMsg>?,
-      password2: password2 == freezed
+      password2: freezed == password2
           ? _value.password2
           : password2 // ignore: cast_nullable_to_non_nullable
               as List<ErrorMsg>?,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$ErrorsCopyWith<$Res> implements $ErrorsCopyWith<$Res> {
-  factory _$ErrorsCopyWith(_Errors value, $Res Function(_Errors) then) =
-      __$ErrorsCopyWithImpl<$Res>;
+abstract class _$$_ErrorsCopyWith<$Res> implements $ErrorsCopyWith<$Res> {
+  factory _$$_ErrorsCopyWith(_$_Errors value, $Res Function(_$_Errors) then) =
+      __$$_ErrorsCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {List<ErrorMsg>? email,
       List<ErrorMsg>? password1,
@@ -468,31 +424,30 @@ abstract class _$ErrorsCopyWith<$Res> implements $ErrorsCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$ErrorsCopyWithImpl<$Res> extends _$ErrorsCopyWithImpl<$Res>
-    implements _$ErrorsCopyWith<$Res> {
-  __$ErrorsCopyWithImpl(_Errors _value, $Res Function(_Errors) _then)
-      : super(_value, (v) => _then(v as _Errors));
+class __$$_ErrorsCopyWithImpl<$Res>
+    extends _$ErrorsCopyWithImpl<$Res, _$_Errors>
+    implements _$$_ErrorsCopyWith<$Res> {
+  __$$_ErrorsCopyWithImpl(_$_Errors _value, $Res Function(_$_Errors) _then)
+      : super(_value, _then);
 
-  @override
-  _Errors get _value => super._value as _Errors;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? email = freezed,
     Object? password1 = freezed,
     Object? password2 = freezed,
   }) {
-    return _then(_Errors(
-      email: email == freezed
-          ? _value.email
+    return _then(_$_Errors(
+      email: freezed == email
+          ? _value._email
           : email // ignore: cast_nullable_to_non_nullable
               as List<ErrorMsg>?,
-      password1: password1 == freezed
-          ? _value.password1
+      password1: freezed == password1
+          ? _value._password1
           : password1 // ignore: cast_nullable_to_non_nullable
               as List<ErrorMsg>?,
-      password2: password2 == freezed
-          ? _value.password2
+      password2: freezed == password2
+          ? _value._password2
           : password2 // ignore: cast_nullable_to_non_nullable
               as List<ErrorMsg>?,
     ));
@@ -503,17 +458,45 @@ class __$ErrorsCopyWithImpl<$Res> extends _$ErrorsCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_Errors implements _Errors {
   const _$_Errors(
-      {required this.email, required this.password1, required this.password2});
+      {required final List<ErrorMsg>? email,
+      required final List<ErrorMsg>? password1,
+      required final List<ErrorMsg>? password2})
+      : _email = email,
+        _password1 = password1,
+        _password2 = password2;
 
   factory _$_Errors.fromJson(Map<String, dynamic> json) =>
       _$$_ErrorsFromJson(json);
 
+  final List<ErrorMsg>? _email;
   @override
-  final List<ErrorMsg>? email;
+  List<ErrorMsg>? get email {
+    final value = _email;
+    if (value == null) return null;
+    if (_email is EqualUnmodifiableListView) return _email;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  final List<ErrorMsg>? _password1;
   @override
-  final List<ErrorMsg>? password1;
+  List<ErrorMsg>? get password1 {
+    final value = _password1;
+    if (value == null) return null;
+    if (_password1 is EqualUnmodifiableListView) return _password1;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  final List<ErrorMsg>? _password2;
   @override
-  final List<ErrorMsg>? password2;
+  List<ErrorMsg>? get password2 {
+    final value = _password2;
+    if (value == null) return null;
+    if (_password2 is EqualUnmodifiableListView) return _password2;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
 
   @override
   String toString() {
@@ -524,35 +507,41 @@ class _$_Errors implements _Errors {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _Errors &&
-            const DeepCollectionEquality().equals(other.email, email) &&
-            const DeepCollectionEquality().equals(other.password1, password1) &&
-            const DeepCollectionEquality().equals(other.password2, password2));
+            other is _$_Errors &&
+            const DeepCollectionEquality().equals(other._email, _email) &&
+            const DeepCollectionEquality()
+                .equals(other._password1, _password1) &&
+            const DeepCollectionEquality()
+                .equals(other._password2, _password2));
   }
-
-  @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(email),
-      const DeepCollectionEquality().hash(password1),
-      const DeepCollectionEquality().hash(password2));
 
   @JsonKey(ignore: true)
   @override
-  _$ErrorsCopyWith<_Errors> get copyWith =>
-      __$ErrorsCopyWithImpl<_Errors>(this, _$identity);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(_email),
+      const DeepCollectionEquality().hash(_password1),
+      const DeepCollectionEquality().hash(_password2));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_ErrorsCopyWith<_$_Errors> get copyWith =>
+      __$$_ErrorsCopyWithImpl<_$_Errors>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_ErrorsToJson(this);
+    return _$$_ErrorsToJson(
+      this,
+    );
   }
 }
 
 abstract class _Errors implements Errors {
   const factory _Errors(
-      {required List<ErrorMsg>? email,
-      required List<ErrorMsg>? password1,
-      required List<ErrorMsg>? password2}) = _$_Errors;
+      {required final List<ErrorMsg>? email,
+      required final List<ErrorMsg>? password1,
+      required final List<ErrorMsg>? password2}) = _$_Errors;
 
   factory _Errors.fromJson(Map<String, dynamic> json) = _$_Errors.fromJson;
 
@@ -564,31 +553,13 @@ abstract class _Errors implements Errors {
   List<ErrorMsg>? get password2;
   @override
   @JsonKey(ignore: true)
-  _$ErrorsCopyWith<_Errors> get copyWith => throw _privateConstructorUsedError;
+  _$$_ErrorsCopyWith<_$_Errors> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 ErrorMsg _$ErrorMsgFromJson(Map<String, dynamic> json) {
   return _ErrorMsg.fromJson(json);
 }
-
-/// @nodoc
-class _$ErrorMsgTearOff {
-  const _$ErrorMsgTearOff();
-
-  _ErrorMsg call({required String? message, required String? code}) {
-    return _ErrorMsg(
-      message: message,
-      code: code,
-    );
-  }
-
-  ErrorMsg fromJson(Map<String, Object?> json) {
-    return ErrorMsg.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $ErrorMsg = _$ErrorMsgTearOff();
 
 /// @nodoc
 mixin _$ErrorMsg {
@@ -604,64 +575,70 @@ mixin _$ErrorMsg {
 /// @nodoc
 abstract class $ErrorMsgCopyWith<$Res> {
   factory $ErrorMsgCopyWith(ErrorMsg value, $Res Function(ErrorMsg) then) =
-      _$ErrorMsgCopyWithImpl<$Res>;
+      _$ErrorMsgCopyWithImpl<$Res, ErrorMsg>;
+  @useResult
   $Res call({String? message, String? code});
 }
 
 /// @nodoc
-class _$ErrorMsgCopyWithImpl<$Res> implements $ErrorMsgCopyWith<$Res> {
+class _$ErrorMsgCopyWithImpl<$Res, $Val extends ErrorMsg>
+    implements $ErrorMsgCopyWith<$Res> {
   _$ErrorMsgCopyWithImpl(this._value, this._then);
 
-  final ErrorMsg _value;
   // ignore: unused_field
-  final $Res Function(ErrorMsg) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? message = freezed,
     Object? code = freezed,
   }) {
     return _then(_value.copyWith(
-      message: message == freezed
+      message: freezed == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String?,
-      code: code == freezed
+      code: freezed == code
           ? _value.code
           : code // ignore: cast_nullable_to_non_nullable
               as String?,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$ErrorMsgCopyWith<$Res> implements $ErrorMsgCopyWith<$Res> {
-  factory _$ErrorMsgCopyWith(_ErrorMsg value, $Res Function(_ErrorMsg) then) =
-      __$ErrorMsgCopyWithImpl<$Res>;
+abstract class _$$_ErrorMsgCopyWith<$Res> implements $ErrorMsgCopyWith<$Res> {
+  factory _$$_ErrorMsgCopyWith(
+          _$_ErrorMsg value, $Res Function(_$_ErrorMsg) then) =
+      __$$_ErrorMsgCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({String? message, String? code});
 }
 
 /// @nodoc
-class __$ErrorMsgCopyWithImpl<$Res> extends _$ErrorMsgCopyWithImpl<$Res>
-    implements _$ErrorMsgCopyWith<$Res> {
-  __$ErrorMsgCopyWithImpl(_ErrorMsg _value, $Res Function(_ErrorMsg) _then)
-      : super(_value, (v) => _then(v as _ErrorMsg));
+class __$$_ErrorMsgCopyWithImpl<$Res>
+    extends _$ErrorMsgCopyWithImpl<$Res, _$_ErrorMsg>
+    implements _$$_ErrorMsgCopyWith<$Res> {
+  __$$_ErrorMsgCopyWithImpl(
+      _$_ErrorMsg _value, $Res Function(_$_ErrorMsg) _then)
+      : super(_value, _then);
 
-  @override
-  _ErrorMsg get _value => super._value as _ErrorMsg;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? message = freezed,
     Object? code = freezed,
   }) {
-    return _then(_ErrorMsg(
-      message: message == freezed
+    return _then(_$_ErrorMsg(
+      message: freezed == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String?,
-      code: code == freezed
+      code: freezed == code
           ? _value.code
           : code // ignore: cast_nullable_to_non_nullable
               as String?,
@@ -691,31 +668,33 @@ class _$_ErrorMsg implements _ErrorMsg {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _ErrorMsg &&
-            const DeepCollectionEquality().equals(other.message, message) &&
-            const DeepCollectionEquality().equals(other.code, code));
+            other is _$_ErrorMsg &&
+            (identical(other.message, message) || other.message == message) &&
+            (identical(other.code, code) || other.code == code));
   }
-
-  @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(message),
-      const DeepCollectionEquality().hash(code));
 
   @JsonKey(ignore: true)
   @override
-  _$ErrorMsgCopyWith<_ErrorMsg> get copyWith =>
-      __$ErrorMsgCopyWithImpl<_ErrorMsg>(this, _$identity);
+  int get hashCode => Object.hash(runtimeType, message, code);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_ErrorMsgCopyWith<_$_ErrorMsg> get copyWith =>
+      __$$_ErrorMsgCopyWithImpl<_$_ErrorMsg>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_ErrorMsgToJson(this);
+    return _$$_ErrorMsgToJson(
+      this,
+    );
   }
 }
 
 abstract class _ErrorMsg implements ErrorMsg {
-  const factory _ErrorMsg({required String? message, required String? code}) =
-      _$_ErrorMsg;
+  const factory _ErrorMsg(
+      {required final String? message,
+      required final String? code}) = _$_ErrorMsg;
 
   factory _ErrorMsg.fromJson(Map<String, dynamic> json) = _$_ErrorMsg.fromJson;
 
@@ -725,6 +704,6 @@ abstract class _ErrorMsg implements ErrorMsg {
   String? get code;
   @override
   @JsonKey(ignore: true)
-  _$ErrorMsgCopyWith<_ErrorMsg> get copyWith =>
+  _$$_ErrorMsgCopyWith<_$_ErrorMsg> get copyWith =>
       throw _privateConstructorUsedError;
 }

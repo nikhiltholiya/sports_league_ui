@@ -85,6 +85,33 @@ query(${param.toString().trim().substring(1, param.toString().trim().length - 1)
 ''';
 }
 
+//20230610
+String allLeaguesQuery(Map<String, dynamic>? param, Map<String, dynamic>? paramType) {
+  return '''
+query(${param.toString().trim().substring(1, param.toString().trim().length - 1)}) {
+  allLeagues(${paramType.toString().trim().substring(1, paramType.toString().trim().length - 1)}) {
+     edges {
+      node {
+        id
+        city
+        country
+        description
+        endDate
+        createdAt
+        leagueId
+        level
+        name
+        startDate
+        state
+        status
+        updatedAt
+      }
+    }
+  }
+}
+''';
+}
+
 String allUsers(Map<String, dynamic>? param, Map<String, dynamic>? paramType) {
   return '''
   query(${param.toString().trim().substring(1, param.toString().trim().length - 1)}) {
@@ -241,7 +268,6 @@ String allMatches(Map<String, dynamic>? param, Map<String, dynamic>? paramType) 
 // startDate
 // createdAt
 // endDate
-
 
 //Mutations
 String SubmitScore(Map<String, dynamic>? param, Map<String, dynamic>? paramType) {
