@@ -389,9 +389,11 @@ class _LeagueDetailsState extends State<LeagueDetails>
                           debugPrint(
                               '${LeagueDetails.path} * Result -- $resultData');
 
+                          //20230617
                           if (resultData != null) {
-                            var message = resultData['leagueApplication']
-                                ['leagueApplication']['message'];
+                            // var message = resultData['leagueApplication']
+                            //     ['leagueApplication']['message'];
+                          var message = 'Your application received, will revert in 12 hours!!';
 
                             errorList = [];
                             errorList!.add(message);

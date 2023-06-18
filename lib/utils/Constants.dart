@@ -189,6 +189,28 @@ String allMessaging(Map<String, dynamic>? param, Map<String, dynamic>? paramType
 ''';
 }
 
+//20230617
+String uniqueMessageSenders(Map<String, dynamic>? param, Map<String, dynamic>? paramType) {
+  return '''
+  query(${param.toString().trim().substring(1, param.toString().trim().length - 1)}) {
+  uniqueMessageSenders(${paramType.toString().trim().substring(1, paramType.toString().trim().length - 1)}) {
+      contacts {
+        city
+        country
+        firstName
+        id
+        lastName
+        picture
+        rating
+        userId
+        state
+        active
+    }
+  }
+}
+''';
+}
+
 String allMatches(Map<String, dynamic>? param, Map<String, dynamic>? paramType) {
   return '''
       query allMatches(${param.toString().trim().substring(1, param.toString().trim().length - 1)}) {
@@ -468,6 +490,7 @@ String userQuery(Map<String, dynamic>? param, Map<String, dynamic>? paramType) {
 ''';
 }
 
+//Remove message 20230617
 String leagueApplication(Map<String, dynamic>? param, Map<String, dynamic>? paramType) {
   return '''
       mutation leagueApplication(${param.toString().trim().substring(1, param.toString().trim().length - 1)}) {
@@ -476,7 +499,6 @@ String leagueApplication(Map<String, dynamic>? param, Map<String, dynamic>? para
                 id
                 leagueAppId
                 status
-                message
               } 
           }
       }
