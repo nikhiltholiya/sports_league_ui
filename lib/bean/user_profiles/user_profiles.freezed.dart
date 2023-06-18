@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'user_profiles.dart';
 
@@ -12,29 +12,11 @@ part of 'user_profiles.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 UserProfileData _$UserProfileDataFromJson(Map<String, dynamic> json) {
   return _UserProfileData.fromJson(json);
 }
-
-/// @nodoc
-class _$UserProfileDataTearOff {
-  const _$UserProfileDataTearOff();
-
-  _UserProfileData call({required UserProfiles? userProfiles}) {
-    return _UserProfileData(
-      userProfiles: userProfiles,
-    );
-  }
-
-  UserProfileData fromJson(Map<String, Object?> json) {
-    return UserProfileData.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $UserProfileData = _$UserProfileDataTearOff();
 
 /// @nodoc
 mixin _$UserProfileData {
@@ -50,52 +32,57 @@ mixin _$UserProfileData {
 abstract class $UserProfileDataCopyWith<$Res> {
   factory $UserProfileDataCopyWith(
           UserProfileData value, $Res Function(UserProfileData) then) =
-      _$UserProfileDataCopyWithImpl<$Res>;
+      _$UserProfileDataCopyWithImpl<$Res, UserProfileData>;
+  @useResult
   $Res call({UserProfiles? userProfiles});
 
   $UserProfilesCopyWith<$Res>? get userProfiles;
 }
 
 /// @nodoc
-class _$UserProfileDataCopyWithImpl<$Res>
+class _$UserProfileDataCopyWithImpl<$Res, $Val extends UserProfileData>
     implements $UserProfileDataCopyWith<$Res> {
   _$UserProfileDataCopyWithImpl(this._value, this._then);
 
-  final UserProfileData _value;
   // ignore: unused_field
-  final $Res Function(UserProfileData) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? userProfiles = freezed,
   }) {
     return _then(_value.copyWith(
-      userProfiles: userProfiles == freezed
+      userProfiles: freezed == userProfiles
           ? _value.userProfiles
           : userProfiles // ignore: cast_nullable_to_non_nullable
               as UserProfiles?,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $UserProfilesCopyWith<$Res>? get userProfiles {
     if (_value.userProfiles == null) {
       return null;
     }
 
     return $UserProfilesCopyWith<$Res>(_value.userProfiles!, (value) {
-      return _then(_value.copyWith(userProfiles: value));
+      return _then(_value.copyWith(userProfiles: value) as $Val);
     });
   }
 }
 
 /// @nodoc
-abstract class _$UserProfileDataCopyWith<$Res>
+abstract class _$$_UserProfileDataCopyWith<$Res>
     implements $UserProfileDataCopyWith<$Res> {
-  factory _$UserProfileDataCopyWith(
-          _UserProfileData value, $Res Function(_UserProfileData) then) =
-      __$UserProfileDataCopyWithImpl<$Res>;
+  factory _$$_UserProfileDataCopyWith(
+          _$_UserProfileData value, $Res Function(_$_UserProfileData) then) =
+      __$$_UserProfileDataCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({UserProfiles? userProfiles});
 
   @override
@@ -103,22 +90,20 @@ abstract class _$UserProfileDataCopyWith<$Res>
 }
 
 /// @nodoc
-class __$UserProfileDataCopyWithImpl<$Res>
-    extends _$UserProfileDataCopyWithImpl<$Res>
-    implements _$UserProfileDataCopyWith<$Res> {
-  __$UserProfileDataCopyWithImpl(
-      _UserProfileData _value, $Res Function(_UserProfileData) _then)
-      : super(_value, (v) => _then(v as _UserProfileData));
+class __$$_UserProfileDataCopyWithImpl<$Res>
+    extends _$UserProfileDataCopyWithImpl<$Res, _$_UserProfileData>
+    implements _$$_UserProfileDataCopyWith<$Res> {
+  __$$_UserProfileDataCopyWithImpl(
+      _$_UserProfileData _value, $Res Function(_$_UserProfileData) _then)
+      : super(_value, _then);
 
-  @override
-  _UserProfileData get _value => super._value as _UserProfileData;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? userProfiles = freezed,
   }) {
-    return _then(_UserProfileData(
-      userProfiles: userProfiles == freezed
+    return _then(_$_UserProfileData(
+      userProfiles: freezed == userProfiles
           ? _value.userProfiles
           : userProfiles // ignore: cast_nullable_to_non_nullable
               as UserProfiles?,
@@ -146,28 +131,31 @@ class _$_UserProfileData implements _UserProfileData {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _UserProfileData &&
-            const DeepCollectionEquality()
-                .equals(other.userProfiles, userProfiles));
+            other is _$_UserProfileData &&
+            (identical(other.userProfiles, userProfiles) ||
+                other.userProfiles == userProfiles));
   }
-
-  @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(userProfiles));
 
   @JsonKey(ignore: true)
   @override
-  _$UserProfileDataCopyWith<_UserProfileData> get copyWith =>
-      __$UserProfileDataCopyWithImpl<_UserProfileData>(this, _$identity);
+  int get hashCode => Object.hash(runtimeType, userProfiles);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_UserProfileDataCopyWith<_$_UserProfileData> get copyWith =>
+      __$$_UserProfileDataCopyWithImpl<_$_UserProfileData>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_UserProfileDataToJson(this);
+    return _$$_UserProfileDataToJson(
+      this,
+    );
   }
 }
 
 abstract class _UserProfileData implements UserProfileData {
-  const factory _UserProfileData({required UserProfiles? userProfiles}) =
+  const factory _UserProfileData({required final UserProfiles? userProfiles}) =
       _$_UserProfileData;
 
   factory _UserProfileData.fromJson(Map<String, dynamic> json) =
@@ -177,56 +165,13 @@ abstract class _UserProfileData implements UserProfileData {
   UserProfiles? get userProfiles;
   @override
   @JsonKey(ignore: true)
-  _$UserProfileDataCopyWith<_UserProfileData> get copyWith =>
+  _$$_UserProfileDataCopyWith<_$_UserProfileData> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 UserProfiles _$UserProfilesFromJson(Map<String, dynamic> json) {
   return _UserProfile.fromJson(json);
 }
-
-/// @nodoc
-class _$UserProfilesTearOff {
-  const _$UserProfilesTearOff();
-
-  _UserProfile call(
-      {required String? userId,
-      required String? firstName,
-      required String? lastName,
-      required int? matchesCount,
-      required int? wonCount,
-      required int? drawCount,
-      required int? lostCount,
-      required String? city,
-      required String? state,
-      required String? dob,
-      required int? age,
-      required String? rating,
-      required String? picture}) {
-    return _UserProfile(
-      userId: userId,
-      firstName: firstName,
-      lastName: lastName,
-      matchesCount: matchesCount,
-      wonCount: wonCount,
-      drawCount: drawCount,
-      lostCount: lostCount,
-      city: city,
-      state: state,
-      dob: dob,
-      age: age,
-      rating: rating,
-      picture: picture,
-    );
-  }
-
-  UserProfiles fromJson(Map<String, Object?> json) {
-    return UserProfiles.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $UserProfiles = _$UserProfilesTearOff();
 
 /// @nodoc
 mixin _$UserProfiles {
@@ -254,7 +199,8 @@ mixin _$UserProfiles {
 abstract class $UserProfilesCopyWith<$Res> {
   factory $UserProfilesCopyWith(
           UserProfiles value, $Res Function(UserProfiles) then) =
-      _$UserProfilesCopyWithImpl<$Res>;
+      _$UserProfilesCopyWithImpl<$Res, UserProfiles>;
+  @useResult
   $Res call(
       {String? userId,
       String? firstName,
@@ -272,13 +218,16 @@ abstract class $UserProfilesCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$UserProfilesCopyWithImpl<$Res> implements $UserProfilesCopyWith<$Res> {
+class _$UserProfilesCopyWithImpl<$Res, $Val extends UserProfiles>
+    implements $UserProfilesCopyWith<$Res> {
   _$UserProfilesCopyWithImpl(this._value, this._then);
 
-  final UserProfiles _value;
   // ignore: unused_field
-  final $Res Function(UserProfiles) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? userId = freezed,
@@ -296,69 +245,70 @@ class _$UserProfilesCopyWithImpl<$Res> implements $UserProfilesCopyWith<$Res> {
     Object? picture = freezed,
   }) {
     return _then(_value.copyWith(
-      userId: userId == freezed
+      userId: freezed == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
               as String?,
-      firstName: firstName == freezed
+      firstName: freezed == firstName
           ? _value.firstName
           : firstName // ignore: cast_nullable_to_non_nullable
               as String?,
-      lastName: lastName == freezed
+      lastName: freezed == lastName
           ? _value.lastName
           : lastName // ignore: cast_nullable_to_non_nullable
               as String?,
-      matchesCount: matchesCount == freezed
+      matchesCount: freezed == matchesCount
           ? _value.matchesCount
           : matchesCount // ignore: cast_nullable_to_non_nullable
               as int?,
-      wonCount: wonCount == freezed
+      wonCount: freezed == wonCount
           ? _value.wonCount
           : wonCount // ignore: cast_nullable_to_non_nullable
               as int?,
-      drawCount: drawCount == freezed
+      drawCount: freezed == drawCount
           ? _value.drawCount
           : drawCount // ignore: cast_nullable_to_non_nullable
               as int?,
-      lostCount: lostCount == freezed
+      lostCount: freezed == lostCount
           ? _value.lostCount
           : lostCount // ignore: cast_nullable_to_non_nullable
               as int?,
-      city: city == freezed
+      city: freezed == city
           ? _value.city
           : city // ignore: cast_nullable_to_non_nullable
               as String?,
-      state: state == freezed
+      state: freezed == state
           ? _value.state
           : state // ignore: cast_nullable_to_non_nullable
               as String?,
-      dob: dob == freezed
+      dob: freezed == dob
           ? _value.dob
           : dob // ignore: cast_nullable_to_non_nullable
               as String?,
-      age: age == freezed
+      age: freezed == age
           ? _value.age
           : age // ignore: cast_nullable_to_non_nullable
               as int?,
-      rating: rating == freezed
+      rating: freezed == rating
           ? _value.rating
           : rating // ignore: cast_nullable_to_non_nullable
               as String?,
-      picture: picture == freezed
+      picture: freezed == picture
           ? _value.picture
           : picture // ignore: cast_nullable_to_non_nullable
               as String?,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$UserProfileCopyWith<$Res>
+abstract class _$$_UserProfileCopyWith<$Res>
     implements $UserProfilesCopyWith<$Res> {
-  factory _$UserProfileCopyWith(
-          _UserProfile value, $Res Function(_UserProfile) then) =
-      __$UserProfileCopyWithImpl<$Res>;
+  factory _$$_UserProfileCopyWith(
+          _$_UserProfile value, $Res Function(_$_UserProfile) then) =
+      __$$_UserProfileCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String? userId,
       String? firstName,
@@ -376,15 +326,14 @@ abstract class _$UserProfileCopyWith<$Res>
 }
 
 /// @nodoc
-class __$UserProfileCopyWithImpl<$Res> extends _$UserProfilesCopyWithImpl<$Res>
-    implements _$UserProfileCopyWith<$Res> {
-  __$UserProfileCopyWithImpl(
-      _UserProfile _value, $Res Function(_UserProfile) _then)
-      : super(_value, (v) => _then(v as _UserProfile));
+class __$$_UserProfileCopyWithImpl<$Res>
+    extends _$UserProfilesCopyWithImpl<$Res, _$_UserProfile>
+    implements _$$_UserProfileCopyWith<$Res> {
+  __$$_UserProfileCopyWithImpl(
+      _$_UserProfile _value, $Res Function(_$_UserProfile) _then)
+      : super(_value, _then);
 
-  @override
-  _UserProfile get _value => super._value as _UserProfile;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? userId = freezed,
@@ -401,56 +350,56 @@ class __$UserProfileCopyWithImpl<$Res> extends _$UserProfilesCopyWithImpl<$Res>
     Object? rating = freezed,
     Object? picture = freezed,
   }) {
-    return _then(_UserProfile(
-      userId: userId == freezed
+    return _then(_$_UserProfile(
+      userId: freezed == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
               as String?,
-      firstName: firstName == freezed
+      firstName: freezed == firstName
           ? _value.firstName
           : firstName // ignore: cast_nullable_to_non_nullable
               as String?,
-      lastName: lastName == freezed
+      lastName: freezed == lastName
           ? _value.lastName
           : lastName // ignore: cast_nullable_to_non_nullable
               as String?,
-      matchesCount: matchesCount == freezed
+      matchesCount: freezed == matchesCount
           ? _value.matchesCount
           : matchesCount // ignore: cast_nullable_to_non_nullable
               as int?,
-      wonCount: wonCount == freezed
+      wonCount: freezed == wonCount
           ? _value.wonCount
           : wonCount // ignore: cast_nullable_to_non_nullable
               as int?,
-      drawCount: drawCount == freezed
+      drawCount: freezed == drawCount
           ? _value.drawCount
           : drawCount // ignore: cast_nullable_to_non_nullable
               as int?,
-      lostCount: lostCount == freezed
+      lostCount: freezed == lostCount
           ? _value.lostCount
           : lostCount // ignore: cast_nullable_to_non_nullable
               as int?,
-      city: city == freezed
+      city: freezed == city
           ? _value.city
           : city // ignore: cast_nullable_to_non_nullable
               as String?,
-      state: state == freezed
+      state: freezed == state
           ? _value.state
           : state // ignore: cast_nullable_to_non_nullable
               as String?,
-      dob: dob == freezed
+      dob: freezed == dob
           ? _value.dob
           : dob // ignore: cast_nullable_to_non_nullable
               as String?,
-      age: age == freezed
+      age: freezed == age
           ? _value.age
           : age // ignore: cast_nullable_to_non_nullable
               as int?,
-      rating: rating == freezed
+      rating: freezed == rating
           ? _value.rating
           : rating // ignore: cast_nullable_to_non_nullable
               as String?,
-      picture: picture == freezed
+      picture: freezed == picture
           ? _value.picture
           : picture // ignore: cast_nullable_to_non_nullable
               as String?,
@@ -515,66 +464,75 @@ class _$_UserProfile implements _UserProfile {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _UserProfile &&
-            const DeepCollectionEquality().equals(other.userId, userId) &&
-            const DeepCollectionEquality().equals(other.firstName, firstName) &&
-            const DeepCollectionEquality().equals(other.lastName, lastName) &&
-            const DeepCollectionEquality()
-                .equals(other.matchesCount, matchesCount) &&
-            const DeepCollectionEquality().equals(other.wonCount, wonCount) &&
-            const DeepCollectionEquality().equals(other.drawCount, drawCount) &&
-            const DeepCollectionEquality().equals(other.lostCount, lostCount) &&
-            const DeepCollectionEquality().equals(other.city, city) &&
-            const DeepCollectionEquality().equals(other.state, state) &&
-            const DeepCollectionEquality().equals(other.dob, dob) &&
-            const DeepCollectionEquality().equals(other.age, age) &&
-            const DeepCollectionEquality().equals(other.rating, rating) &&
-            const DeepCollectionEquality().equals(other.picture, picture));
+            other is _$_UserProfile &&
+            (identical(other.userId, userId) || other.userId == userId) &&
+            (identical(other.firstName, firstName) ||
+                other.firstName == firstName) &&
+            (identical(other.lastName, lastName) ||
+                other.lastName == lastName) &&
+            (identical(other.matchesCount, matchesCount) ||
+                other.matchesCount == matchesCount) &&
+            (identical(other.wonCount, wonCount) ||
+                other.wonCount == wonCount) &&
+            (identical(other.drawCount, drawCount) ||
+                other.drawCount == drawCount) &&
+            (identical(other.lostCount, lostCount) ||
+                other.lostCount == lostCount) &&
+            (identical(other.city, city) || other.city == city) &&
+            (identical(other.state, state) || other.state == state) &&
+            (identical(other.dob, dob) || other.dob == dob) &&
+            (identical(other.age, age) || other.age == age) &&
+            (identical(other.rating, rating) || other.rating == rating) &&
+            (identical(other.picture, picture) || other.picture == picture));
   }
-
-  @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(userId),
-      const DeepCollectionEquality().hash(firstName),
-      const DeepCollectionEquality().hash(lastName),
-      const DeepCollectionEquality().hash(matchesCount),
-      const DeepCollectionEquality().hash(wonCount),
-      const DeepCollectionEquality().hash(drawCount),
-      const DeepCollectionEquality().hash(lostCount),
-      const DeepCollectionEquality().hash(city),
-      const DeepCollectionEquality().hash(state),
-      const DeepCollectionEquality().hash(dob),
-      const DeepCollectionEquality().hash(age),
-      const DeepCollectionEquality().hash(rating),
-      const DeepCollectionEquality().hash(picture));
 
   @JsonKey(ignore: true)
   @override
-  _$UserProfileCopyWith<_UserProfile> get copyWith =>
-      __$UserProfileCopyWithImpl<_UserProfile>(this, _$identity);
+  int get hashCode => Object.hash(
+      runtimeType,
+      userId,
+      firstName,
+      lastName,
+      matchesCount,
+      wonCount,
+      drawCount,
+      lostCount,
+      city,
+      state,
+      dob,
+      age,
+      rating,
+      picture);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_UserProfileCopyWith<_$_UserProfile> get copyWith =>
+      __$$_UserProfileCopyWithImpl<_$_UserProfile>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_UserProfileToJson(this);
+    return _$$_UserProfileToJson(
+      this,
+    );
   }
 }
 
 abstract class _UserProfile implements UserProfiles {
   const factory _UserProfile(
-      {required String? userId,
-      required String? firstName,
-      required String? lastName,
-      required int? matchesCount,
-      required int? wonCount,
-      required int? drawCount,
-      required int? lostCount,
-      required String? city,
-      required String? state,
-      required String? dob,
-      required int? age,
-      required String? rating,
-      required String? picture}) = _$_UserProfile;
+      {required final String? userId,
+      required final String? firstName,
+      required final String? lastName,
+      required final int? matchesCount,
+      required final int? wonCount,
+      required final int? drawCount,
+      required final int? lostCount,
+      required final String? city,
+      required final String? state,
+      required final String? dob,
+      required final int? age,
+      required final String? rating,
+      required final String? picture}) = _$_UserProfile;
 
   factory _UserProfile.fromJson(Map<String, dynamic> json) =
       _$_UserProfile.fromJson;
@@ -607,6 +565,6 @@ abstract class _UserProfile implements UserProfiles {
   String? get picture;
   @override
   @JsonKey(ignore: true)
-  _$UserProfileCopyWith<_UserProfile> get copyWith =>
+  _$$_UserProfileCopyWith<_$_UserProfile> get copyWith =>
       throw _privateConstructorUsedError;
 }

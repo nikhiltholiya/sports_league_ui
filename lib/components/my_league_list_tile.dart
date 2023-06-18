@@ -45,8 +45,9 @@ class _MyLeagueListTileState extends State<MyLeagueListTile> {
               decoration: ShapeDecoration(
                 color: aPartGray5,
                 shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12.0),
-                    side: BorderSide(color: aPartGray10, style: BorderStyle.solid, width: 1.0)),
+                  borderRadius: BorderRadius.circular(12.0),
+                  side: BorderSide(color: aPartGray10, style: BorderStyle.solid, width: 1.0),
+                ),
               ),
               child: Padding(
                 padding: const EdgeInsets.only(top: 15, right: 5, left: 5, bottom: 10),

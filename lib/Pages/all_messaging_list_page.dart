@@ -11,6 +11,7 @@ import '../Pages/base_activity.dart';
 import '../Pages/challenges_chat.dart';
 import '../Pages/no_internet_page.dart';
 import '../bean/all_messaging/all_messaging.dart';
+import '../bean/unique_message_sender/unique_message_sender.dart';
 import '../components/all_messaging_list_tile.dart';
 import '../components/no_data_list_tile.dart';
 import '../providers/internet_provider.dart';
@@ -36,7 +37,8 @@ class _AllMessagesListPageState extends State<AllMessagesListPage> with isIntern
   ScrollController? _scrollController;
   List<dynamic>? _listAllUsers;
 
-  late AllMessagingData _allMessagingData;
+  //20230617 Implement new query
+  late UniqueMessageData _uniqueMessageData;
   bool? flagSearch = false;
 
   // bool? isLoaded = false;
@@ -52,12 +54,10 @@ class _AllMessagesListPageState extends State<AllMessagesListPage> with isIntern
     _scrollController = ScrollController();
 
     paramForMsg = {
-      '\$senderReceipientSearch': 'String!',
-      '\$orderBy': 'String!',
+      '\$userId': 'String!',
     };
     paramTypeForMsg = {
-      'senderReceipientSearch': '\$senderReceipientSearch',
-      'orderBy': '\$orderBy',
+      'userId': '\$userId',
     };
     _streamController = StreamController<List<dynamic>?>();
     _streamController.sink.add([]);
@@ -85,11 +85,10 @@ class _AllMessagesListPageState extends State<AllMessagesListPage> with isIntern
                       color: aWhite,
                       child: Query(
                         options: QueryOptions(
-                          document: gql(allMessaging(paramForMsg, paramTypeForMsg)),
+                          document: gql(uniqueMessageSenders(paramForMsg, paramTypeForMsg)),
                           // this is the query string you just created
                           variables: {
-                            'senderReceipientSearch': '${SharedPreferencesUtils.getUserId}',
-                            'orderBy': 'createdAt'
+                            'userId': '${SharedPreferencesUtils.getUserId}',
                           },
                           pollInterval: Duration(seconds: 50),
                         ),
@@ -105,13 +104,14 @@ class _AllMessagesListPageState extends State<AllMessagesListPage> with isIntern
                           // if (!isLoaded!) {
                           //   isLoaded = true;
                           try {
-                            _allMessagingData = AllMessagingData.fromJson(msgresult.data!);
+                            _uniqueMessageData = UniqueMessageData.fromJson(msgresult.data!);
                             _listAllUsers = [];
+                            _listAllUsers = _uniqueMessageData.uniqueMessageSenders?.contacts;
 
-                            for (var data in _allMessagingData.allMessaging!.edges!)
-                              _listAllUsers?.add(data.node?.recipient?.userId != SharedPreferencesUtils.getUserId
-                                  ? data.node!.recipient!
-                                  : data.node!.sender!);
+                            // for (var data in _uniqueMessageData.uniqueMessageSenders!.contacts!)
+                              // _listAllUsers?.add(data.node?.recipient?.userId != SharedPreferencesUtils.getUserId
+                              //     ? data.node!.recipient!
+                              //     : data.node!.sender!);
                             // _listAllUsers?.where((element) => element.node!.node!.recipient!.userId == )
 
                             List<dynamic>? _listAllUsersTemp = [];

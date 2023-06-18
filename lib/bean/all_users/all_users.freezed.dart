@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'all_users.dart';
 
@@ -12,29 +12,11 @@ part of 'all_users.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 AllUsersData _$AllUsersDataFromJson(Map<String, dynamic> json) {
   return _AllUsersData.fromJson(json);
 }
-
-/// @nodoc
-class _$AllUsersDataTearOff {
-  const _$AllUsersDataTearOff();
-
-  _AllUsersData call({required AllUsers? allUsers}) {
-    return _AllUsersData(
-      allUsers: allUsers,
-    );
-  }
-
-  AllUsersData fromJson(Map<String, Object?> json) {
-    return AllUsersData.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $AllUsersData = _$AllUsersDataTearOff();
 
 /// @nodoc
 mixin _$AllUsersData {
@@ -50,51 +32,57 @@ mixin _$AllUsersData {
 abstract class $AllUsersDataCopyWith<$Res> {
   factory $AllUsersDataCopyWith(
           AllUsersData value, $Res Function(AllUsersData) then) =
-      _$AllUsersDataCopyWithImpl<$Res>;
+      _$AllUsersDataCopyWithImpl<$Res, AllUsersData>;
+  @useResult
   $Res call({AllUsers? allUsers});
 
   $AllUsersCopyWith<$Res>? get allUsers;
 }
 
 /// @nodoc
-class _$AllUsersDataCopyWithImpl<$Res> implements $AllUsersDataCopyWith<$Res> {
+class _$AllUsersDataCopyWithImpl<$Res, $Val extends AllUsersData>
+    implements $AllUsersDataCopyWith<$Res> {
   _$AllUsersDataCopyWithImpl(this._value, this._then);
 
-  final AllUsersData _value;
   // ignore: unused_field
-  final $Res Function(AllUsersData) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? allUsers = freezed,
   }) {
     return _then(_value.copyWith(
-      allUsers: allUsers == freezed
+      allUsers: freezed == allUsers
           ? _value.allUsers
           : allUsers // ignore: cast_nullable_to_non_nullable
               as AllUsers?,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $AllUsersCopyWith<$Res>? get allUsers {
     if (_value.allUsers == null) {
       return null;
     }
 
     return $AllUsersCopyWith<$Res>(_value.allUsers!, (value) {
-      return _then(_value.copyWith(allUsers: value));
+      return _then(_value.copyWith(allUsers: value) as $Val);
     });
   }
 }
 
 /// @nodoc
-abstract class _$AllUsersDataCopyWith<$Res>
+abstract class _$$_AllUsersDataCopyWith<$Res>
     implements $AllUsersDataCopyWith<$Res> {
-  factory _$AllUsersDataCopyWith(
-          _AllUsersData value, $Res Function(_AllUsersData) then) =
-      __$AllUsersDataCopyWithImpl<$Res>;
+  factory _$$_AllUsersDataCopyWith(
+          _$_AllUsersData value, $Res Function(_$_AllUsersData) then) =
+      __$$_AllUsersDataCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({AllUsers? allUsers});
 
   @override
@@ -102,21 +90,20 @@ abstract class _$AllUsersDataCopyWith<$Res>
 }
 
 /// @nodoc
-class __$AllUsersDataCopyWithImpl<$Res> extends _$AllUsersDataCopyWithImpl<$Res>
-    implements _$AllUsersDataCopyWith<$Res> {
-  __$AllUsersDataCopyWithImpl(
-      _AllUsersData _value, $Res Function(_AllUsersData) _then)
-      : super(_value, (v) => _then(v as _AllUsersData));
+class __$$_AllUsersDataCopyWithImpl<$Res>
+    extends _$AllUsersDataCopyWithImpl<$Res, _$_AllUsersData>
+    implements _$$_AllUsersDataCopyWith<$Res> {
+  __$$_AllUsersDataCopyWithImpl(
+      _$_AllUsersData _value, $Res Function(_$_AllUsersData) _then)
+      : super(_value, _then);
 
-  @override
-  _AllUsersData get _value => super._value as _AllUsersData;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? allUsers = freezed,
   }) {
-    return _then(_AllUsersData(
-      allUsers: allUsers == freezed
+    return _then(_$_AllUsersData(
+      allUsers: freezed == allUsers
           ? _value.allUsers
           : allUsers // ignore: cast_nullable_to_non_nullable
               as AllUsers?,
@@ -144,27 +131,32 @@ class _$_AllUsersData implements _AllUsersData {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _AllUsersData &&
-            const DeepCollectionEquality().equals(other.allUsers, allUsers));
+            other is _$_AllUsersData &&
+            (identical(other.allUsers, allUsers) ||
+                other.allUsers == allUsers));
   }
-
-  @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(allUsers));
 
   @JsonKey(ignore: true)
   @override
-  _$AllUsersDataCopyWith<_AllUsersData> get copyWith =>
-      __$AllUsersDataCopyWithImpl<_AllUsersData>(this, _$identity);
+  int get hashCode => Object.hash(runtimeType, allUsers);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_AllUsersDataCopyWith<_$_AllUsersData> get copyWith =>
+      __$$_AllUsersDataCopyWithImpl<_$_AllUsersData>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_AllUsersDataToJson(this);
+    return _$$_AllUsersDataToJson(
+      this,
+    );
   }
 }
 
 abstract class _AllUsersData implements AllUsersData {
-  const factory _AllUsersData({required AllUsers? allUsers}) = _$_AllUsersData;
+  const factory _AllUsersData({required final AllUsers? allUsers}) =
+      _$_AllUsersData;
 
   factory _AllUsersData.fromJson(Map<String, dynamic> json) =
       _$_AllUsersData.fromJson;
@@ -173,31 +165,13 @@ abstract class _AllUsersData implements AllUsersData {
   AllUsers? get allUsers;
   @override
   @JsonKey(ignore: true)
-  _$AllUsersDataCopyWith<_AllUsersData> get copyWith =>
+  _$$_AllUsersDataCopyWith<_$_AllUsersData> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 AllUsers _$AllUsersFromJson(Map<String, dynamic> json) {
   return _AllUsers.fromJson(json);
 }
-
-/// @nodoc
-class _$AllUsersTearOff {
-  const _$AllUsersTearOff();
-
-  _AllUsers call({required List<UserEdges>? edges}) {
-    return _AllUsers(
-      edges: edges,
-    );
-  }
-
-  AllUsers fromJson(Map<String, Object?> json) {
-    return AllUsers.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $AllUsers = _$AllUsersTearOff();
 
 /// @nodoc
 mixin _$AllUsers {
@@ -212,55 +186,61 @@ mixin _$AllUsers {
 /// @nodoc
 abstract class $AllUsersCopyWith<$Res> {
   factory $AllUsersCopyWith(AllUsers value, $Res Function(AllUsers) then) =
-      _$AllUsersCopyWithImpl<$Res>;
+      _$AllUsersCopyWithImpl<$Res, AllUsers>;
+  @useResult
   $Res call({List<UserEdges>? edges});
 }
 
 /// @nodoc
-class _$AllUsersCopyWithImpl<$Res> implements $AllUsersCopyWith<$Res> {
+class _$AllUsersCopyWithImpl<$Res, $Val extends AllUsers>
+    implements $AllUsersCopyWith<$Res> {
   _$AllUsersCopyWithImpl(this._value, this._then);
 
-  final AllUsers _value;
   // ignore: unused_field
-  final $Res Function(AllUsers) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? edges = freezed,
   }) {
     return _then(_value.copyWith(
-      edges: edges == freezed
+      edges: freezed == edges
           ? _value.edges
           : edges // ignore: cast_nullable_to_non_nullable
               as List<UserEdges>?,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$AllUsersCopyWith<$Res> implements $AllUsersCopyWith<$Res> {
-  factory _$AllUsersCopyWith(_AllUsers value, $Res Function(_AllUsers) then) =
-      __$AllUsersCopyWithImpl<$Res>;
+abstract class _$$_AllUsersCopyWith<$Res> implements $AllUsersCopyWith<$Res> {
+  factory _$$_AllUsersCopyWith(
+          _$_AllUsers value, $Res Function(_$_AllUsers) then) =
+      __$$_AllUsersCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({List<UserEdges>? edges});
 }
 
 /// @nodoc
-class __$AllUsersCopyWithImpl<$Res> extends _$AllUsersCopyWithImpl<$Res>
-    implements _$AllUsersCopyWith<$Res> {
-  __$AllUsersCopyWithImpl(_AllUsers _value, $Res Function(_AllUsers) _then)
-      : super(_value, (v) => _then(v as _AllUsers));
+class __$$_AllUsersCopyWithImpl<$Res>
+    extends _$AllUsersCopyWithImpl<$Res, _$_AllUsers>
+    implements _$$_AllUsersCopyWith<$Res> {
+  __$$_AllUsersCopyWithImpl(
+      _$_AllUsers _value, $Res Function(_$_AllUsers) _then)
+      : super(_value, _then);
 
-  @override
-  _AllUsers get _value => super._value as _AllUsers;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? edges = freezed,
   }) {
-    return _then(_AllUsers(
-      edges: edges == freezed
-          ? _value.edges
+    return _then(_$_AllUsers(
+      edges: freezed == edges
+          ? _value._edges
           : edges // ignore: cast_nullable_to_non_nullable
               as List<UserEdges>?,
     ));
@@ -270,13 +250,20 @@ class __$AllUsersCopyWithImpl<$Res> extends _$AllUsersCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_AllUsers implements _AllUsers {
-  const _$_AllUsers({required this.edges});
+  const _$_AllUsers({required final List<UserEdges>? edges}) : _edges = edges;
 
   factory _$_AllUsers.fromJson(Map<String, dynamic> json) =>
       _$$_AllUsersFromJson(json);
 
+  final List<UserEdges>? _edges;
   @override
-  final List<UserEdges>? edges;
+  List<UserEdges>? get edges {
+    final value = _edges;
+    if (value == null) return null;
+    if (_edges is EqualUnmodifiableListView) return _edges;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
 
   @override
   String toString() {
@@ -287,27 +274,32 @@ class _$_AllUsers implements _AllUsers {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _AllUsers &&
-            const DeepCollectionEquality().equals(other.edges, edges));
+            other is _$_AllUsers &&
+            const DeepCollectionEquality().equals(other._edges, _edges));
   }
-
-  @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(edges));
 
   @JsonKey(ignore: true)
   @override
-  _$AllUsersCopyWith<_AllUsers> get copyWith =>
-      __$AllUsersCopyWithImpl<_AllUsers>(this, _$identity);
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(_edges));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_AllUsersCopyWith<_$_AllUsers> get copyWith =>
+      __$$_AllUsersCopyWithImpl<_$_AllUsers>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_AllUsersToJson(this);
+    return _$$_AllUsersToJson(
+      this,
+    );
   }
 }
 
 abstract class _AllUsers implements AllUsers {
-  const factory _AllUsers({required List<UserEdges>? edges}) = _$_AllUsers;
+  const factory _AllUsers({required final List<UserEdges>? edges}) =
+      _$_AllUsers;
 
   factory _AllUsers.fromJson(Map<String, dynamic> json) = _$_AllUsers.fromJson;
 
@@ -315,31 +307,13 @@ abstract class _AllUsers implements AllUsers {
   List<UserEdges>? get edges;
   @override
   @JsonKey(ignore: true)
-  _$AllUsersCopyWith<_AllUsers> get copyWith =>
+  _$$_AllUsersCopyWith<_$_AllUsers> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 UserEdges _$UserEdgesFromJson(Map<String, dynamic> json) {
   return _UserEdges.fromJson(json);
 }
-
-/// @nodoc
-class _$UserEdgesTearOff {
-  const _$UserEdgesTearOff();
-
-  _UserEdges call({required UserNode? node}) {
-    return _UserEdges(
-      node: node,
-    );
-  }
-
-  UserEdges fromJson(Map<String, Object?> json) {
-    return UserEdges.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $UserEdges = _$UserEdgesTearOff();
 
 /// @nodoc
 mixin _$UserEdges {
@@ -354,50 +328,56 @@ mixin _$UserEdges {
 /// @nodoc
 abstract class $UserEdgesCopyWith<$Res> {
   factory $UserEdgesCopyWith(UserEdges value, $Res Function(UserEdges) then) =
-      _$UserEdgesCopyWithImpl<$Res>;
+      _$UserEdgesCopyWithImpl<$Res, UserEdges>;
+  @useResult
   $Res call({UserNode? node});
 
   $UserNodeCopyWith<$Res>? get node;
 }
 
 /// @nodoc
-class _$UserEdgesCopyWithImpl<$Res> implements $UserEdgesCopyWith<$Res> {
+class _$UserEdgesCopyWithImpl<$Res, $Val extends UserEdges>
+    implements $UserEdgesCopyWith<$Res> {
   _$UserEdgesCopyWithImpl(this._value, this._then);
 
-  final UserEdges _value;
   // ignore: unused_field
-  final $Res Function(UserEdges) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? node = freezed,
   }) {
     return _then(_value.copyWith(
-      node: node == freezed
+      node: freezed == node
           ? _value.node
           : node // ignore: cast_nullable_to_non_nullable
               as UserNode?,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $UserNodeCopyWith<$Res>? get node {
     if (_value.node == null) {
       return null;
     }
 
     return $UserNodeCopyWith<$Res>(_value.node!, (value) {
-      return _then(_value.copyWith(node: value));
+      return _then(_value.copyWith(node: value) as $Val);
     });
   }
 }
 
 /// @nodoc
-abstract class _$UserEdgesCopyWith<$Res> implements $UserEdgesCopyWith<$Res> {
-  factory _$UserEdgesCopyWith(
-          _UserEdges value, $Res Function(_UserEdges) then) =
-      __$UserEdgesCopyWithImpl<$Res>;
+abstract class _$$_UserEdgesCopyWith<$Res> implements $UserEdgesCopyWith<$Res> {
+  factory _$$_UserEdgesCopyWith(
+          _$_UserEdges value, $Res Function(_$_UserEdges) then) =
+      __$$_UserEdgesCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({UserNode? node});
 
   @override
@@ -405,20 +385,20 @@ abstract class _$UserEdgesCopyWith<$Res> implements $UserEdgesCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$UserEdgesCopyWithImpl<$Res> extends _$UserEdgesCopyWithImpl<$Res>
-    implements _$UserEdgesCopyWith<$Res> {
-  __$UserEdgesCopyWithImpl(_UserEdges _value, $Res Function(_UserEdges) _then)
-      : super(_value, (v) => _then(v as _UserEdges));
+class __$$_UserEdgesCopyWithImpl<$Res>
+    extends _$UserEdgesCopyWithImpl<$Res, _$_UserEdges>
+    implements _$$_UserEdgesCopyWith<$Res> {
+  __$$_UserEdgesCopyWithImpl(
+      _$_UserEdges _value, $Res Function(_$_UserEdges) _then)
+      : super(_value, _then);
 
-  @override
-  _UserEdges get _value => super._value as _UserEdges;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? node = freezed,
   }) {
-    return _then(_UserEdges(
-      node: node == freezed
+    return _then(_$_UserEdges(
+      node: freezed == node
           ? _value.node
           : node // ignore: cast_nullable_to_non_nullable
               as UserNode?,
@@ -446,27 +426,30 @@ class _$_UserEdges implements _UserEdges {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _UserEdges &&
-            const DeepCollectionEquality().equals(other.node, node));
+            other is _$_UserEdges &&
+            (identical(other.node, node) || other.node == node));
   }
-
-  @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(node));
 
   @JsonKey(ignore: true)
   @override
-  _$UserEdgesCopyWith<_UserEdges> get copyWith =>
-      __$UserEdgesCopyWithImpl<_UserEdges>(this, _$identity);
+  int get hashCode => Object.hash(runtimeType, node);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_UserEdgesCopyWith<_$_UserEdges> get copyWith =>
+      __$$_UserEdgesCopyWithImpl<_$_UserEdges>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_UserEdgesToJson(this);
+    return _$$_UserEdgesToJson(
+      this,
+    );
   }
 }
 
 abstract class _UserEdges implements UserEdges {
-  const factory _UserEdges({required UserNode? node}) = _$_UserEdges;
+  const factory _UserEdges({required final UserNode? node}) = _$_UserEdges;
 
   factory _UserEdges.fromJson(Map<String, dynamic> json) =
       _$_UserEdges.fromJson;
@@ -475,70 +458,13 @@ abstract class _UserEdges implements UserEdges {
   UserNode? get node;
   @override
   @JsonKey(ignore: true)
-  _$UserEdgesCopyWith<_UserEdges> get copyWith =>
+  _$$_UserEdgesCopyWith<_$_UserEdges> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 UserNode _$UserNodeFromJson(Map<String, dynamic> json) {
   return _UserNode.fromJson(json);
 }
-
-/// @nodoc
-class _$UserNodeTearOff {
-  const _$UserNodeTearOff();
-
-  _UserNode call(
-      {required String? userId,
-      required String? aboutMe,
-      required bool? active,
-      required String? city,
-      required String? country,
-      required String? dateJoined,
-      required bool? deleted,
-      required String? email,
-      required String? dob,
-      required String? firstName,
-      required String? gender,
-      required bool? isActive,
-      required String? id,
-      required bool? isStaff,
-      required String? lastLogin,
-      required String? lastName,
-      required String? phone,
-      required String? picture,
-      required String? rating,
-      required String? state}) {
-    return _UserNode(
-      userId: userId,
-      aboutMe: aboutMe,
-      active: active,
-      city: city,
-      country: country,
-      dateJoined: dateJoined,
-      deleted: deleted,
-      email: email,
-      dob: dob,
-      firstName: firstName,
-      gender: gender,
-      isActive: isActive,
-      id: id,
-      isStaff: isStaff,
-      lastLogin: lastLogin,
-      lastName: lastName,
-      phone: phone,
-      picture: picture,
-      rating: rating,
-      state: state,
-    );
-  }
-
-  UserNode fromJson(Map<String, Object?> json) {
-    return UserNode.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $UserNode = _$UserNodeTearOff();
 
 /// @nodoc
 mixin _$UserNode {
@@ -572,7 +498,8 @@ mixin _$UserNode {
 /// @nodoc
 abstract class $UserNodeCopyWith<$Res> {
   factory $UserNodeCopyWith(UserNode value, $Res Function(UserNode) then) =
-      _$UserNodeCopyWithImpl<$Res>;
+      _$UserNodeCopyWithImpl<$Res, UserNode>;
+  @useResult
   $Res call(
       {String? userId,
       String? aboutMe,
@@ -597,13 +524,16 @@ abstract class $UserNodeCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$UserNodeCopyWithImpl<$Res> implements $UserNodeCopyWith<$Res> {
+class _$UserNodeCopyWithImpl<$Res, $Val extends UserNode>
+    implements $UserNodeCopyWith<$Res> {
   _$UserNodeCopyWithImpl(this._value, this._then);
 
-  final UserNode _value;
   // ignore: unused_field
-  final $Res Function(UserNode) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? userId = freezed,
@@ -628,95 +558,97 @@ class _$UserNodeCopyWithImpl<$Res> implements $UserNodeCopyWith<$Res> {
     Object? state = freezed,
   }) {
     return _then(_value.copyWith(
-      userId: userId == freezed
+      userId: freezed == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
               as String?,
-      aboutMe: aboutMe == freezed
+      aboutMe: freezed == aboutMe
           ? _value.aboutMe
           : aboutMe // ignore: cast_nullable_to_non_nullable
               as String?,
-      active: active == freezed
+      active: freezed == active
           ? _value.active
           : active // ignore: cast_nullable_to_non_nullable
               as bool?,
-      city: city == freezed
+      city: freezed == city
           ? _value.city
           : city // ignore: cast_nullable_to_non_nullable
               as String?,
-      country: country == freezed
+      country: freezed == country
           ? _value.country
           : country // ignore: cast_nullable_to_non_nullable
               as String?,
-      dateJoined: dateJoined == freezed
+      dateJoined: freezed == dateJoined
           ? _value.dateJoined
           : dateJoined // ignore: cast_nullable_to_non_nullable
               as String?,
-      deleted: deleted == freezed
+      deleted: freezed == deleted
           ? _value.deleted
           : deleted // ignore: cast_nullable_to_non_nullable
               as bool?,
-      email: email == freezed
+      email: freezed == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String?,
-      dob: dob == freezed
+      dob: freezed == dob
           ? _value.dob
           : dob // ignore: cast_nullable_to_non_nullable
               as String?,
-      firstName: firstName == freezed
+      firstName: freezed == firstName
           ? _value.firstName
           : firstName // ignore: cast_nullable_to_non_nullable
               as String?,
-      gender: gender == freezed
+      gender: freezed == gender
           ? _value.gender
           : gender // ignore: cast_nullable_to_non_nullable
               as String?,
-      isActive: isActive == freezed
+      isActive: freezed == isActive
           ? _value.isActive
           : isActive // ignore: cast_nullable_to_non_nullable
               as bool?,
-      id: id == freezed
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String?,
-      isStaff: isStaff == freezed
+      isStaff: freezed == isStaff
           ? _value.isStaff
           : isStaff // ignore: cast_nullable_to_non_nullable
               as bool?,
-      lastLogin: lastLogin == freezed
+      lastLogin: freezed == lastLogin
           ? _value.lastLogin
           : lastLogin // ignore: cast_nullable_to_non_nullable
               as String?,
-      lastName: lastName == freezed
+      lastName: freezed == lastName
           ? _value.lastName
           : lastName // ignore: cast_nullable_to_non_nullable
               as String?,
-      phone: phone == freezed
+      phone: freezed == phone
           ? _value.phone
           : phone // ignore: cast_nullable_to_non_nullable
               as String?,
-      picture: picture == freezed
+      picture: freezed == picture
           ? _value.picture
           : picture // ignore: cast_nullable_to_non_nullable
               as String?,
-      rating: rating == freezed
+      rating: freezed == rating
           ? _value.rating
           : rating // ignore: cast_nullable_to_non_nullable
               as String?,
-      state: state == freezed
+      state: freezed == state
           ? _value.state
           : state // ignore: cast_nullable_to_non_nullable
               as String?,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$UserNodeCopyWith<$Res> implements $UserNodeCopyWith<$Res> {
-  factory _$UserNodeCopyWith(_UserNode value, $Res Function(_UserNode) then) =
-      __$UserNodeCopyWithImpl<$Res>;
+abstract class _$$_UserNodeCopyWith<$Res> implements $UserNodeCopyWith<$Res> {
+  factory _$$_UserNodeCopyWith(
+          _$_UserNode value, $Res Function(_$_UserNode) then) =
+      __$$_UserNodeCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String? userId,
       String? aboutMe,
@@ -741,14 +673,14 @@ abstract class _$UserNodeCopyWith<$Res> implements $UserNodeCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$UserNodeCopyWithImpl<$Res> extends _$UserNodeCopyWithImpl<$Res>
-    implements _$UserNodeCopyWith<$Res> {
-  __$UserNodeCopyWithImpl(_UserNode _value, $Res Function(_UserNode) _then)
-      : super(_value, (v) => _then(v as _UserNode));
+class __$$_UserNodeCopyWithImpl<$Res>
+    extends _$UserNodeCopyWithImpl<$Res, _$_UserNode>
+    implements _$$_UserNodeCopyWith<$Res> {
+  __$$_UserNodeCopyWithImpl(
+      _$_UserNode _value, $Res Function(_$_UserNode) _then)
+      : super(_value, _then);
 
-  @override
-  _UserNode get _value => super._value as _UserNode;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? userId = freezed,
@@ -772,84 +704,84 @@ class __$UserNodeCopyWithImpl<$Res> extends _$UserNodeCopyWithImpl<$Res>
     Object? rating = freezed,
     Object? state = freezed,
   }) {
-    return _then(_UserNode(
-      userId: userId == freezed
+    return _then(_$_UserNode(
+      userId: freezed == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
               as String?,
-      aboutMe: aboutMe == freezed
+      aboutMe: freezed == aboutMe
           ? _value.aboutMe
           : aboutMe // ignore: cast_nullable_to_non_nullable
               as String?,
-      active: active == freezed
+      active: freezed == active
           ? _value.active
           : active // ignore: cast_nullable_to_non_nullable
               as bool?,
-      city: city == freezed
+      city: freezed == city
           ? _value.city
           : city // ignore: cast_nullable_to_non_nullable
               as String?,
-      country: country == freezed
+      country: freezed == country
           ? _value.country
           : country // ignore: cast_nullable_to_non_nullable
               as String?,
-      dateJoined: dateJoined == freezed
+      dateJoined: freezed == dateJoined
           ? _value.dateJoined
           : dateJoined // ignore: cast_nullable_to_non_nullable
               as String?,
-      deleted: deleted == freezed
+      deleted: freezed == deleted
           ? _value.deleted
           : deleted // ignore: cast_nullable_to_non_nullable
               as bool?,
-      email: email == freezed
+      email: freezed == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String?,
-      dob: dob == freezed
+      dob: freezed == dob
           ? _value.dob
           : dob // ignore: cast_nullable_to_non_nullable
               as String?,
-      firstName: firstName == freezed
+      firstName: freezed == firstName
           ? _value.firstName
           : firstName // ignore: cast_nullable_to_non_nullable
               as String?,
-      gender: gender == freezed
+      gender: freezed == gender
           ? _value.gender
           : gender // ignore: cast_nullable_to_non_nullable
               as String?,
-      isActive: isActive == freezed
+      isActive: freezed == isActive
           ? _value.isActive
           : isActive // ignore: cast_nullable_to_non_nullable
               as bool?,
-      id: id == freezed
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String?,
-      isStaff: isStaff == freezed
+      isStaff: freezed == isStaff
           ? _value.isStaff
           : isStaff // ignore: cast_nullable_to_non_nullable
               as bool?,
-      lastLogin: lastLogin == freezed
+      lastLogin: freezed == lastLogin
           ? _value.lastLogin
           : lastLogin // ignore: cast_nullable_to_non_nullable
               as String?,
-      lastName: lastName == freezed
+      lastName: freezed == lastName
           ? _value.lastName
           : lastName // ignore: cast_nullable_to_non_nullable
               as String?,
-      phone: phone == freezed
+      phone: freezed == phone
           ? _value.phone
           : phone // ignore: cast_nullable_to_non_nullable
               as String?,
-      picture: picture == freezed
+      picture: freezed == picture
           ? _value.picture
           : picture // ignore: cast_nullable_to_non_nullable
               as String?,
-      rating: rating == freezed
+      rating: freezed == rating
           ? _value.rating
           : rating // ignore: cast_nullable_to_non_nullable
               as String?,
-      state: state == freezed
+      state: freezed == state
           ? _value.state
           : state // ignore: cast_nullable_to_non_nullable
               as String?,
@@ -935,88 +867,96 @@ class _$_UserNode implements _UserNode {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _UserNode &&
-            const DeepCollectionEquality().equals(other.userId, userId) &&
-            const DeepCollectionEquality().equals(other.aboutMe, aboutMe) &&
-            const DeepCollectionEquality().equals(other.active, active) &&
-            const DeepCollectionEquality().equals(other.city, city) &&
-            const DeepCollectionEquality().equals(other.country, country) &&
-            const DeepCollectionEquality()
-                .equals(other.dateJoined, dateJoined) &&
-            const DeepCollectionEquality().equals(other.deleted, deleted) &&
-            const DeepCollectionEquality().equals(other.email, email) &&
-            const DeepCollectionEquality().equals(other.dob, dob) &&
-            const DeepCollectionEquality().equals(other.firstName, firstName) &&
-            const DeepCollectionEquality().equals(other.gender, gender) &&
-            const DeepCollectionEquality().equals(other.isActive, isActive) &&
-            const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality().equals(other.isStaff, isStaff) &&
-            const DeepCollectionEquality().equals(other.lastLogin, lastLogin) &&
-            const DeepCollectionEquality().equals(other.lastName, lastName) &&
-            const DeepCollectionEquality().equals(other.phone, phone) &&
-            const DeepCollectionEquality().equals(other.picture, picture) &&
-            const DeepCollectionEquality().equals(other.rating, rating) &&
-            const DeepCollectionEquality().equals(other.state, state));
+            other is _$_UserNode &&
+            (identical(other.userId, userId) || other.userId == userId) &&
+            (identical(other.aboutMe, aboutMe) || other.aboutMe == aboutMe) &&
+            (identical(other.active, active) || other.active == active) &&
+            (identical(other.city, city) || other.city == city) &&
+            (identical(other.country, country) || other.country == country) &&
+            (identical(other.dateJoined, dateJoined) ||
+                other.dateJoined == dateJoined) &&
+            (identical(other.deleted, deleted) || other.deleted == deleted) &&
+            (identical(other.email, email) || other.email == email) &&
+            (identical(other.dob, dob) || other.dob == dob) &&
+            (identical(other.firstName, firstName) ||
+                other.firstName == firstName) &&
+            (identical(other.gender, gender) || other.gender == gender) &&
+            (identical(other.isActive, isActive) ||
+                other.isActive == isActive) &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.isStaff, isStaff) || other.isStaff == isStaff) &&
+            (identical(other.lastLogin, lastLogin) ||
+                other.lastLogin == lastLogin) &&
+            (identical(other.lastName, lastName) ||
+                other.lastName == lastName) &&
+            (identical(other.phone, phone) || other.phone == phone) &&
+            (identical(other.picture, picture) || other.picture == picture) &&
+            (identical(other.rating, rating) || other.rating == rating) &&
+            (identical(other.state, state) || other.state == state));
   }
 
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hashAll([
         runtimeType,
-        const DeepCollectionEquality().hash(userId),
-        const DeepCollectionEquality().hash(aboutMe),
-        const DeepCollectionEquality().hash(active),
-        const DeepCollectionEquality().hash(city),
-        const DeepCollectionEquality().hash(country),
-        const DeepCollectionEquality().hash(dateJoined),
-        const DeepCollectionEquality().hash(deleted),
-        const DeepCollectionEquality().hash(email),
-        const DeepCollectionEquality().hash(dob),
-        const DeepCollectionEquality().hash(firstName),
-        const DeepCollectionEquality().hash(gender),
-        const DeepCollectionEquality().hash(isActive),
-        const DeepCollectionEquality().hash(id),
-        const DeepCollectionEquality().hash(isStaff),
-        const DeepCollectionEquality().hash(lastLogin),
-        const DeepCollectionEquality().hash(lastName),
-        const DeepCollectionEquality().hash(phone),
-        const DeepCollectionEquality().hash(picture),
-        const DeepCollectionEquality().hash(rating),
-        const DeepCollectionEquality().hash(state)
+        userId,
+        aboutMe,
+        active,
+        city,
+        country,
+        dateJoined,
+        deleted,
+        email,
+        dob,
+        firstName,
+        gender,
+        isActive,
+        id,
+        isStaff,
+        lastLogin,
+        lastName,
+        phone,
+        picture,
+        rating,
+        state
       ]);
 
   @JsonKey(ignore: true)
   @override
-  _$UserNodeCopyWith<_UserNode> get copyWith =>
-      __$UserNodeCopyWithImpl<_UserNode>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$_UserNodeCopyWith<_$_UserNode> get copyWith =>
+      __$$_UserNodeCopyWithImpl<_$_UserNode>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_UserNodeToJson(this);
+    return _$$_UserNodeToJson(
+      this,
+    );
   }
 }
 
 abstract class _UserNode implements UserNode {
   const factory _UserNode(
-      {required String? userId,
-      required String? aboutMe,
-      required bool? active,
-      required String? city,
-      required String? country,
-      required String? dateJoined,
-      required bool? deleted,
-      required String? email,
-      required String? dob,
-      required String? firstName,
-      required String? gender,
-      required bool? isActive,
-      required String? id,
-      required bool? isStaff,
-      required String? lastLogin,
-      required String? lastName,
-      required String? phone,
-      required String? picture,
-      required String? rating,
-      required String? state}) = _$_UserNode;
+      {required final String? userId,
+      required final String? aboutMe,
+      required final bool? active,
+      required final String? city,
+      required final String? country,
+      required final String? dateJoined,
+      required final bool? deleted,
+      required final String? email,
+      required final String? dob,
+      required final String? firstName,
+      required final String? gender,
+      required final bool? isActive,
+      required final String? id,
+      required final bool? isStaff,
+      required final String? lastLogin,
+      required final String? lastName,
+      required final String? phone,
+      required final String? picture,
+      required final String? rating,
+      required final String? state}) = _$_UserNode;
 
   factory _UserNode.fromJson(Map<String, dynamic> json) = _$_UserNode.fromJson;
 
@@ -1062,6 +1002,6 @@ abstract class _UserNode implements UserNode {
   String? get state;
   @override
   @JsonKey(ignore: true)
-  _$UserNodeCopyWith<_UserNode> get copyWith =>
+  _$$_UserNodeCopyWith<_$_UserNode> get copyWith =>
       throw _privateConstructorUsedError;
 }

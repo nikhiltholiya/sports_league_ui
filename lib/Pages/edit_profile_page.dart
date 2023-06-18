@@ -536,7 +536,6 @@ class _EditProfilePageState extends State<EditProfilePage> with isInternetConnec
     print('resp 522 *$resp');
   }
 
-
   Future<File> getImageFileFromAssets(String path) async {
     final byteData = await rootBundle.load('assets/$path');
 
@@ -651,28 +650,34 @@ class _EditProfilePageState extends State<EditProfilePage> with isInternetConnec
 
 //IMAGE OVER
 
+  //20230608 Change Dialog with done only if success and is failure then it shows Error list in dialog..
   _showAlert() async {
     return await showDialog(
         context: context,
         barrierDismissible: false,
         builder: (BuildContext context) {
           return AppDialog(
-            title: profile,
+            title: profileUpdDialogTitle,
             body: [
-              ListView.builder(
-                shrinkWrap: true,
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(errorList![index].toString()),
-                  );
-                },
-                itemCount: errorList!.length,
-              )
+              errorList?.first?.toString().toLowerCase() == 'done'
+                  ? const SizedBox(
+                      height: 0,
+                      width: 0,
+                    )
+                  : ListView.builder(
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(errorList![index].toString()),
+                        );
+                      },
+                      itemCount: errorList!.length,
+                    )
             ],
             isBtnPositiveAvail: false,
             btnPositiveText: '',
-            btnNegativeText: dialogDismiss,
+            btnNegativeText: btnDone,
             onNegativeClick: () {
               Navigator.pop(context);
               if (errorList?.first?.toString().toLowerCase() == 'done') {

@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'send_message.dart';
 
@@ -12,29 +12,11 @@ part of 'send_message.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 SendMessageData _$SendMessageDataFromJson(Map<String, dynamic> json) {
   return _SendMessageData.fromJson(json);
 }
-
-/// @nodoc
-class _$SendMessageDataTearOff {
-  const _$SendMessageDataTearOff();
-
-  _SendMessageData call({required SendMessage? sendMessage}) {
-    return _SendMessageData(
-      sendMessage: sendMessage,
-    );
-  }
-
-  SendMessageData fromJson(Map<String, Object?> json) {
-    return SendMessageData.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $SendMessageData = _$SendMessageDataTearOff();
 
 /// @nodoc
 mixin _$SendMessageData {
@@ -50,52 +32,57 @@ mixin _$SendMessageData {
 abstract class $SendMessageDataCopyWith<$Res> {
   factory $SendMessageDataCopyWith(
           SendMessageData value, $Res Function(SendMessageData) then) =
-      _$SendMessageDataCopyWithImpl<$Res>;
+      _$SendMessageDataCopyWithImpl<$Res, SendMessageData>;
+  @useResult
   $Res call({SendMessage? sendMessage});
 
   $SendMessageCopyWith<$Res>? get sendMessage;
 }
 
 /// @nodoc
-class _$SendMessageDataCopyWithImpl<$Res>
+class _$SendMessageDataCopyWithImpl<$Res, $Val extends SendMessageData>
     implements $SendMessageDataCopyWith<$Res> {
   _$SendMessageDataCopyWithImpl(this._value, this._then);
 
-  final SendMessageData _value;
   // ignore: unused_field
-  final $Res Function(SendMessageData) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? sendMessage = freezed,
   }) {
     return _then(_value.copyWith(
-      sendMessage: sendMessage == freezed
+      sendMessage: freezed == sendMessage
           ? _value.sendMessage
           : sendMessage // ignore: cast_nullable_to_non_nullable
               as SendMessage?,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $SendMessageCopyWith<$Res>? get sendMessage {
     if (_value.sendMessage == null) {
       return null;
     }
 
     return $SendMessageCopyWith<$Res>(_value.sendMessage!, (value) {
-      return _then(_value.copyWith(sendMessage: value));
+      return _then(_value.copyWith(sendMessage: value) as $Val);
     });
   }
 }
 
 /// @nodoc
-abstract class _$SendMessageDataCopyWith<$Res>
+abstract class _$$_SendMessageDataCopyWith<$Res>
     implements $SendMessageDataCopyWith<$Res> {
-  factory _$SendMessageDataCopyWith(
-          _SendMessageData value, $Res Function(_SendMessageData) then) =
-      __$SendMessageDataCopyWithImpl<$Res>;
+  factory _$$_SendMessageDataCopyWith(
+          _$_SendMessageData value, $Res Function(_$_SendMessageData) then) =
+      __$$_SendMessageDataCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({SendMessage? sendMessage});
 
   @override
@@ -103,22 +90,20 @@ abstract class _$SendMessageDataCopyWith<$Res>
 }
 
 /// @nodoc
-class __$SendMessageDataCopyWithImpl<$Res>
-    extends _$SendMessageDataCopyWithImpl<$Res>
-    implements _$SendMessageDataCopyWith<$Res> {
-  __$SendMessageDataCopyWithImpl(
-      _SendMessageData _value, $Res Function(_SendMessageData) _then)
-      : super(_value, (v) => _then(v as _SendMessageData));
+class __$$_SendMessageDataCopyWithImpl<$Res>
+    extends _$SendMessageDataCopyWithImpl<$Res, _$_SendMessageData>
+    implements _$$_SendMessageDataCopyWith<$Res> {
+  __$$_SendMessageDataCopyWithImpl(
+      _$_SendMessageData _value, $Res Function(_$_SendMessageData) _then)
+      : super(_value, _then);
 
-  @override
-  _SendMessageData get _value => super._value as _SendMessageData;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? sendMessage = freezed,
   }) {
-    return _then(_SendMessageData(
-      sendMessage: sendMessage == freezed
+    return _then(_$_SendMessageData(
+      sendMessage: freezed == sendMessage
           ? _value.sendMessage
           : sendMessage // ignore: cast_nullable_to_non_nullable
               as SendMessage?,
@@ -146,28 +131,31 @@ class _$_SendMessageData implements _SendMessageData {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _SendMessageData &&
-            const DeepCollectionEquality()
-                .equals(other.sendMessage, sendMessage));
+            other is _$_SendMessageData &&
+            (identical(other.sendMessage, sendMessage) ||
+                other.sendMessage == sendMessage));
   }
-
-  @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(sendMessage));
 
   @JsonKey(ignore: true)
   @override
-  _$SendMessageDataCopyWith<_SendMessageData> get copyWith =>
-      __$SendMessageDataCopyWithImpl<_SendMessageData>(this, _$identity);
+  int get hashCode => Object.hash(runtimeType, sendMessage);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_SendMessageDataCopyWith<_$_SendMessageData> get copyWith =>
+      __$$_SendMessageDataCopyWithImpl<_$_SendMessageData>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_SendMessageDataToJson(this);
+    return _$$_SendMessageDataToJson(
+      this,
+    );
   }
 }
 
 abstract class _SendMessageData implements SendMessageData {
-  const factory _SendMessageData({required SendMessage? sendMessage}) =
+  const factory _SendMessageData({required final SendMessage? sendMessage}) =
       _$_SendMessageData;
 
   factory _SendMessageData.fromJson(Map<String, dynamic> json) =
@@ -177,31 +165,13 @@ abstract class _SendMessageData implements SendMessageData {
   SendMessage? get sendMessage;
   @override
   @JsonKey(ignore: true)
-  _$SendMessageDataCopyWith<_SendMessageData> get copyWith =>
+  _$$_SendMessageDataCopyWith<_$_SendMessageData> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 SendMessage _$SendMessageFromJson(Map<String, dynamic> json) {
   return _SendMessage.fromJson(json);
 }
-
-/// @nodoc
-class _$SendMessageTearOff {
-  const _$SendMessageTearOff();
-
-  _SendMessage call({required MsgNode? messaging}) {
-    return _SendMessage(
-      messaging: messaging,
-    );
-  }
-
-  SendMessage fromJson(Map<String, Object?> json) {
-    return SendMessage.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $SendMessage = _$SendMessageTearOff();
 
 /// @nodoc
 mixin _$SendMessage {
@@ -217,51 +187,57 @@ mixin _$SendMessage {
 abstract class $SendMessageCopyWith<$Res> {
   factory $SendMessageCopyWith(
           SendMessage value, $Res Function(SendMessage) then) =
-      _$SendMessageCopyWithImpl<$Res>;
+      _$SendMessageCopyWithImpl<$Res, SendMessage>;
+  @useResult
   $Res call({MsgNode? messaging});
 
   $MsgNodeCopyWith<$Res>? get messaging;
 }
 
 /// @nodoc
-class _$SendMessageCopyWithImpl<$Res> implements $SendMessageCopyWith<$Res> {
+class _$SendMessageCopyWithImpl<$Res, $Val extends SendMessage>
+    implements $SendMessageCopyWith<$Res> {
   _$SendMessageCopyWithImpl(this._value, this._then);
 
-  final SendMessage _value;
   // ignore: unused_field
-  final $Res Function(SendMessage) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? messaging = freezed,
   }) {
     return _then(_value.copyWith(
-      messaging: messaging == freezed
+      messaging: freezed == messaging
           ? _value.messaging
           : messaging // ignore: cast_nullable_to_non_nullable
               as MsgNode?,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $MsgNodeCopyWith<$Res>? get messaging {
     if (_value.messaging == null) {
       return null;
     }
 
     return $MsgNodeCopyWith<$Res>(_value.messaging!, (value) {
-      return _then(_value.copyWith(messaging: value));
+      return _then(_value.copyWith(messaging: value) as $Val);
     });
   }
 }
 
 /// @nodoc
-abstract class _$SendMessageCopyWith<$Res>
+abstract class _$$_SendMessageCopyWith<$Res>
     implements $SendMessageCopyWith<$Res> {
-  factory _$SendMessageCopyWith(
-          _SendMessage value, $Res Function(_SendMessage) then) =
-      __$SendMessageCopyWithImpl<$Res>;
+  factory _$$_SendMessageCopyWith(
+          _$_SendMessage value, $Res Function(_$_SendMessage) then) =
+      __$$_SendMessageCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({MsgNode? messaging});
 
   @override
@@ -269,21 +245,20 @@ abstract class _$SendMessageCopyWith<$Res>
 }
 
 /// @nodoc
-class __$SendMessageCopyWithImpl<$Res> extends _$SendMessageCopyWithImpl<$Res>
-    implements _$SendMessageCopyWith<$Res> {
-  __$SendMessageCopyWithImpl(
-      _SendMessage _value, $Res Function(_SendMessage) _then)
-      : super(_value, (v) => _then(v as _SendMessage));
+class __$$_SendMessageCopyWithImpl<$Res>
+    extends _$SendMessageCopyWithImpl<$Res, _$_SendMessage>
+    implements _$$_SendMessageCopyWith<$Res> {
+  __$$_SendMessageCopyWithImpl(
+      _$_SendMessage _value, $Res Function(_$_SendMessage) _then)
+      : super(_value, _then);
 
-  @override
-  _SendMessage get _value => super._value as _SendMessage;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? messaging = freezed,
   }) {
-    return _then(_SendMessage(
-      messaging: messaging == freezed
+    return _then(_$_SendMessage(
+      messaging: freezed == messaging
           ? _value.messaging
           : messaging // ignore: cast_nullable_to_non_nullable
               as MsgNode?,
@@ -311,27 +286,32 @@ class _$_SendMessage implements _SendMessage {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _SendMessage &&
-            const DeepCollectionEquality().equals(other.messaging, messaging));
+            other is _$_SendMessage &&
+            (identical(other.messaging, messaging) ||
+                other.messaging == messaging));
   }
-
-  @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(messaging));
 
   @JsonKey(ignore: true)
   @override
-  _$SendMessageCopyWith<_SendMessage> get copyWith =>
-      __$SendMessageCopyWithImpl<_SendMessage>(this, _$identity);
+  int get hashCode => Object.hash(runtimeType, messaging);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_SendMessageCopyWith<_$_SendMessage> get copyWith =>
+      __$$_SendMessageCopyWithImpl<_$_SendMessage>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_SendMessageToJson(this);
+    return _$$_SendMessageToJson(
+      this,
+    );
   }
 }
 
 abstract class _SendMessage implements SendMessage {
-  const factory _SendMessage({required MsgNode? messaging}) = _$_SendMessage;
+  const factory _SendMessage({required final MsgNode? messaging}) =
+      _$_SendMessage;
 
   factory _SendMessage.fromJson(Map<String, dynamic> json) =
       _$_SendMessage.fromJson;
@@ -340,6 +320,6 @@ abstract class _SendMessage implements SendMessage {
   MsgNode? get messaging;
   @override
   @JsonKey(ignore: true)
-  _$SendMessageCopyWith<_SendMessage> get copyWith =>
+  _$$_SendMessageCopyWith<_$_SendMessage> get copyWith =>
       throw _privateConstructorUsedError;
 }

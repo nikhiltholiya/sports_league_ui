@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'all_matches.dart';
 
@@ -12,29 +12,11 @@ part of 'all_matches.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 AllMatchesData _$AllMatchesDataFromJson(Map<String, dynamic> json) {
   return _AllMatchesData.fromJson(json);
 }
-
-/// @nodoc
-class _$AllMatchesDataTearOff {
-  const _$AllMatchesDataTearOff();
-
-  _AllMatchesData call({required AllMatches? allMatches}) {
-    return _AllMatchesData(
-      allMatches: allMatches,
-    );
-  }
-
-  AllMatchesData fromJson(Map<String, Object?> json) {
-    return AllMatchesData.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $AllMatchesData = _$AllMatchesDataTearOff();
 
 /// @nodoc
 mixin _$AllMatchesData {
@@ -50,52 +32,57 @@ mixin _$AllMatchesData {
 abstract class $AllMatchesDataCopyWith<$Res> {
   factory $AllMatchesDataCopyWith(
           AllMatchesData value, $Res Function(AllMatchesData) then) =
-      _$AllMatchesDataCopyWithImpl<$Res>;
+      _$AllMatchesDataCopyWithImpl<$Res, AllMatchesData>;
+  @useResult
   $Res call({AllMatches? allMatches});
 
   $AllMatchesCopyWith<$Res>? get allMatches;
 }
 
 /// @nodoc
-class _$AllMatchesDataCopyWithImpl<$Res>
+class _$AllMatchesDataCopyWithImpl<$Res, $Val extends AllMatchesData>
     implements $AllMatchesDataCopyWith<$Res> {
   _$AllMatchesDataCopyWithImpl(this._value, this._then);
 
-  final AllMatchesData _value;
   // ignore: unused_field
-  final $Res Function(AllMatchesData) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? allMatches = freezed,
   }) {
     return _then(_value.copyWith(
-      allMatches: allMatches == freezed
+      allMatches: freezed == allMatches
           ? _value.allMatches
           : allMatches // ignore: cast_nullable_to_non_nullable
               as AllMatches?,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $AllMatchesCopyWith<$Res>? get allMatches {
     if (_value.allMatches == null) {
       return null;
     }
 
     return $AllMatchesCopyWith<$Res>(_value.allMatches!, (value) {
-      return _then(_value.copyWith(allMatches: value));
+      return _then(_value.copyWith(allMatches: value) as $Val);
     });
   }
 }
 
 /// @nodoc
-abstract class _$AllMatchesDataCopyWith<$Res>
+abstract class _$$_AllMatchesDataCopyWith<$Res>
     implements $AllMatchesDataCopyWith<$Res> {
-  factory _$AllMatchesDataCopyWith(
-          _AllMatchesData value, $Res Function(_AllMatchesData) then) =
-      __$AllMatchesDataCopyWithImpl<$Res>;
+  factory _$$_AllMatchesDataCopyWith(
+          _$_AllMatchesData value, $Res Function(_$_AllMatchesData) then) =
+      __$$_AllMatchesDataCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({AllMatches? allMatches});
 
   @override
@@ -103,22 +90,20 @@ abstract class _$AllMatchesDataCopyWith<$Res>
 }
 
 /// @nodoc
-class __$AllMatchesDataCopyWithImpl<$Res>
-    extends _$AllMatchesDataCopyWithImpl<$Res>
-    implements _$AllMatchesDataCopyWith<$Res> {
-  __$AllMatchesDataCopyWithImpl(
-      _AllMatchesData _value, $Res Function(_AllMatchesData) _then)
-      : super(_value, (v) => _then(v as _AllMatchesData));
+class __$$_AllMatchesDataCopyWithImpl<$Res>
+    extends _$AllMatchesDataCopyWithImpl<$Res, _$_AllMatchesData>
+    implements _$$_AllMatchesDataCopyWith<$Res> {
+  __$$_AllMatchesDataCopyWithImpl(
+      _$_AllMatchesData _value, $Res Function(_$_AllMatchesData) _then)
+      : super(_value, _then);
 
-  @override
-  _AllMatchesData get _value => super._value as _AllMatchesData;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? allMatches = freezed,
   }) {
-    return _then(_AllMatchesData(
-      allMatches: allMatches == freezed
+    return _then(_$_AllMatchesData(
+      allMatches: freezed == allMatches
           ? _value.allMatches
           : allMatches // ignore: cast_nullable_to_non_nullable
               as AllMatches?,
@@ -146,28 +131,31 @@ class _$_AllMatchesData implements _AllMatchesData {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _AllMatchesData &&
-            const DeepCollectionEquality()
-                .equals(other.allMatches, allMatches));
+            other is _$_AllMatchesData &&
+            (identical(other.allMatches, allMatches) ||
+                other.allMatches == allMatches));
   }
-
-  @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(allMatches));
 
   @JsonKey(ignore: true)
   @override
-  _$AllMatchesDataCopyWith<_AllMatchesData> get copyWith =>
-      __$AllMatchesDataCopyWithImpl<_AllMatchesData>(this, _$identity);
+  int get hashCode => Object.hash(runtimeType, allMatches);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_AllMatchesDataCopyWith<_$_AllMatchesData> get copyWith =>
+      __$$_AllMatchesDataCopyWithImpl<_$_AllMatchesData>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_AllMatchesDataToJson(this);
+    return _$$_AllMatchesDataToJson(
+      this,
+    );
   }
 }
 
 abstract class _AllMatchesData implements AllMatchesData {
-  const factory _AllMatchesData({required AllMatches? allMatches}) =
+  const factory _AllMatchesData({required final AllMatches? allMatches}) =
       _$_AllMatchesData;
 
   factory _AllMatchesData.fromJson(Map<String, dynamic> json) =
@@ -177,31 +165,13 @@ abstract class _AllMatchesData implements AllMatchesData {
   AllMatches? get allMatches;
   @override
   @JsonKey(ignore: true)
-  _$AllMatchesDataCopyWith<_AllMatchesData> get copyWith =>
+  _$$_AllMatchesDataCopyWith<_$_AllMatchesData> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 AllMatches _$AllMatchesFromJson(Map<String, dynamic> json) {
   return _AllMatches.fromJson(json);
 }
-
-/// @nodoc
-class _$AllMatchesTearOff {
-  const _$AllMatchesTearOff();
-
-  _AllMatches call({required List<MatchesEdges>? edges}) {
-    return _AllMatches(
-      edges: edges,
-    );
-  }
-
-  AllMatches fromJson(Map<String, Object?> json) {
-    return AllMatches.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $AllMatches = _$AllMatchesTearOff();
 
 /// @nodoc
 mixin _$AllMatches {
@@ -217,57 +187,62 @@ mixin _$AllMatches {
 abstract class $AllMatchesCopyWith<$Res> {
   factory $AllMatchesCopyWith(
           AllMatches value, $Res Function(AllMatches) then) =
-      _$AllMatchesCopyWithImpl<$Res>;
+      _$AllMatchesCopyWithImpl<$Res, AllMatches>;
+  @useResult
   $Res call({List<MatchesEdges>? edges});
 }
 
 /// @nodoc
-class _$AllMatchesCopyWithImpl<$Res> implements $AllMatchesCopyWith<$Res> {
+class _$AllMatchesCopyWithImpl<$Res, $Val extends AllMatches>
+    implements $AllMatchesCopyWith<$Res> {
   _$AllMatchesCopyWithImpl(this._value, this._then);
 
-  final AllMatches _value;
   // ignore: unused_field
-  final $Res Function(AllMatches) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? edges = freezed,
   }) {
     return _then(_value.copyWith(
-      edges: edges == freezed
+      edges: freezed == edges
           ? _value.edges
           : edges // ignore: cast_nullable_to_non_nullable
               as List<MatchesEdges>?,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$AllMatchesCopyWith<$Res> implements $AllMatchesCopyWith<$Res> {
-  factory _$AllMatchesCopyWith(
-          _AllMatches value, $Res Function(_AllMatches) then) =
-      __$AllMatchesCopyWithImpl<$Res>;
+abstract class _$$_AllMatchesCopyWith<$Res>
+    implements $AllMatchesCopyWith<$Res> {
+  factory _$$_AllMatchesCopyWith(
+          _$_AllMatches value, $Res Function(_$_AllMatches) then) =
+      __$$_AllMatchesCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({List<MatchesEdges>? edges});
 }
 
 /// @nodoc
-class __$AllMatchesCopyWithImpl<$Res> extends _$AllMatchesCopyWithImpl<$Res>
-    implements _$AllMatchesCopyWith<$Res> {
-  __$AllMatchesCopyWithImpl(
-      _AllMatches _value, $Res Function(_AllMatches) _then)
-      : super(_value, (v) => _then(v as _AllMatches));
+class __$$_AllMatchesCopyWithImpl<$Res>
+    extends _$AllMatchesCopyWithImpl<$Res, _$_AllMatches>
+    implements _$$_AllMatchesCopyWith<$Res> {
+  __$$_AllMatchesCopyWithImpl(
+      _$_AllMatches _value, $Res Function(_$_AllMatches) _then)
+      : super(_value, _then);
 
-  @override
-  _AllMatches get _value => super._value as _AllMatches;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? edges = freezed,
   }) {
-    return _then(_AllMatches(
-      edges: edges == freezed
-          ? _value.edges
+    return _then(_$_AllMatches(
+      edges: freezed == edges
+          ? _value._edges
           : edges // ignore: cast_nullable_to_non_nullable
               as List<MatchesEdges>?,
     ));
@@ -277,13 +252,21 @@ class __$AllMatchesCopyWithImpl<$Res> extends _$AllMatchesCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_AllMatches implements _AllMatches {
-  const _$_AllMatches({required this.edges});
+  const _$_AllMatches({required final List<MatchesEdges>? edges})
+      : _edges = edges;
 
   factory _$_AllMatches.fromJson(Map<String, dynamic> json) =>
       _$$_AllMatchesFromJson(json);
 
+  final List<MatchesEdges>? _edges;
   @override
-  final List<MatchesEdges>? edges;
+  List<MatchesEdges>? get edges {
+    final value = _edges;
+    if (value == null) return null;
+    if (_edges is EqualUnmodifiableListView) return _edges;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
 
   @override
   String toString() {
@@ -294,27 +277,31 @@ class _$_AllMatches implements _AllMatches {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _AllMatches &&
-            const DeepCollectionEquality().equals(other.edges, edges));
+            other is _$_AllMatches &&
+            const DeepCollectionEquality().equals(other._edges, _edges));
   }
-
-  @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(edges));
 
   @JsonKey(ignore: true)
   @override
-  _$AllMatchesCopyWith<_AllMatches> get copyWith =>
-      __$AllMatchesCopyWithImpl<_AllMatches>(this, _$identity);
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(_edges));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_AllMatchesCopyWith<_$_AllMatches> get copyWith =>
+      __$$_AllMatchesCopyWithImpl<_$_AllMatches>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_AllMatchesToJson(this);
+    return _$$_AllMatchesToJson(
+      this,
+    );
   }
 }
 
 abstract class _AllMatches implements AllMatches {
-  const factory _AllMatches({required List<MatchesEdges>? edges}) =
+  const factory _AllMatches({required final List<MatchesEdges>? edges}) =
       _$_AllMatches;
 
   factory _AllMatches.fromJson(Map<String, dynamic> json) =
@@ -324,31 +311,13 @@ abstract class _AllMatches implements AllMatches {
   List<MatchesEdges>? get edges;
   @override
   @JsonKey(ignore: true)
-  _$AllMatchesCopyWith<_AllMatches> get copyWith =>
+  _$$_AllMatchesCopyWith<_$_AllMatches> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 MatchesEdges _$MatchesEdgesFromJson(Map<String, dynamic> json) {
   return _MatchesEdges.fromJson(json);
 }
-
-/// @nodoc
-class _$MatchesEdgesTearOff {
-  const _$MatchesEdgesTearOff();
-
-  _MatchesEdges call({required MatchesNode? node}) {
-    return _MatchesEdges(
-      node: node,
-    );
-  }
-
-  MatchesEdges fromJson(Map<String, Object?> json) {
-    return MatchesEdges.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $MatchesEdges = _$MatchesEdgesTearOff();
 
 /// @nodoc
 mixin _$MatchesEdges {
@@ -364,51 +333,57 @@ mixin _$MatchesEdges {
 abstract class $MatchesEdgesCopyWith<$Res> {
   factory $MatchesEdgesCopyWith(
           MatchesEdges value, $Res Function(MatchesEdges) then) =
-      _$MatchesEdgesCopyWithImpl<$Res>;
+      _$MatchesEdgesCopyWithImpl<$Res, MatchesEdges>;
+  @useResult
   $Res call({MatchesNode? node});
 
   $MatchesNodeCopyWith<$Res>? get node;
 }
 
 /// @nodoc
-class _$MatchesEdgesCopyWithImpl<$Res> implements $MatchesEdgesCopyWith<$Res> {
+class _$MatchesEdgesCopyWithImpl<$Res, $Val extends MatchesEdges>
+    implements $MatchesEdgesCopyWith<$Res> {
   _$MatchesEdgesCopyWithImpl(this._value, this._then);
 
-  final MatchesEdges _value;
   // ignore: unused_field
-  final $Res Function(MatchesEdges) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? node = freezed,
   }) {
     return _then(_value.copyWith(
-      node: node == freezed
+      node: freezed == node
           ? _value.node
           : node // ignore: cast_nullable_to_non_nullable
               as MatchesNode?,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $MatchesNodeCopyWith<$Res>? get node {
     if (_value.node == null) {
       return null;
     }
 
     return $MatchesNodeCopyWith<$Res>(_value.node!, (value) {
-      return _then(_value.copyWith(node: value));
+      return _then(_value.copyWith(node: value) as $Val);
     });
   }
 }
 
 /// @nodoc
-abstract class _$MatchesEdgesCopyWith<$Res>
+abstract class _$$_MatchesEdgesCopyWith<$Res>
     implements $MatchesEdgesCopyWith<$Res> {
-  factory _$MatchesEdgesCopyWith(
-          _MatchesEdges value, $Res Function(_MatchesEdges) then) =
-      __$MatchesEdgesCopyWithImpl<$Res>;
+  factory _$$_MatchesEdgesCopyWith(
+          _$_MatchesEdges value, $Res Function(_$_MatchesEdges) then) =
+      __$$_MatchesEdgesCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({MatchesNode? node});
 
   @override
@@ -416,21 +391,20 @@ abstract class _$MatchesEdgesCopyWith<$Res>
 }
 
 /// @nodoc
-class __$MatchesEdgesCopyWithImpl<$Res> extends _$MatchesEdgesCopyWithImpl<$Res>
-    implements _$MatchesEdgesCopyWith<$Res> {
-  __$MatchesEdgesCopyWithImpl(
-      _MatchesEdges _value, $Res Function(_MatchesEdges) _then)
-      : super(_value, (v) => _then(v as _MatchesEdges));
+class __$$_MatchesEdgesCopyWithImpl<$Res>
+    extends _$MatchesEdgesCopyWithImpl<$Res, _$_MatchesEdges>
+    implements _$$_MatchesEdgesCopyWith<$Res> {
+  __$$_MatchesEdgesCopyWithImpl(
+      _$_MatchesEdges _value, $Res Function(_$_MatchesEdges) _then)
+      : super(_value, _then);
 
-  @override
-  _MatchesEdges get _value => super._value as _MatchesEdges;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? node = freezed,
   }) {
-    return _then(_MatchesEdges(
-      node: node == freezed
+    return _then(_$_MatchesEdges(
+      node: freezed == node
           ? _value.node
           : node // ignore: cast_nullable_to_non_nullable
               as MatchesNode?,
@@ -458,27 +432,31 @@ class _$_MatchesEdges implements _MatchesEdges {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _MatchesEdges &&
-            const DeepCollectionEquality().equals(other.node, node));
+            other is _$_MatchesEdges &&
+            (identical(other.node, node) || other.node == node));
   }
-
-  @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(node));
 
   @JsonKey(ignore: true)
   @override
-  _$MatchesEdgesCopyWith<_MatchesEdges> get copyWith =>
-      __$MatchesEdgesCopyWithImpl<_MatchesEdges>(this, _$identity);
+  int get hashCode => Object.hash(runtimeType, node);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_MatchesEdgesCopyWith<_$_MatchesEdges> get copyWith =>
+      __$$_MatchesEdgesCopyWithImpl<_$_MatchesEdges>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_MatchesEdgesToJson(this);
+    return _$$_MatchesEdgesToJson(
+      this,
+    );
   }
 }
 
 abstract class _MatchesEdges implements MatchesEdges {
-  const factory _MatchesEdges({required MatchesNode? node}) = _$_MatchesEdges;
+  const factory _MatchesEdges({required final MatchesNode? node}) =
+      _$_MatchesEdges;
 
   factory _MatchesEdges.fromJson(Map<String, dynamic> json) =
       _$_MatchesEdges.fromJson;
@@ -487,42 +465,13 @@ abstract class _MatchesEdges implements MatchesEdges {
   MatchesNode? get node;
   @override
   @JsonKey(ignore: true)
-  _$MatchesEdgesCopyWith<_MatchesEdges> get copyWith =>
+  _$$_MatchesEdgesCopyWith<_$_MatchesEdges> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 MatchesNode _$MatchesNodeFromJson(Map<String, dynamic> json) {
   return _MatchesNode.fromJson(json);
 }
-
-/// @nodoc
-class _$MatchesNodeTearOff {
-  const _$MatchesNodeTearOff();
-
-  _MatchesNode call(
-      {required String? id,
-      required String? court,
-      required String? startDate,
-      required MatchSet? matchSet,
-      required UserNode? playerOne,
-      required UserNode? playerTwo}) {
-    return _MatchesNode(
-      id: id,
-      court: court,
-      startDate: startDate,
-      matchSet: matchSet,
-      playerOne: playerOne,
-      playerTwo: playerTwo,
-    );
-  }
-
-  MatchesNode fromJson(Map<String, Object?> json) {
-    return MatchesNode.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $MatchesNode = _$MatchesNodeTearOff();
 
 /// @nodoc
 mixin _$MatchesNode {
@@ -543,7 +492,8 @@ mixin _$MatchesNode {
 abstract class $MatchesNodeCopyWith<$Res> {
   factory $MatchesNodeCopyWith(
           MatchesNode value, $Res Function(MatchesNode) then) =
-      _$MatchesNodeCopyWithImpl<$Res>;
+      _$MatchesNodeCopyWithImpl<$Res, MatchesNode>;
+  @useResult
   $Res call(
       {String? id,
       String? court,
@@ -558,13 +508,16 @@ abstract class $MatchesNodeCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$MatchesNodeCopyWithImpl<$Res> implements $MatchesNodeCopyWith<$Res> {
+class _$MatchesNodeCopyWithImpl<$Res, $Val extends MatchesNode>
+    implements $MatchesNodeCopyWith<$Res> {
   _$MatchesNodeCopyWithImpl(this._value, this._then);
 
-  final MatchesNode _value;
   // ignore: unused_field
-  final $Res Function(MatchesNode) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = freezed,
@@ -575,74 +528,78 @@ class _$MatchesNodeCopyWithImpl<$Res> implements $MatchesNodeCopyWith<$Res> {
     Object? playerTwo = freezed,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String?,
-      court: court == freezed
+      court: freezed == court
           ? _value.court
           : court // ignore: cast_nullable_to_non_nullable
               as String?,
-      startDate: startDate == freezed
+      startDate: freezed == startDate
           ? _value.startDate
           : startDate // ignore: cast_nullable_to_non_nullable
               as String?,
-      matchSet: matchSet == freezed
+      matchSet: freezed == matchSet
           ? _value.matchSet
           : matchSet // ignore: cast_nullable_to_non_nullable
               as MatchSet?,
-      playerOne: playerOne == freezed
+      playerOne: freezed == playerOne
           ? _value.playerOne
           : playerOne // ignore: cast_nullable_to_non_nullable
               as UserNode?,
-      playerTwo: playerTwo == freezed
+      playerTwo: freezed == playerTwo
           ? _value.playerTwo
           : playerTwo // ignore: cast_nullable_to_non_nullable
               as UserNode?,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $MatchSetCopyWith<$Res>? get matchSet {
     if (_value.matchSet == null) {
       return null;
     }
 
     return $MatchSetCopyWith<$Res>(_value.matchSet!, (value) {
-      return _then(_value.copyWith(matchSet: value));
+      return _then(_value.copyWith(matchSet: value) as $Val);
     });
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $UserNodeCopyWith<$Res>? get playerOne {
     if (_value.playerOne == null) {
       return null;
     }
 
     return $UserNodeCopyWith<$Res>(_value.playerOne!, (value) {
-      return _then(_value.copyWith(playerOne: value));
+      return _then(_value.copyWith(playerOne: value) as $Val);
     });
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $UserNodeCopyWith<$Res>? get playerTwo {
     if (_value.playerTwo == null) {
       return null;
     }
 
     return $UserNodeCopyWith<$Res>(_value.playerTwo!, (value) {
-      return _then(_value.copyWith(playerTwo: value));
+      return _then(_value.copyWith(playerTwo: value) as $Val);
     });
   }
 }
 
 /// @nodoc
-abstract class _$MatchesNodeCopyWith<$Res>
+abstract class _$$_MatchesNodeCopyWith<$Res>
     implements $MatchesNodeCopyWith<$Res> {
-  factory _$MatchesNodeCopyWith(
-          _MatchesNode value, $Res Function(_MatchesNode) then) =
-      __$MatchesNodeCopyWithImpl<$Res>;
+  factory _$$_MatchesNodeCopyWith(
+          _$_MatchesNode value, $Res Function(_$_MatchesNode) then) =
+      __$$_MatchesNodeCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String? id,
       String? court,
@@ -660,15 +617,14 @@ abstract class _$MatchesNodeCopyWith<$Res>
 }
 
 /// @nodoc
-class __$MatchesNodeCopyWithImpl<$Res> extends _$MatchesNodeCopyWithImpl<$Res>
-    implements _$MatchesNodeCopyWith<$Res> {
-  __$MatchesNodeCopyWithImpl(
-      _MatchesNode _value, $Res Function(_MatchesNode) _then)
-      : super(_value, (v) => _then(v as _MatchesNode));
+class __$$_MatchesNodeCopyWithImpl<$Res>
+    extends _$MatchesNodeCopyWithImpl<$Res, _$_MatchesNode>
+    implements _$$_MatchesNodeCopyWith<$Res> {
+  __$$_MatchesNodeCopyWithImpl(
+      _$_MatchesNode _value, $Res Function(_$_MatchesNode) _then)
+      : super(_value, _then);
 
-  @override
-  _MatchesNode get _value => super._value as _MatchesNode;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = freezed,
@@ -678,28 +634,28 @@ class __$MatchesNodeCopyWithImpl<$Res> extends _$MatchesNodeCopyWithImpl<$Res>
     Object? playerOne = freezed,
     Object? playerTwo = freezed,
   }) {
-    return _then(_MatchesNode(
-      id: id == freezed
+    return _then(_$_MatchesNode(
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String?,
-      court: court == freezed
+      court: freezed == court
           ? _value.court
           : court // ignore: cast_nullable_to_non_nullable
               as String?,
-      startDate: startDate == freezed
+      startDate: freezed == startDate
           ? _value.startDate
           : startDate // ignore: cast_nullable_to_non_nullable
               as String?,
-      matchSet: matchSet == freezed
+      matchSet: freezed == matchSet
           ? _value.matchSet
           : matchSet // ignore: cast_nullable_to_non_nullable
               as MatchSet?,
-      playerOne: playerOne == freezed
+      playerOne: freezed == playerOne
           ? _value.playerOne
           : playerOne // ignore: cast_nullable_to_non_nullable
               as UserNode?,
-      playerTwo: playerTwo == freezed
+      playerTwo: freezed == playerTwo
           ? _value.playerTwo
           : playerTwo // ignore: cast_nullable_to_non_nullable
               as UserNode?,
@@ -743,44 +699,46 @@ class _$_MatchesNode implements _MatchesNode {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _MatchesNode &&
-            const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality().equals(other.court, court) &&
-            const DeepCollectionEquality().equals(other.startDate, startDate) &&
-            const DeepCollectionEquality().equals(other.matchSet, matchSet) &&
-            const DeepCollectionEquality().equals(other.playerOne, playerOne) &&
-            const DeepCollectionEquality().equals(other.playerTwo, playerTwo));
+            other is _$_MatchesNode &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.court, court) || other.court == court) &&
+            (identical(other.startDate, startDate) ||
+                other.startDate == startDate) &&
+            (identical(other.matchSet, matchSet) ||
+                other.matchSet == matchSet) &&
+            (identical(other.playerOne, playerOne) ||
+                other.playerOne == playerOne) &&
+            (identical(other.playerTwo, playerTwo) ||
+                other.playerTwo == playerTwo));
   }
-
-  @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(court),
-      const DeepCollectionEquality().hash(startDate),
-      const DeepCollectionEquality().hash(matchSet),
-      const DeepCollectionEquality().hash(playerOne),
-      const DeepCollectionEquality().hash(playerTwo));
 
   @JsonKey(ignore: true)
   @override
-  _$MatchesNodeCopyWith<_MatchesNode> get copyWith =>
-      __$MatchesNodeCopyWithImpl<_MatchesNode>(this, _$identity);
+  int get hashCode => Object.hash(
+      runtimeType, id, court, startDate, matchSet, playerOne, playerTwo);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_MatchesNodeCopyWith<_$_MatchesNode> get copyWith =>
+      __$$_MatchesNodeCopyWithImpl<_$_MatchesNode>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_MatchesNodeToJson(this);
+    return _$$_MatchesNodeToJson(
+      this,
+    );
   }
 }
 
 abstract class _MatchesNode implements MatchesNode {
   const factory _MatchesNode(
-      {required String? id,
-      required String? court,
-      required String? startDate,
-      required MatchSet? matchSet,
-      required UserNode? playerOne,
-      required UserNode? playerTwo}) = _$_MatchesNode;
+      {required final String? id,
+      required final String? court,
+      required final String? startDate,
+      required final MatchSet? matchSet,
+      required final UserNode? playerOne,
+      required final UserNode? playerTwo}) = _$_MatchesNode;
 
   factory _MatchesNode.fromJson(Map<String, dynamic> json) =
       _$_MatchesNode.fromJson;
@@ -799,31 +757,13 @@ abstract class _MatchesNode implements MatchesNode {
   UserNode? get playerTwo;
   @override
   @JsonKey(ignore: true)
-  _$MatchesNodeCopyWith<_MatchesNode> get copyWith =>
+  _$$_MatchesNodeCopyWith<_$_MatchesNode> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 MatchSet _$MatchSetFromJson(Map<String, dynamic> json) {
   return _MatchSet.fromJson(json);
 }
-
-/// @nodoc
-class _$MatchSetTearOff {
-  const _$MatchSetTearOff();
-
-  _MatchSet call({required List<MatchSetEdges>? edges}) {
-    return _MatchSet(
-      edges: edges,
-    );
-  }
-
-  MatchSet fromJson(Map<String, Object?> json) {
-    return MatchSet.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $MatchSet = _$MatchSetTearOff();
 
 /// @nodoc
 mixin _$MatchSet {
@@ -838,55 +778,61 @@ mixin _$MatchSet {
 /// @nodoc
 abstract class $MatchSetCopyWith<$Res> {
   factory $MatchSetCopyWith(MatchSet value, $Res Function(MatchSet) then) =
-      _$MatchSetCopyWithImpl<$Res>;
+      _$MatchSetCopyWithImpl<$Res, MatchSet>;
+  @useResult
   $Res call({List<MatchSetEdges>? edges});
 }
 
 /// @nodoc
-class _$MatchSetCopyWithImpl<$Res> implements $MatchSetCopyWith<$Res> {
+class _$MatchSetCopyWithImpl<$Res, $Val extends MatchSet>
+    implements $MatchSetCopyWith<$Res> {
   _$MatchSetCopyWithImpl(this._value, this._then);
 
-  final MatchSet _value;
   // ignore: unused_field
-  final $Res Function(MatchSet) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? edges = freezed,
   }) {
     return _then(_value.copyWith(
-      edges: edges == freezed
+      edges: freezed == edges
           ? _value.edges
           : edges // ignore: cast_nullable_to_non_nullable
               as List<MatchSetEdges>?,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$MatchSetCopyWith<$Res> implements $MatchSetCopyWith<$Res> {
-  factory _$MatchSetCopyWith(_MatchSet value, $Res Function(_MatchSet) then) =
-      __$MatchSetCopyWithImpl<$Res>;
+abstract class _$$_MatchSetCopyWith<$Res> implements $MatchSetCopyWith<$Res> {
+  factory _$$_MatchSetCopyWith(
+          _$_MatchSet value, $Res Function(_$_MatchSet) then) =
+      __$$_MatchSetCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({List<MatchSetEdges>? edges});
 }
 
 /// @nodoc
-class __$MatchSetCopyWithImpl<$Res> extends _$MatchSetCopyWithImpl<$Res>
-    implements _$MatchSetCopyWith<$Res> {
-  __$MatchSetCopyWithImpl(_MatchSet _value, $Res Function(_MatchSet) _then)
-      : super(_value, (v) => _then(v as _MatchSet));
+class __$$_MatchSetCopyWithImpl<$Res>
+    extends _$MatchSetCopyWithImpl<$Res, _$_MatchSet>
+    implements _$$_MatchSetCopyWith<$Res> {
+  __$$_MatchSetCopyWithImpl(
+      _$_MatchSet _value, $Res Function(_$_MatchSet) _then)
+      : super(_value, _then);
 
-  @override
-  _MatchSet get _value => super._value as _MatchSet;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? edges = freezed,
   }) {
-    return _then(_MatchSet(
-      edges: edges == freezed
-          ? _value.edges
+    return _then(_$_MatchSet(
+      edges: freezed == edges
+          ? _value._edges
           : edges // ignore: cast_nullable_to_non_nullable
               as List<MatchSetEdges>?,
     ));
@@ -896,13 +842,21 @@ class __$MatchSetCopyWithImpl<$Res> extends _$MatchSetCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_MatchSet implements _MatchSet {
-  const _$_MatchSet({required this.edges});
+  const _$_MatchSet({required final List<MatchSetEdges>? edges})
+      : _edges = edges;
 
   factory _$_MatchSet.fromJson(Map<String, dynamic> json) =>
       _$$_MatchSetFromJson(json);
 
+  final List<MatchSetEdges>? _edges;
   @override
-  final List<MatchSetEdges>? edges;
+  List<MatchSetEdges>? get edges {
+    final value = _edges;
+    if (value == null) return null;
+    if (_edges is EqualUnmodifiableListView) return _edges;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
 
   @override
   String toString() {
@@ -913,27 +867,32 @@ class _$_MatchSet implements _MatchSet {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _MatchSet &&
-            const DeepCollectionEquality().equals(other.edges, edges));
+            other is _$_MatchSet &&
+            const DeepCollectionEquality().equals(other._edges, _edges));
   }
-
-  @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(edges));
 
   @JsonKey(ignore: true)
   @override
-  _$MatchSetCopyWith<_MatchSet> get copyWith =>
-      __$MatchSetCopyWithImpl<_MatchSet>(this, _$identity);
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(_edges));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_MatchSetCopyWith<_$_MatchSet> get copyWith =>
+      __$$_MatchSetCopyWithImpl<_$_MatchSet>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_MatchSetToJson(this);
+    return _$$_MatchSetToJson(
+      this,
+    );
   }
 }
 
 abstract class _MatchSet implements MatchSet {
-  const factory _MatchSet({required List<MatchSetEdges>? edges}) = _$_MatchSet;
+  const factory _MatchSet({required final List<MatchSetEdges>? edges}) =
+      _$_MatchSet;
 
   factory _MatchSet.fromJson(Map<String, dynamic> json) = _$_MatchSet.fromJson;
 
@@ -941,31 +900,13 @@ abstract class _MatchSet implements MatchSet {
   List<MatchSetEdges>? get edges;
   @override
   @JsonKey(ignore: true)
-  _$MatchSetCopyWith<_MatchSet> get copyWith =>
+  _$$_MatchSetCopyWith<_$_MatchSet> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 MatchSetEdges _$MatchSetEdgesFromJson(Map<String, dynamic> json) {
   return _MatchSetEdges.fromJson(json);
 }
-
-/// @nodoc
-class _$MatchSetEdgesTearOff {
-  const _$MatchSetEdgesTearOff();
-
-  _MatchSetEdges call({required MatchSetNode? node}) {
-    return _MatchSetEdges(
-      node: node,
-    );
-  }
-
-  MatchSetEdges fromJson(Map<String, Object?> json) {
-    return MatchSetEdges.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $MatchSetEdges = _$MatchSetEdgesTearOff();
 
 /// @nodoc
 mixin _$MatchSetEdges {
@@ -981,52 +922,57 @@ mixin _$MatchSetEdges {
 abstract class $MatchSetEdgesCopyWith<$Res> {
   factory $MatchSetEdgesCopyWith(
           MatchSetEdges value, $Res Function(MatchSetEdges) then) =
-      _$MatchSetEdgesCopyWithImpl<$Res>;
+      _$MatchSetEdgesCopyWithImpl<$Res, MatchSetEdges>;
+  @useResult
   $Res call({MatchSetNode? node});
 
   $MatchSetNodeCopyWith<$Res>? get node;
 }
 
 /// @nodoc
-class _$MatchSetEdgesCopyWithImpl<$Res>
+class _$MatchSetEdgesCopyWithImpl<$Res, $Val extends MatchSetEdges>
     implements $MatchSetEdgesCopyWith<$Res> {
   _$MatchSetEdgesCopyWithImpl(this._value, this._then);
 
-  final MatchSetEdges _value;
   // ignore: unused_field
-  final $Res Function(MatchSetEdges) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? node = freezed,
   }) {
     return _then(_value.copyWith(
-      node: node == freezed
+      node: freezed == node
           ? _value.node
           : node // ignore: cast_nullable_to_non_nullable
               as MatchSetNode?,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $MatchSetNodeCopyWith<$Res>? get node {
     if (_value.node == null) {
       return null;
     }
 
     return $MatchSetNodeCopyWith<$Res>(_value.node!, (value) {
-      return _then(_value.copyWith(node: value));
+      return _then(_value.copyWith(node: value) as $Val);
     });
   }
 }
 
 /// @nodoc
-abstract class _$MatchSetEdgesCopyWith<$Res>
+abstract class _$$_MatchSetEdgesCopyWith<$Res>
     implements $MatchSetEdgesCopyWith<$Res> {
-  factory _$MatchSetEdgesCopyWith(
-          _MatchSetEdges value, $Res Function(_MatchSetEdges) then) =
-      __$MatchSetEdgesCopyWithImpl<$Res>;
+  factory _$$_MatchSetEdgesCopyWith(
+          _$_MatchSetEdges value, $Res Function(_$_MatchSetEdges) then) =
+      __$$_MatchSetEdgesCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({MatchSetNode? node});
 
   @override
@@ -1034,22 +980,20 @@ abstract class _$MatchSetEdgesCopyWith<$Res>
 }
 
 /// @nodoc
-class __$MatchSetEdgesCopyWithImpl<$Res>
-    extends _$MatchSetEdgesCopyWithImpl<$Res>
-    implements _$MatchSetEdgesCopyWith<$Res> {
-  __$MatchSetEdgesCopyWithImpl(
-      _MatchSetEdges _value, $Res Function(_MatchSetEdges) _then)
-      : super(_value, (v) => _then(v as _MatchSetEdges));
+class __$$_MatchSetEdgesCopyWithImpl<$Res>
+    extends _$MatchSetEdgesCopyWithImpl<$Res, _$_MatchSetEdges>
+    implements _$$_MatchSetEdgesCopyWith<$Res> {
+  __$$_MatchSetEdgesCopyWithImpl(
+      _$_MatchSetEdges _value, $Res Function(_$_MatchSetEdges) _then)
+      : super(_value, _then);
 
-  @override
-  _MatchSetEdges get _value => super._value as _MatchSetEdges;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? node = freezed,
   }) {
-    return _then(_MatchSetEdges(
-      node: node == freezed
+    return _then(_$_MatchSetEdges(
+      node: freezed == node
           ? _value.node
           : node // ignore: cast_nullable_to_non_nullable
               as MatchSetNode?,
@@ -1077,27 +1021,30 @@ class _$_MatchSetEdges implements _MatchSetEdges {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _MatchSetEdges &&
-            const DeepCollectionEquality().equals(other.node, node));
+            other is _$_MatchSetEdges &&
+            (identical(other.node, node) || other.node == node));
   }
-
-  @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(node));
 
   @JsonKey(ignore: true)
   @override
-  _$MatchSetEdgesCopyWith<_MatchSetEdges> get copyWith =>
-      __$MatchSetEdgesCopyWithImpl<_MatchSetEdges>(this, _$identity);
+  int get hashCode => Object.hash(runtimeType, node);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_MatchSetEdgesCopyWith<_$_MatchSetEdges> get copyWith =>
+      __$$_MatchSetEdgesCopyWithImpl<_$_MatchSetEdges>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_MatchSetEdgesToJson(this);
+    return _$$_MatchSetEdgesToJson(
+      this,
+    );
   }
 }
 
 abstract class _MatchSetEdges implements MatchSetEdges {
-  const factory _MatchSetEdges({required MatchSetNode? node}) =
+  const factory _MatchSetEdges({required final MatchSetNode? node}) =
       _$_MatchSetEdges;
 
   factory _MatchSetEdges.fromJson(Map<String, dynamic> json) =
@@ -1107,40 +1054,13 @@ abstract class _MatchSetEdges implements MatchSetEdges {
   MatchSetNode? get node;
   @override
   @JsonKey(ignore: true)
-  _$MatchSetEdgesCopyWith<_MatchSetEdges> get copyWith =>
+  _$$_MatchSetEdgesCopyWith<_$_MatchSetEdges> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 MatchSetNode _$MatchSetNodeFromJson(Map<String, dynamic> json) {
   return _MatchSetNode.fromJson(json);
 }
-
-/// @nodoc
-class _$MatchSetNodeTearOff {
-  const _$MatchSetNodeTearOff();
-
-  _MatchSetNode call(
-      {required String? id,
-      required int? playerOneScore,
-      required int? playerTwoScore,
-      required String? matchSetId,
-      required MatchDetails? match}) {
-    return _MatchSetNode(
-      id: id,
-      playerOneScore: playerOneScore,
-      playerTwoScore: playerTwoScore,
-      matchSetId: matchSetId,
-      match: match,
-    );
-  }
-
-  MatchSetNode fromJson(Map<String, Object?> json) {
-    return MatchSetNode.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $MatchSetNode = _$MatchSetNodeTearOff();
 
 /// @nodoc
 mixin _$MatchSetNode {
@@ -1160,7 +1080,8 @@ mixin _$MatchSetNode {
 abstract class $MatchSetNodeCopyWith<$Res> {
   factory $MatchSetNodeCopyWith(
           MatchSetNode value, $Res Function(MatchSetNode) then) =
-      _$MatchSetNodeCopyWithImpl<$Res>;
+      _$MatchSetNodeCopyWithImpl<$Res, MatchSetNode>;
+  @useResult
   $Res call(
       {String? id,
       int? playerOneScore,
@@ -1172,13 +1093,16 @@ abstract class $MatchSetNodeCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$MatchSetNodeCopyWithImpl<$Res> implements $MatchSetNodeCopyWith<$Res> {
+class _$MatchSetNodeCopyWithImpl<$Res, $Val extends MatchSetNode>
+    implements $MatchSetNodeCopyWith<$Res> {
   _$MatchSetNodeCopyWithImpl(this._value, this._then);
 
-  final MatchSetNode _value;
   // ignore: unused_field
-  final $Res Function(MatchSetNode) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = freezed,
@@ -1188,48 +1112,50 @@ class _$MatchSetNodeCopyWithImpl<$Res> implements $MatchSetNodeCopyWith<$Res> {
     Object? match = freezed,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String?,
-      playerOneScore: playerOneScore == freezed
+      playerOneScore: freezed == playerOneScore
           ? _value.playerOneScore
           : playerOneScore // ignore: cast_nullable_to_non_nullable
               as int?,
-      playerTwoScore: playerTwoScore == freezed
+      playerTwoScore: freezed == playerTwoScore
           ? _value.playerTwoScore
           : playerTwoScore // ignore: cast_nullable_to_non_nullable
               as int?,
-      matchSetId: matchSetId == freezed
+      matchSetId: freezed == matchSetId
           ? _value.matchSetId
           : matchSetId // ignore: cast_nullable_to_non_nullable
               as String?,
-      match: match == freezed
+      match: freezed == match
           ? _value.match
           : match // ignore: cast_nullable_to_non_nullable
               as MatchDetails?,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $MatchDetailsCopyWith<$Res>? get match {
     if (_value.match == null) {
       return null;
     }
 
     return $MatchDetailsCopyWith<$Res>(_value.match!, (value) {
-      return _then(_value.copyWith(match: value));
+      return _then(_value.copyWith(match: value) as $Val);
     });
   }
 }
 
 /// @nodoc
-abstract class _$MatchSetNodeCopyWith<$Res>
+abstract class _$$_MatchSetNodeCopyWith<$Res>
     implements $MatchSetNodeCopyWith<$Res> {
-  factory _$MatchSetNodeCopyWith(
-          _MatchSetNode value, $Res Function(_MatchSetNode) then) =
-      __$MatchSetNodeCopyWithImpl<$Res>;
+  factory _$$_MatchSetNodeCopyWith(
+          _$_MatchSetNode value, $Res Function(_$_MatchSetNode) then) =
+      __$$_MatchSetNodeCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String? id,
       int? playerOneScore,
@@ -1242,15 +1168,14 @@ abstract class _$MatchSetNodeCopyWith<$Res>
 }
 
 /// @nodoc
-class __$MatchSetNodeCopyWithImpl<$Res> extends _$MatchSetNodeCopyWithImpl<$Res>
-    implements _$MatchSetNodeCopyWith<$Res> {
-  __$MatchSetNodeCopyWithImpl(
-      _MatchSetNode _value, $Res Function(_MatchSetNode) _then)
-      : super(_value, (v) => _then(v as _MatchSetNode));
+class __$$_MatchSetNodeCopyWithImpl<$Res>
+    extends _$MatchSetNodeCopyWithImpl<$Res, _$_MatchSetNode>
+    implements _$$_MatchSetNodeCopyWith<$Res> {
+  __$$_MatchSetNodeCopyWithImpl(
+      _$_MatchSetNode _value, $Res Function(_$_MatchSetNode) _then)
+      : super(_value, _then);
 
-  @override
-  _MatchSetNode get _value => super._value as _MatchSetNode;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = freezed,
@@ -1259,24 +1184,24 @@ class __$MatchSetNodeCopyWithImpl<$Res> extends _$MatchSetNodeCopyWithImpl<$Res>
     Object? matchSetId = freezed,
     Object? match = freezed,
   }) {
-    return _then(_MatchSetNode(
-      id: id == freezed
+    return _then(_$_MatchSetNode(
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String?,
-      playerOneScore: playerOneScore == freezed
+      playerOneScore: freezed == playerOneScore
           ? _value.playerOneScore
           : playerOneScore // ignore: cast_nullable_to_non_nullable
               as int?,
-      playerTwoScore: playerTwoScore == freezed
+      playerTwoScore: freezed == playerTwoScore
           ? _value.playerTwoScore
           : playerTwoScore // ignore: cast_nullable_to_non_nullable
               as int?,
-      matchSetId: matchSetId == freezed
+      matchSetId: freezed == matchSetId
           ? _value.matchSetId
           : matchSetId // ignore: cast_nullable_to_non_nullable
               as String?,
-      match: match == freezed
+      match: freezed == match
           ? _value.match
           : match // ignore: cast_nullable_to_non_nullable
               as MatchDetails?,
@@ -1317,44 +1242,43 @@ class _$_MatchSetNode implements _MatchSetNode {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _MatchSetNode &&
-            const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality()
-                .equals(other.playerOneScore, playerOneScore) &&
-            const DeepCollectionEquality()
-                .equals(other.playerTwoScore, playerTwoScore) &&
-            const DeepCollectionEquality()
-                .equals(other.matchSetId, matchSetId) &&
-            const DeepCollectionEquality().equals(other.match, match));
+            other is _$_MatchSetNode &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.playerOneScore, playerOneScore) ||
+                other.playerOneScore == playerOneScore) &&
+            (identical(other.playerTwoScore, playerTwoScore) ||
+                other.playerTwoScore == playerTwoScore) &&
+            (identical(other.matchSetId, matchSetId) ||
+                other.matchSetId == matchSetId) &&
+            (identical(other.match, match) || other.match == match));
   }
-
-  @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(playerOneScore),
-      const DeepCollectionEquality().hash(playerTwoScore),
-      const DeepCollectionEquality().hash(matchSetId),
-      const DeepCollectionEquality().hash(match));
 
   @JsonKey(ignore: true)
   @override
-  _$MatchSetNodeCopyWith<_MatchSetNode> get copyWith =>
-      __$MatchSetNodeCopyWithImpl<_MatchSetNode>(this, _$identity);
+  int get hashCode => Object.hash(
+      runtimeType, id, playerOneScore, playerTwoScore, matchSetId, match);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_MatchSetNodeCopyWith<_$_MatchSetNode> get copyWith =>
+      __$$_MatchSetNodeCopyWithImpl<_$_MatchSetNode>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_MatchSetNodeToJson(this);
+    return _$$_MatchSetNodeToJson(
+      this,
+    );
   }
 }
 
 abstract class _MatchSetNode implements MatchSetNode {
   const factory _MatchSetNode(
-      {required String? id,
-      required int? playerOneScore,
-      required int? playerTwoScore,
-      required String? matchSetId,
-      required MatchDetails? match}) = _$_MatchSetNode;
+      {required final String? id,
+      required final int? playerOneScore,
+      required final int? playerTwoScore,
+      required final String? matchSetId,
+      required final MatchDetails? match}) = _$_MatchSetNode;
 
   factory _MatchSetNode.fromJson(Map<String, dynamic> json) =
       _$_MatchSetNode.fromJson;
@@ -1371,42 +1295,13 @@ abstract class _MatchSetNode implements MatchSetNode {
   MatchDetails? get match;
   @override
   @JsonKey(ignore: true)
-  _$MatchSetNodeCopyWith<_MatchSetNode> get copyWith =>
+  _$$_MatchSetNodeCopyWith<_$_MatchSetNode> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 MatchDetails _$MatchDetailsFromJson(Map<String, dynamic> json) {
   return _MatchDetails.fromJson(json);
 }
-
-/// @nodoc
-class _$MatchDetailsTearOff {
-  const _$MatchDetailsTearOff();
-
-  _MatchDetails call(
-      {required String? court,
-      required String? matchId,
-      required String? startDate,
-      required String? createdAt,
-      required String? endDate,
-      required String? id}) {
-    return _MatchDetails(
-      court: court,
-      matchId: matchId,
-      startDate: startDate,
-      createdAt: createdAt,
-      endDate: endDate,
-      id: id,
-    );
-  }
-
-  MatchDetails fromJson(Map<String, Object?> json) {
-    return MatchDetails.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $MatchDetails = _$MatchDetailsTearOff();
 
 /// @nodoc
 mixin _$MatchDetails {
@@ -1427,7 +1322,8 @@ mixin _$MatchDetails {
 abstract class $MatchDetailsCopyWith<$Res> {
   factory $MatchDetailsCopyWith(
           MatchDetails value, $Res Function(MatchDetails) then) =
-      _$MatchDetailsCopyWithImpl<$Res>;
+      _$MatchDetailsCopyWithImpl<$Res, MatchDetails>;
+  @useResult
   $Res call(
       {String? court,
       String? matchId,
@@ -1438,13 +1334,16 @@ abstract class $MatchDetailsCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$MatchDetailsCopyWithImpl<$Res> implements $MatchDetailsCopyWith<$Res> {
+class _$MatchDetailsCopyWithImpl<$Res, $Val extends MatchDetails>
+    implements $MatchDetailsCopyWith<$Res> {
   _$MatchDetailsCopyWithImpl(this._value, this._then);
 
-  final MatchDetails _value;
   // ignore: unused_field
-  final $Res Function(MatchDetails) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? court = freezed,
@@ -1455,41 +1354,42 @@ class _$MatchDetailsCopyWithImpl<$Res> implements $MatchDetailsCopyWith<$Res> {
     Object? id = freezed,
   }) {
     return _then(_value.copyWith(
-      court: court == freezed
+      court: freezed == court
           ? _value.court
           : court // ignore: cast_nullable_to_non_nullable
               as String?,
-      matchId: matchId == freezed
+      matchId: freezed == matchId
           ? _value.matchId
           : matchId // ignore: cast_nullable_to_non_nullable
               as String?,
-      startDate: startDate == freezed
+      startDate: freezed == startDate
           ? _value.startDate
           : startDate // ignore: cast_nullable_to_non_nullable
               as String?,
-      createdAt: createdAt == freezed
+      createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as String?,
-      endDate: endDate == freezed
+      endDate: freezed == endDate
           ? _value.endDate
           : endDate // ignore: cast_nullable_to_non_nullable
               as String?,
-      id: id == freezed
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String?,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$MatchDetailsCopyWith<$Res>
+abstract class _$$_MatchDetailsCopyWith<$Res>
     implements $MatchDetailsCopyWith<$Res> {
-  factory _$MatchDetailsCopyWith(
-          _MatchDetails value, $Res Function(_MatchDetails) then) =
-      __$MatchDetailsCopyWithImpl<$Res>;
+  factory _$$_MatchDetailsCopyWith(
+          _$_MatchDetails value, $Res Function(_$_MatchDetails) then) =
+      __$$_MatchDetailsCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String? court,
       String? matchId,
@@ -1500,15 +1400,14 @@ abstract class _$MatchDetailsCopyWith<$Res>
 }
 
 /// @nodoc
-class __$MatchDetailsCopyWithImpl<$Res> extends _$MatchDetailsCopyWithImpl<$Res>
-    implements _$MatchDetailsCopyWith<$Res> {
-  __$MatchDetailsCopyWithImpl(
-      _MatchDetails _value, $Res Function(_MatchDetails) _then)
-      : super(_value, (v) => _then(v as _MatchDetails));
+class __$$_MatchDetailsCopyWithImpl<$Res>
+    extends _$MatchDetailsCopyWithImpl<$Res, _$_MatchDetails>
+    implements _$$_MatchDetailsCopyWith<$Res> {
+  __$$_MatchDetailsCopyWithImpl(
+      _$_MatchDetails _value, $Res Function(_$_MatchDetails) _then)
+      : super(_value, _then);
 
-  @override
-  _MatchDetails get _value => super._value as _MatchDetails;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? court = freezed,
@@ -1518,28 +1417,28 @@ class __$MatchDetailsCopyWithImpl<$Res> extends _$MatchDetailsCopyWithImpl<$Res>
     Object? endDate = freezed,
     Object? id = freezed,
   }) {
-    return _then(_MatchDetails(
-      court: court == freezed
+    return _then(_$_MatchDetails(
+      court: freezed == court
           ? _value.court
           : court // ignore: cast_nullable_to_non_nullable
               as String?,
-      matchId: matchId == freezed
+      matchId: freezed == matchId
           ? _value.matchId
           : matchId // ignore: cast_nullable_to_non_nullable
               as String?,
-      startDate: startDate == freezed
+      startDate: freezed == startDate
           ? _value.startDate
           : startDate // ignore: cast_nullable_to_non_nullable
               as String?,
-      createdAt: createdAt == freezed
+      createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as String?,
-      endDate: endDate == freezed
+      endDate: freezed == endDate
           ? _value.endDate
           : endDate // ignore: cast_nullable_to_non_nullable
               as String?,
-      id: id == freezed
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String?,
@@ -1583,44 +1482,44 @@ class _$_MatchDetails implements _MatchDetails {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _MatchDetails &&
-            const DeepCollectionEquality().equals(other.court, court) &&
-            const DeepCollectionEquality().equals(other.matchId, matchId) &&
-            const DeepCollectionEquality().equals(other.startDate, startDate) &&
-            const DeepCollectionEquality().equals(other.createdAt, createdAt) &&
-            const DeepCollectionEquality().equals(other.endDate, endDate) &&
-            const DeepCollectionEquality().equals(other.id, id));
+            other is _$_MatchDetails &&
+            (identical(other.court, court) || other.court == court) &&
+            (identical(other.matchId, matchId) || other.matchId == matchId) &&
+            (identical(other.startDate, startDate) ||
+                other.startDate == startDate) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.endDate, endDate) || other.endDate == endDate) &&
+            (identical(other.id, id) || other.id == id));
   }
-
-  @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(court),
-      const DeepCollectionEquality().hash(matchId),
-      const DeepCollectionEquality().hash(startDate),
-      const DeepCollectionEquality().hash(createdAt),
-      const DeepCollectionEquality().hash(endDate),
-      const DeepCollectionEquality().hash(id));
 
   @JsonKey(ignore: true)
   @override
-  _$MatchDetailsCopyWith<_MatchDetails> get copyWith =>
-      __$MatchDetailsCopyWithImpl<_MatchDetails>(this, _$identity);
+  int get hashCode => Object.hash(
+      runtimeType, court, matchId, startDate, createdAt, endDate, id);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_MatchDetailsCopyWith<_$_MatchDetails> get copyWith =>
+      __$$_MatchDetailsCopyWithImpl<_$_MatchDetails>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_MatchDetailsToJson(this);
+    return _$$_MatchDetailsToJson(
+      this,
+    );
   }
 }
 
 abstract class _MatchDetails implements MatchDetails {
   const factory _MatchDetails(
-      {required String? court,
-      required String? matchId,
-      required String? startDate,
-      required String? createdAt,
-      required String? endDate,
-      required String? id}) = _$_MatchDetails;
+      {required final String? court,
+      required final String? matchId,
+      required final String? startDate,
+      required final String? createdAt,
+      required final String? endDate,
+      required final String? id}) = _$_MatchDetails;
 
   factory _MatchDetails.fromJson(Map<String, dynamic> json) =
       _$_MatchDetails.fromJson;
@@ -1639,6 +1538,6 @@ abstract class _MatchDetails implements MatchDetails {
   String? get id;
   @override
   @JsonKey(ignore: true)
-  _$MatchDetailsCopyWith<_MatchDetails> get copyWith =>
+  _$$_MatchDetailsCopyWith<_$_MatchDetails> get copyWith =>
       throw _privateConstructorUsedError;
 }

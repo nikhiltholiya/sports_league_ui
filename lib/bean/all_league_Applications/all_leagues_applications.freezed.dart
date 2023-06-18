@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'all_leagues_applications.dart';
 
@@ -12,30 +12,11 @@ part of 'all_leagues_applications.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 AllLeaguesApps _$AllLeaguesAppsFromJson(Map<String, dynamic> json) {
   return _AllLeaguesApps.fromJson(json);
 }
-
-/// @nodoc
-class _$AllLeaguesAppsTearOff {
-  const _$AllLeaguesAppsTearOff();
-
-  _AllLeaguesApps call(
-      {required AllLeagueApplications? allLeagueApplications}) {
-    return _AllLeaguesApps(
-      allLeagueApplications: allLeagueApplications,
-    );
-  }
-
-  AllLeaguesApps fromJson(Map<String, Object?> json) {
-    return AllLeaguesApps.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $AllLeaguesApps = _$AllLeaguesAppsTearOff();
 
 /// @nodoc
 mixin _$AllLeaguesApps {
@@ -52,34 +33,38 @@ mixin _$AllLeaguesApps {
 abstract class $AllLeaguesAppsCopyWith<$Res> {
   factory $AllLeaguesAppsCopyWith(
           AllLeaguesApps value, $Res Function(AllLeaguesApps) then) =
-      _$AllLeaguesAppsCopyWithImpl<$Res>;
+      _$AllLeaguesAppsCopyWithImpl<$Res, AllLeaguesApps>;
+  @useResult
   $Res call({AllLeagueApplications? allLeagueApplications});
 
   $AllLeagueApplicationsCopyWith<$Res>? get allLeagueApplications;
 }
 
 /// @nodoc
-class _$AllLeaguesAppsCopyWithImpl<$Res>
+class _$AllLeaguesAppsCopyWithImpl<$Res, $Val extends AllLeaguesApps>
     implements $AllLeaguesAppsCopyWith<$Res> {
   _$AllLeaguesAppsCopyWithImpl(this._value, this._then);
 
-  final AllLeaguesApps _value;
   // ignore: unused_field
-  final $Res Function(AllLeaguesApps) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? allLeagueApplications = freezed,
   }) {
     return _then(_value.copyWith(
-      allLeagueApplications: allLeagueApplications == freezed
+      allLeagueApplications: freezed == allLeagueApplications
           ? _value.allLeagueApplications
           : allLeagueApplications // ignore: cast_nullable_to_non_nullable
               as AllLeagueApplications?,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $AllLeagueApplicationsCopyWith<$Res>? get allLeagueApplications {
     if (_value.allLeagueApplications == null) {
       return null;
@@ -87,18 +72,19 @@ class _$AllLeaguesAppsCopyWithImpl<$Res>
 
     return $AllLeagueApplicationsCopyWith<$Res>(_value.allLeagueApplications!,
         (value) {
-      return _then(_value.copyWith(allLeagueApplications: value));
+      return _then(_value.copyWith(allLeagueApplications: value) as $Val);
     });
   }
 }
 
 /// @nodoc
-abstract class _$AllLeaguesAppsCopyWith<$Res>
+abstract class _$$_AllLeaguesAppsCopyWith<$Res>
     implements $AllLeaguesAppsCopyWith<$Res> {
-  factory _$AllLeaguesAppsCopyWith(
-          _AllLeaguesApps value, $Res Function(_AllLeaguesApps) then) =
-      __$AllLeaguesAppsCopyWithImpl<$Res>;
+  factory _$$_AllLeaguesAppsCopyWith(
+          _$_AllLeaguesApps value, $Res Function(_$_AllLeaguesApps) then) =
+      __$$_AllLeaguesAppsCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({AllLeagueApplications? allLeagueApplications});
 
   @override
@@ -106,22 +92,20 @@ abstract class _$AllLeaguesAppsCopyWith<$Res>
 }
 
 /// @nodoc
-class __$AllLeaguesAppsCopyWithImpl<$Res>
-    extends _$AllLeaguesAppsCopyWithImpl<$Res>
-    implements _$AllLeaguesAppsCopyWith<$Res> {
-  __$AllLeaguesAppsCopyWithImpl(
-      _AllLeaguesApps _value, $Res Function(_AllLeaguesApps) _then)
-      : super(_value, (v) => _then(v as _AllLeaguesApps));
+class __$$_AllLeaguesAppsCopyWithImpl<$Res>
+    extends _$AllLeaguesAppsCopyWithImpl<$Res, _$_AllLeaguesApps>
+    implements _$$_AllLeaguesAppsCopyWith<$Res> {
+  __$$_AllLeaguesAppsCopyWithImpl(
+      _$_AllLeaguesApps _value, $Res Function(_$_AllLeaguesApps) _then)
+      : super(_value, _then);
 
-  @override
-  _AllLeaguesApps get _value => super._value as _AllLeaguesApps;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? allLeagueApplications = freezed,
   }) {
-    return _then(_AllLeaguesApps(
-      allLeagueApplications: allLeagueApplications == freezed
+    return _then(_$_AllLeaguesApps(
+      allLeagueApplications: freezed == allLeagueApplications
           ? _value.allLeagueApplications
           : allLeagueApplications // ignore: cast_nullable_to_non_nullable
               as AllLeagueApplications?,
@@ -149,29 +133,32 @@ class _$_AllLeaguesApps implements _AllLeaguesApps {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _AllLeaguesApps &&
-            const DeepCollectionEquality()
-                .equals(other.allLeagueApplications, allLeagueApplications));
+            other is _$_AllLeaguesApps &&
+            (identical(other.allLeagueApplications, allLeagueApplications) ||
+                other.allLeagueApplications == allLeagueApplications));
   }
-
-  @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(allLeagueApplications));
 
   @JsonKey(ignore: true)
   @override
-  _$AllLeaguesAppsCopyWith<_AllLeaguesApps> get copyWith =>
-      __$AllLeaguesAppsCopyWithImpl<_AllLeaguesApps>(this, _$identity);
+  int get hashCode => Object.hash(runtimeType, allLeagueApplications);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_AllLeaguesAppsCopyWith<_$_AllLeaguesApps> get copyWith =>
+      __$$_AllLeaguesAppsCopyWithImpl<_$_AllLeaguesApps>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_AllLeaguesAppsToJson(this);
+    return _$$_AllLeaguesAppsToJson(
+      this,
+    );
   }
 }
 
 abstract class _AllLeaguesApps implements AllLeaguesApps {
   const factory _AllLeaguesApps(
-          {required AllLeagueApplications? allLeagueApplications}) =
+          {required final AllLeagueApplications? allLeagueApplications}) =
       _$_AllLeaguesApps;
 
   factory _AllLeaguesApps.fromJson(Map<String, dynamic> json) =
@@ -181,7 +168,7 @@ abstract class _AllLeaguesApps implements AllLeaguesApps {
   AllLeagueApplications? get allLeagueApplications;
   @override
   @JsonKey(ignore: true)
-  _$AllLeaguesAppsCopyWith<_AllLeaguesApps> get copyWith =>
+  _$$_AllLeaguesAppsCopyWith<_$_AllLeaguesApps> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -189,24 +176,6 @@ AllLeagueApplications _$AllLeagueApplicationsFromJson(
     Map<String, dynamic> json) {
   return _AllLeagueApplications.fromJson(json);
 }
-
-/// @nodoc
-class _$AllLeagueApplicationsTearOff {
-  const _$AllLeagueApplicationsTearOff();
-
-  _AllLeagueApplications call({required List<LeagueEdges>? edges}) {
-    return _AllLeagueApplications(
-      edges: edges,
-    );
-  }
-
-  AllLeagueApplications fromJson(Map<String, Object?> json) {
-    return AllLeagueApplications.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $AllLeagueApplications = _$AllLeagueApplicationsTearOff();
 
 /// @nodoc
 mixin _$AllLeagueApplications {
@@ -222,60 +191,63 @@ mixin _$AllLeagueApplications {
 abstract class $AllLeagueApplicationsCopyWith<$Res> {
   factory $AllLeagueApplicationsCopyWith(AllLeagueApplications value,
           $Res Function(AllLeagueApplications) then) =
-      _$AllLeagueApplicationsCopyWithImpl<$Res>;
+      _$AllLeagueApplicationsCopyWithImpl<$Res, AllLeagueApplications>;
+  @useResult
   $Res call({List<LeagueEdges>? edges});
 }
 
 /// @nodoc
-class _$AllLeagueApplicationsCopyWithImpl<$Res>
+class _$AllLeagueApplicationsCopyWithImpl<$Res,
+        $Val extends AllLeagueApplications>
     implements $AllLeagueApplicationsCopyWith<$Res> {
   _$AllLeagueApplicationsCopyWithImpl(this._value, this._then);
 
-  final AllLeagueApplications _value;
   // ignore: unused_field
-  final $Res Function(AllLeagueApplications) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? edges = freezed,
   }) {
     return _then(_value.copyWith(
-      edges: edges == freezed
+      edges: freezed == edges
           ? _value.edges
           : edges // ignore: cast_nullable_to_non_nullable
               as List<LeagueEdges>?,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$AllLeagueApplicationsCopyWith<$Res>
+abstract class _$$_AllLeagueApplicationsCopyWith<$Res>
     implements $AllLeagueApplicationsCopyWith<$Res> {
-  factory _$AllLeagueApplicationsCopyWith(_AllLeagueApplications value,
-          $Res Function(_AllLeagueApplications) then) =
-      __$AllLeagueApplicationsCopyWithImpl<$Res>;
+  factory _$$_AllLeagueApplicationsCopyWith(_$_AllLeagueApplications value,
+          $Res Function(_$_AllLeagueApplications) then) =
+      __$$_AllLeagueApplicationsCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({List<LeagueEdges>? edges});
 }
 
 /// @nodoc
-class __$AllLeagueApplicationsCopyWithImpl<$Res>
-    extends _$AllLeagueApplicationsCopyWithImpl<$Res>
-    implements _$AllLeagueApplicationsCopyWith<$Res> {
-  __$AllLeagueApplicationsCopyWithImpl(_AllLeagueApplications _value,
-      $Res Function(_AllLeagueApplications) _then)
-      : super(_value, (v) => _then(v as _AllLeagueApplications));
+class __$$_AllLeagueApplicationsCopyWithImpl<$Res>
+    extends _$AllLeagueApplicationsCopyWithImpl<$Res, _$_AllLeagueApplications>
+    implements _$$_AllLeagueApplicationsCopyWith<$Res> {
+  __$$_AllLeagueApplicationsCopyWithImpl(_$_AllLeagueApplications _value,
+      $Res Function(_$_AllLeagueApplications) _then)
+      : super(_value, _then);
 
-  @override
-  _AllLeagueApplications get _value => super._value as _AllLeagueApplications;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? edges = freezed,
   }) {
-    return _then(_AllLeagueApplications(
-      edges: edges == freezed
-          ? _value.edges
+    return _then(_$_AllLeagueApplications(
+      edges: freezed == edges
+          ? _value._edges
           : edges // ignore: cast_nullable_to_non_nullable
               as List<LeagueEdges>?,
     ));
@@ -285,13 +257,21 @@ class __$AllLeagueApplicationsCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_AllLeagueApplications implements _AllLeagueApplications {
-  const _$_AllLeagueApplications({required this.edges});
+  const _$_AllLeagueApplications({required final List<LeagueEdges>? edges})
+      : _edges = edges;
 
   factory _$_AllLeagueApplications.fromJson(Map<String, dynamic> json) =>
       _$$_AllLeagueApplicationsFromJson(json);
 
+  final List<LeagueEdges>? _edges;
   @override
-  final List<LeagueEdges>? edges;
+  List<LeagueEdges>? get edges {
+    final value = _edges;
+    if (value == null) return null;
+    if (_edges is EqualUnmodifiableListView) return _edges;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
 
   @override
   String toString() {
@@ -302,29 +282,33 @@ class _$_AllLeagueApplications implements _AllLeagueApplications {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _AllLeagueApplications &&
-            const DeepCollectionEquality().equals(other.edges, edges));
+            other is _$_AllLeagueApplications &&
+            const DeepCollectionEquality().equals(other._edges, _edges));
   }
-
-  @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(edges));
 
   @JsonKey(ignore: true)
   @override
-  _$AllLeagueApplicationsCopyWith<_AllLeagueApplications> get copyWith =>
-      __$AllLeagueApplicationsCopyWithImpl<_AllLeagueApplications>(
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(_edges));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_AllLeagueApplicationsCopyWith<_$_AllLeagueApplications> get copyWith =>
+      __$$_AllLeagueApplicationsCopyWithImpl<_$_AllLeagueApplications>(
           this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_AllLeagueApplicationsToJson(this);
+    return _$$_AllLeagueApplicationsToJson(
+      this,
+    );
   }
 }
 
 abstract class _AllLeagueApplications implements AllLeagueApplications {
-  const factory _AllLeagueApplications({required List<LeagueEdges>? edges}) =
-      _$_AllLeagueApplications;
+  const factory _AllLeagueApplications(
+      {required final List<LeagueEdges>? edges}) = _$_AllLeagueApplications;
 
   factory _AllLeagueApplications.fromJson(Map<String, dynamic> json) =
       _$_AllLeagueApplications.fromJson;
@@ -333,31 +317,13 @@ abstract class _AllLeagueApplications implements AllLeagueApplications {
   List<LeagueEdges>? get edges;
   @override
   @JsonKey(ignore: true)
-  _$AllLeagueApplicationsCopyWith<_AllLeagueApplications> get copyWith =>
+  _$$_AllLeagueApplicationsCopyWith<_$_AllLeagueApplications> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 LeagueEdges _$LeagueEdgesFromJson(Map<String, dynamic> json) {
   return _LeagueEdges.fromJson(json);
 }
-
-/// @nodoc
-class _$LeagueEdgesTearOff {
-  const _$LeagueEdgesTearOff();
-
-  _LeagueEdges call({required LeagueNode? node}) {
-    return _LeagueEdges(
-      node: node,
-    );
-  }
-
-  LeagueEdges fromJson(Map<String, Object?> json) {
-    return LeagueEdges.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $LeagueEdges = _$LeagueEdgesTearOff();
 
 /// @nodoc
 mixin _$LeagueEdges {
@@ -373,51 +339,57 @@ mixin _$LeagueEdges {
 abstract class $LeagueEdgesCopyWith<$Res> {
   factory $LeagueEdgesCopyWith(
           LeagueEdges value, $Res Function(LeagueEdges) then) =
-      _$LeagueEdgesCopyWithImpl<$Res>;
+      _$LeagueEdgesCopyWithImpl<$Res, LeagueEdges>;
+  @useResult
   $Res call({LeagueNode? node});
 
   $LeagueNodeCopyWith<$Res>? get node;
 }
 
 /// @nodoc
-class _$LeagueEdgesCopyWithImpl<$Res> implements $LeagueEdgesCopyWith<$Res> {
+class _$LeagueEdgesCopyWithImpl<$Res, $Val extends LeagueEdges>
+    implements $LeagueEdgesCopyWith<$Res> {
   _$LeagueEdgesCopyWithImpl(this._value, this._then);
 
-  final LeagueEdges _value;
   // ignore: unused_field
-  final $Res Function(LeagueEdges) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? node = freezed,
   }) {
     return _then(_value.copyWith(
-      node: node == freezed
+      node: freezed == node
           ? _value.node
           : node // ignore: cast_nullable_to_non_nullable
               as LeagueNode?,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $LeagueNodeCopyWith<$Res>? get node {
     if (_value.node == null) {
       return null;
     }
 
     return $LeagueNodeCopyWith<$Res>(_value.node!, (value) {
-      return _then(_value.copyWith(node: value));
+      return _then(_value.copyWith(node: value) as $Val);
     });
   }
 }
 
 /// @nodoc
-abstract class _$LeagueEdgesCopyWith<$Res>
+abstract class _$$_LeagueEdgesCopyWith<$Res>
     implements $LeagueEdgesCopyWith<$Res> {
-  factory _$LeagueEdgesCopyWith(
-          _LeagueEdges value, $Res Function(_LeagueEdges) then) =
-      __$LeagueEdgesCopyWithImpl<$Res>;
+  factory _$$_LeagueEdgesCopyWith(
+          _$_LeagueEdges value, $Res Function(_$_LeagueEdges) then) =
+      __$$_LeagueEdgesCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({LeagueNode? node});
 
   @override
@@ -425,21 +397,20 @@ abstract class _$LeagueEdgesCopyWith<$Res>
 }
 
 /// @nodoc
-class __$LeagueEdgesCopyWithImpl<$Res> extends _$LeagueEdgesCopyWithImpl<$Res>
-    implements _$LeagueEdgesCopyWith<$Res> {
-  __$LeagueEdgesCopyWithImpl(
-      _LeagueEdges _value, $Res Function(_LeagueEdges) _then)
-      : super(_value, (v) => _then(v as _LeagueEdges));
+class __$$_LeagueEdgesCopyWithImpl<$Res>
+    extends _$LeagueEdgesCopyWithImpl<$Res, _$_LeagueEdges>
+    implements _$$_LeagueEdgesCopyWith<$Res> {
+  __$$_LeagueEdgesCopyWithImpl(
+      _$_LeagueEdges _value, $Res Function(_$_LeagueEdges) _then)
+      : super(_value, _then);
 
-  @override
-  _LeagueEdges get _value => super._value as _LeagueEdges;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? node = freezed,
   }) {
-    return _then(_LeagueEdges(
-      node: node == freezed
+    return _then(_$_LeagueEdges(
+      node: freezed == node
           ? _value.node
           : node // ignore: cast_nullable_to_non_nullable
               as LeagueNode?,
@@ -467,27 +438,31 @@ class _$_LeagueEdges implements _LeagueEdges {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _LeagueEdges &&
-            const DeepCollectionEquality().equals(other.node, node));
+            other is _$_LeagueEdges &&
+            (identical(other.node, node) || other.node == node));
   }
-
-  @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(node));
 
   @JsonKey(ignore: true)
   @override
-  _$LeagueEdgesCopyWith<_LeagueEdges> get copyWith =>
-      __$LeagueEdgesCopyWithImpl<_LeagueEdges>(this, _$identity);
+  int get hashCode => Object.hash(runtimeType, node);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_LeagueEdgesCopyWith<_$_LeagueEdges> get copyWith =>
+      __$$_LeagueEdgesCopyWithImpl<_$_LeagueEdges>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_LeagueEdgesToJson(this);
+    return _$$_LeagueEdgesToJson(
+      this,
+    );
   }
 }
 
 abstract class _LeagueEdges implements LeagueEdges {
-  const factory _LeagueEdges({required LeagueNode? node}) = _$_LeagueEdges;
+  const factory _LeagueEdges({required final LeagueNode? node}) =
+      _$_LeagueEdges;
 
   factory _LeagueEdges.fromJson(Map<String, dynamic> json) =
       _$_LeagueEdges.fromJson;
@@ -496,38 +471,13 @@ abstract class _LeagueEdges implements LeagueEdges {
   LeagueNode? get node;
   @override
   @JsonKey(ignore: true)
-  _$LeagueEdgesCopyWith<_LeagueEdges> get copyWith =>
+  _$$_LeagueEdgesCopyWith<_$_LeagueEdges> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 LeagueNode _$LeagueNodeFromJson(Map<String, dynamic> json) {
   return _LeagueNode.fromJson(json);
 }
-
-/// @nodoc
-class _$LeagueNodeTearOff {
-  const _$LeagueNodeTearOff();
-
-  _LeagueNode call(
-      {required String? id,
-      required League? league,
-      required String? status,
-      required Applicant? applicant}) {
-    return _LeagueNode(
-      id: id,
-      league: league,
-      status: status,
-      applicant: applicant,
-    );
-  }
-
-  LeagueNode fromJson(Map<String, Object?> json) {
-    return LeagueNode.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $LeagueNode = _$LeagueNodeTearOff();
 
 /// @nodoc
 mixin _$LeagueNode {
@@ -546,7 +496,8 @@ mixin _$LeagueNode {
 abstract class $LeagueNodeCopyWith<$Res> {
   factory $LeagueNodeCopyWith(
           LeagueNode value, $Res Function(LeagueNode) then) =
-      _$LeagueNodeCopyWithImpl<$Res>;
+      _$LeagueNodeCopyWithImpl<$Res, LeagueNode>;
+  @useResult
   $Res call({String? id, League? league, String? status, Applicant? applicant});
 
   $LeagueCopyWith<$Res>? get league;
@@ -554,13 +505,16 @@ abstract class $LeagueNodeCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$LeagueNodeCopyWithImpl<$Res> implements $LeagueNodeCopyWith<$Res> {
+class _$LeagueNodeCopyWithImpl<$Res, $Val extends LeagueNode>
+    implements $LeagueNodeCopyWith<$Res> {
   _$LeagueNodeCopyWithImpl(this._value, this._then);
 
-  final LeagueNode _value;
   // ignore: unused_field
-  final $Res Function(LeagueNode) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = freezed,
@@ -569,54 +523,58 @@ class _$LeagueNodeCopyWithImpl<$Res> implements $LeagueNodeCopyWith<$Res> {
     Object? applicant = freezed,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String?,
-      league: league == freezed
+      league: freezed == league
           ? _value.league
           : league // ignore: cast_nullable_to_non_nullable
               as League?,
-      status: status == freezed
+      status: freezed == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as String?,
-      applicant: applicant == freezed
+      applicant: freezed == applicant
           ? _value.applicant
           : applicant // ignore: cast_nullable_to_non_nullable
               as Applicant?,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $LeagueCopyWith<$Res>? get league {
     if (_value.league == null) {
       return null;
     }
 
     return $LeagueCopyWith<$Res>(_value.league!, (value) {
-      return _then(_value.copyWith(league: value));
+      return _then(_value.copyWith(league: value) as $Val);
     });
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $ApplicantCopyWith<$Res>? get applicant {
     if (_value.applicant == null) {
       return null;
     }
 
     return $ApplicantCopyWith<$Res>(_value.applicant!, (value) {
-      return _then(_value.copyWith(applicant: value));
+      return _then(_value.copyWith(applicant: value) as $Val);
     });
   }
 }
 
 /// @nodoc
-abstract class _$LeagueNodeCopyWith<$Res> implements $LeagueNodeCopyWith<$Res> {
-  factory _$LeagueNodeCopyWith(
-          _LeagueNode value, $Res Function(_LeagueNode) then) =
-      __$LeagueNodeCopyWithImpl<$Res>;
+abstract class _$$_LeagueNodeCopyWith<$Res>
+    implements $LeagueNodeCopyWith<$Res> {
+  factory _$$_LeagueNodeCopyWith(
+          _$_LeagueNode value, $Res Function(_$_LeagueNode) then) =
+      __$$_LeagueNodeCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({String? id, League? league, String? status, Applicant? applicant});
 
   @override
@@ -626,15 +584,14 @@ abstract class _$LeagueNodeCopyWith<$Res> implements $LeagueNodeCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$LeagueNodeCopyWithImpl<$Res> extends _$LeagueNodeCopyWithImpl<$Res>
-    implements _$LeagueNodeCopyWith<$Res> {
-  __$LeagueNodeCopyWithImpl(
-      _LeagueNode _value, $Res Function(_LeagueNode) _then)
-      : super(_value, (v) => _then(v as _LeagueNode));
+class __$$_LeagueNodeCopyWithImpl<$Res>
+    extends _$LeagueNodeCopyWithImpl<$Res, _$_LeagueNode>
+    implements _$$_LeagueNodeCopyWith<$Res> {
+  __$$_LeagueNodeCopyWithImpl(
+      _$_LeagueNode _value, $Res Function(_$_LeagueNode) _then)
+      : super(_value, _then);
 
-  @override
-  _LeagueNode get _value => super._value as _LeagueNode;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = freezed,
@@ -642,20 +599,20 @@ class __$LeagueNodeCopyWithImpl<$Res> extends _$LeagueNodeCopyWithImpl<$Res>
     Object? status = freezed,
     Object? applicant = freezed,
   }) {
-    return _then(_LeagueNode(
-      id: id == freezed
+    return _then(_$_LeagueNode(
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String?,
-      league: league == freezed
+      league: freezed == league
           ? _value.league
           : league // ignore: cast_nullable_to_non_nullable
               as League?,
-      status: status == freezed
+      status: freezed == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as String?,
-      applicant: applicant == freezed
+      applicant: freezed == applicant
           ? _value.applicant
           : applicant // ignore: cast_nullable_to_non_nullable
               as Applicant?,
@@ -693,38 +650,38 @@ class _$_LeagueNode implements _LeagueNode {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _LeagueNode &&
-            const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality().equals(other.league, league) &&
-            const DeepCollectionEquality().equals(other.status, status) &&
-            const DeepCollectionEquality().equals(other.applicant, applicant));
+            other is _$_LeagueNode &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.league, league) || other.league == league) &&
+            (identical(other.status, status) || other.status == status) &&
+            (identical(other.applicant, applicant) ||
+                other.applicant == applicant));
   }
-
-  @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(league),
-      const DeepCollectionEquality().hash(status),
-      const DeepCollectionEquality().hash(applicant));
 
   @JsonKey(ignore: true)
   @override
-  _$LeagueNodeCopyWith<_LeagueNode> get copyWith =>
-      __$LeagueNodeCopyWithImpl<_LeagueNode>(this, _$identity);
+  int get hashCode => Object.hash(runtimeType, id, league, status, applicant);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_LeagueNodeCopyWith<_$_LeagueNode> get copyWith =>
+      __$$_LeagueNodeCopyWithImpl<_$_LeagueNode>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_LeagueNodeToJson(this);
+    return _$$_LeagueNodeToJson(
+      this,
+    );
   }
 }
 
 abstract class _LeagueNode implements LeagueNode {
   const factory _LeagueNode(
-      {required String? id,
-      required League? league,
-      required String? status,
-      required Applicant? applicant}) = _$_LeagueNode;
+      {required final String? id,
+      required final League? league,
+      required final String? status,
+      required final Applicant? applicant}) = _$_LeagueNode;
 
   factory _LeagueNode.fromJson(Map<String, dynamic> json) =
       _$_LeagueNode.fromJson;
@@ -739,56 +696,13 @@ abstract class _LeagueNode implements LeagueNode {
   Applicant? get applicant;
   @override
   @JsonKey(ignore: true)
-  _$LeagueNodeCopyWith<_LeagueNode> get copyWith =>
+  _$$_LeagueNodeCopyWith<_$_LeagueNode> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 League _$LeagueFromJson(Map<String, dynamic> json) {
   return _League.fromJson(json);
 }
-
-/// @nodoc
-class _$LeagueTearOff {
-  const _$LeagueTearOff();
-
-  _League call(
-      {required String? city,
-      required String? country,
-      required String? createdAt,
-      required String? description,
-      required String? endDate,
-      required String? id,
-      required String? leagueId,
-      required double? level,
-      required String? name,
-      required String? startDate,
-      required String? state,
-      required String? status,
-      required String? updatedAt}) {
-    return _League(
-      city: city,
-      country: country,
-      createdAt: createdAt,
-      description: description,
-      endDate: endDate,
-      id: id,
-      leagueId: leagueId,
-      level: level,
-      name: name,
-      startDate: startDate,
-      state: state,
-      status: status,
-      updatedAt: updatedAt,
-    );
-  }
-
-  League fromJson(Map<String, Object?> json) {
-    return League.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $League = _$LeagueTearOff();
 
 /// @nodoc
 mixin _$League {
@@ -814,7 +728,8 @@ mixin _$League {
 /// @nodoc
 abstract class $LeagueCopyWith<$Res> {
   factory $LeagueCopyWith(League value, $Res Function(League) then) =
-      _$LeagueCopyWithImpl<$Res>;
+      _$LeagueCopyWithImpl<$Res, League>;
+  @useResult
   $Res call(
       {String? city,
       String? country,
@@ -832,13 +747,16 @@ abstract class $LeagueCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$LeagueCopyWithImpl<$Res> implements $LeagueCopyWith<$Res> {
+class _$LeagueCopyWithImpl<$Res, $Val extends League>
+    implements $LeagueCopyWith<$Res> {
   _$LeagueCopyWithImpl(this._value, this._then);
 
-  final League _value;
   // ignore: unused_field
-  final $Res Function(League) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? city = freezed,
@@ -856,67 +774,68 @@ class _$LeagueCopyWithImpl<$Res> implements $LeagueCopyWith<$Res> {
     Object? updatedAt = freezed,
   }) {
     return _then(_value.copyWith(
-      city: city == freezed
+      city: freezed == city
           ? _value.city
           : city // ignore: cast_nullable_to_non_nullable
               as String?,
-      country: country == freezed
+      country: freezed == country
           ? _value.country
           : country // ignore: cast_nullable_to_non_nullable
               as String?,
-      createdAt: createdAt == freezed
+      createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as String?,
-      description: description == freezed
+      description: freezed == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String?,
-      endDate: endDate == freezed
+      endDate: freezed == endDate
           ? _value.endDate
           : endDate // ignore: cast_nullable_to_non_nullable
               as String?,
-      id: id == freezed
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String?,
-      leagueId: leagueId == freezed
+      leagueId: freezed == leagueId
           ? _value.leagueId
           : leagueId // ignore: cast_nullable_to_non_nullable
               as String?,
-      level: level == freezed
+      level: freezed == level
           ? _value.level
           : level // ignore: cast_nullable_to_non_nullable
               as double?,
-      name: name == freezed
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
-      startDate: startDate == freezed
+      startDate: freezed == startDate
           ? _value.startDate
           : startDate // ignore: cast_nullable_to_non_nullable
               as String?,
-      state: state == freezed
+      state: freezed == state
           ? _value.state
           : state // ignore: cast_nullable_to_non_nullable
               as String?,
-      status: status == freezed
+      status: freezed == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as String?,
-      updatedAt: updatedAt == freezed
+      updatedAt: freezed == updatedAt
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as String?,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$LeagueCopyWith<$Res> implements $LeagueCopyWith<$Res> {
-  factory _$LeagueCopyWith(_League value, $Res Function(_League) then) =
-      __$LeagueCopyWithImpl<$Res>;
+abstract class _$$_LeagueCopyWith<$Res> implements $LeagueCopyWith<$Res> {
+  factory _$$_LeagueCopyWith(_$_League value, $Res Function(_$_League) then) =
+      __$$_LeagueCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String? city,
       String? country,
@@ -934,14 +853,13 @@ abstract class _$LeagueCopyWith<$Res> implements $LeagueCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$LeagueCopyWithImpl<$Res> extends _$LeagueCopyWithImpl<$Res>
-    implements _$LeagueCopyWith<$Res> {
-  __$LeagueCopyWithImpl(_League _value, $Res Function(_League) _then)
-      : super(_value, (v) => _then(v as _League));
+class __$$_LeagueCopyWithImpl<$Res>
+    extends _$LeagueCopyWithImpl<$Res, _$_League>
+    implements _$$_LeagueCopyWith<$Res> {
+  __$$_LeagueCopyWithImpl(_$_League _value, $Res Function(_$_League) _then)
+      : super(_value, _then);
 
-  @override
-  _League get _value => super._value as _League;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? city = freezed,
@@ -958,56 +876,56 @@ class __$LeagueCopyWithImpl<$Res> extends _$LeagueCopyWithImpl<$Res>
     Object? status = freezed,
     Object? updatedAt = freezed,
   }) {
-    return _then(_League(
-      city: city == freezed
+    return _then(_$_League(
+      city: freezed == city
           ? _value.city
           : city // ignore: cast_nullable_to_non_nullable
               as String?,
-      country: country == freezed
+      country: freezed == country
           ? _value.country
           : country // ignore: cast_nullable_to_non_nullable
               as String?,
-      createdAt: createdAt == freezed
+      createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as String?,
-      description: description == freezed
+      description: freezed == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String?,
-      endDate: endDate == freezed
+      endDate: freezed == endDate
           ? _value.endDate
           : endDate // ignore: cast_nullable_to_non_nullable
               as String?,
-      id: id == freezed
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String?,
-      leagueId: leagueId == freezed
+      leagueId: freezed == leagueId
           ? _value.leagueId
           : leagueId // ignore: cast_nullable_to_non_nullable
               as String?,
-      level: level == freezed
+      level: freezed == level
           ? _value.level
           : level // ignore: cast_nullable_to_non_nullable
               as double?,
-      name: name == freezed
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
-      startDate: startDate == freezed
+      startDate: freezed == startDate
           ? _value.startDate
           : startDate // ignore: cast_nullable_to_non_nullable
               as String?,
-      state: state == freezed
+      state: freezed == state
           ? _value.state
           : state // ignore: cast_nullable_to_non_nullable
               as String?,
-      status: status == freezed
+      status: freezed == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as String?,
-      updatedAt: updatedAt == freezed
+      updatedAt: freezed == updatedAt
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as String?,
@@ -1072,66 +990,74 @@ class _$_League implements _League {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _League &&
-            const DeepCollectionEquality().equals(other.city, city) &&
-            const DeepCollectionEquality().equals(other.country, country) &&
-            const DeepCollectionEquality().equals(other.createdAt, createdAt) &&
-            const DeepCollectionEquality()
-                .equals(other.description, description) &&
-            const DeepCollectionEquality().equals(other.endDate, endDate) &&
-            const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality().equals(other.leagueId, leagueId) &&
-            const DeepCollectionEquality().equals(other.level, level) &&
-            const DeepCollectionEquality().equals(other.name, name) &&
-            const DeepCollectionEquality().equals(other.startDate, startDate) &&
-            const DeepCollectionEquality().equals(other.state, state) &&
-            const DeepCollectionEquality().equals(other.status, status) &&
-            const DeepCollectionEquality().equals(other.updatedAt, updatedAt));
+            other is _$_League &&
+            (identical(other.city, city) || other.city == city) &&
+            (identical(other.country, country) || other.country == country) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.description, description) ||
+                other.description == description) &&
+            (identical(other.endDate, endDate) || other.endDate == endDate) &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.leagueId, leagueId) ||
+                other.leagueId == leagueId) &&
+            (identical(other.level, level) || other.level == level) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.startDate, startDate) ||
+                other.startDate == startDate) &&
+            (identical(other.state, state) || other.state == state) &&
+            (identical(other.status, status) || other.status == status) &&
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt));
   }
-
-  @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(city),
-      const DeepCollectionEquality().hash(country),
-      const DeepCollectionEquality().hash(createdAt),
-      const DeepCollectionEquality().hash(description),
-      const DeepCollectionEquality().hash(endDate),
-      const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(leagueId),
-      const DeepCollectionEquality().hash(level),
-      const DeepCollectionEquality().hash(name),
-      const DeepCollectionEquality().hash(startDate),
-      const DeepCollectionEquality().hash(state),
-      const DeepCollectionEquality().hash(status),
-      const DeepCollectionEquality().hash(updatedAt));
 
   @JsonKey(ignore: true)
   @override
-  _$LeagueCopyWith<_League> get copyWith =>
-      __$LeagueCopyWithImpl<_League>(this, _$identity);
+  int get hashCode => Object.hash(
+      runtimeType,
+      city,
+      country,
+      createdAt,
+      description,
+      endDate,
+      id,
+      leagueId,
+      level,
+      name,
+      startDate,
+      state,
+      status,
+      updatedAt);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_LeagueCopyWith<_$_League> get copyWith =>
+      __$$_LeagueCopyWithImpl<_$_League>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_LeagueToJson(this);
+    return _$$_LeagueToJson(
+      this,
+    );
   }
 }
 
 abstract class _League implements League {
   const factory _League(
-      {required String? city,
-      required String? country,
-      required String? createdAt,
-      required String? description,
-      required String? endDate,
-      required String? id,
-      required String? leagueId,
-      required double? level,
-      required String? name,
-      required String? startDate,
-      required String? state,
-      required String? status,
-      required String? updatedAt}) = _$_League;
+      {required final String? city,
+      required final String? country,
+      required final String? createdAt,
+      required final String? description,
+      required final String? endDate,
+      required final String? id,
+      required final String? leagueId,
+      required final double? level,
+      required final String? name,
+      required final String? startDate,
+      required final String? state,
+      required final String? status,
+      required final String? updatedAt}) = _$_League;
 
   factory _League.fromJson(Map<String, dynamic> json) = _$_League.fromJson;
 
@@ -1163,30 +1089,13 @@ abstract class _League implements League {
   String? get updatedAt;
   @override
   @JsonKey(ignore: true)
-  _$LeagueCopyWith<_League> get copyWith => throw _privateConstructorUsedError;
+  _$$_LeagueCopyWith<_$_League> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 Applicant _$ApplicantFromJson(Map<String, dynamic> json) {
   return _Applicant.fromJson(json);
 }
-
-/// @nodoc
-class _$ApplicantTearOff {
-  const _$ApplicantTearOff();
-
-  _Applicant call({required String? userId}) {
-    return _Applicant(
-      userId: userId,
-    );
-  }
-
-  Applicant fromJson(Map<String, Object?> json) {
-    return Applicant.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $Applicant = _$ApplicantTearOff();
 
 /// @nodoc
 mixin _$Applicant {
@@ -1201,55 +1110,60 @@ mixin _$Applicant {
 /// @nodoc
 abstract class $ApplicantCopyWith<$Res> {
   factory $ApplicantCopyWith(Applicant value, $Res Function(Applicant) then) =
-      _$ApplicantCopyWithImpl<$Res>;
+      _$ApplicantCopyWithImpl<$Res, Applicant>;
+  @useResult
   $Res call({String? userId});
 }
 
 /// @nodoc
-class _$ApplicantCopyWithImpl<$Res> implements $ApplicantCopyWith<$Res> {
+class _$ApplicantCopyWithImpl<$Res, $Val extends Applicant>
+    implements $ApplicantCopyWith<$Res> {
   _$ApplicantCopyWithImpl(this._value, this._then);
 
-  final Applicant _value;
   // ignore: unused_field
-  final $Res Function(Applicant) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? userId = freezed,
   }) {
     return _then(_value.copyWith(
-      userId: userId == freezed
+      userId: freezed == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
               as String?,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$ApplicantCopyWith<$Res> implements $ApplicantCopyWith<$Res> {
-  factory _$ApplicantCopyWith(
-          _Applicant value, $Res Function(_Applicant) then) =
-      __$ApplicantCopyWithImpl<$Res>;
+abstract class _$$_ApplicantCopyWith<$Res> implements $ApplicantCopyWith<$Res> {
+  factory _$$_ApplicantCopyWith(
+          _$_Applicant value, $Res Function(_$_Applicant) then) =
+      __$$_ApplicantCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({String? userId});
 }
 
 /// @nodoc
-class __$ApplicantCopyWithImpl<$Res> extends _$ApplicantCopyWithImpl<$Res>
-    implements _$ApplicantCopyWith<$Res> {
-  __$ApplicantCopyWithImpl(_Applicant _value, $Res Function(_Applicant) _then)
-      : super(_value, (v) => _then(v as _Applicant));
+class __$$_ApplicantCopyWithImpl<$Res>
+    extends _$ApplicantCopyWithImpl<$Res, _$_Applicant>
+    implements _$$_ApplicantCopyWith<$Res> {
+  __$$_ApplicantCopyWithImpl(
+      _$_Applicant _value, $Res Function(_$_Applicant) _then)
+      : super(_value, _then);
 
-  @override
-  _Applicant get _value => super._value as _Applicant;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? userId = freezed,
   }) {
-    return _then(_Applicant(
-      userId: userId == freezed
+    return _then(_$_Applicant(
+      userId: freezed == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
               as String?,
@@ -1277,27 +1191,30 @@ class _$_Applicant implements _Applicant {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _Applicant &&
-            const DeepCollectionEquality().equals(other.userId, userId));
+            other is _$_Applicant &&
+            (identical(other.userId, userId) || other.userId == userId));
   }
-
-  @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(userId));
 
   @JsonKey(ignore: true)
   @override
-  _$ApplicantCopyWith<_Applicant> get copyWith =>
-      __$ApplicantCopyWithImpl<_Applicant>(this, _$identity);
+  int get hashCode => Object.hash(runtimeType, userId);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_ApplicantCopyWith<_$_Applicant> get copyWith =>
+      __$$_ApplicantCopyWithImpl<_$_Applicant>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_ApplicantToJson(this);
+    return _$$_ApplicantToJson(
+      this,
+    );
   }
 }
 
 abstract class _Applicant implements Applicant {
-  const factory _Applicant({required String? userId}) = _$_Applicant;
+  const factory _Applicant({required final String? userId}) = _$_Applicant;
 
   factory _Applicant.fromJson(Map<String, dynamic> json) =
       _$_Applicant.fromJson;
@@ -1306,6 +1223,6 @@ abstract class _Applicant implements Applicant {
   String? get userId;
   @override
   @JsonKey(ignore: true)
-  _$ApplicantCopyWith<_Applicant> get copyWith =>
+  _$$_ApplicantCopyWith<_$_Applicant> get copyWith =>
       throw _privateConstructorUsedError;
 }
