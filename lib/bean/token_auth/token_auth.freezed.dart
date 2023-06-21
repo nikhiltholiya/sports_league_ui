@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'token_auth.dart';
 
@@ -12,29 +12,11 @@ part of 'token_auth.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 TokenAuthData _$TokenAuthDataFromJson(Map<String, dynamic> json) {
   return _TokenAuthData.fromJson(json);
 }
-
-/// @nodoc
-class _$TokenAuthDataTearOff {
-  const _$TokenAuthDataTearOff();
-
-  _TokenAuthData call({required TokenAuth? tokenAuth}) {
-    return _TokenAuthData(
-      tokenAuth: tokenAuth,
-    );
-  }
-
-  TokenAuthData fromJson(Map<String, Object?> json) {
-    return TokenAuthData.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $TokenAuthData = _$TokenAuthDataTearOff();
 
 /// @nodoc
 mixin _$TokenAuthData {
@@ -50,52 +32,57 @@ mixin _$TokenAuthData {
 abstract class $TokenAuthDataCopyWith<$Res> {
   factory $TokenAuthDataCopyWith(
           TokenAuthData value, $Res Function(TokenAuthData) then) =
-      _$TokenAuthDataCopyWithImpl<$Res>;
+      _$TokenAuthDataCopyWithImpl<$Res, TokenAuthData>;
+  @useResult
   $Res call({TokenAuth? tokenAuth});
 
   $TokenAuthCopyWith<$Res>? get tokenAuth;
 }
 
 /// @nodoc
-class _$TokenAuthDataCopyWithImpl<$Res>
+class _$TokenAuthDataCopyWithImpl<$Res, $Val extends TokenAuthData>
     implements $TokenAuthDataCopyWith<$Res> {
   _$TokenAuthDataCopyWithImpl(this._value, this._then);
 
-  final TokenAuthData _value;
   // ignore: unused_field
-  final $Res Function(TokenAuthData) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? tokenAuth = freezed,
   }) {
     return _then(_value.copyWith(
-      tokenAuth: tokenAuth == freezed
+      tokenAuth: freezed == tokenAuth
           ? _value.tokenAuth
           : tokenAuth // ignore: cast_nullable_to_non_nullable
               as TokenAuth?,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $TokenAuthCopyWith<$Res>? get tokenAuth {
     if (_value.tokenAuth == null) {
       return null;
     }
 
     return $TokenAuthCopyWith<$Res>(_value.tokenAuth!, (value) {
-      return _then(_value.copyWith(tokenAuth: value));
+      return _then(_value.copyWith(tokenAuth: value) as $Val);
     });
   }
 }
 
 /// @nodoc
-abstract class _$TokenAuthDataCopyWith<$Res>
+abstract class _$$_TokenAuthDataCopyWith<$Res>
     implements $TokenAuthDataCopyWith<$Res> {
-  factory _$TokenAuthDataCopyWith(
-          _TokenAuthData value, $Res Function(_TokenAuthData) then) =
-      __$TokenAuthDataCopyWithImpl<$Res>;
+  factory _$$_TokenAuthDataCopyWith(
+          _$_TokenAuthData value, $Res Function(_$_TokenAuthData) then) =
+      __$$_TokenAuthDataCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({TokenAuth? tokenAuth});
 
   @override
@@ -103,22 +90,20 @@ abstract class _$TokenAuthDataCopyWith<$Res>
 }
 
 /// @nodoc
-class __$TokenAuthDataCopyWithImpl<$Res>
-    extends _$TokenAuthDataCopyWithImpl<$Res>
-    implements _$TokenAuthDataCopyWith<$Res> {
-  __$TokenAuthDataCopyWithImpl(
-      _TokenAuthData _value, $Res Function(_TokenAuthData) _then)
-      : super(_value, (v) => _then(v as _TokenAuthData));
+class __$$_TokenAuthDataCopyWithImpl<$Res>
+    extends _$TokenAuthDataCopyWithImpl<$Res, _$_TokenAuthData>
+    implements _$$_TokenAuthDataCopyWith<$Res> {
+  __$$_TokenAuthDataCopyWithImpl(
+      _$_TokenAuthData _value, $Res Function(_$_TokenAuthData) _then)
+      : super(_value, _then);
 
-  @override
-  _TokenAuthData get _value => super._value as _TokenAuthData;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? tokenAuth = freezed,
   }) {
-    return _then(_TokenAuthData(
-      tokenAuth: tokenAuth == freezed
+    return _then(_$_TokenAuthData(
+      tokenAuth: freezed == tokenAuth
           ? _value.tokenAuth
           : tokenAuth // ignore: cast_nullable_to_non_nullable
               as TokenAuth?,
@@ -146,27 +131,31 @@ class _$_TokenAuthData implements _TokenAuthData {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _TokenAuthData &&
-            const DeepCollectionEquality().equals(other.tokenAuth, tokenAuth));
+            other is _$_TokenAuthData &&
+            (identical(other.tokenAuth, tokenAuth) ||
+                other.tokenAuth == tokenAuth));
   }
-
-  @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(tokenAuth));
 
   @JsonKey(ignore: true)
   @override
-  _$TokenAuthDataCopyWith<_TokenAuthData> get copyWith =>
-      __$TokenAuthDataCopyWithImpl<_TokenAuthData>(this, _$identity);
+  int get hashCode => Object.hash(runtimeType, tokenAuth);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_TokenAuthDataCopyWith<_$_TokenAuthData> get copyWith =>
+      __$$_TokenAuthDataCopyWithImpl<_$_TokenAuthData>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_TokenAuthDataToJson(this);
+    return _$$_TokenAuthDataToJson(
+      this,
+    );
   }
 }
 
 abstract class _TokenAuthData implements TokenAuthData {
-  const factory _TokenAuthData({required TokenAuth? tokenAuth}) =
+  const factory _TokenAuthData({required final TokenAuth? tokenAuth}) =
       _$_TokenAuthData;
 
   factory _TokenAuthData.fromJson(Map<String, dynamic> json) =
@@ -176,42 +165,13 @@ abstract class _TokenAuthData implements TokenAuthData {
   TokenAuth? get tokenAuth;
   @override
   @JsonKey(ignore: true)
-  _$TokenAuthDataCopyWith<_TokenAuthData> get copyWith =>
+  _$$_TokenAuthDataCopyWith<_$_TokenAuthData> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 TokenAuth _$TokenAuthFromJson(Map<String, dynamic> json) {
   return _TokenAuth.fromJson(json);
 }
-
-/// @nodoc
-class _$TokenAuthTearOff {
-  const _$TokenAuthTearOff();
-
-  _TokenAuth call(
-      {required String? refreshToken,
-      required bool? success,
-      required String? token,
-      required bool? unarchiving,
-      required LoggedUser? user,
-      required TokenError? errors}) {
-    return _TokenAuth(
-      refreshToken: refreshToken,
-      success: success,
-      token: token,
-      unarchiving: unarchiving,
-      user: user,
-      errors: errors,
-    );
-  }
-
-  TokenAuth fromJson(Map<String, Object?> json) {
-    return TokenAuth.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $TokenAuth = _$TokenAuthTearOff();
 
 /// @nodoc
 mixin _$TokenAuth {
@@ -231,7 +191,8 @@ mixin _$TokenAuth {
 /// @nodoc
 abstract class $TokenAuthCopyWith<$Res> {
   factory $TokenAuthCopyWith(TokenAuth value, $Res Function(TokenAuth) then) =
-      _$TokenAuthCopyWithImpl<$Res>;
+      _$TokenAuthCopyWithImpl<$Res, TokenAuth>;
+  @useResult
   $Res call(
       {String? refreshToken,
       bool? success,
@@ -245,13 +206,16 @@ abstract class $TokenAuthCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$TokenAuthCopyWithImpl<$Res> implements $TokenAuthCopyWith<$Res> {
+class _$TokenAuthCopyWithImpl<$Res, $Val extends TokenAuth>
+    implements $TokenAuthCopyWith<$Res> {
   _$TokenAuthCopyWithImpl(this._value, this._then);
 
-  final TokenAuth _value;
   // ignore: unused_field
-  final $Res Function(TokenAuth) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? refreshToken = freezed,
@@ -262,62 +226,65 @@ class _$TokenAuthCopyWithImpl<$Res> implements $TokenAuthCopyWith<$Res> {
     Object? errors = freezed,
   }) {
     return _then(_value.copyWith(
-      refreshToken: refreshToken == freezed
+      refreshToken: freezed == refreshToken
           ? _value.refreshToken
           : refreshToken // ignore: cast_nullable_to_non_nullable
               as String?,
-      success: success == freezed
+      success: freezed == success
           ? _value.success
           : success // ignore: cast_nullable_to_non_nullable
               as bool?,
-      token: token == freezed
+      token: freezed == token
           ? _value.token
           : token // ignore: cast_nullable_to_non_nullable
               as String?,
-      unarchiving: unarchiving == freezed
+      unarchiving: freezed == unarchiving
           ? _value.unarchiving
           : unarchiving // ignore: cast_nullable_to_non_nullable
               as bool?,
-      user: user == freezed
+      user: freezed == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
               as LoggedUser?,
-      errors: errors == freezed
+      errors: freezed == errors
           ? _value.errors
           : errors // ignore: cast_nullable_to_non_nullable
               as TokenError?,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $LoggedUserCopyWith<$Res>? get user {
     if (_value.user == null) {
       return null;
     }
 
     return $LoggedUserCopyWith<$Res>(_value.user!, (value) {
-      return _then(_value.copyWith(user: value));
+      return _then(_value.copyWith(user: value) as $Val);
     });
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $TokenErrorCopyWith<$Res>? get errors {
     if (_value.errors == null) {
       return null;
     }
 
     return $TokenErrorCopyWith<$Res>(_value.errors!, (value) {
-      return _then(_value.copyWith(errors: value));
+      return _then(_value.copyWith(errors: value) as $Val);
     });
   }
 }
 
 /// @nodoc
-abstract class _$TokenAuthCopyWith<$Res> implements $TokenAuthCopyWith<$Res> {
-  factory _$TokenAuthCopyWith(
-          _TokenAuth value, $Res Function(_TokenAuth) then) =
-      __$TokenAuthCopyWithImpl<$Res>;
+abstract class _$$_TokenAuthCopyWith<$Res> implements $TokenAuthCopyWith<$Res> {
+  factory _$$_TokenAuthCopyWith(
+          _$_TokenAuth value, $Res Function(_$_TokenAuth) then) =
+      __$$_TokenAuthCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String? refreshToken,
       bool? success,
@@ -333,14 +300,14 @@ abstract class _$TokenAuthCopyWith<$Res> implements $TokenAuthCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$TokenAuthCopyWithImpl<$Res> extends _$TokenAuthCopyWithImpl<$Res>
-    implements _$TokenAuthCopyWith<$Res> {
-  __$TokenAuthCopyWithImpl(_TokenAuth _value, $Res Function(_TokenAuth) _then)
-      : super(_value, (v) => _then(v as _TokenAuth));
+class __$$_TokenAuthCopyWithImpl<$Res>
+    extends _$TokenAuthCopyWithImpl<$Res, _$_TokenAuth>
+    implements _$$_TokenAuthCopyWith<$Res> {
+  __$$_TokenAuthCopyWithImpl(
+      _$_TokenAuth _value, $Res Function(_$_TokenAuth) _then)
+      : super(_value, _then);
 
-  @override
-  _TokenAuth get _value => super._value as _TokenAuth;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? refreshToken = freezed,
@@ -350,28 +317,28 @@ class __$TokenAuthCopyWithImpl<$Res> extends _$TokenAuthCopyWithImpl<$Res>
     Object? user = freezed,
     Object? errors = freezed,
   }) {
-    return _then(_TokenAuth(
-      refreshToken: refreshToken == freezed
+    return _then(_$_TokenAuth(
+      refreshToken: freezed == refreshToken
           ? _value.refreshToken
           : refreshToken // ignore: cast_nullable_to_non_nullable
               as String?,
-      success: success == freezed
+      success: freezed == success
           ? _value.success
           : success // ignore: cast_nullable_to_non_nullable
               as bool?,
-      token: token == freezed
+      token: freezed == token
           ? _value.token
           : token // ignore: cast_nullable_to_non_nullable
               as String?,
-      unarchiving: unarchiving == freezed
+      unarchiving: freezed == unarchiving
           ? _value.unarchiving
           : unarchiving // ignore: cast_nullable_to_non_nullable
               as bool?,
-      user: user == freezed
+      user: freezed == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
               as LoggedUser?,
-      errors: errors == freezed
+      errors: freezed == errors
           ? _value.errors
           : errors // ignore: cast_nullable_to_non_nullable
               as TokenError?,
@@ -415,46 +382,44 @@ class _$_TokenAuth implements _TokenAuth {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _TokenAuth &&
-            const DeepCollectionEquality()
-                .equals(other.refreshToken, refreshToken) &&
-            const DeepCollectionEquality().equals(other.success, success) &&
-            const DeepCollectionEquality().equals(other.token, token) &&
-            const DeepCollectionEquality()
-                .equals(other.unarchiving, unarchiving) &&
-            const DeepCollectionEquality().equals(other.user, user) &&
-            const DeepCollectionEquality().equals(other.errors, errors));
+            other is _$_TokenAuth &&
+            (identical(other.refreshToken, refreshToken) ||
+                other.refreshToken == refreshToken) &&
+            (identical(other.success, success) || other.success == success) &&
+            (identical(other.token, token) || other.token == token) &&
+            (identical(other.unarchiving, unarchiving) ||
+                other.unarchiving == unarchiving) &&
+            (identical(other.user, user) || other.user == user) &&
+            (identical(other.errors, errors) || other.errors == errors));
   }
-
-  @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(refreshToken),
-      const DeepCollectionEquality().hash(success),
-      const DeepCollectionEquality().hash(token),
-      const DeepCollectionEquality().hash(unarchiving),
-      const DeepCollectionEquality().hash(user),
-      const DeepCollectionEquality().hash(errors));
 
   @JsonKey(ignore: true)
   @override
-  _$TokenAuthCopyWith<_TokenAuth> get copyWith =>
-      __$TokenAuthCopyWithImpl<_TokenAuth>(this, _$identity);
+  int get hashCode => Object.hash(
+      runtimeType, refreshToken, success, token, unarchiving, user, errors);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_TokenAuthCopyWith<_$_TokenAuth> get copyWith =>
+      __$$_TokenAuthCopyWithImpl<_$_TokenAuth>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_TokenAuthToJson(this);
+    return _$$_TokenAuthToJson(
+      this,
+    );
   }
 }
 
 abstract class _TokenAuth implements TokenAuth {
   const factory _TokenAuth(
-      {required String? refreshToken,
-      required bool? success,
-      required String? token,
-      required bool? unarchiving,
-      required LoggedUser? user,
-      required TokenError? errors}) = _$_TokenAuth;
+      {required final String? refreshToken,
+      required final bool? success,
+      required final String? token,
+      required final bool? unarchiving,
+      required final LoggedUser? user,
+      required final TokenError? errors}) = _$_TokenAuth;
 
   factory _TokenAuth.fromJson(Map<String, dynamic> json) =
       _$_TokenAuth.fromJson;
@@ -473,7 +438,7 @@ abstract class _TokenAuth implements TokenAuth {
   TokenError? get errors;
   @override
   @JsonKey(ignore: true)
-  _$TokenAuthCopyWith<_TokenAuth> get copyWith =>
+  _$$_TokenAuthCopyWith<_$_TokenAuth> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -482,64 +447,8 @@ LoggedUser _$LoggedUserFromJson(Map<String, dynamic> json) {
 }
 
 /// @nodoc
-class _$LoggedUserTearOff {
-  const _$LoggedUserTearOff();
-
-  _LoggedUser call(
-      {required String? userId,
-      required String? aboutMe,
-      required bool? active,
-      required String? city,
-      required String? country,
-      required String? dateJoined,
-      required bool? deleted,
-      required String? email,
-      required String? dob,
-      required String? firstName,
-      required String? gender,
-      required bool? isActive,
-      required String? id,
-      required bool? isStaff,
-      required String? lastLogin,
-      required String? lastName,
-      required String? phone,
-      required String? picture,
-      required String? rating,
-      required String? state}) {
-    return _LoggedUser(
-      userId: userId,
-      aboutMe: aboutMe,
-      active: active,
-      city: city,
-      country: country,
-      dateJoined: dateJoined,
-      deleted: deleted,
-      email: email,
-      dob: dob,
-      firstName: firstName,
-      gender: gender,
-      isActive: isActive,
-      id: id,
-      isStaff: isStaff,
-      lastLogin: lastLogin,
-      lastName: lastName,
-      phone: phone,
-      picture: picture,
-      rating: rating,
-      state: state,
-    );
-  }
-
-  LoggedUser fromJson(Map<String, Object?> json) {
-    return LoggedUser.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $LoggedUser = _$LoggedUserTearOff();
-
-/// @nodoc
 mixin _$LoggedUser {
+  bool? get verified => throw _privateConstructorUsedError;
   String? get userId => throw _privateConstructorUsedError;
   String? get aboutMe => throw _privateConstructorUsedError;
   bool? get active => throw _privateConstructorUsedError;
@@ -571,9 +480,11 @@ mixin _$LoggedUser {
 abstract class $LoggedUserCopyWith<$Res> {
   factory $LoggedUserCopyWith(
           LoggedUser value, $Res Function(LoggedUser) then) =
-      _$LoggedUserCopyWithImpl<$Res>;
+      _$LoggedUserCopyWithImpl<$Res, LoggedUser>;
+  @useResult
   $Res call(
-      {String? userId,
+      {bool? verified,
+      String? userId,
       String? aboutMe,
       bool? active,
       String? city,
@@ -596,15 +507,19 @@ abstract class $LoggedUserCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$LoggedUserCopyWithImpl<$Res> implements $LoggedUserCopyWith<$Res> {
+class _$LoggedUserCopyWithImpl<$Res, $Val extends LoggedUser>
+    implements $LoggedUserCopyWith<$Res> {
   _$LoggedUserCopyWithImpl(this._value, this._then);
 
-  final LoggedUser _value;
   // ignore: unused_field
-  final $Res Function(LoggedUser) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? verified = freezed,
     Object? userId = freezed,
     Object? aboutMe = freezed,
     Object? active = freezed,
@@ -627,98 +542,105 @@ class _$LoggedUserCopyWithImpl<$Res> implements $LoggedUserCopyWith<$Res> {
     Object? state = freezed,
   }) {
     return _then(_value.copyWith(
-      userId: userId == freezed
+      verified: freezed == verified
+          ? _value.verified
+          : verified // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      userId: freezed == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
               as String?,
-      aboutMe: aboutMe == freezed
+      aboutMe: freezed == aboutMe
           ? _value.aboutMe
           : aboutMe // ignore: cast_nullable_to_non_nullable
               as String?,
-      active: active == freezed
+      active: freezed == active
           ? _value.active
           : active // ignore: cast_nullable_to_non_nullable
               as bool?,
-      city: city == freezed
+      city: freezed == city
           ? _value.city
           : city // ignore: cast_nullable_to_non_nullable
               as String?,
-      country: country == freezed
+      country: freezed == country
           ? _value.country
           : country // ignore: cast_nullable_to_non_nullable
               as String?,
-      dateJoined: dateJoined == freezed
+      dateJoined: freezed == dateJoined
           ? _value.dateJoined
           : dateJoined // ignore: cast_nullable_to_non_nullable
               as String?,
-      deleted: deleted == freezed
+      deleted: freezed == deleted
           ? _value.deleted
           : deleted // ignore: cast_nullable_to_non_nullable
               as bool?,
-      email: email == freezed
+      email: freezed == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String?,
-      dob: dob == freezed
+      dob: freezed == dob
           ? _value.dob
           : dob // ignore: cast_nullable_to_non_nullable
               as String?,
-      firstName: firstName == freezed
+      firstName: freezed == firstName
           ? _value.firstName
           : firstName // ignore: cast_nullable_to_non_nullable
               as String?,
-      gender: gender == freezed
+      gender: freezed == gender
           ? _value.gender
           : gender // ignore: cast_nullable_to_non_nullable
               as String?,
-      isActive: isActive == freezed
+      isActive: freezed == isActive
           ? _value.isActive
           : isActive // ignore: cast_nullable_to_non_nullable
               as bool?,
-      id: id == freezed
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String?,
-      isStaff: isStaff == freezed
+      isStaff: freezed == isStaff
           ? _value.isStaff
           : isStaff // ignore: cast_nullable_to_non_nullable
               as bool?,
-      lastLogin: lastLogin == freezed
+      lastLogin: freezed == lastLogin
           ? _value.lastLogin
           : lastLogin // ignore: cast_nullable_to_non_nullable
               as String?,
-      lastName: lastName == freezed
+      lastName: freezed == lastName
           ? _value.lastName
           : lastName // ignore: cast_nullable_to_non_nullable
               as String?,
-      phone: phone == freezed
+      phone: freezed == phone
           ? _value.phone
           : phone // ignore: cast_nullable_to_non_nullable
               as String?,
-      picture: picture == freezed
+      picture: freezed == picture
           ? _value.picture
           : picture // ignore: cast_nullable_to_non_nullable
               as String?,
-      rating: rating == freezed
+      rating: freezed == rating
           ? _value.rating
           : rating // ignore: cast_nullable_to_non_nullable
               as String?,
-      state: state == freezed
+      state: freezed == state
           ? _value.state
           : state // ignore: cast_nullable_to_non_nullable
               as String?,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$LoggedUserCopyWith<$Res> implements $LoggedUserCopyWith<$Res> {
-  factory _$LoggedUserCopyWith(
-          _LoggedUser value, $Res Function(_LoggedUser) then) =
-      __$LoggedUserCopyWithImpl<$Res>;
+abstract class _$$_LoggedUserCopyWith<$Res>
+    implements $LoggedUserCopyWith<$Res> {
+  factory _$$_LoggedUserCopyWith(
+          _$_LoggedUser value, $Res Function(_$_LoggedUser) then) =
+      __$$_LoggedUserCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
-      {String? userId,
+      {bool? verified,
+      String? userId,
       String? aboutMe,
       bool? active,
       String? city,
@@ -741,17 +663,17 @@ abstract class _$LoggedUserCopyWith<$Res> implements $LoggedUserCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$LoggedUserCopyWithImpl<$Res> extends _$LoggedUserCopyWithImpl<$Res>
-    implements _$LoggedUserCopyWith<$Res> {
-  __$LoggedUserCopyWithImpl(
-      _LoggedUser _value, $Res Function(_LoggedUser) _then)
-      : super(_value, (v) => _then(v as _LoggedUser));
+class __$$_LoggedUserCopyWithImpl<$Res>
+    extends _$LoggedUserCopyWithImpl<$Res, _$_LoggedUser>
+    implements _$$_LoggedUserCopyWith<$Res> {
+  __$$_LoggedUserCopyWithImpl(
+      _$_LoggedUser _value, $Res Function(_$_LoggedUser) _then)
+      : super(_value, _then);
 
-  @override
-  _LoggedUser get _value => super._value as _LoggedUser;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? verified = freezed,
     Object? userId = freezed,
     Object? aboutMe = freezed,
     Object? active = freezed,
@@ -773,84 +695,88 @@ class __$LoggedUserCopyWithImpl<$Res> extends _$LoggedUserCopyWithImpl<$Res>
     Object? rating = freezed,
     Object? state = freezed,
   }) {
-    return _then(_LoggedUser(
-      userId: userId == freezed
+    return _then(_$_LoggedUser(
+      verified: freezed == verified
+          ? _value.verified
+          : verified // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      userId: freezed == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
               as String?,
-      aboutMe: aboutMe == freezed
+      aboutMe: freezed == aboutMe
           ? _value.aboutMe
           : aboutMe // ignore: cast_nullable_to_non_nullable
               as String?,
-      active: active == freezed
+      active: freezed == active
           ? _value.active
           : active // ignore: cast_nullable_to_non_nullable
               as bool?,
-      city: city == freezed
+      city: freezed == city
           ? _value.city
           : city // ignore: cast_nullable_to_non_nullable
               as String?,
-      country: country == freezed
+      country: freezed == country
           ? _value.country
           : country // ignore: cast_nullable_to_non_nullable
               as String?,
-      dateJoined: dateJoined == freezed
+      dateJoined: freezed == dateJoined
           ? _value.dateJoined
           : dateJoined // ignore: cast_nullable_to_non_nullable
               as String?,
-      deleted: deleted == freezed
+      deleted: freezed == deleted
           ? _value.deleted
           : deleted // ignore: cast_nullable_to_non_nullable
               as bool?,
-      email: email == freezed
+      email: freezed == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String?,
-      dob: dob == freezed
+      dob: freezed == dob
           ? _value.dob
           : dob // ignore: cast_nullable_to_non_nullable
               as String?,
-      firstName: firstName == freezed
+      firstName: freezed == firstName
           ? _value.firstName
           : firstName // ignore: cast_nullable_to_non_nullable
               as String?,
-      gender: gender == freezed
+      gender: freezed == gender
           ? _value.gender
           : gender // ignore: cast_nullable_to_non_nullable
               as String?,
-      isActive: isActive == freezed
+      isActive: freezed == isActive
           ? _value.isActive
           : isActive // ignore: cast_nullable_to_non_nullable
               as bool?,
-      id: id == freezed
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String?,
-      isStaff: isStaff == freezed
+      isStaff: freezed == isStaff
           ? _value.isStaff
           : isStaff // ignore: cast_nullable_to_non_nullable
               as bool?,
-      lastLogin: lastLogin == freezed
+      lastLogin: freezed == lastLogin
           ? _value.lastLogin
           : lastLogin // ignore: cast_nullable_to_non_nullable
               as String?,
-      lastName: lastName == freezed
+      lastName: freezed == lastName
           ? _value.lastName
           : lastName // ignore: cast_nullable_to_non_nullable
               as String?,
-      phone: phone == freezed
+      phone: freezed == phone
           ? _value.phone
           : phone // ignore: cast_nullable_to_non_nullable
               as String?,
-      picture: picture == freezed
+      picture: freezed == picture
           ? _value.picture
           : picture // ignore: cast_nullable_to_non_nullable
               as String?,
-      rating: rating == freezed
+      rating: freezed == rating
           ? _value.rating
           : rating // ignore: cast_nullable_to_non_nullable
               as String?,
-      state: state == freezed
+      state: freezed == state
           ? _value.state
           : state // ignore: cast_nullable_to_non_nullable
               as String?,
@@ -862,7 +788,8 @@ class __$LoggedUserCopyWithImpl<$Res> extends _$LoggedUserCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_LoggedUser implements _LoggedUser {
   const _$_LoggedUser(
-      {required this.userId,
+      {required this.verified,
+      required this.userId,
       required this.aboutMe,
       required this.active,
       required this.city,
@@ -886,6 +813,8 @@ class _$_LoggedUser implements _LoggedUser {
   factory _$_LoggedUser.fromJson(Map<String, dynamic> json) =>
       _$$_LoggedUserFromJson(json);
 
+  @override
+  final bool? verified;
   @override
   final String? userId;
   @override
@@ -929,99 +858,113 @@ class _$_LoggedUser implements _LoggedUser {
 
   @override
   String toString() {
-    return 'LoggedUser(userId: $userId, aboutMe: $aboutMe, active: $active, city: $city, country: $country, dateJoined: $dateJoined, deleted: $deleted, email: $email, dob: $dob, firstName: $firstName, gender: $gender, isActive: $isActive, id: $id, isStaff: $isStaff, lastLogin: $lastLogin, lastName: $lastName, phone: $phone, picture: $picture, rating: $rating, state: $state)';
+    return 'LoggedUser(verified: $verified, userId: $userId, aboutMe: $aboutMe, active: $active, city: $city, country: $country, dateJoined: $dateJoined, deleted: $deleted, email: $email, dob: $dob, firstName: $firstName, gender: $gender, isActive: $isActive, id: $id, isStaff: $isStaff, lastLogin: $lastLogin, lastName: $lastName, phone: $phone, picture: $picture, rating: $rating, state: $state)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _LoggedUser &&
-            const DeepCollectionEquality().equals(other.userId, userId) &&
-            const DeepCollectionEquality().equals(other.aboutMe, aboutMe) &&
-            const DeepCollectionEquality().equals(other.active, active) &&
-            const DeepCollectionEquality().equals(other.city, city) &&
-            const DeepCollectionEquality().equals(other.country, country) &&
-            const DeepCollectionEquality()
-                .equals(other.dateJoined, dateJoined) &&
-            const DeepCollectionEquality().equals(other.deleted, deleted) &&
-            const DeepCollectionEquality().equals(other.email, email) &&
-            const DeepCollectionEquality().equals(other.dob, dob) &&
-            const DeepCollectionEquality().equals(other.firstName, firstName) &&
-            const DeepCollectionEquality().equals(other.gender, gender) &&
-            const DeepCollectionEquality().equals(other.isActive, isActive) &&
-            const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality().equals(other.isStaff, isStaff) &&
-            const DeepCollectionEquality().equals(other.lastLogin, lastLogin) &&
-            const DeepCollectionEquality().equals(other.lastName, lastName) &&
-            const DeepCollectionEquality().equals(other.phone, phone) &&
-            const DeepCollectionEquality().equals(other.picture, picture) &&
-            const DeepCollectionEquality().equals(other.rating, rating) &&
-            const DeepCollectionEquality().equals(other.state, state));
+            other is _$_LoggedUser &&
+            (identical(other.verified, verified) ||
+                other.verified == verified) &&
+            (identical(other.userId, userId) || other.userId == userId) &&
+            (identical(other.aboutMe, aboutMe) || other.aboutMe == aboutMe) &&
+            (identical(other.active, active) || other.active == active) &&
+            (identical(other.city, city) || other.city == city) &&
+            (identical(other.country, country) || other.country == country) &&
+            (identical(other.dateJoined, dateJoined) ||
+                other.dateJoined == dateJoined) &&
+            (identical(other.deleted, deleted) || other.deleted == deleted) &&
+            (identical(other.email, email) || other.email == email) &&
+            (identical(other.dob, dob) || other.dob == dob) &&
+            (identical(other.firstName, firstName) ||
+                other.firstName == firstName) &&
+            (identical(other.gender, gender) || other.gender == gender) &&
+            (identical(other.isActive, isActive) ||
+                other.isActive == isActive) &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.isStaff, isStaff) || other.isStaff == isStaff) &&
+            (identical(other.lastLogin, lastLogin) ||
+                other.lastLogin == lastLogin) &&
+            (identical(other.lastName, lastName) ||
+                other.lastName == lastName) &&
+            (identical(other.phone, phone) || other.phone == phone) &&
+            (identical(other.picture, picture) || other.picture == picture) &&
+            (identical(other.rating, rating) || other.rating == rating) &&
+            (identical(other.state, state) || other.state == state));
   }
 
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hashAll([
         runtimeType,
-        const DeepCollectionEquality().hash(userId),
-        const DeepCollectionEquality().hash(aboutMe),
-        const DeepCollectionEquality().hash(active),
-        const DeepCollectionEquality().hash(city),
-        const DeepCollectionEquality().hash(country),
-        const DeepCollectionEquality().hash(dateJoined),
-        const DeepCollectionEquality().hash(deleted),
-        const DeepCollectionEquality().hash(email),
-        const DeepCollectionEquality().hash(dob),
-        const DeepCollectionEquality().hash(firstName),
-        const DeepCollectionEquality().hash(gender),
-        const DeepCollectionEquality().hash(isActive),
-        const DeepCollectionEquality().hash(id),
-        const DeepCollectionEquality().hash(isStaff),
-        const DeepCollectionEquality().hash(lastLogin),
-        const DeepCollectionEquality().hash(lastName),
-        const DeepCollectionEquality().hash(phone),
-        const DeepCollectionEquality().hash(picture),
-        const DeepCollectionEquality().hash(rating),
-        const DeepCollectionEquality().hash(state)
+        verified,
+        userId,
+        aboutMe,
+        active,
+        city,
+        country,
+        dateJoined,
+        deleted,
+        email,
+        dob,
+        firstName,
+        gender,
+        isActive,
+        id,
+        isStaff,
+        lastLogin,
+        lastName,
+        phone,
+        picture,
+        rating,
+        state
       ]);
 
   @JsonKey(ignore: true)
   @override
-  _$LoggedUserCopyWith<_LoggedUser> get copyWith =>
-      __$LoggedUserCopyWithImpl<_LoggedUser>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$_LoggedUserCopyWith<_$_LoggedUser> get copyWith =>
+      __$$_LoggedUserCopyWithImpl<_$_LoggedUser>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_LoggedUserToJson(this);
+    return _$$_LoggedUserToJson(
+      this,
+    );
   }
 }
 
 abstract class _LoggedUser implements LoggedUser {
   const factory _LoggedUser(
-      {required String? userId,
-      required String? aboutMe,
-      required bool? active,
-      required String? city,
-      required String? country,
-      required String? dateJoined,
-      required bool? deleted,
-      required String? email,
-      required String? dob,
-      required String? firstName,
-      required String? gender,
-      required bool? isActive,
-      required String? id,
-      required bool? isStaff,
-      required String? lastLogin,
-      required String? lastName,
-      required String? phone,
-      required String? picture,
-      required String? rating,
-      required String? state}) = _$_LoggedUser;
+      {required final bool? verified,
+      required final String? userId,
+      required final String? aboutMe,
+      required final bool? active,
+      required final String? city,
+      required final String? country,
+      required final String? dateJoined,
+      required final bool? deleted,
+      required final String? email,
+      required final String? dob,
+      required final String? firstName,
+      required final String? gender,
+      required final bool? isActive,
+      required final String? id,
+      required final bool? isStaff,
+      required final String? lastLogin,
+      required final String? lastName,
+      required final String? phone,
+      required final String? picture,
+      required final String? rating,
+      required final String? state}) = _$_LoggedUser;
 
   factory _LoggedUser.fromJson(Map<String, dynamic> json) =
       _$_LoggedUser.fromJson;
 
+  @override
+  bool? get verified;
   @override
   String? get userId;
   @override
@@ -1064,31 +1007,13 @@ abstract class _LoggedUser implements LoggedUser {
   String? get state;
   @override
   @JsonKey(ignore: true)
-  _$LoggedUserCopyWith<_LoggedUser> get copyWith =>
+  _$$_LoggedUserCopyWith<_$_LoggedUser> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 TokenError _$TokenErrorFromJson(Map<String, dynamic> json) {
   return _TokenError.fromJson(json);
 }
-
-/// @nodoc
-class _$TokenErrorTearOff {
-  const _$TokenErrorTearOff();
-
-  _TokenError call({required List<NonFieldErrors>? nonFieldErrors}) {
-    return _TokenError(
-      nonFieldErrors: nonFieldErrors,
-    );
-  }
-
-  TokenError fromJson(Map<String, Object?> json) {
-    return TokenError.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $TokenError = _$TokenErrorTearOff();
 
 /// @nodoc
 mixin _$TokenError {
@@ -1105,57 +1030,62 @@ mixin _$TokenError {
 abstract class $TokenErrorCopyWith<$Res> {
   factory $TokenErrorCopyWith(
           TokenError value, $Res Function(TokenError) then) =
-      _$TokenErrorCopyWithImpl<$Res>;
+      _$TokenErrorCopyWithImpl<$Res, TokenError>;
+  @useResult
   $Res call({List<NonFieldErrors>? nonFieldErrors});
 }
 
 /// @nodoc
-class _$TokenErrorCopyWithImpl<$Res> implements $TokenErrorCopyWith<$Res> {
+class _$TokenErrorCopyWithImpl<$Res, $Val extends TokenError>
+    implements $TokenErrorCopyWith<$Res> {
   _$TokenErrorCopyWithImpl(this._value, this._then);
 
-  final TokenError _value;
   // ignore: unused_field
-  final $Res Function(TokenError) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? nonFieldErrors = freezed,
   }) {
     return _then(_value.copyWith(
-      nonFieldErrors: nonFieldErrors == freezed
+      nonFieldErrors: freezed == nonFieldErrors
           ? _value.nonFieldErrors
           : nonFieldErrors // ignore: cast_nullable_to_non_nullable
               as List<NonFieldErrors>?,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$TokenErrorCopyWith<$Res> implements $TokenErrorCopyWith<$Res> {
-  factory _$TokenErrorCopyWith(
-          _TokenError value, $Res Function(_TokenError) then) =
-      __$TokenErrorCopyWithImpl<$Res>;
+abstract class _$$_TokenErrorCopyWith<$Res>
+    implements $TokenErrorCopyWith<$Res> {
+  factory _$$_TokenErrorCopyWith(
+          _$_TokenError value, $Res Function(_$_TokenError) then) =
+      __$$_TokenErrorCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({List<NonFieldErrors>? nonFieldErrors});
 }
 
 /// @nodoc
-class __$TokenErrorCopyWithImpl<$Res> extends _$TokenErrorCopyWithImpl<$Res>
-    implements _$TokenErrorCopyWith<$Res> {
-  __$TokenErrorCopyWithImpl(
-      _TokenError _value, $Res Function(_TokenError) _then)
-      : super(_value, (v) => _then(v as _TokenError));
+class __$$_TokenErrorCopyWithImpl<$Res>
+    extends _$TokenErrorCopyWithImpl<$Res, _$_TokenError>
+    implements _$$_TokenErrorCopyWith<$Res> {
+  __$$_TokenErrorCopyWithImpl(
+      _$_TokenError _value, $Res Function(_$_TokenError) _then)
+      : super(_value, _then);
 
-  @override
-  _TokenError get _value => super._value as _TokenError;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? nonFieldErrors = freezed,
   }) {
-    return _then(_TokenError(
-      nonFieldErrors: nonFieldErrors == freezed
-          ? _value.nonFieldErrors
+    return _then(_$_TokenError(
+      nonFieldErrors: freezed == nonFieldErrors
+          ? _value._nonFieldErrors
           : nonFieldErrors // ignore: cast_nullable_to_non_nullable
               as List<NonFieldErrors>?,
     ));
@@ -1165,13 +1095,21 @@ class __$TokenErrorCopyWithImpl<$Res> extends _$TokenErrorCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_TokenError implements _TokenError {
-  const _$_TokenError({required this.nonFieldErrors});
+  const _$_TokenError({required final List<NonFieldErrors>? nonFieldErrors})
+      : _nonFieldErrors = nonFieldErrors;
 
   factory _$_TokenError.fromJson(Map<String, dynamic> json) =>
       _$$_TokenErrorFromJson(json);
 
+  final List<NonFieldErrors>? _nonFieldErrors;
   @override
-  final List<NonFieldErrors>? nonFieldErrors;
+  List<NonFieldErrors>? get nonFieldErrors {
+    final value = _nonFieldErrors;
+    if (value == null) return null;
+    if (_nonFieldErrors is EqualUnmodifiableListView) return _nonFieldErrors;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
 
   @override
   String toString() {
@@ -1182,29 +1120,33 @@ class _$_TokenError implements _TokenError {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _TokenError &&
+            other is _$_TokenError &&
             const DeepCollectionEquality()
-                .equals(other.nonFieldErrors, nonFieldErrors));
+                .equals(other._nonFieldErrors, _nonFieldErrors));
   }
-
-  @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(nonFieldErrors));
 
   @JsonKey(ignore: true)
   @override
-  _$TokenErrorCopyWith<_TokenError> get copyWith =>
-      __$TokenErrorCopyWithImpl<_TokenError>(this, _$identity);
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(_nonFieldErrors));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_TokenErrorCopyWith<_$_TokenError> get copyWith =>
+      __$$_TokenErrorCopyWithImpl<_$_TokenError>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_TokenErrorToJson(this);
+    return _$$_TokenErrorToJson(
+      this,
+    );
   }
 }
 
 abstract class _TokenError implements TokenError {
-  const factory _TokenError({required List<NonFieldErrors>? nonFieldErrors}) =
-      _$_TokenError;
+  const factory _TokenError(
+      {required final List<NonFieldErrors>? nonFieldErrors}) = _$_TokenError;
 
   factory _TokenError.fromJson(Map<String, dynamic> json) =
       _$_TokenError.fromJson;
@@ -1213,32 +1155,13 @@ abstract class _TokenError implements TokenError {
   List<NonFieldErrors>? get nonFieldErrors;
   @override
   @JsonKey(ignore: true)
-  _$TokenErrorCopyWith<_TokenError> get copyWith =>
+  _$$_TokenErrorCopyWith<_$_TokenError> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 NonFieldErrors _$NonFieldErrorsFromJson(Map<String, dynamic> json) {
   return _NonFieldErrors.fromJson(json);
 }
-
-/// @nodoc
-class _$NonFieldErrorsTearOff {
-  const _$NonFieldErrorsTearOff();
-
-  _NonFieldErrors call({required String? message, required String? code}) {
-    return _NonFieldErrors(
-      message: message,
-      code: code,
-    );
-  }
-
-  NonFieldErrors fromJson(Map<String, Object?> json) {
-    return NonFieldErrors.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $NonFieldErrors = _$NonFieldErrorsTearOff();
 
 /// @nodoc
 mixin _$NonFieldErrors {
@@ -1255,69 +1178,71 @@ mixin _$NonFieldErrors {
 abstract class $NonFieldErrorsCopyWith<$Res> {
   factory $NonFieldErrorsCopyWith(
           NonFieldErrors value, $Res Function(NonFieldErrors) then) =
-      _$NonFieldErrorsCopyWithImpl<$Res>;
+      _$NonFieldErrorsCopyWithImpl<$Res, NonFieldErrors>;
+  @useResult
   $Res call({String? message, String? code});
 }
 
 /// @nodoc
-class _$NonFieldErrorsCopyWithImpl<$Res>
+class _$NonFieldErrorsCopyWithImpl<$Res, $Val extends NonFieldErrors>
     implements $NonFieldErrorsCopyWith<$Res> {
   _$NonFieldErrorsCopyWithImpl(this._value, this._then);
 
-  final NonFieldErrors _value;
   // ignore: unused_field
-  final $Res Function(NonFieldErrors) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? message = freezed,
     Object? code = freezed,
   }) {
     return _then(_value.copyWith(
-      message: message == freezed
+      message: freezed == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String?,
-      code: code == freezed
+      code: freezed == code
           ? _value.code
           : code // ignore: cast_nullable_to_non_nullable
               as String?,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$NonFieldErrorsCopyWith<$Res>
+abstract class _$$_NonFieldErrorsCopyWith<$Res>
     implements $NonFieldErrorsCopyWith<$Res> {
-  factory _$NonFieldErrorsCopyWith(
-          _NonFieldErrors value, $Res Function(_NonFieldErrors) then) =
-      __$NonFieldErrorsCopyWithImpl<$Res>;
+  factory _$$_NonFieldErrorsCopyWith(
+          _$_NonFieldErrors value, $Res Function(_$_NonFieldErrors) then) =
+      __$$_NonFieldErrorsCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({String? message, String? code});
 }
 
 /// @nodoc
-class __$NonFieldErrorsCopyWithImpl<$Res>
-    extends _$NonFieldErrorsCopyWithImpl<$Res>
-    implements _$NonFieldErrorsCopyWith<$Res> {
-  __$NonFieldErrorsCopyWithImpl(
-      _NonFieldErrors _value, $Res Function(_NonFieldErrors) _then)
-      : super(_value, (v) => _then(v as _NonFieldErrors));
+class __$$_NonFieldErrorsCopyWithImpl<$Res>
+    extends _$NonFieldErrorsCopyWithImpl<$Res, _$_NonFieldErrors>
+    implements _$$_NonFieldErrorsCopyWith<$Res> {
+  __$$_NonFieldErrorsCopyWithImpl(
+      _$_NonFieldErrors _value, $Res Function(_$_NonFieldErrors) _then)
+      : super(_value, _then);
 
-  @override
-  _NonFieldErrors get _value => super._value as _NonFieldErrors;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? message = freezed,
     Object? code = freezed,
   }) {
-    return _then(_NonFieldErrors(
-      message: message == freezed
+    return _then(_$_NonFieldErrors(
+      message: freezed == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String?,
-      code: code == freezed
+      code: freezed == code
           ? _value.code
           : code // ignore: cast_nullable_to_non_nullable
               as String?,
@@ -1347,31 +1272,33 @@ class _$_NonFieldErrors implements _NonFieldErrors {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _NonFieldErrors &&
-            const DeepCollectionEquality().equals(other.message, message) &&
-            const DeepCollectionEquality().equals(other.code, code));
+            other is _$_NonFieldErrors &&
+            (identical(other.message, message) || other.message == message) &&
+            (identical(other.code, code) || other.code == code));
   }
-
-  @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(message),
-      const DeepCollectionEquality().hash(code));
 
   @JsonKey(ignore: true)
   @override
-  _$NonFieldErrorsCopyWith<_NonFieldErrors> get copyWith =>
-      __$NonFieldErrorsCopyWithImpl<_NonFieldErrors>(this, _$identity);
+  int get hashCode => Object.hash(runtimeType, message, code);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_NonFieldErrorsCopyWith<_$_NonFieldErrors> get copyWith =>
+      __$$_NonFieldErrorsCopyWithImpl<_$_NonFieldErrors>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_NonFieldErrorsToJson(this);
+    return _$$_NonFieldErrorsToJson(
+      this,
+    );
   }
 }
 
 abstract class _NonFieldErrors implements NonFieldErrors {
   const factory _NonFieldErrors(
-      {required String? message, required String? code}) = _$_NonFieldErrors;
+      {required final String? message,
+      required final String? code}) = _$_NonFieldErrors;
 
   factory _NonFieldErrors.fromJson(Map<String, dynamic> json) =
       _$_NonFieldErrors.fromJson;
@@ -1382,6 +1309,6 @@ abstract class _NonFieldErrors implements NonFieldErrors {
   String? get code;
   @override
   @JsonKey(ignore: true)
-  _$NonFieldErrorsCopyWith<_NonFieldErrors> get copyWith =>
+  _$$_NonFieldErrorsCopyWith<_$_NonFieldErrors> get copyWith =>
       throw _privateConstructorUsedError;
 }

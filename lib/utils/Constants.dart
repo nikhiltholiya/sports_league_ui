@@ -120,6 +120,8 @@ String allUsers(Map<String, dynamic>? param, Map<String, dynamic>? paramType) {
 
 // query(${param.toString().replaceAll('{', ' ').replaceAll('}', ' ')}) {
 // allMessaging(${paramType.toString().replaceAll('{', ' ').replaceAll('}', ' ')})
+
+// 20230622 Added read
 String allMessaging(Map<String, dynamic>? param, Map<String, dynamic>? paramType) {
   return '''
   query(${param.toString().trim().substring(1, param.toString().trim().length - 1)}) {
@@ -130,6 +132,7 @@ String allMessaging(Map<String, dynamic>? param, Map<String, dynamic>? paramType
         id
         message
         messageId
+        read
         updatedAt
         recipient {
           city
@@ -323,6 +326,7 @@ String resendActivationEmail(Map<String, dynamic>? param, Map<String, dynamic>? 
 ''';
 }
 
+//20230633 verified was added for check user is verified or not.
 String tokenAuth(Map<String, dynamic>? param, Map<String, dynamic>? paramType) {
   return '''
       mutation tokenAuth(${param.toString().trim().substring(1, param.toString().trim().length - 1)}) {
@@ -333,6 +337,7 @@ String tokenAuth(Map<String, dynamic>? param, Map<String, dynamic>? paramType) {
                unarchiving
                errors
                user {
+                  verified
                   userId
                   aboutMe
                   active

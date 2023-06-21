@@ -235,26 +235,35 @@ class _SignInPageState extends State<SignInPage> with isInternetConnection {
                           '${SignInPage.path} * SUCCESS -- ${_tokenAuthData?.tokenAuth?.success}');
                       errorList = [];
                       if (_tokenAuthData!.tokenAuth!.success!) {
-                        SharedPreferencesUtils.setEmail(
-                            _tokenAuthData?.tokenAuth?.user?.email);
-                        SharedPreferencesUtils.setToken(
-                            _tokenAuthData?.tokenAuth?.token);
-                        SharedPreferencesUtils.setRefreshToken(
-                            _tokenAuthData?.tokenAuth?.refreshToken);
-                        SharedPreferencesUtils.setUserData(
-                            jsonEncode(_tokenAuthData!.tokenAuth?.user));
-                        SharedPreferencesUtils.setUserId(
-                            _tokenAuthData?.tokenAuth?.user?.userId);
+                        if(_tokenAuthData!.tokenAuth!.user!.verified!) { //20230622 -- Checked for user is verified or not
+                          SharedPreferencesUtils.setEmail(
+                              _tokenAuthData?.tokenAuth?.user?.email);
+                          SharedPreferencesUtils.setToken(
+                              _tokenAuthData?.tokenAuth?.token);
+                          SharedPreferencesUtils.setRefreshToken(
+                              _tokenAuthData?.tokenAuth?.refreshToken);
+                          SharedPreferencesUtils.setUserData(
+                              jsonEncode(_tokenAuthData!.tokenAuth?.user));
+                          SharedPreferencesUtils.setUserId(
+                              _tokenAuthData?.tokenAuth?.user?.userId);
 
-                        // Provider.of<TokenProvider>(context, listen: false).setToken(_tokenAuthData?.tokenAuth?.token);
+                          // Provider.of<TokenProvider>(context, listen: false).setToken(_tokenAuthData?.tokenAuth?.token);
 
-                        if (_tokenAuthData!.tokenAuth!.user!.firstName
-                            .toString()
-                            .isNotEmpty) {
-                          Navigator.pushNamedAndRemoveUntil(
-                              context, DashboardPage.path, (route) => false);
-                        } else {
-                          Navigator.pushNamed(context, CreateProfilePage.path);
+                          if (_tokenAuthData!
+                              .tokenAuth!
+                              .user!
+                              .firstName
+                              .toString()
+                              .isNotEmpty) {
+                            Navigator.pushNamedAndRemoveUntil(
+                                context, DashboardPage.path, (route) => false);
+                          } else {
+                            Navigator.pushNamed(context, CreateProfilePage.path);
+                          }
+                        } else{
+                          errorList!.add(errorActLink);
+                          _showAlert();
+
                         }
                         // Navigator.pushNamed(context, CreateProfilePage.path);
                       } else {

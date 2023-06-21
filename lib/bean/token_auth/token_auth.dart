@@ -27,6 +27,7 @@ class TokenAuth with _$TokenAuth {
 @Freezed()
 class LoggedUser with _$LoggedUser {
   const factory LoggedUser({
+    required bool? verified,
     required String? userId,
     required String? aboutMe,
     required bool? active,

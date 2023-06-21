@@ -43,6 +43,7 @@ Map<String, dynamic> _$$_TokenAuthToJson(_$_TokenAuth instance) =>
 
 _$_LoggedUser _$$_LoggedUserFromJson(Map<String, dynamic> json) =>
     _$_LoggedUser(
+      verified: json['verified'] as bool?,
       userId: json['userId'] as String?,
       aboutMe: json['aboutMe'] as String?,
       active: json['active'] as bool?,
@@ -67,6 +68,7 @@ _$_LoggedUser _$$_LoggedUserFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$$_LoggedUserToJson(_$_LoggedUser instance) =>
     <String, dynamic>{
+      'verified': instance.verified,
       'userId': instance.userId,
       'aboutMe': instance.aboutMe,
       'active': instance.active,

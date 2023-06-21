@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'all_messaging.dart';
 
@@ -12,29 +12,11 @@ part of 'all_messaging.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 AllMessagingData _$AllMessagingDataFromJson(Map<String, dynamic> json) {
   return _AllMessagingData.fromJson(json);
 }
-
-/// @nodoc
-class _$AllMessagingDataTearOff {
-  const _$AllMessagingDataTearOff();
-
-  _AllMessagingData call({required AllMessaging? allMessaging}) {
-    return _AllMessagingData(
-      allMessaging: allMessaging,
-    );
-  }
-
-  AllMessagingData fromJson(Map<String, Object?> json) {
-    return AllMessagingData.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $AllMessagingData = _$AllMessagingDataTearOff();
 
 /// @nodoc
 mixin _$AllMessagingData {
@@ -50,52 +32,57 @@ mixin _$AllMessagingData {
 abstract class $AllMessagingDataCopyWith<$Res> {
   factory $AllMessagingDataCopyWith(
           AllMessagingData value, $Res Function(AllMessagingData) then) =
-      _$AllMessagingDataCopyWithImpl<$Res>;
+      _$AllMessagingDataCopyWithImpl<$Res, AllMessagingData>;
+  @useResult
   $Res call({AllMessaging? allMessaging});
 
   $AllMessagingCopyWith<$Res>? get allMessaging;
 }
 
 /// @nodoc
-class _$AllMessagingDataCopyWithImpl<$Res>
+class _$AllMessagingDataCopyWithImpl<$Res, $Val extends AllMessagingData>
     implements $AllMessagingDataCopyWith<$Res> {
   _$AllMessagingDataCopyWithImpl(this._value, this._then);
 
-  final AllMessagingData _value;
   // ignore: unused_field
-  final $Res Function(AllMessagingData) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? allMessaging = freezed,
   }) {
     return _then(_value.copyWith(
-      allMessaging: allMessaging == freezed
+      allMessaging: freezed == allMessaging
           ? _value.allMessaging
           : allMessaging // ignore: cast_nullable_to_non_nullable
               as AllMessaging?,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $AllMessagingCopyWith<$Res>? get allMessaging {
     if (_value.allMessaging == null) {
       return null;
     }
 
     return $AllMessagingCopyWith<$Res>(_value.allMessaging!, (value) {
-      return _then(_value.copyWith(allMessaging: value));
+      return _then(_value.copyWith(allMessaging: value) as $Val);
     });
   }
 }
 
 /// @nodoc
-abstract class _$AllMessagingDataCopyWith<$Res>
+abstract class _$$_AllMessagingDataCopyWith<$Res>
     implements $AllMessagingDataCopyWith<$Res> {
-  factory _$AllMessagingDataCopyWith(
-          _AllMessagingData value, $Res Function(_AllMessagingData) then) =
-      __$AllMessagingDataCopyWithImpl<$Res>;
+  factory _$$_AllMessagingDataCopyWith(
+          _$_AllMessagingData value, $Res Function(_$_AllMessagingData) then) =
+      __$$_AllMessagingDataCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({AllMessaging? allMessaging});
 
   @override
@@ -103,22 +90,20 @@ abstract class _$AllMessagingDataCopyWith<$Res>
 }
 
 /// @nodoc
-class __$AllMessagingDataCopyWithImpl<$Res>
-    extends _$AllMessagingDataCopyWithImpl<$Res>
-    implements _$AllMessagingDataCopyWith<$Res> {
-  __$AllMessagingDataCopyWithImpl(
-      _AllMessagingData _value, $Res Function(_AllMessagingData) _then)
-      : super(_value, (v) => _then(v as _AllMessagingData));
+class __$$_AllMessagingDataCopyWithImpl<$Res>
+    extends _$AllMessagingDataCopyWithImpl<$Res, _$_AllMessagingData>
+    implements _$$_AllMessagingDataCopyWith<$Res> {
+  __$$_AllMessagingDataCopyWithImpl(
+      _$_AllMessagingData _value, $Res Function(_$_AllMessagingData) _then)
+      : super(_value, _then);
 
-  @override
-  _AllMessagingData get _value => super._value as _AllMessagingData;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? allMessaging = freezed,
   }) {
-    return _then(_AllMessagingData(
-      allMessaging: allMessaging == freezed
+    return _then(_$_AllMessagingData(
+      allMessaging: freezed == allMessaging
           ? _value.allMessaging
           : allMessaging // ignore: cast_nullable_to_non_nullable
               as AllMessaging?,
@@ -146,28 +131,31 @@ class _$_AllMessagingData implements _AllMessagingData {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _AllMessagingData &&
-            const DeepCollectionEquality()
-                .equals(other.allMessaging, allMessaging));
+            other is _$_AllMessagingData &&
+            (identical(other.allMessaging, allMessaging) ||
+                other.allMessaging == allMessaging));
   }
-
-  @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(allMessaging));
 
   @JsonKey(ignore: true)
   @override
-  _$AllMessagingDataCopyWith<_AllMessagingData> get copyWith =>
-      __$AllMessagingDataCopyWithImpl<_AllMessagingData>(this, _$identity);
+  int get hashCode => Object.hash(runtimeType, allMessaging);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_AllMessagingDataCopyWith<_$_AllMessagingData> get copyWith =>
+      __$$_AllMessagingDataCopyWithImpl<_$_AllMessagingData>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_AllMessagingDataToJson(this);
+    return _$$_AllMessagingDataToJson(
+      this,
+    );
   }
 }
 
 abstract class _AllMessagingData implements AllMessagingData {
-  const factory _AllMessagingData({required AllMessaging? allMessaging}) =
+  const factory _AllMessagingData({required final AllMessaging? allMessaging}) =
       _$_AllMessagingData;
 
   factory _AllMessagingData.fromJson(Map<String, dynamic> json) =
@@ -177,31 +165,13 @@ abstract class _AllMessagingData implements AllMessagingData {
   AllMessaging? get allMessaging;
   @override
   @JsonKey(ignore: true)
-  _$AllMessagingDataCopyWith<_AllMessagingData> get copyWith =>
+  _$$_AllMessagingDataCopyWith<_$_AllMessagingData> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 AllMessaging _$AllMessagingFromJson(Map<String, dynamic> json) {
   return _AllMessaging.fromJson(json);
 }
-
-/// @nodoc
-class _$AllMessagingTearOff {
-  const _$AllMessagingTearOff();
-
-  _AllMessaging call({required List<MsgEdges>? edges}) {
-    return _AllMessaging(
-      edges: edges,
-    );
-  }
-
-  AllMessaging fromJson(Map<String, Object?> json) {
-    return AllMessaging.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $AllMessaging = _$AllMessagingTearOff();
 
 /// @nodoc
 mixin _$AllMessaging {
@@ -217,58 +187,62 @@ mixin _$AllMessaging {
 abstract class $AllMessagingCopyWith<$Res> {
   factory $AllMessagingCopyWith(
           AllMessaging value, $Res Function(AllMessaging) then) =
-      _$AllMessagingCopyWithImpl<$Res>;
+      _$AllMessagingCopyWithImpl<$Res, AllMessaging>;
+  @useResult
   $Res call({List<MsgEdges>? edges});
 }
 
 /// @nodoc
-class _$AllMessagingCopyWithImpl<$Res> implements $AllMessagingCopyWith<$Res> {
+class _$AllMessagingCopyWithImpl<$Res, $Val extends AllMessaging>
+    implements $AllMessagingCopyWith<$Res> {
   _$AllMessagingCopyWithImpl(this._value, this._then);
 
-  final AllMessaging _value;
   // ignore: unused_field
-  final $Res Function(AllMessaging) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? edges = freezed,
   }) {
     return _then(_value.copyWith(
-      edges: edges == freezed
+      edges: freezed == edges
           ? _value.edges
           : edges // ignore: cast_nullable_to_non_nullable
               as List<MsgEdges>?,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$AllMessagingCopyWith<$Res>
+abstract class _$$_AllMessagingCopyWith<$Res>
     implements $AllMessagingCopyWith<$Res> {
-  factory _$AllMessagingCopyWith(
-          _AllMessaging value, $Res Function(_AllMessaging) then) =
-      __$AllMessagingCopyWithImpl<$Res>;
+  factory _$$_AllMessagingCopyWith(
+          _$_AllMessaging value, $Res Function(_$_AllMessaging) then) =
+      __$$_AllMessagingCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({List<MsgEdges>? edges});
 }
 
 /// @nodoc
-class __$AllMessagingCopyWithImpl<$Res> extends _$AllMessagingCopyWithImpl<$Res>
-    implements _$AllMessagingCopyWith<$Res> {
-  __$AllMessagingCopyWithImpl(
-      _AllMessaging _value, $Res Function(_AllMessaging) _then)
-      : super(_value, (v) => _then(v as _AllMessaging));
+class __$$_AllMessagingCopyWithImpl<$Res>
+    extends _$AllMessagingCopyWithImpl<$Res, _$_AllMessaging>
+    implements _$$_AllMessagingCopyWith<$Res> {
+  __$$_AllMessagingCopyWithImpl(
+      _$_AllMessaging _value, $Res Function(_$_AllMessaging) _then)
+      : super(_value, _then);
 
-  @override
-  _AllMessaging get _value => super._value as _AllMessaging;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? edges = freezed,
   }) {
-    return _then(_AllMessaging(
-      edges: edges == freezed
-          ? _value.edges
+    return _then(_$_AllMessaging(
+      edges: freezed == edges
+          ? _value._edges
           : edges // ignore: cast_nullable_to_non_nullable
               as List<MsgEdges>?,
     ));
@@ -278,13 +252,21 @@ class __$AllMessagingCopyWithImpl<$Res> extends _$AllMessagingCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_AllMessaging implements _AllMessaging {
-  const _$_AllMessaging({required this.edges});
+  const _$_AllMessaging({required final List<MsgEdges>? edges})
+      : _edges = edges;
 
   factory _$_AllMessaging.fromJson(Map<String, dynamic> json) =>
       _$$_AllMessagingFromJson(json);
 
+  final List<MsgEdges>? _edges;
   @override
-  final List<MsgEdges>? edges;
+  List<MsgEdges>? get edges {
+    final value = _edges;
+    if (value == null) return null;
+    if (_edges is EqualUnmodifiableListView) return _edges;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
 
   @override
   String toString() {
@@ -295,27 +277,31 @@ class _$_AllMessaging implements _AllMessaging {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _AllMessaging &&
-            const DeepCollectionEquality().equals(other.edges, edges));
+            other is _$_AllMessaging &&
+            const DeepCollectionEquality().equals(other._edges, _edges));
   }
-
-  @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(edges));
 
   @JsonKey(ignore: true)
   @override
-  _$AllMessagingCopyWith<_AllMessaging> get copyWith =>
-      __$AllMessagingCopyWithImpl<_AllMessaging>(this, _$identity);
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(_edges));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_AllMessagingCopyWith<_$_AllMessaging> get copyWith =>
+      __$$_AllMessagingCopyWithImpl<_$_AllMessaging>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_AllMessagingToJson(this);
+    return _$$_AllMessagingToJson(
+      this,
+    );
   }
 }
 
 abstract class _AllMessaging implements AllMessaging {
-  const factory _AllMessaging({required List<MsgEdges>? edges}) =
+  const factory _AllMessaging({required final List<MsgEdges>? edges}) =
       _$_AllMessaging;
 
   factory _AllMessaging.fromJson(Map<String, dynamic> json) =
@@ -325,31 +311,13 @@ abstract class _AllMessaging implements AllMessaging {
   List<MsgEdges>? get edges;
   @override
   @JsonKey(ignore: true)
-  _$AllMessagingCopyWith<_AllMessaging> get copyWith =>
+  _$$_AllMessagingCopyWith<_$_AllMessaging> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 MsgEdges _$MsgEdgesFromJson(Map<String, dynamic> json) {
   return _MsgEdges.fromJson(json);
 }
-
-/// @nodoc
-class _$MsgEdgesTearOff {
-  const _$MsgEdgesTearOff();
-
-  _MsgEdges call({required MsgNode? node}) {
-    return _MsgEdges(
-      node: node,
-    );
-  }
-
-  MsgEdges fromJson(Map<String, Object?> json) {
-    return MsgEdges.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $MsgEdges = _$MsgEdgesTearOff();
 
 /// @nodoc
 mixin _$MsgEdges {
@@ -364,49 +332,56 @@ mixin _$MsgEdges {
 /// @nodoc
 abstract class $MsgEdgesCopyWith<$Res> {
   factory $MsgEdgesCopyWith(MsgEdges value, $Res Function(MsgEdges) then) =
-      _$MsgEdgesCopyWithImpl<$Res>;
+      _$MsgEdgesCopyWithImpl<$Res, MsgEdges>;
+  @useResult
   $Res call({MsgNode? node});
 
   $MsgNodeCopyWith<$Res>? get node;
 }
 
 /// @nodoc
-class _$MsgEdgesCopyWithImpl<$Res> implements $MsgEdgesCopyWith<$Res> {
+class _$MsgEdgesCopyWithImpl<$Res, $Val extends MsgEdges>
+    implements $MsgEdgesCopyWith<$Res> {
   _$MsgEdgesCopyWithImpl(this._value, this._then);
 
-  final MsgEdges _value;
   // ignore: unused_field
-  final $Res Function(MsgEdges) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? node = freezed,
   }) {
     return _then(_value.copyWith(
-      node: node == freezed
+      node: freezed == node
           ? _value.node
           : node // ignore: cast_nullable_to_non_nullable
               as MsgNode?,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $MsgNodeCopyWith<$Res>? get node {
     if (_value.node == null) {
       return null;
     }
 
     return $MsgNodeCopyWith<$Res>(_value.node!, (value) {
-      return _then(_value.copyWith(node: value));
+      return _then(_value.copyWith(node: value) as $Val);
     });
   }
 }
 
 /// @nodoc
-abstract class _$MsgEdgesCopyWith<$Res> implements $MsgEdgesCopyWith<$Res> {
-  factory _$MsgEdgesCopyWith(_MsgEdges value, $Res Function(_MsgEdges) then) =
-      __$MsgEdgesCopyWithImpl<$Res>;
+abstract class _$$_MsgEdgesCopyWith<$Res> implements $MsgEdgesCopyWith<$Res> {
+  factory _$$_MsgEdgesCopyWith(
+          _$_MsgEdges value, $Res Function(_$_MsgEdges) then) =
+      __$$_MsgEdgesCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({MsgNode? node});
 
   @override
@@ -414,20 +389,20 @@ abstract class _$MsgEdgesCopyWith<$Res> implements $MsgEdgesCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$MsgEdgesCopyWithImpl<$Res> extends _$MsgEdgesCopyWithImpl<$Res>
-    implements _$MsgEdgesCopyWith<$Res> {
-  __$MsgEdgesCopyWithImpl(_MsgEdges _value, $Res Function(_MsgEdges) _then)
-      : super(_value, (v) => _then(v as _MsgEdges));
+class __$$_MsgEdgesCopyWithImpl<$Res>
+    extends _$MsgEdgesCopyWithImpl<$Res, _$_MsgEdges>
+    implements _$$_MsgEdgesCopyWith<$Res> {
+  __$$_MsgEdgesCopyWithImpl(
+      _$_MsgEdges _value, $Res Function(_$_MsgEdges) _then)
+      : super(_value, _then);
 
-  @override
-  _MsgEdges get _value => super._value as _MsgEdges;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? node = freezed,
   }) {
-    return _then(_MsgEdges(
-      node: node == freezed
+    return _then(_$_MsgEdges(
+      node: freezed == node
           ? _value.node
           : node // ignore: cast_nullable_to_non_nullable
               as MsgNode?,
@@ -455,27 +430,30 @@ class _$_MsgEdges implements _MsgEdges {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _MsgEdges &&
-            const DeepCollectionEquality().equals(other.node, node));
+            other is _$_MsgEdges &&
+            (identical(other.node, node) || other.node == node));
   }
-
-  @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(node));
 
   @JsonKey(ignore: true)
   @override
-  _$MsgEdgesCopyWith<_MsgEdges> get copyWith =>
-      __$MsgEdgesCopyWithImpl<_MsgEdges>(this, _$identity);
+  int get hashCode => Object.hash(runtimeType, node);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_MsgEdgesCopyWith<_$_MsgEdges> get copyWith =>
+      __$$_MsgEdgesCopyWithImpl<_$_MsgEdges>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_MsgEdgesToJson(this);
+    return _$$_MsgEdgesToJson(
+      this,
+    );
   }
 }
 
 abstract class _MsgEdges implements MsgEdges {
-  const factory _MsgEdges({required MsgNode? node}) = _$_MsgEdges;
+  const factory _MsgEdges({required final MsgNode? node}) = _$_MsgEdges;
 
   factory _MsgEdges.fromJson(Map<String, dynamic> json) = _$_MsgEdges.fromJson;
 
@@ -483,7 +461,7 @@ abstract class _MsgEdges implements MsgEdges {
   MsgNode? get node;
   @override
   @JsonKey(ignore: true)
-  _$MsgEdgesCopyWith<_MsgEdges> get copyWith =>
+  _$$_MsgEdgesCopyWith<_$_MsgEdges> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -492,42 +470,12 @@ MsgNode _$MsgNodeFromJson(Map<String, dynamic> json) {
 }
 
 /// @nodoc
-class _$MsgNodeTearOff {
-  const _$MsgNodeTearOff();
-
-  _MsgNode call(
-      {required String? createdAt,
-      required String? id,
-      required String? message,
-      required String? messageId,
-      required String? updatedAt,
-      required MsgRecipient? recipient,
-      required MsgRecipient? sender}) {
-    return _MsgNode(
-      createdAt: createdAt,
-      id: id,
-      message: message,
-      messageId: messageId,
-      updatedAt: updatedAt,
-      recipient: recipient,
-      sender: sender,
-    );
-  }
-
-  MsgNode fromJson(Map<String, Object?> json) {
-    return MsgNode.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $MsgNode = _$MsgNodeTearOff();
-
-/// @nodoc
 mixin _$MsgNode {
   String? get createdAt => throw _privateConstructorUsedError;
   String? get id => throw _privateConstructorUsedError;
   String? get message => throw _privateConstructorUsedError;
   String? get messageId => throw _privateConstructorUsedError;
+  bool? get read => throw _privateConstructorUsedError;
   String? get updatedAt => throw _privateConstructorUsedError;
   MsgRecipient? get recipient => throw _privateConstructorUsedError;
   MsgRecipient? get sender => throw _privateConstructorUsedError;
@@ -540,12 +488,14 @@ mixin _$MsgNode {
 /// @nodoc
 abstract class $MsgNodeCopyWith<$Res> {
   factory $MsgNodeCopyWith(MsgNode value, $Res Function(MsgNode) then) =
-      _$MsgNodeCopyWithImpl<$Res>;
+      _$MsgNodeCopyWithImpl<$Res, MsgNode>;
+  @useResult
   $Res call(
       {String? createdAt,
       String? id,
       String? message,
       String? messageId,
+      bool? read,
       String? updatedAt,
       MsgRecipient? recipient,
       MsgRecipient? sender});
@@ -555,88 +505,101 @@ abstract class $MsgNodeCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$MsgNodeCopyWithImpl<$Res> implements $MsgNodeCopyWith<$Res> {
+class _$MsgNodeCopyWithImpl<$Res, $Val extends MsgNode>
+    implements $MsgNodeCopyWith<$Res> {
   _$MsgNodeCopyWithImpl(this._value, this._then);
 
-  final MsgNode _value;
   // ignore: unused_field
-  final $Res Function(MsgNode) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? createdAt = freezed,
     Object? id = freezed,
     Object? message = freezed,
     Object? messageId = freezed,
+    Object? read = freezed,
     Object? updatedAt = freezed,
     Object? recipient = freezed,
     Object? sender = freezed,
   }) {
     return _then(_value.copyWith(
-      createdAt: createdAt == freezed
+      createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as String?,
-      id: id == freezed
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String?,
-      message: message == freezed
+      message: freezed == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String?,
-      messageId: messageId == freezed
+      messageId: freezed == messageId
           ? _value.messageId
           : messageId // ignore: cast_nullable_to_non_nullable
               as String?,
-      updatedAt: updatedAt == freezed
+      read: freezed == read
+          ? _value.read
+          : read // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      updatedAt: freezed == updatedAt
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as String?,
-      recipient: recipient == freezed
+      recipient: freezed == recipient
           ? _value.recipient
           : recipient // ignore: cast_nullable_to_non_nullable
               as MsgRecipient?,
-      sender: sender == freezed
+      sender: freezed == sender
           ? _value.sender
           : sender // ignore: cast_nullable_to_non_nullable
               as MsgRecipient?,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $MsgRecipientCopyWith<$Res>? get recipient {
     if (_value.recipient == null) {
       return null;
     }
 
     return $MsgRecipientCopyWith<$Res>(_value.recipient!, (value) {
-      return _then(_value.copyWith(recipient: value));
+      return _then(_value.copyWith(recipient: value) as $Val);
     });
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $MsgRecipientCopyWith<$Res>? get sender {
     if (_value.sender == null) {
       return null;
     }
 
     return $MsgRecipientCopyWith<$Res>(_value.sender!, (value) {
-      return _then(_value.copyWith(sender: value));
+      return _then(_value.copyWith(sender: value) as $Val);
     });
   }
 }
 
 /// @nodoc
-abstract class _$MsgNodeCopyWith<$Res> implements $MsgNodeCopyWith<$Res> {
-  factory _$MsgNodeCopyWith(_MsgNode value, $Res Function(_MsgNode) then) =
-      __$MsgNodeCopyWithImpl<$Res>;
+abstract class _$$_MsgNodeCopyWith<$Res> implements $MsgNodeCopyWith<$Res> {
+  factory _$$_MsgNodeCopyWith(
+          _$_MsgNode value, $Res Function(_$_MsgNode) then) =
+      __$$_MsgNodeCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String? createdAt,
       String? id,
       String? message,
       String? messageId,
+      bool? read,
       String? updatedAt,
       MsgRecipient? recipient,
       MsgRecipient? sender});
@@ -648,50 +611,54 @@ abstract class _$MsgNodeCopyWith<$Res> implements $MsgNodeCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$MsgNodeCopyWithImpl<$Res> extends _$MsgNodeCopyWithImpl<$Res>
-    implements _$MsgNodeCopyWith<$Res> {
-  __$MsgNodeCopyWithImpl(_MsgNode _value, $Res Function(_MsgNode) _then)
-      : super(_value, (v) => _then(v as _MsgNode));
+class __$$_MsgNodeCopyWithImpl<$Res>
+    extends _$MsgNodeCopyWithImpl<$Res, _$_MsgNode>
+    implements _$$_MsgNodeCopyWith<$Res> {
+  __$$_MsgNodeCopyWithImpl(_$_MsgNode _value, $Res Function(_$_MsgNode) _then)
+      : super(_value, _then);
 
-  @override
-  _MsgNode get _value => super._value as _MsgNode;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? createdAt = freezed,
     Object? id = freezed,
     Object? message = freezed,
     Object? messageId = freezed,
+    Object? read = freezed,
     Object? updatedAt = freezed,
     Object? recipient = freezed,
     Object? sender = freezed,
   }) {
-    return _then(_MsgNode(
-      createdAt: createdAt == freezed
+    return _then(_$_MsgNode(
+      createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as String?,
-      id: id == freezed
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String?,
-      message: message == freezed
+      message: freezed == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String?,
-      messageId: messageId == freezed
+      messageId: freezed == messageId
           ? _value.messageId
           : messageId // ignore: cast_nullable_to_non_nullable
               as String?,
-      updatedAt: updatedAt == freezed
+      read: freezed == read
+          ? _value.read
+          : read // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      updatedAt: freezed == updatedAt
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as String?,
-      recipient: recipient == freezed
+      recipient: freezed == recipient
           ? _value.recipient
           : recipient // ignore: cast_nullable_to_non_nullable
               as MsgRecipient?,
-      sender: sender == freezed
+      sender: freezed == sender
           ? _value.sender
           : sender // ignore: cast_nullable_to_non_nullable
               as MsgRecipient?,
@@ -707,6 +674,7 @@ class _$_MsgNode implements _MsgNode {
       required this.id,
       required this.message,
       required this.messageId,
+      required this.read,
       required this.updatedAt,
       required this.recipient,
       required this.sender});
@@ -723,6 +691,8 @@ class _$_MsgNode implements _MsgNode {
   @override
   final String? messageId;
   @override
+  final bool? read;
+  @override
   final String? updatedAt;
   @override
   final MsgRecipient? recipient;
@@ -731,54 +701,57 @@ class _$_MsgNode implements _MsgNode {
 
   @override
   String toString() {
-    return 'MsgNode(createdAt: $createdAt, id: $id, message: $message, messageId: $messageId, updatedAt: $updatedAt, recipient: $recipient, sender: $sender)';
+    return 'MsgNode(createdAt: $createdAt, id: $id, message: $message, messageId: $messageId, read: $read, updatedAt: $updatedAt, recipient: $recipient, sender: $sender)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _MsgNode &&
-            const DeepCollectionEquality().equals(other.createdAt, createdAt) &&
-            const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality().equals(other.message, message) &&
-            const DeepCollectionEquality().equals(other.messageId, messageId) &&
-            const DeepCollectionEquality().equals(other.updatedAt, updatedAt) &&
-            const DeepCollectionEquality().equals(other.recipient, recipient) &&
-            const DeepCollectionEquality().equals(other.sender, sender));
+            other is _$_MsgNode &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.message, message) || other.message == message) &&
+            (identical(other.messageId, messageId) ||
+                other.messageId == messageId) &&
+            (identical(other.read, read) || other.read == read) &&
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt) &&
+            (identical(other.recipient, recipient) ||
+                other.recipient == recipient) &&
+            (identical(other.sender, sender) || other.sender == sender));
   }
-
-  @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(createdAt),
-      const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(message),
-      const DeepCollectionEquality().hash(messageId),
-      const DeepCollectionEquality().hash(updatedAt),
-      const DeepCollectionEquality().hash(recipient),
-      const DeepCollectionEquality().hash(sender));
 
   @JsonKey(ignore: true)
   @override
-  _$MsgNodeCopyWith<_MsgNode> get copyWith =>
-      __$MsgNodeCopyWithImpl<_MsgNode>(this, _$identity);
+  int get hashCode => Object.hash(runtimeType, createdAt, id, message,
+      messageId, read, updatedAt, recipient, sender);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_MsgNodeCopyWith<_$_MsgNode> get copyWith =>
+      __$$_MsgNodeCopyWithImpl<_$_MsgNode>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_MsgNodeToJson(this);
+    return _$$_MsgNodeToJson(
+      this,
+    );
   }
 }
 
 abstract class _MsgNode implements MsgNode {
   const factory _MsgNode(
-      {required String? createdAt,
-      required String? id,
-      required String? message,
-      required String? messageId,
-      required String? updatedAt,
-      required MsgRecipient? recipient,
-      required MsgRecipient? sender}) = _$_MsgNode;
+      {required final String? createdAt,
+      required final String? id,
+      required final String? message,
+      required final String? messageId,
+      required final bool? read,
+      required final String? updatedAt,
+      required final MsgRecipient? recipient,
+      required final MsgRecipient? sender}) = _$_MsgNode;
 
   factory _MsgNode.fromJson(Map<String, dynamic> json) = _$_MsgNode.fromJson;
 
@@ -791,6 +764,8 @@ abstract class _MsgNode implements MsgNode {
   @override
   String? get messageId;
   @override
+  bool? get read;
+  @override
   String? get updatedAt;
   @override
   MsgRecipient? get recipient;
@@ -798,50 +773,13 @@ abstract class _MsgNode implements MsgNode {
   MsgRecipient? get sender;
   @override
   @JsonKey(ignore: true)
-  _$MsgNodeCopyWith<_MsgNode> get copyWith =>
+  _$$_MsgNodeCopyWith<_$_MsgNode> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 MsgRecipient _$MsgRecipientFromJson(Map<String, dynamic> json) {
   return _MsgRecipient.fromJson(json);
 }
-
-/// @nodoc
-class _$MsgRecipientTearOff {
-  const _$MsgRecipientTearOff();
-
-  _MsgRecipient call(
-      {required String? city,
-      required String? country,
-      required String? firstName,
-      required String? id,
-      required String? lastName,
-      required String? picture,
-      required String? rating,
-      required String? userId,
-      required String? state,
-      required bool? active}) {
-    return _MsgRecipient(
-      city: city,
-      country: country,
-      firstName: firstName,
-      id: id,
-      lastName: lastName,
-      picture: picture,
-      rating: rating,
-      userId: userId,
-      state: state,
-      active: active,
-    );
-  }
-
-  MsgRecipient fromJson(Map<String, Object?> json) {
-    return MsgRecipient.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $MsgRecipient = _$MsgRecipientTearOff();
 
 /// @nodoc
 mixin _$MsgRecipient {
@@ -866,7 +804,8 @@ mixin _$MsgRecipient {
 abstract class $MsgRecipientCopyWith<$Res> {
   factory $MsgRecipientCopyWith(
           MsgRecipient value, $Res Function(MsgRecipient) then) =
-      _$MsgRecipientCopyWithImpl<$Res>;
+      _$MsgRecipientCopyWithImpl<$Res, MsgRecipient>;
+  @useResult
   $Res call(
       {String? city,
       String? country,
@@ -881,13 +820,16 @@ abstract class $MsgRecipientCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$MsgRecipientCopyWithImpl<$Res> implements $MsgRecipientCopyWith<$Res> {
+class _$MsgRecipientCopyWithImpl<$Res, $Val extends MsgRecipient>
+    implements $MsgRecipientCopyWith<$Res> {
   _$MsgRecipientCopyWithImpl(this._value, this._then);
 
-  final MsgRecipient _value;
   // ignore: unused_field
-  final $Res Function(MsgRecipient) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? city = freezed,
@@ -902,57 +844,58 @@ class _$MsgRecipientCopyWithImpl<$Res> implements $MsgRecipientCopyWith<$Res> {
     Object? active = freezed,
   }) {
     return _then(_value.copyWith(
-      city: city == freezed
+      city: freezed == city
           ? _value.city
           : city // ignore: cast_nullable_to_non_nullable
               as String?,
-      country: country == freezed
+      country: freezed == country
           ? _value.country
           : country // ignore: cast_nullable_to_non_nullable
               as String?,
-      firstName: firstName == freezed
+      firstName: freezed == firstName
           ? _value.firstName
           : firstName // ignore: cast_nullable_to_non_nullable
               as String?,
-      id: id == freezed
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String?,
-      lastName: lastName == freezed
+      lastName: freezed == lastName
           ? _value.lastName
           : lastName // ignore: cast_nullable_to_non_nullable
               as String?,
-      picture: picture == freezed
+      picture: freezed == picture
           ? _value.picture
           : picture // ignore: cast_nullable_to_non_nullable
               as String?,
-      rating: rating == freezed
+      rating: freezed == rating
           ? _value.rating
           : rating // ignore: cast_nullable_to_non_nullable
               as String?,
-      userId: userId == freezed
+      userId: freezed == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
               as String?,
-      state: state == freezed
+      state: freezed == state
           ? _value.state
           : state // ignore: cast_nullable_to_non_nullable
               as String?,
-      active: active == freezed
+      active: freezed == active
           ? _value.active
           : active // ignore: cast_nullable_to_non_nullable
               as bool?,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$MsgRecipientCopyWith<$Res>
+abstract class _$$_MsgRecipientCopyWith<$Res>
     implements $MsgRecipientCopyWith<$Res> {
-  factory _$MsgRecipientCopyWith(
-          _MsgRecipient value, $Res Function(_MsgRecipient) then) =
-      __$MsgRecipientCopyWithImpl<$Res>;
+  factory _$$_MsgRecipientCopyWith(
+          _$_MsgRecipient value, $Res Function(_$_MsgRecipient) then) =
+      __$$_MsgRecipientCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String? city,
       String? country,
@@ -967,15 +910,14 @@ abstract class _$MsgRecipientCopyWith<$Res>
 }
 
 /// @nodoc
-class __$MsgRecipientCopyWithImpl<$Res> extends _$MsgRecipientCopyWithImpl<$Res>
-    implements _$MsgRecipientCopyWith<$Res> {
-  __$MsgRecipientCopyWithImpl(
-      _MsgRecipient _value, $Res Function(_MsgRecipient) _then)
-      : super(_value, (v) => _then(v as _MsgRecipient));
+class __$$_MsgRecipientCopyWithImpl<$Res>
+    extends _$MsgRecipientCopyWithImpl<$Res, _$_MsgRecipient>
+    implements _$$_MsgRecipientCopyWith<$Res> {
+  __$$_MsgRecipientCopyWithImpl(
+      _$_MsgRecipient _value, $Res Function(_$_MsgRecipient) _then)
+      : super(_value, _then);
 
-  @override
-  _MsgRecipient get _value => super._value as _MsgRecipient;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? city = freezed,
@@ -989,44 +931,44 @@ class __$MsgRecipientCopyWithImpl<$Res> extends _$MsgRecipientCopyWithImpl<$Res>
     Object? state = freezed,
     Object? active = freezed,
   }) {
-    return _then(_MsgRecipient(
-      city: city == freezed
+    return _then(_$_MsgRecipient(
+      city: freezed == city
           ? _value.city
           : city // ignore: cast_nullable_to_non_nullable
               as String?,
-      country: country == freezed
+      country: freezed == country
           ? _value.country
           : country // ignore: cast_nullable_to_non_nullable
               as String?,
-      firstName: firstName == freezed
+      firstName: freezed == firstName
           ? _value.firstName
           : firstName // ignore: cast_nullable_to_non_nullable
               as String?,
-      id: id == freezed
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String?,
-      lastName: lastName == freezed
+      lastName: freezed == lastName
           ? _value.lastName
           : lastName // ignore: cast_nullable_to_non_nullable
               as String?,
-      picture: picture == freezed
+      picture: freezed == picture
           ? _value.picture
           : picture // ignore: cast_nullable_to_non_nullable
               as String?,
-      rating: rating == freezed
+      rating: freezed == rating
           ? _value.rating
           : rating // ignore: cast_nullable_to_non_nullable
               as String?,
-      userId: userId == freezed
+      userId: freezed == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
               as String?,
-      state: state == freezed
+      state: freezed == state
           ? _value.state
           : state // ignore: cast_nullable_to_non_nullable
               as String?,
-      active: active == freezed
+      active: freezed == active
           ? _value.active
           : active // ignore: cast_nullable_to_non_nullable
               as bool?,
@@ -1082,56 +1024,52 @@ class _$_MsgRecipient implements _MsgRecipient {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _MsgRecipient &&
-            const DeepCollectionEquality().equals(other.city, city) &&
-            const DeepCollectionEquality().equals(other.country, country) &&
-            const DeepCollectionEquality().equals(other.firstName, firstName) &&
-            const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality().equals(other.lastName, lastName) &&
-            const DeepCollectionEquality().equals(other.picture, picture) &&
-            const DeepCollectionEquality().equals(other.rating, rating) &&
-            const DeepCollectionEquality().equals(other.userId, userId) &&
-            const DeepCollectionEquality().equals(other.state, state) &&
-            const DeepCollectionEquality().equals(other.active, active));
+            other is _$_MsgRecipient &&
+            (identical(other.city, city) || other.city == city) &&
+            (identical(other.country, country) || other.country == country) &&
+            (identical(other.firstName, firstName) ||
+                other.firstName == firstName) &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.lastName, lastName) ||
+                other.lastName == lastName) &&
+            (identical(other.picture, picture) || other.picture == picture) &&
+            (identical(other.rating, rating) || other.rating == rating) &&
+            (identical(other.userId, userId) || other.userId == userId) &&
+            (identical(other.state, state) || other.state == state) &&
+            (identical(other.active, active) || other.active == active));
   }
-
-  @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(city),
-      const DeepCollectionEquality().hash(country),
-      const DeepCollectionEquality().hash(firstName),
-      const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(lastName),
-      const DeepCollectionEquality().hash(picture),
-      const DeepCollectionEquality().hash(rating),
-      const DeepCollectionEquality().hash(userId),
-      const DeepCollectionEquality().hash(state),
-      const DeepCollectionEquality().hash(active));
 
   @JsonKey(ignore: true)
   @override
-  _$MsgRecipientCopyWith<_MsgRecipient> get copyWith =>
-      __$MsgRecipientCopyWithImpl<_MsgRecipient>(this, _$identity);
+  int get hashCode => Object.hash(runtimeType, city, country, firstName, id,
+      lastName, picture, rating, userId, state, active);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_MsgRecipientCopyWith<_$_MsgRecipient> get copyWith =>
+      __$$_MsgRecipientCopyWithImpl<_$_MsgRecipient>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_MsgRecipientToJson(this);
+    return _$$_MsgRecipientToJson(
+      this,
+    );
   }
 }
 
 abstract class _MsgRecipient implements MsgRecipient {
   const factory _MsgRecipient(
-      {required String? city,
-      required String? country,
-      required String? firstName,
-      required String? id,
-      required String? lastName,
-      required String? picture,
-      required String? rating,
-      required String? userId,
-      required String? state,
-      required bool? active}) = _$_MsgRecipient;
+      {required final String? city,
+      required final String? country,
+      required final String? firstName,
+      required final String? id,
+      required final String? lastName,
+      required final String? picture,
+      required final String? rating,
+      required final String? userId,
+      required final String? state,
+      required final bool? active}) = _$_MsgRecipient;
 
   factory _MsgRecipient.fromJson(Map<String, dynamic> json) =
       _$_MsgRecipient.fromJson;
@@ -1158,6 +1096,6 @@ abstract class _MsgRecipient implements MsgRecipient {
   bool? get active;
   @override
   @JsonKey(ignore: true)
-  _$MsgRecipientCopyWith<_MsgRecipient> get copyWith =>
+  _$$_MsgRecipientCopyWith<_$_MsgRecipient> get copyWith =>
       throw _privateConstructorUsedError;
 }
