@@ -75,12 +75,10 @@ class _LeagueDetailsState extends State<LeagueDetails>
   Future<dynamic> isJoined() async {
     var contain = null;
 
-    // await getUserId().then((value) {
+    //20230611 Prevent from null
+    if(LeagueData != null)
     contain = userStat?.where(
         (element) => element.userId == SharedPreferencesUtils.getUserId);
-    // isContain = contain!.length > 1 ;
-    // print('$isContain  -${contain.length}-#- $contain');
-    // });
     return contain;
   }
 
@@ -138,6 +136,7 @@ class _LeagueDetailsState extends State<LeagueDetails>
                 builder: (context, value, child) {
                   debugPrint(
                       '${LeagueDetails.path} * LeagueId : ${value.leagueId}');
+
                   return Query(
                     options: QueryOptions(
                       document: gql(fetchLeague),
@@ -218,7 +217,7 @@ class _LeagueDetailsState extends State<LeagueDetails>
                                         flexibleSpace: FlexibleSpaceBar(
                                           background: LeagueDetailsHeaderTile(
                                             leagueName:
-                                                LeagueData!.leagueStat!.name,
+                                                LeagueData?.leagueStat?.name,
                                             leagueStatus:
                                                 LeagueData?.leagueStat?.status,
                                             leagueDate: convertDate(
@@ -248,8 +247,8 @@ class _LeagueDetailsState extends State<LeagueDetails>
                                       );
                                     },
                                   ),
-                                  if (LeagueData!.leagueStat!.status != null &&
-                                      LeagueData!.leagueStat!.status!
+                                  if (LeagueData?.leagueStat?.status != null &&
+                                      LeagueData?.leagueStat?.status!
                                               .toString() !=
                                           'ongoing')
                                     SliverToBoxAdapter(
@@ -259,7 +258,7 @@ class _LeagueDetailsState extends State<LeagueDetails>
                                           // this is the query string you just created
                                           variables: {
                                             'userId':
-                                                '${LeagueData!.leagueStat!.winnerOneId}',
+                                                '${LeagueData?.leagueStat?.winnerOneId}',
                                             // 'userId': '${LeagueData!.leagueStat!.winnerOneId}',
                                           },
                                           pollInterval: Duration(seconds: 100),
@@ -338,7 +337,7 @@ class _LeagueDetailsState extends State<LeagueDetails>
                                           win: userStat![index].won,
                                           profileImg: userStat![index].picture,
                                           onTileClick: () {
-                                            if (LeagueData!.leagueStat!.status!
+                                            if (LeagueData?.leagueStat?.status!
                                                     .toLowerCase() ==
                                                 'ongoing') {
                                               Provider.of<UserIdProvider>(
@@ -371,8 +370,8 @@ class _LeagueDetailsState extends State<LeagueDetails>
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   // print('snapshot.data - ${snapshot.data} -- ${snapshot.data.length}');
-                  if (LeagueData!.leagueStat!.status != null &&
-                      LeagueData!.leagueStat!.status!.toString() == 'ongoing' &&
+                  if (LeagueData?.leagueStat?.status != null &&
+                      LeagueData?.leagueStat?.status?.toString() == 'ongoing' &&
                       snapshot.data.length == 0) {
                     return Mutation(
                       options: MutationOptions(
@@ -390,9 +389,11 @@ class _LeagueDetailsState extends State<LeagueDetails>
                           debugPrint(
                               '${LeagueDetails.path} * Result -- $resultData');
 
+                          //20230617
                           if (resultData != null) {
-                            var message = resultData['leagueApplication']
-                                ['leagueApplication']['message'];
+                            // var message = resultData['leagueApplication']
+                            //     ['leagueApplication']['message'];
+                          var message = 'Your application received, will revert in 12 hours!!';
 
                             errorList = [];
                             errorList!.add(message);

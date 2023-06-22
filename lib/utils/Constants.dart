@@ -85,6 +85,33 @@ query(${param.toString().trim().substring(1, param.toString().trim().length - 1)
 ''';
 }
 
+//20230610
+String allLeaguesQuery(Map<String, dynamic>? param, Map<String, dynamic>? paramType) {
+  return '''
+query(${param.toString().trim().substring(1, param.toString().trim().length - 1)}) {
+  allLeagues(${paramType.toString().trim().substring(1, paramType.toString().trim().length - 1)}) {
+     edges {
+      node {
+        id
+        city
+        country
+        description
+        endDate
+        createdAt
+        leagueId
+        level
+        name
+        startDate
+        state
+        status
+        updatedAt
+      }
+    }
+  }
+}
+''';
+}
+
 String allUsers(Map<String, dynamic>? param, Map<String, dynamic>? paramType) {
   return '''
   query(${param.toString().trim().substring(1, param.toString().trim().length - 1)}) {
@@ -160,6 +187,28 @@ String allMessaging(Map<String, dynamic>? param, Map<String, dynamic>? paramType
         }
       }
     } 
+  }
+}
+''';
+}
+
+//20230617
+String uniqueMessageSenders(Map<String, dynamic>? param, Map<String, dynamic>? paramType) {
+  return '''
+  query(${param.toString().trim().substring(1, param.toString().trim().length - 1)}) {
+  uniqueMessageSenders(${paramType.toString().trim().substring(1, paramType.toString().trim().length - 1)}) {
+      contacts {
+        city
+        country
+        firstName
+        id
+        lastName
+        picture
+        rating
+        userId
+        state
+        active
+    }
   }
 }
 ''';
@@ -245,7 +294,6 @@ String allMatches(Map<String, dynamic>? param, Map<String, dynamic>? paramType) 
 // createdAt
 // endDate
 
-
 //Mutations
 String SubmitScore(Map<String, dynamic>? param, Map<String, dynamic>? paramType) {
   return '''
@@ -326,7 +374,7 @@ String resendActivationEmail(Map<String, dynamic>? param, Map<String, dynamic>? 
 ''';
 }
 
-//20230633 verified was added for check user is verified or not.
+//20230623 verified was added for check user is verified or not.
 String tokenAuth(Map<String, dynamic>? param, Map<String, dynamic>? paramType) {
   return '''
       mutation tokenAuth(${param.toString().trim().substring(1, param.toString().trim().length - 1)}) {
@@ -447,6 +495,7 @@ String userQuery(Map<String, dynamic>? param, Map<String, dynamic>? paramType) {
 ''';
 }
 
+//Remove message 20230617
 String leagueApplication(Map<String, dynamic>? param, Map<String, dynamic>? paramType) {
   return '''
       mutation leagueApplication(${param.toString().trim().substring(1, param.toString().trim().length - 1)}) {
@@ -455,7 +504,6 @@ String leagueApplication(Map<String, dynamic>? param, Map<String, dynamic>? para
                 id
                 leagueAppId
                 status
-                message
               } 
           }
       }

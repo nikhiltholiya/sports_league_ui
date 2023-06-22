@@ -4,6 +4,7 @@ import '../components/profile_pic_avatar.dart';
 import '../utils/app_colors.dart';
 
 //Created on 20220222
+//update 0n 20230608
 class LeagueDetailTile extends StatefulWidget {
   final String? name;
   final String? profileImg;
@@ -51,18 +52,6 @@ class _LeagueDetailTileState extends State<LeagueDetailTile> {
                   ),
                   Expanded(
                     child: Text(
-                      'Games',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: aLightGray,
-                        fontSize: 12,
-                        fontWeight: (FontWeight.normal),
-                      ),
-                    ),
-                    flex: 1,
-                  ),
-                  Expanded(
-                    child: Text(
                       'Win',
                       textAlign: TextAlign.center,
                       style: TextStyle(
@@ -76,6 +65,18 @@ class _LeagueDetailTileState extends State<LeagueDetailTile> {
                   Expanded(
                     child: Text(
                       'Loss',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: aLightGray,
+                        fontSize: 12,
+                        fontWeight: (FontWeight.normal),
+                      ),
+                    ),
+                    flex: 1,
+                  ),
+                  Expanded(
+                    child: Text(
+                      'Games',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: aLightGray,
@@ -125,18 +126,6 @@ class _LeagueDetailTileState extends State<LeagueDetailTile> {
                   ),
                   Expanded(
                     child: Text(
-                      '${widget.games}',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: aBlack,
-                        fontSize: 14,
-                        fontWeight: (FontWeight.bold),
-                      ),
-                    ),
-                    flex: 1,
-                  ),
-                  Expanded(
-                    child: Text(
                       '${widget.win}',
                       textAlign: TextAlign.center,
                       style: TextStyle(
@@ -153,6 +142,18 @@ class _LeagueDetailTileState extends State<LeagueDetailTile> {
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: aRed,
+                        fontSize: 14,
+                        fontWeight: (FontWeight.bold),
+                      ),
+                    ),
+                    flex: 1,
+                  ),
+                  Expanded(
+                    child: Text(
+                      '${widget.games}',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: aBlack,
                         fontSize: 14,
                         fontWeight: (FontWeight.bold),
                       ),
