@@ -106,7 +106,7 @@ class _AllMessagesListPageState extends State<AllMessagesListPage> with isIntern
                           try {
                             _uniqueMessageData = UniqueMessageData.fromJson(msgresult.data!);
                             _listAllUsers = [];
-                            _listAllUsers = _uniqueMessageData.uniqueMessageSenders?.contacts;
+                            _listAllUsers = _uniqueMessageData.uniqueMessageSenders?.inbox;
 
                             // for (var data in _uniqueMessageData.uniqueMessageSenders!.contacts!)
                               // _listAllUsers?.add(data.node?.recipient?.userId != SharedPreferencesUtils.getUserId
@@ -127,7 +127,7 @@ class _AllMessagesListPageState extends State<AllMessagesListPage> with isIntern
                           } catch (e) {
                             debugPrint('Exception -- $e');
                           }
-                          // }
+
                           return CustomScrollView(
                             controller: _scrollController,
                             physics: const BouncingScrollPhysics(),
@@ -137,13 +137,14 @@ class _AllMessagesListPageState extends State<AllMessagesListPage> with isIntern
                                   ? SliverList(
                                       delegate: SliverChildBuilderDelegate(
                                         (context, index) => AllMessagesListTile(
+                                          isRead: snapshot.data![index].read,
                                           userName:
-                                              '${snapshot.data![index].firstName} ${snapshot.data![index].lastName}',
-                                          profileImg: snapshot.data?[index].picture,
+                                          '${snapshot.data![index].user[0].firstName} ${snapshot.data![index].user[0].lastName}',
+                                          profileImg: snapshot.data?[index].user[0].picture,
                                           // profileImg: 'assets/Ellipse 1.png',
                                           onTileClick: () {
                                             Provider.of<UserIdProvider>(context, listen: false)
-                                                .setUserId('${snapshot.data![index].userId}');
+                                                .setUserId('${snapshot.data![index].user[0].userId}');
                                             Navigator.pushNamed(context, ChallengesChat.path);
 
                                             // Provider.of<UserIdProvider>(context,

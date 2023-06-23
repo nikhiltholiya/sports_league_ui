@@ -192,25 +192,33 @@ String allMessaging(Map<String, dynamic>? param, Map<String, dynamic>? paramType
 ''';
 }
 
-//20230622 -- Added read for check messages status : true = read , false = unread
 //20230617 Added New query for message List.
+//20230622 -- Added read for check messages status : true = read , false = unread
+//20230723 -- Replace Inbox for messages with read Flags : true = read , false = unread
 String uniqueMessageSenders(Map<String, dynamic>? param, Map<String, dynamic>? paramType) {
   return '''
   query(${param.toString().trim().substring(1, param.toString().trim().length - 1)}) {
   uniqueMessageSenders(${paramType.toString().trim().substring(1, paramType.toString().trim().length - 1)}) {
-      contacts {
+      inbox {
+      read
+      user {
+        aboutMe
+        active
         city
-        country
+        email
         firstName
-        id
-        lastName
         picture
+        phone
         rating
         userId
         state
-        active
+        lastName
+        id
+        dob
+        country
+        lastLogin
+      }
     }
-    read
   }
 }
 ''';

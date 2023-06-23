@@ -9,9 +9,15 @@ class AllMessagesListTile extends StatefulWidget {
   final String? userName;
   final Function? onTileClick;
   final Function? onProfileClick;
+  final bool? isRead;
 
   const AllMessagesListTile(
-      {Key? key, required this.profileImg, required this.userName, this.onTileClick, this.onProfileClick})
+      {Key? key,
+      required this.profileImg,
+      required this.userName,
+      this.isRead = false,
+      this.onTileClick,
+      this.onProfileClick})
       : super(key: key);
 
   @override
@@ -52,7 +58,7 @@ class _AllMessagesListTileState extends State<AllMessagesListTile> {
                     widget.userName!,
                     textAlign: TextAlign.start,
                     style: TextStyle(
-                      color: aBlack,
+                      color: widget.isRead! ? aLightGray : aBlack,
                       fontSize: 15,
                       fontWeight: (FontWeight.bold),
                     ),

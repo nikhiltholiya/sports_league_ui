@@ -264,38 +264,38 @@ class _ChallengesChatState extends State<ChallengesChat>
                   };
 
                   print('${value.getUserId}|${SharedPreferencesUtils.getUserId}');
-                  Mutation(
-                    // key: _mutationVerifyToken,
-                    options: MutationOptions(
-                      document: gql(readMessages(paramReadMsg, paramTypeForMsg)),
-                      // update: update,
-                      onError: (OperationException? error) {
-                        debugPrint('${ChallengesChat.path} * erroR -- $error');
-                      },
-                      onCompleted: (dynamic resultData) async {
-                        if (resultData != null) {
-                          print(resultData);
-                          var status = resultData['readMessages']['status'];
-                        }
-                      },
-                      // 'Sorry you changed your mind!',
-                    ),
-                    builder: (RunMutation _mutationReadMsg, QueryResult? result) {
-                      this._mutationReadMessages = _mutationReadMsg;
-                      if (result != null) {
-                        result.isLoading
-                            ? Center(
-                          child: CupertinoActivityIndicator(color: aWhite),
-                        )
-                            : SizedBox();
-
-                      }
-                      return SizedBox();
-                      // _streamController.sink.add(addResult!.isLoading);
-                    },
-                  );
-
-                  getDelay('${value.getUserId}');
+                  // Mutation(
+                  //   // key: _mutationVerifyToken,
+                  //   options: MutationOptions(
+                  //     document: gql(readMessages(paramReadMsg, paramTypeForMsg)),
+                  //     // update: update,
+                  //     onError: (OperationException? error) {
+                  //       debugPrint('${ChallengesChat.path} * erroR -- $error');
+                  //     },
+                  //     onCompleted: (dynamic resultData) async {
+                  //       if (resultData != null) {
+                  //         print(resultData);
+                  //         var status = resultData['readMessages']['status'];
+                  //       }
+                  //     },
+                  //     // 'Sorry you changed your mind!',
+                  //   ),
+                  //   builder: (RunMutation _mutationReadMsg, QueryResult? result) {
+                  //     this._mutationReadMessages = _mutationReadMsg;
+                  //     if (result != null) {
+                  //       result.isLoading
+                  //           ? Center(
+                  //         child: CupertinoActivityIndicator(color: aWhite),
+                  //       )
+                  //           : SizedBox();
+                  //
+                  //     }
+                  //     return SizedBox();
+                  //     // _streamController.sink.add(addResult!.isLoading);
+                  //   },
+                  // );
+                  //
+                  // getDelay('${value.getUserId}');
 
 
                   return Query(
