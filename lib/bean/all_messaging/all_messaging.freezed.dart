@@ -543,13 +543,10 @@ class _$MsgNodeCopyWithImpl<$Res, $Val extends MsgNode>
           ? _value.messageId
           : messageId // ignore: cast_nullable_to_non_nullable
               as String?,
-<<<<<<< HEAD
       read: freezed == read
           ? _value.read
           : read // ignore: cast_nullable_to_non_nullable
               as bool?,
-=======
->>>>>>> 5856fe09b42f6a39775693b3c02977882e7cad19
       updatedAt: freezed == updatedAt
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
@@ -649,13 +646,10 @@ class __$$_MsgNodeCopyWithImpl<$Res>
           ? _value.messageId
           : messageId // ignore: cast_nullable_to_non_nullable
               as String?,
-<<<<<<< HEAD
       read: freezed == read
           ? _value.read
           : read // ignore: cast_nullable_to_non_nullable
               as bool?,
-=======
->>>>>>> 5856fe09b42f6a39775693b3c02977882e7cad19
       updatedAt: freezed == updatedAt
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
@@ -721,10 +715,7 @@ class _$_MsgNode implements _MsgNode {
             (identical(other.message, message) || other.message == message) &&
             (identical(other.messageId, messageId) ||
                 other.messageId == messageId) &&
-<<<<<<< HEAD
             (identical(other.read, read) || other.read == read) &&
-=======
->>>>>>> 5856fe09b42f6a39775693b3c02977882e7cad19
             (identical(other.updatedAt, updatedAt) ||
                 other.updatedAt == updatedAt) &&
             (identical(other.recipient, recipient) ||
@@ -735,11 +726,7 @@ class _$_MsgNode implements _MsgNode {
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, createdAt, id, message,
-<<<<<<< HEAD
       messageId, read, updatedAt, recipient, sender);
-=======
-      messageId, updatedAt, recipient, sender);
->>>>>>> 5856fe09b42f6a39775693b3c02977882e7cad19
 
   @JsonKey(ignore: true)
   @override
@@ -761,10 +748,7 @@ abstract class _MsgNode implements MsgNode {
       required final String? id,
       required final String? message,
       required final String? messageId,
-<<<<<<< HEAD
       required final bool? read,
-=======
->>>>>>> 5856fe09b42f6a39775693b3c02977882e7cad19
       required final String? updatedAt,
       required final MsgRecipient? recipient,
       required final MsgRecipient? sender}) = _$_MsgNode;

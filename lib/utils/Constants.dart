@@ -192,7 +192,8 @@ String allMessaging(Map<String, dynamic>? param, Map<String, dynamic>? paramType
 ''';
 }
 
-//20230617
+//20230622 -- Added read for check messages status : true = read , false = unread
+//20230617 Added New query for message List.
 String uniqueMessageSenders(Map<String, dynamic>? param, Map<String, dynamic>? paramType) {
   return '''
   query(${param.toString().trim().substring(1, param.toString().trim().length - 1)}) {
@@ -209,6 +210,18 @@ String uniqueMessageSenders(Map<String, dynamic>? param, Map<String, dynamic>? p
         state
         active
     }
+    read
+  }
+}
+''';
+}
+
+//20230622 Added New query for message List.
+String readMessages(Map<String, dynamic>? param, Map<String, dynamic>? paramType) {
+  return '''
+  mutation(${param.toString().trim().substring(1, param.toString().trim().length - 1)}) {
+  readMessages(${paramType.toString().trim().substring(1, paramType.toString().trim().length - 1)}) {
+    status
   }
 }
 ''';

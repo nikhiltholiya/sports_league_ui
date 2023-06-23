@@ -172,8 +172,21 @@ class _ChallengesChatState extends State<ChallengesChat>
     });
   }
 
+  //20230623 Adding new Mutation for read messages.
+  late RunMutation _mutationReadMessages;
+  Map<String, dynamic> paramReadMsg= {};
+  Map<String, dynamic> paramTypeReadMsg = {};
+
+  Future<void> getDelay(String sender) async {
+    await Future.delayed(const Duration(seconds: 2)).then((value) {
+        _mutationReadMessages({'recipient': SharedPreferencesUtils.getUserId,
+          'sender': sender});
+    });
+  }
+
   @override
   void initState() {
+
     initInternet(context);
     _scrollController = ScrollController();
     _chatNode = FocusNode();
@@ -194,6 +207,15 @@ class _ChallengesChatState extends State<ChallengesChat>
     };
     paramTypeForMsg = {
       'senderReceipientSearch': '\$senderReceipientSearch',
+    };
+
+    paramReadMsg = {
+      '\$recipient': 'String',
+      '\$sender': 'String',
+    };
+    paramTypeReadMsg = {
+      'recipient': '\$recipient',
+      'sender': '\$sender',
     };
 
     _chatList = [];
@@ -240,6 +262,41 @@ class _ChallengesChatState extends State<ChallengesChat>
                     'senderReceipientSearch':
                         '${value.getUserId}|${SharedPreferencesUtils.getUserId}'
                   };
+
+                  print('${value.getUserId}|${SharedPreferencesUtils.getUserId}');
+                  Mutation(
+                    // key: _mutationVerifyToken,
+                    options: MutationOptions(
+                      document: gql(readMessages(paramReadMsg, paramTypeForMsg)),
+                      // update: update,
+                      onError: (OperationException? error) {
+                        debugPrint('${ChallengesChat.path} * erroR -- $error');
+                      },
+                      onCompleted: (dynamic resultData) async {
+                        if (resultData != null) {
+                          print(resultData);
+                          var status = resultData['readMessages']['status'];
+                        }
+                      },
+                      // 'Sorry you changed your mind!',
+                    ),
+                    builder: (RunMutation _mutationReadMsg, QueryResult? result) {
+                      this._mutationReadMessages = _mutationReadMsg;
+                      if (result != null) {
+                        result.isLoading
+                            ? Center(
+                          child: CupertinoActivityIndicator(color: aWhite),
+                        )
+                            : SizedBox();
+
+                      }
+                      return SizedBox();
+                      // _streamController.sink.add(addResult!.isLoading);
+                    },
+                  );
+
+                  getDelay('${value.getUserId}');
+
 
                   return Query(
                     options: QueryOptions(
