@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 
 import '../Pages/base_activity.dart';
 import '../Pages/no_internet_page.dart';
-import '../Pages/password_reset_page.dart';
 import '../Pages/sign_in_page.dart';
 import '../components/elevated_buttons.dart';
 import '../providers/internet_provider.dart';
@@ -111,7 +110,7 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> with isInternetConnec
     print('passData $passData');
     if (passData != null) {
       if (passData['for'] == forgotPassword) {
-        await Navigator.pushReplacementNamed(context, PasswordResetPage.path);
+        // await Navigator.pushReplacementNamed(context, PasswordResetPage.path);
       }
     } else {
       await Navigator.pushReplacementNamed(context, SignInPage.path);

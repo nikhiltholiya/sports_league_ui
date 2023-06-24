@@ -501,19 +501,18 @@ class _SubmitScoreDetailsState extends State<SubmitScoreDetails>
                                       document: gql(
                                         allLeagueApplicationsQuery({
                                           '\$applicant_UserId': 'UUID',
-                                          '\$status': 'String!',
-                                          '\$league_Status': 'String!',
+                                          '\$status': 'LeagueApplicationStatus', //20230624 Change Type from api
+                                          '\$league_Status': 'LeagueStatus',//20230624 Change Type from api
                                         }, {
-                                          'applicant_UserId':
-                                              '\$applicant_UserId',
+                                          'applicant_UserId': '\$applicant_UserId',
                                           'status': '\$status',
                                           'league_Status': '\$league_Status',
                                         }),
                                       ),
                                       variables: {
                                         'applicant_UserId': '${player1.userId}',
-                                        'status': 'approved',
-                                        'league_Status': 'ongoing',
+                                        'status': 'APPROVED',//20230624 Change Type from api
+                                        'league_Status': 'ONGOING',//20230624 Change Type from api
                                       },
                                       pollInterval: Duration(seconds: 100),
                                     ),

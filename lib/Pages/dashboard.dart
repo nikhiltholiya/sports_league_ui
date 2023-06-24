@@ -261,7 +261,7 @@ class _DashboardPageState extends State<DashboardPage>
 
                             if (data) {
                               SharedPreferencesUtils.dataClear();
-                              Navigator.popAndPushNamed(context, HomePage.path);
+                              Navigator.pushNamedAndRemoveUntil(context, HomePage.path,(route) => false,);
                             }
                           } else {
                             // errorList = [];

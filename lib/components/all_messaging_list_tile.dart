@@ -7,6 +7,7 @@ import '../utils/app_colors.dart';
 class AllMessagesListTile extends StatefulWidget {
   final String? profileImg;
   final String? userName;
+  final String? address;
   final Function? onTileClick;
   final Function? onProfileClick;
   final bool? isRead;
@@ -15,6 +16,7 @@ class AllMessagesListTile extends StatefulWidget {
       {Key? key,
       required this.profileImg,
       required this.userName,
+      required this.address,
       this.isRead = false,
       this.onTileClick,
       this.onProfileClick})
@@ -66,6 +68,19 @@ class _AllMessagesListTileState extends State<AllMessagesListTile> {
                 ),
                 flex: 4,
               ),
+
+              //20230624 Adding city Name in address.
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+                decoration: ShapeDecoration(
+                  color: aPartGray5,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5.0),
+                    side: BorderSide(color: aGreen20, style: BorderStyle.solid, width: 1.0),
+                  ),
+                ),
+                child: Text(widget.address!, style: TextStyle(fontSize: 10)),
+              )
             ],
           ),
         ),

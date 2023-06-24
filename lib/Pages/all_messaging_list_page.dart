@@ -141,6 +141,7 @@ class _AllMessagesListPageState extends State<AllMessagesListPage> with isIntern
                                           userName:
                                           '${snapshot.data![index].user[0].firstName} ${snapshot.data![index].user[0].lastName}',
                                           profileImg: snapshot.data?[index].user[0].picture,
+                                          address: snapshot.data![index].user[0].city,
                                           // profileImg: 'assets/Ellipse 1.png',
                                           onTileClick: () {
                                             Provider.of<UserIdProvider>(context, listen: false)
