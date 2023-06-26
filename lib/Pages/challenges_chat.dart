@@ -167,10 +167,6 @@ class _ChallengesChatState extends State<ChallengesChat> with isInternetConnecti
     });
   }
 
-  //20230623 Adding new Mutation for read messages.
-  Map<String, dynamic> paramReadMsg = {};
-  Map<String, dynamic> paramTypeReadMsg = {};
-  Map<String, dynamic> variableTypeReadMsg = {};
 
   Map<String, dynamic> passAllUsersVariable = {};
   Map<String, dynamic> paramAllUsers = {};
@@ -206,15 +202,6 @@ class _ChallengesChatState extends State<ChallengesChat> with isInternetConnecti
     };
     paramTypeForMsg = {
       'senderReceipientSearch': '\$senderReceipientSearch',
-    };
-
-    paramReadMsg = {
-      '\$recipient': 'String!',
-      '\$sender': 'String!',
-    };
-    paramTypeReadMsg = {
-      'recipient': '\$recipient',
-      'sender': '\$sender',
     };
 
     _chatList = [];
@@ -255,12 +242,6 @@ class _ChallengesChatState extends State<ChallengesChat> with isInternetConnecti
                     };
 
                     print('${value.getUserId}|${SharedPreferencesUtils.getUserId}');
-
-                    variableTypeReadMsg = {
-                      'recipient': SharedPreferencesUtils.getUserId,
-                      'sender': '${value.getUserId}'
-                    };
-                    ReadMessages(context);
                     isLoaded = true;
                   }
 
@@ -619,24 +600,5 @@ class _ChallengesChatState extends State<ChallengesChat> with isInternetConnecti
         }
       },
     );
-  }
-
-  Future<void> ReadMessages(BuildContext context) async {
-    final options = MutationOptions(
-      document: gql(readMessages(paramReadMsg, paramTypeReadMsg)),
-      variables: variableTypeReadMsg,
-    );
-
-
-    final client = GraphQLProvider.of(context).value;
-    final QueryResult? result = await client.mutate(options);
-
-    if (result?.hasException ?? false) {
-      print("ReadMessages EXCEPTION ${result!.exception}");
-      // Handle the exception
-    } else {
-      print("ReadMessages ${result!.data!}");
-      // Mutation was successful
-    }
   }
 }

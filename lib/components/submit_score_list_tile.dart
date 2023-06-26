@@ -6,6 +6,7 @@ import '../components/rate_badges.dart';
 import '../utils/app_colors.dart';
 
 //created on 20220315
+//20230626 -- Change design of Submit score List tile
 class SubmitScoreListTile extends StatefulWidget {
   final String? profileImg;
   final String? userName;
@@ -69,25 +70,30 @@ class _SubmitScoreListTileState extends State<SubmitScoreListTile> {
                         Expanded(
                           child: Padding(
                             padding: EdgeInsets.symmetric(horizontal: 5.0),
-                            child: Text(
-                              widget.userName!,
-                              textAlign: TextAlign.start,
-                              style: TextStyle(
-                                color: aBlack,
-                                fontSize: 15,
-                                fontWeight: (FontWeight.bold),
-                              ),
+                            child: Wrap(
+                              children: [
+                                Text(
+                                  widget.userName!,
+                                  textAlign: TextAlign.start,
+                                  style: TextStyle(
+                                    color: aBlack,
+                                    fontSize: 15,
+                                    fontWeight: (FontWeight.bold),
+                                  ),
+                                ),
+                                IconicTextView(
+                                  icon: Icons.location_pin,
+                                  label: widget.playerLocation!,
+                                  labelTextColor: aLightGray,
+                                )
+                              ],
                             ),
                           ),
                           flex: 4,
                         ),
                       ],
                     ),
-                    IconicTextView(
-                      icon: Icons.location_pin,
-                      label: widget.playerLocation!,
-                      labelTextColor: aLightGray,
-                    )
+
                   ],
                 ),
               ),
