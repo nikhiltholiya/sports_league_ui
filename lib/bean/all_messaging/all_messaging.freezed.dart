@@ -475,6 +475,7 @@ mixin _$MsgNode {
   String? get id => throw _privateConstructorUsedError;
   String? get message => throw _privateConstructorUsedError;
   String? get messageId => throw _privateConstructorUsedError;
+  bool? get read => throw _privateConstructorUsedError;
   String? get updatedAt => throw _privateConstructorUsedError;
   MsgRecipient? get recipient => throw _privateConstructorUsedError;
   MsgRecipient? get sender => throw _privateConstructorUsedError;
@@ -494,6 +495,7 @@ abstract class $MsgNodeCopyWith<$Res> {
       String? id,
       String? message,
       String? messageId,
+      bool? read,
       String? updatedAt,
       MsgRecipient? recipient,
       MsgRecipient? sender});
@@ -519,6 +521,7 @@ class _$MsgNodeCopyWithImpl<$Res, $Val extends MsgNode>
     Object? id = freezed,
     Object? message = freezed,
     Object? messageId = freezed,
+    Object? read = freezed,
     Object? updatedAt = freezed,
     Object? recipient = freezed,
     Object? sender = freezed,
@@ -540,6 +543,10 @@ class _$MsgNodeCopyWithImpl<$Res, $Val extends MsgNode>
           ? _value.messageId
           : messageId // ignore: cast_nullable_to_non_nullable
               as String?,
+      read: freezed == read
+          ? _value.read
+          : read // ignore: cast_nullable_to_non_nullable
+              as bool?,
       updatedAt: freezed == updatedAt
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
@@ -592,6 +599,7 @@ abstract class _$$_MsgNodeCopyWith<$Res> implements $MsgNodeCopyWith<$Res> {
       String? id,
       String? message,
       String? messageId,
+      bool? read,
       String? updatedAt,
       MsgRecipient? recipient,
       MsgRecipient? sender});
@@ -616,6 +624,7 @@ class __$$_MsgNodeCopyWithImpl<$Res>
     Object? id = freezed,
     Object? message = freezed,
     Object? messageId = freezed,
+    Object? read = freezed,
     Object? updatedAt = freezed,
     Object? recipient = freezed,
     Object? sender = freezed,
@@ -637,6 +646,10 @@ class __$$_MsgNodeCopyWithImpl<$Res>
           ? _value.messageId
           : messageId // ignore: cast_nullable_to_non_nullable
               as String?,
+      read: freezed == read
+          ? _value.read
+          : read // ignore: cast_nullable_to_non_nullable
+              as bool?,
       updatedAt: freezed == updatedAt
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
@@ -661,6 +674,7 @@ class _$_MsgNode implements _MsgNode {
       required this.id,
       required this.message,
       required this.messageId,
+      required this.read,
       required this.updatedAt,
       required this.recipient,
       required this.sender});
@@ -677,6 +691,8 @@ class _$_MsgNode implements _MsgNode {
   @override
   final String? messageId;
   @override
+  final bool? read;
+  @override
   final String? updatedAt;
   @override
   final MsgRecipient? recipient;
@@ -685,7 +701,7 @@ class _$_MsgNode implements _MsgNode {
 
   @override
   String toString() {
-    return 'MsgNode(createdAt: $createdAt, id: $id, message: $message, messageId: $messageId, updatedAt: $updatedAt, recipient: $recipient, sender: $sender)';
+    return 'MsgNode(createdAt: $createdAt, id: $id, message: $message, messageId: $messageId, read: $read, updatedAt: $updatedAt, recipient: $recipient, sender: $sender)';
   }
 
   @override
@@ -699,6 +715,7 @@ class _$_MsgNode implements _MsgNode {
             (identical(other.message, message) || other.message == message) &&
             (identical(other.messageId, messageId) ||
                 other.messageId == messageId) &&
+            (identical(other.read, read) || other.read == read) &&
             (identical(other.updatedAt, updatedAt) ||
                 other.updatedAt == updatedAt) &&
             (identical(other.recipient, recipient) ||
@@ -709,7 +726,7 @@ class _$_MsgNode implements _MsgNode {
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, createdAt, id, message,
-      messageId, updatedAt, recipient, sender);
+      messageId, read, updatedAt, recipient, sender);
 
   @JsonKey(ignore: true)
   @override
@@ -731,6 +748,7 @@ abstract class _MsgNode implements MsgNode {
       required final String? id,
       required final String? message,
       required final String? messageId,
+      required final bool? read,
       required final String? updatedAt,
       required final MsgRecipient? recipient,
       required final MsgRecipient? sender}) = _$_MsgNode;
@@ -745,6 +763,8 @@ abstract class _MsgNode implements MsgNode {
   String? get message;
   @override
   String? get messageId;
+  @override
+  bool? get read;
   @override
   String? get updatedAt;
   @override

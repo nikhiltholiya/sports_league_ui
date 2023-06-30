@@ -448,6 +448,7 @@ LoggedUser _$LoggedUserFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$LoggedUser {
+  bool? get verified => throw _privateConstructorUsedError;
   String? get userId => throw _privateConstructorUsedError;
   String? get aboutMe => throw _privateConstructorUsedError;
   bool? get active => throw _privateConstructorUsedError;
@@ -482,7 +483,8 @@ abstract class $LoggedUserCopyWith<$Res> {
       _$LoggedUserCopyWithImpl<$Res, LoggedUser>;
   @useResult
   $Res call(
-      {String? userId,
+      {bool? verified,
+      String? userId,
       String? aboutMe,
       bool? active,
       String? city,
@@ -517,6 +519,7 @@ class _$LoggedUserCopyWithImpl<$Res, $Val extends LoggedUser>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? verified = freezed,
     Object? userId = freezed,
     Object? aboutMe = freezed,
     Object? active = freezed,
@@ -539,6 +542,10 @@ class _$LoggedUserCopyWithImpl<$Res, $Val extends LoggedUser>
     Object? state = freezed,
   }) {
     return _then(_value.copyWith(
+      verified: freezed == verified
+          ? _value.verified
+          : verified // ignore: cast_nullable_to_non_nullable
+              as bool?,
       userId: freezed == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
@@ -632,7 +639,8 @@ abstract class _$$_LoggedUserCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String? userId,
+      {bool? verified,
+      String? userId,
       String? aboutMe,
       bool? active,
       String? city,
@@ -665,6 +673,7 @@ class __$$_LoggedUserCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? verified = freezed,
     Object? userId = freezed,
     Object? aboutMe = freezed,
     Object? active = freezed,
@@ -687,6 +696,10 @@ class __$$_LoggedUserCopyWithImpl<$Res>
     Object? state = freezed,
   }) {
     return _then(_$_LoggedUser(
+      verified: freezed == verified
+          ? _value.verified
+          : verified // ignore: cast_nullable_to_non_nullable
+              as bool?,
       userId: freezed == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
@@ -775,7 +788,8 @@ class __$$_LoggedUserCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_LoggedUser implements _LoggedUser {
   const _$_LoggedUser(
-      {required this.userId,
+      {required this.verified,
+      required this.userId,
       required this.aboutMe,
       required this.active,
       required this.city,
@@ -799,6 +813,8 @@ class _$_LoggedUser implements _LoggedUser {
   factory _$_LoggedUser.fromJson(Map<String, dynamic> json) =>
       _$$_LoggedUserFromJson(json);
 
+  @override
+  final bool? verified;
   @override
   final String? userId;
   @override
@@ -842,7 +858,7 @@ class _$_LoggedUser implements _LoggedUser {
 
   @override
   String toString() {
-    return 'LoggedUser(userId: $userId, aboutMe: $aboutMe, active: $active, city: $city, country: $country, dateJoined: $dateJoined, deleted: $deleted, email: $email, dob: $dob, firstName: $firstName, gender: $gender, isActive: $isActive, id: $id, isStaff: $isStaff, lastLogin: $lastLogin, lastName: $lastName, phone: $phone, picture: $picture, rating: $rating, state: $state)';
+    return 'LoggedUser(verified: $verified, userId: $userId, aboutMe: $aboutMe, active: $active, city: $city, country: $country, dateJoined: $dateJoined, deleted: $deleted, email: $email, dob: $dob, firstName: $firstName, gender: $gender, isActive: $isActive, id: $id, isStaff: $isStaff, lastLogin: $lastLogin, lastName: $lastName, phone: $phone, picture: $picture, rating: $rating, state: $state)';
   }
 
   @override
@@ -850,6 +866,8 @@ class _$_LoggedUser implements _LoggedUser {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_LoggedUser &&
+            (identical(other.verified, verified) ||
+                other.verified == verified) &&
             (identical(other.userId, userId) || other.userId == userId) &&
             (identical(other.aboutMe, aboutMe) || other.aboutMe == aboutMe) &&
             (identical(other.active, active) || other.active == active) &&
@@ -881,6 +899,7 @@ class _$_LoggedUser implements _LoggedUser {
   @override
   int get hashCode => Object.hashAll([
         runtimeType,
+        verified,
         userId,
         aboutMe,
         active,
@@ -919,7 +938,8 @@ class _$_LoggedUser implements _LoggedUser {
 
 abstract class _LoggedUser implements LoggedUser {
   const factory _LoggedUser(
-      {required final String? userId,
+      {required final bool? verified,
+      required final String? userId,
       required final String? aboutMe,
       required final bool? active,
       required final String? city,
@@ -943,6 +963,8 @@ abstract class _LoggedUser implements LoggedUser {
   factory _LoggedUser.fromJson(Map<String, dynamic> json) =
       _$_LoggedUser.fromJson;
 
+  @override
+  bool? get verified;
   @override
   String? get userId;
   @override

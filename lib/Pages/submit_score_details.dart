@@ -85,6 +85,7 @@ class _SubmitScoreDetailsState extends State<SubmitScoreDetails>
   String? matchGameStatus = '';
 
   List<LeagueEdges>? _leaguesList;
+  List<LeagueEdges>? _leaguesSortedList;
 
   FocusNode? _chatNode;
   late String? dropDownValue = null;
@@ -501,19 +502,18 @@ class _SubmitScoreDetailsState extends State<SubmitScoreDetails>
                                       document: gql(
                                         allLeagueApplicationsQuery({
                                           '\$applicant_UserId': 'UUID',
-                                          '\$status': 'String!',
-                                          '\$league_Status': 'String!',
+                                          '\$status': 'LeagueApplicationStatus', //20230624 Change Type from api
+                                          '\$league_Status': 'LeagueStatus',//20230624 Change Type from api
                                         }, {
-                                          'applicant_UserId':
-                                              '\$applicant_UserId',
+                                          'applicant_UserId': '\$applicant_UserId',
                                           'status': '\$status',
                                           'league_Status': '\$league_Status',
                                         }),
                                       ),
                                       variables: {
                                         'applicant_UserId': '${player1.userId}',
-                                        'status': 'approved',
-                                        'league_Status': 'ongoing',
+                                        'status': 'APPROVED',//20230624 Change Type from api
+                                        'league_Status': 'ONGOING',//20230624 Change Type from api
                                       },
                                       pollInterval: Duration(seconds: 100),
                                     ),
@@ -534,14 +534,24 @@ class _SubmitScoreDetailsState extends State<SubmitScoreDetails>
                                           AllLeaguesApps.fromJson(result.data!);
 
                                       _leaguesList = [];
+                                      _leaguesSortedList = [];
                                       _leaguesList = allLeaguesApps
                                           .allLeagueApplications?.edges;
 
+                                      //20230626 Added this snippet code for add only Unique League names.
                                       List<String>? leagueListTemp = [];
-                                      for (var data in _leaguesList!) {
-                                        leagueListTemp
-                                            .add(data.node!.league!.name!);
+                                      List<String>? leagueListIds = [];
+                                      for (LeagueEdges data in _leaguesList!) {
+                                        if(!leagueListIds.contains(data.node!.league!.leagueId)) {
+                                          _leaguesSortedList?.add(data);
+                                          leagueListIds.add(data.node!.league!.leagueId!);
+                                          leagueListTemp
+                                          // .add(data.node!.league!.name!);
+                                              .add(trimText(data.node!.league!.name!, 35));
+                                        }
                                       }
+                                      _leaguesList = [];
+                                      _leaguesList = _leaguesSortedList;
 
                                       var exist = _leaguesList!.where(
                                           (LeagueEdges) =>
@@ -559,18 +569,18 @@ class _SubmitScoreDetailsState extends State<SubmitScoreDetails>
                                           dropList: leagueListTemp,
                                           hint: exist.isEmpty
                                               ? leagueOptHint
-                                              : exist.first.node!.league!.name!,
+                                              // : exist.first.node!.league!.name!,
+                                              : trimText(exist.first.node!.league!.name!,35),
                                           dropdownValue: dropDownValue,
                                           onValueChange: (value) {
                                             dropDownValue = value;
-
                                             var data = _leaguesList!.where(
                                                 (element) =>
-                                                    element
-                                                        .node?.league?.name ==
+                                                    trimText(element.node!.league!.name!,35)
+                                                         ==
                                                     value);
-                                            // print('Selected -- $data');
-                                            // print('Selected -- ${data.first.node?.league?.leagueId}');
+                                            print('Selected -- $data');
+                                            print('Selected -- ${data.first.node?.league?.leagueId}');
 
                                             Provider.of<LeagueIdProvider>(
                                                     context,
@@ -1003,5 +1013,13 @@ class _SubmitScoreDetailsState extends State<SubmitScoreDetails>
         );
       },
     );
+  }
+
+  String trimText(String text, int maxLength) {
+    if (text.length <= maxLength) {
+      return text;
+    } else {
+      return text.substring(0, maxLength) + '...';
+    }
   }
 }

@@ -37,7 +37,7 @@ import '../utils/shared_preferences_utils.dart';
 
 // final HttpLink httpLink = HttpLink('http://52.144.47.85:8000/graphql/',);
 // final graphqlEndpoint = 'http://52.144.47.85:8000/graphql/';//OLD
-final graphqlEndpoint = 'http://104.238.213.60:8000/graphql/';
+final graphqlEndpoint = 'http://leagueoftennis.com/graphql/';
 // final graphqlEndpoint = 'https://api.github.com/graphql'; //Test purpose
 final subscriptionEndpoint = null;
 
@@ -158,9 +158,10 @@ class AppBody extends StatelessWidget {
           } else if (settings.name == VerifyEmailPage.path) {
             return CupertinoPageRoute(
                 builder: (context) => VerifyEmailPage(), settings: settings);
-          } else if (settings.name == PasswordResetPage.path) {
-            return CupertinoPageRoute(
-                builder: (context) => PasswordResetPage(), settings: settings);
+          //20230624 Removed Redirection
+            // } else if (settings.name == PasswordResetPage.path) {
+          //   return CupertinoPageRoute(
+          //       builder: (context) => PasswordResetPage(), settings: settings);
           } else if (settings.name == PasswordChangePage.path) {
             return CupertinoPageRoute(
                 builder: (context) => PasswordChangePage(), settings: settings);

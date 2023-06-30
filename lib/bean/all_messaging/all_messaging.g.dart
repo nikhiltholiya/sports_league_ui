@@ -46,6 +46,7 @@ _$_MsgNode _$$_MsgNodeFromJson(Map<String, dynamic> json) => _$_MsgNode(
       id: json['id'] as String?,
       message: json['message'] as String?,
       messageId: json['messageId'] as String?,
+      read: json['read'] as bool?,
       updatedAt: json['updatedAt'] as String?,
       recipient: json['recipient'] == null
           ? null
@@ -61,6 +62,7 @@ Map<String, dynamic> _$$_MsgNodeToJson(_$_MsgNode instance) =>
       'id': instance.id,
       'message': instance.message,
       'messageId': instance.messageId,
+      'read': instance.read,
       'updatedAt': instance.updatedAt,
       'recipient': instance.recipient,
       'sender': instance.sender,

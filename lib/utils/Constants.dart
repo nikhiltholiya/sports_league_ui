@@ -147,6 +147,8 @@ String allUsers(Map<String, dynamic>? param, Map<String, dynamic>? paramType) {
 
 // query(${param.toString().replaceAll('{', ' ').replaceAll('}', ' ')}) {
 // allMessaging(${paramType.toString().replaceAll('{', ' ').replaceAll('}', ' ')})
+
+// 20230622 Added read
 String allMessaging(Map<String, dynamic>? param, Map<String, dynamic>? paramType) {
   return '''
   query(${param.toString().trim().substring(1, param.toString().trim().length - 1)}) {
@@ -157,6 +159,7 @@ String allMessaging(Map<String, dynamic>? param, Map<String, dynamic>? paramType
         id
         message
         messageId
+        read
         updatedAt
         recipient {
           city
@@ -189,23 +192,44 @@ String allMessaging(Map<String, dynamic>? param, Map<String, dynamic>? paramType
 ''';
 }
 
-//20230617
+//20230617 Added New query for message List.
+//20230622 -- Added read for check messages status : true = read , false = unread
+//20230723 -- Replace Inbox for messages with read Flags : true = read , false = unread
 String uniqueMessageSenders(Map<String, dynamic>? param, Map<String, dynamic>? paramType) {
   return '''
   query(${param.toString().trim().substring(1, param.toString().trim().length - 1)}) {
   uniqueMessageSenders(${paramType.toString().trim().substring(1, paramType.toString().trim().length - 1)}) {
-      contacts {
+      inbox {
+      read
+      user {
+        aboutMe
+        active
         city
-        country
+        email
         firstName
-        id
-        lastName
         picture
+        phone
         rating
         userId
         state
-        active
+        lastName
+        id
+        dob
+        country
+        lastLogin
+      }
     }
+  }
+}
+''';
+}
+
+//20230622 Added New query for message List.
+String readMessages(Map<String, dynamic>? param, Map<String, dynamic>? paramType) {
+  return '''
+  mutation(${param.toString().trim().substring(1, param.toString().trim().length - 1)}) {
+  readMessages(${paramType.toString().trim().substring(1, paramType.toString().trim().length - 1)}) {
+    status
   }
 }
 ''';
@@ -371,6 +395,7 @@ String resendActivationEmail(Map<String, dynamic>? param, Map<String, dynamic>? 
 ''';
 }
 
+//20230623 verified was added for check user is verified or not.
 String tokenAuth(Map<String, dynamic>? param, Map<String, dynamic>? paramType) {
   return '''
       mutation tokenAuth(${param.toString().trim().substring(1, param.toString().trim().length - 1)}) {
@@ -381,6 +406,7 @@ String tokenAuth(Map<String, dynamic>? param, Map<String, dynamic>? paramType) {
                unarchiving
                errors
                user {
+                  verified
                   userId
                   aboutMe
                   active

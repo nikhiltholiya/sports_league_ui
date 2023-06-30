@@ -176,8 +176,8 @@ class _CreateProfilePicturePageState extends State<CreateProfilePicturePage> wit
       );
       if (croppedFile != null) {
         // setState(() {
-          _croppedFile = croppedFile;
-          _streamImgState.sink.add(imgState.cropped);
+        _croppedFile = croppedFile;
+        _streamImgState.sink.add(imgState.cropped);
         // });
       }
     }
@@ -402,6 +402,7 @@ class _CreateProfilePicturePageState extends State<CreateProfilePicturePage> wit
     );
   }
 
+  //20230624 Remove Done Message and Only Add Button
   _showAlert() async {
     return await showDialog(
         context: context,
@@ -410,20 +411,25 @@ class _CreateProfilePicturePageState extends State<CreateProfilePicturePage> wit
           return AppDialog(
             title: profile,
             body: [
-              ListView.builder(
-                shrinkWrap: true,
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(errorList![index].toString()),
-                  );
-                },
-                itemCount: errorList!.length,
-              )
+              errorList?.first?.toString().toLowerCase() == 'done'
+                  ? const SizedBox(
+                      height: 0,
+                      width: 0,
+                    )
+                  : ListView.builder(
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(errorList![index].toString()),
+                        );
+                      },
+                      itemCount: errorList!.length,
+                    )
             ],
             isBtnPositiveAvail: false,
             btnPositiveText: '',
-            btnNegativeText: dialogDismiss,
+            btnNegativeText: btnDone,
             onNegativeClick: () {
               if (errorList?.first?.toString().toLowerCase() == 'done') {
                 Navigator.of(context).pop();

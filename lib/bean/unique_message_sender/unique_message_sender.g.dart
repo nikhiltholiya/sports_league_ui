@@ -23,41 +23,59 @@ Map<String, dynamic> _$$_UniqueMessageDataToJson(
 _$_UniqueMessageSenders _$$_UniqueMessageSendersFromJson(
         Map<String, dynamic> json) =>
     _$_UniqueMessageSenders(
-      contacts: (json['contacts'] as List<dynamic>?)
-          ?.map((e) => ContactsList.fromJson(e as Map<String, dynamic>))
+      inbox: (json['inbox'] as List<dynamic>?)
+          ?.map((e) => Inbox.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
 Map<String, dynamic> _$$_UniqueMessageSendersToJson(
         _$_UniqueMessageSenders instance) =>
     <String, dynamic>{
-      'contacts': instance.contacts,
+      'inbox': instance.inbox,
     };
 
-_$_ContactsList _$$_ContactsListFromJson(Map<String, dynamic> json) =>
-    _$_ContactsList(
-      city: json['city'] as String?,
-      country: json['country'] as String?,
-      firstName: json['firstName'] as String?,
-      id: json['id'] as String?,
-      lastName: json['lastName'] as String?,
-      picture: json['picture'] as String?,
-      rating: json['rating'] as String?,
-      userId: json['userId'] as String?,
-      state: json['state'] as String?,
-      active: json['active'] as bool?,
+_$_Inbox _$$_InboxFromJson(Map<String, dynamic> json) => _$_Inbox(
+      read: json['read'] as bool?,
+      user: (json['user'] as List<dynamic>?)
+          ?.map((e) => User.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
-Map<String, dynamic> _$$_ContactsListToJson(_$_ContactsList instance) =>
-    <String, dynamic>{
-      'city': instance.city,
-      'country': instance.country,
-      'firstName': instance.firstName,
-      'id': instance.id,
-      'lastName': instance.lastName,
-      'picture': instance.picture,
-      'rating': instance.rating,
+Map<String, dynamic> _$$_InboxToJson(_$_Inbox instance) => <String, dynamic>{
+      'read': instance.read,
+      'user': instance.user,
+    };
+
+_$_User _$$_UserFromJson(Map<String, dynamic> json) => _$_User(
+      userId: json['userId'] as String?,
+      firstName: json['firstName'] as String?,
+      lastName: json['lastName'] as String?,
+      aboutMe: json['aboutMe'] as String?,
+      active: json['active'] as bool?,
+      city: json['city'] as String?,
+      email: json['email'] as String?,
+      picture: json['picture'] as String?,
+      phone: json['phone'] as String?,
+      rating: json['rating'] as String?,
+      state: json['state'] as String?,
+      country: json['country'] as String?,
+      id: json['id'] as String?,
+      dob: json['dob'] as String?,
+    );
+
+Map<String, dynamic> _$$_UserToJson(_$_User instance) => <String, dynamic>{
       'userId': instance.userId,
-      'state': instance.state,
+      'firstName': instance.firstName,
+      'lastName': instance.lastName,
+      'aboutMe': instance.aboutMe,
       'active': instance.active,
+      'city': instance.city,
+      'email': instance.email,
+      'picture': instance.picture,
+      'phone': instance.phone,
+      'rating': instance.rating,
+      'state': instance.state,
+      'country': instance.country,
+      'id': instance.id,
+      'dob': instance.dob,
     };

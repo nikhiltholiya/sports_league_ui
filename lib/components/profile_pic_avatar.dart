@@ -31,7 +31,7 @@ class ProfilePicAvatar extends StatelessWidget {
               backgroundColor: aWhite,
             )
           : CircleAvatar(
-              backgroundImage: NetworkImage('http://104.238.213.60:8000/${path}'),
+              backgroundImage: NetworkImage('http://leagueoftennis.com/${path}'),//change Here....
               radius: (radius! - 1),
               backgroundColor: aWhite,
             ),

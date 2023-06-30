@@ -35,7 +35,7 @@ class _IconicTextViewState extends State<IconicTextView> {
       mainAxisAlignment: widget.align!,
       children: [
         Padding(
-          padding: EdgeInsets.all(5.0),
+          padding: EdgeInsets.only(bottom: 5.0,left: 2.0,right: 5.0,top: 5.0),
           child: Icon(widget.icon!, size: widget.iconSize!, color: widget.iconColor!),
           // child: Image.asset('assets/Vector (1).png',color: Color(0xFF3E4982),fit: BoxFit.none),
         ),

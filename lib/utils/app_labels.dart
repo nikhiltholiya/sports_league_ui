@@ -93,5 +93,7 @@ const String errQuery = 'Please enter your query';
 const String thankYou = 'Thank you';
 const String allMatchesTitle = 'All Matches';
 const String latestScoreTitle = 'Latest Score';
+const String errorActLink = 'Please check your email for activation link';
+const String resendEmail = 'Resend Email';
 
 

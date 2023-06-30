@@ -179,7 +179,7 @@ UniqueMessageSenders _$UniqueMessageSendersFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$UniqueMessageSenders {
-  List<ContactsList>? get contacts => throw _privateConstructorUsedError;
+  List<Inbox>? get inbox => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -193,7 +193,7 @@ abstract class $UniqueMessageSendersCopyWith<$Res> {
           $Res Function(UniqueMessageSenders) then) =
       _$UniqueMessageSendersCopyWithImpl<$Res, UniqueMessageSenders>;
   @useResult
-  $Res call({List<ContactsList>? contacts});
+  $Res call({List<Inbox>? inbox});
 }
 
 /// @nodoc
@@ -210,13 +210,13 @@ class _$UniqueMessageSendersCopyWithImpl<$Res,
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? contacts = freezed,
+    Object? inbox = freezed,
   }) {
     return _then(_value.copyWith(
-      contacts: freezed == contacts
-          ? _value.contacts
-          : contacts // ignore: cast_nullable_to_non_nullable
-              as List<ContactsList>?,
+      inbox: freezed == inbox
+          ? _value.inbox
+          : inbox // ignore: cast_nullable_to_non_nullable
+              as List<Inbox>?,
     ) as $Val);
   }
 }
@@ -229,7 +229,7 @@ abstract class _$$_UniqueMessageSendersCopyWith<$Res>
       __$$_UniqueMessageSendersCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<ContactsList>? contacts});
+  $Res call({List<Inbox>? inbox});
 }
 
 /// @nodoc
@@ -243,13 +243,13 @@ class __$$_UniqueMessageSendersCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? contacts = freezed,
+    Object? inbox = freezed,
   }) {
     return _then(_$_UniqueMessageSenders(
-      contacts: freezed == contacts
-          ? _value._contacts
-          : contacts // ignore: cast_nullable_to_non_nullable
-              as List<ContactsList>?,
+      inbox: freezed == inbox
+          ? _value._inbox
+          : inbox // ignore: cast_nullable_to_non_nullable
+              as List<Inbox>?,
     ));
   }
 }
@@ -257,25 +257,25 @@ class __$$_UniqueMessageSendersCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_UniqueMessageSenders implements _UniqueMessageSenders {
-  const _$_UniqueMessageSenders({required final List<ContactsList>? contacts})
-      : _contacts = contacts;
+  const _$_UniqueMessageSenders({required final List<Inbox>? inbox})
+      : _inbox = inbox;
 
   factory _$_UniqueMessageSenders.fromJson(Map<String, dynamic> json) =>
       _$$_UniqueMessageSendersFromJson(json);
 
-  final List<ContactsList>? _contacts;
+  final List<Inbox>? _inbox;
   @override
-  List<ContactsList>? get contacts {
-    final value = _contacts;
+  List<Inbox>? get inbox {
+    final value = _inbox;
     if (value == null) return null;
-    if (_contacts is EqualUnmodifiableListView) return _contacts;
+    if (_inbox is EqualUnmodifiableListView) return _inbox;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(value);
   }
 
   @override
   String toString() {
-    return 'UniqueMessageSenders(contacts: $contacts)';
+    return 'UniqueMessageSenders(inbox: $inbox)';
   }
 
   @override
@@ -283,13 +283,13 @@ class _$_UniqueMessageSenders implements _UniqueMessageSenders {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_UniqueMessageSenders &&
-            const DeepCollectionEquality().equals(other._contacts, _contacts));
+            const DeepCollectionEquality().equals(other._inbox, _inbox));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_contacts));
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(_inbox));
 
   @JsonKey(ignore: true)
   @override
@@ -307,66 +307,46 @@ class _$_UniqueMessageSenders implements _UniqueMessageSenders {
 }
 
 abstract class _UniqueMessageSenders implements UniqueMessageSenders {
-  const factory _UniqueMessageSenders(
-      {required final List<ContactsList>? contacts}) = _$_UniqueMessageSenders;
+  const factory _UniqueMessageSenders({required final List<Inbox>? inbox}) =
+      _$_UniqueMessageSenders;
 
   factory _UniqueMessageSenders.fromJson(Map<String, dynamic> json) =
       _$_UniqueMessageSenders.fromJson;
 
   @override
-  List<ContactsList>? get contacts;
+  List<Inbox>? get inbox;
   @override
   @JsonKey(ignore: true)
   _$$_UniqueMessageSendersCopyWith<_$_UniqueMessageSenders> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
-ContactsList _$ContactsListFromJson(Map<String, dynamic> json) {
-  return _ContactsList.fromJson(json);
+Inbox _$InboxFromJson(Map<String, dynamic> json) {
+  return _Inbox.fromJson(json);
 }
 
 /// @nodoc
-mixin _$ContactsList {
-  String? get city => throw _privateConstructorUsedError;
-  String? get country => throw _privateConstructorUsedError;
-  String? get firstName => throw _privateConstructorUsedError;
-  String? get id => throw _privateConstructorUsedError;
-  String? get lastName => throw _privateConstructorUsedError;
-  String? get picture => throw _privateConstructorUsedError;
-  String? get rating => throw _privateConstructorUsedError;
-  String? get userId => throw _privateConstructorUsedError;
-  String? get state => throw _privateConstructorUsedError;
-  bool? get active => throw _privateConstructorUsedError;
+mixin _$Inbox {
+  bool? get read => throw _privateConstructorUsedError;
+  List<User>? get user => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $ContactsListCopyWith<ContactsList> get copyWith =>
-      throw _privateConstructorUsedError;
+  $InboxCopyWith<Inbox> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $ContactsListCopyWith<$Res> {
-  factory $ContactsListCopyWith(
-          ContactsList value, $Res Function(ContactsList) then) =
-      _$ContactsListCopyWithImpl<$Res, ContactsList>;
+abstract class $InboxCopyWith<$Res> {
+  factory $InboxCopyWith(Inbox value, $Res Function(Inbox) then) =
+      _$InboxCopyWithImpl<$Res, Inbox>;
   @useResult
-  $Res call(
-      {String? city,
-      String? country,
-      String? firstName,
-      String? id,
-      String? lastName,
-      String? picture,
-      String? rating,
-      String? userId,
-      String? state,
-      bool? active});
+  $Res call({bool? read, List<User>? user});
 }
 
 /// @nodoc
-class _$ContactsListCopyWithImpl<$Res, $Val extends ContactsList>
-    implements $ContactsListCopyWith<$Res> {
-  _$ContactsListCopyWithImpl(this._value, this._then);
+class _$InboxCopyWithImpl<$Res, $Val extends Inbox>
+    implements $InboxCopyWith<$Res> {
+  _$InboxCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -376,270 +356,530 @@ class _$ContactsListCopyWithImpl<$Res, $Val extends ContactsList>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? city = freezed,
-    Object? country = freezed,
-    Object? firstName = freezed,
-    Object? id = freezed,
-    Object? lastName = freezed,
-    Object? picture = freezed,
-    Object? rating = freezed,
-    Object? userId = freezed,
-    Object? state = freezed,
-    Object? active = freezed,
+    Object? read = freezed,
+    Object? user = freezed,
   }) {
     return _then(_value.copyWith(
-      city: freezed == city
-          ? _value.city
-          : city // ignore: cast_nullable_to_non_nullable
-              as String?,
-      country: freezed == country
-          ? _value.country
-          : country // ignore: cast_nullable_to_non_nullable
-              as String?,
-      firstName: freezed == firstName
-          ? _value.firstName
-          : firstName // ignore: cast_nullable_to_non_nullable
-              as String?,
-      id: freezed == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String?,
-      lastName: freezed == lastName
-          ? _value.lastName
-          : lastName // ignore: cast_nullable_to_non_nullable
-              as String?,
-      picture: freezed == picture
-          ? _value.picture
-          : picture // ignore: cast_nullable_to_non_nullable
-              as String?,
-      rating: freezed == rating
-          ? _value.rating
-          : rating // ignore: cast_nullable_to_non_nullable
-              as String?,
-      userId: freezed == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      state: freezed == state
-          ? _value.state
-          : state // ignore: cast_nullable_to_non_nullable
-              as String?,
-      active: freezed == active
-          ? _value.active
-          : active // ignore: cast_nullable_to_non_nullable
+      read: freezed == read
+          ? _value.read
+          : read // ignore: cast_nullable_to_non_nullable
               as bool?,
+      user: freezed == user
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as List<User>?,
     ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$$_ContactsListCopyWith<$Res>
-    implements $ContactsListCopyWith<$Res> {
-  factory _$$_ContactsListCopyWith(
-          _$_ContactsList value, $Res Function(_$_ContactsList) then) =
-      __$$_ContactsListCopyWithImpl<$Res>;
+abstract class _$$_InboxCopyWith<$Res> implements $InboxCopyWith<$Res> {
+  factory _$$_InboxCopyWith(_$_Inbox value, $Res Function(_$_Inbox) then) =
+      __$$_InboxCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {String? city,
-      String? country,
-      String? firstName,
-      String? id,
-      String? lastName,
-      String? picture,
-      String? rating,
-      String? userId,
-      String? state,
-      bool? active});
+  $Res call({bool? read, List<User>? user});
 }
 
 /// @nodoc
-class __$$_ContactsListCopyWithImpl<$Res>
-    extends _$ContactsListCopyWithImpl<$Res, _$_ContactsList>
-    implements _$$_ContactsListCopyWith<$Res> {
-  __$$_ContactsListCopyWithImpl(
-      _$_ContactsList _value, $Res Function(_$_ContactsList) _then)
+class __$$_InboxCopyWithImpl<$Res> extends _$InboxCopyWithImpl<$Res, _$_Inbox>
+    implements _$$_InboxCopyWith<$Res> {
+  __$$_InboxCopyWithImpl(_$_Inbox _value, $Res Function(_$_Inbox) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? city = freezed,
-    Object? country = freezed,
-    Object? firstName = freezed,
-    Object? id = freezed,
-    Object? lastName = freezed,
-    Object? picture = freezed,
-    Object? rating = freezed,
-    Object? userId = freezed,
-    Object? state = freezed,
-    Object? active = freezed,
+    Object? read = freezed,
+    Object? user = freezed,
   }) {
-    return _then(_$_ContactsList(
-      city: freezed == city
-          ? _value.city
-          : city // ignore: cast_nullable_to_non_nullable
-              as String?,
-      country: freezed == country
-          ? _value.country
-          : country // ignore: cast_nullable_to_non_nullable
-              as String?,
-      firstName: freezed == firstName
-          ? _value.firstName
-          : firstName // ignore: cast_nullable_to_non_nullable
-              as String?,
-      id: freezed == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String?,
-      lastName: freezed == lastName
-          ? _value.lastName
-          : lastName // ignore: cast_nullable_to_non_nullable
-              as String?,
-      picture: freezed == picture
-          ? _value.picture
-          : picture // ignore: cast_nullable_to_non_nullable
-              as String?,
-      rating: freezed == rating
-          ? _value.rating
-          : rating // ignore: cast_nullable_to_non_nullable
-              as String?,
-      userId: freezed == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      state: freezed == state
-          ? _value.state
-          : state // ignore: cast_nullable_to_non_nullable
-              as String?,
-      active: freezed == active
-          ? _value.active
-          : active // ignore: cast_nullable_to_non_nullable
+    return _then(_$_Inbox(
+      read: freezed == read
+          ? _value.read
+          : read // ignore: cast_nullable_to_non_nullable
               as bool?,
+      user: freezed == user
+          ? _value._user
+          : user // ignore: cast_nullable_to_non_nullable
+              as List<User>?,
     ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$_ContactsList implements _ContactsList {
-  const _$_ContactsList(
-      {required this.city,
-      required this.country,
-      required this.firstName,
-      required this.id,
-      required this.lastName,
-      required this.picture,
-      required this.rating,
-      required this.userId,
-      required this.state,
-      required this.active});
+class _$_Inbox implements _Inbox {
+  const _$_Inbox({required this.read, required final List<User>? user})
+      : _user = user;
 
-  factory _$_ContactsList.fromJson(Map<String, dynamic> json) =>
-      _$$_ContactsListFromJson(json);
+  factory _$_Inbox.fromJson(Map<String, dynamic> json) =>
+      _$$_InboxFromJson(json);
 
   @override
-  final String? city;
+  final bool? read;
+  final List<User>? _user;
   @override
-  final String? country;
-  @override
-  final String? firstName;
-  @override
-  final String? id;
-  @override
-  final String? lastName;
-  @override
-  final String? picture;
-  @override
-  final String? rating;
-  @override
-  final String? userId;
-  @override
-  final String? state;
-  @override
-  final bool? active;
+  List<User>? get user {
+    final value = _user;
+    if (value == null) return null;
+    if (_user is EqualUnmodifiableListView) return _user;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
 
   @override
   String toString() {
-    return 'ContactsList(city: $city, country: $country, firstName: $firstName, id: $id, lastName: $lastName, picture: $picture, rating: $rating, userId: $userId, state: $state, active: $active)';
+    return 'Inbox(read: $read, user: $user)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_ContactsList &&
-            (identical(other.city, city) || other.city == city) &&
-            (identical(other.country, country) || other.country == country) &&
-            (identical(other.firstName, firstName) ||
-                other.firstName == firstName) &&
-            (identical(other.id, id) || other.id == id) &&
-            (identical(other.lastName, lastName) ||
-                other.lastName == lastName) &&
-            (identical(other.picture, picture) || other.picture == picture) &&
-            (identical(other.rating, rating) || other.rating == rating) &&
-            (identical(other.userId, userId) || other.userId == userId) &&
-            (identical(other.state, state) || other.state == state) &&
-            (identical(other.active, active) || other.active == active));
+            other is _$_Inbox &&
+            (identical(other.read, read) || other.read == read) &&
+            const DeepCollectionEquality().equals(other._user, _user));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, city, country, firstName, id,
-      lastName, picture, rating, userId, state, active);
+  int get hashCode => Object.hash(
+      runtimeType, read, const DeepCollectionEquality().hash(_user));
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_ContactsListCopyWith<_$_ContactsList> get copyWith =>
-      __$$_ContactsListCopyWithImpl<_$_ContactsList>(this, _$identity);
+  _$$_InboxCopyWith<_$_Inbox> get copyWith =>
+      __$$_InboxCopyWithImpl<_$_Inbox>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_ContactsListToJson(
+    return _$$_InboxToJson(
       this,
     );
   }
 }
 
-abstract class _ContactsList implements ContactsList {
-  const factory _ContactsList(
-      {required final String? city,
-      required final String? country,
+abstract class _Inbox implements Inbox {
+  const factory _Inbox(
+      {required final bool? read, required final List<User>? user}) = _$_Inbox;
+
+  factory _Inbox.fromJson(Map<String, dynamic> json) = _$_Inbox.fromJson;
+
+  @override
+  bool? get read;
+  @override
+  List<User>? get user;
+  @override
+  @JsonKey(ignore: true)
+  _$$_InboxCopyWith<_$_Inbox> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+User _$UserFromJson(Map<String, dynamic> json) {
+  return _User.fromJson(json);
+}
+
+/// @nodoc
+mixin _$User {
+  String? get userId => throw _privateConstructorUsedError;
+  String? get firstName => throw _privateConstructorUsedError;
+  String? get lastName => throw _privateConstructorUsedError;
+  String? get aboutMe => throw _privateConstructorUsedError;
+  bool? get active => throw _privateConstructorUsedError;
+  String? get city => throw _privateConstructorUsedError;
+  String? get email => throw _privateConstructorUsedError;
+  String? get picture => throw _privateConstructorUsedError;
+  String? get phone => throw _privateConstructorUsedError;
+  String? get rating => throw _privateConstructorUsedError;
+  String? get state => throw _privateConstructorUsedError;
+  String? get country => throw _privateConstructorUsedError;
+  String? get id => throw _privateConstructorUsedError;
+  String? get dob => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $UserCopyWith<User> get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $UserCopyWith<$Res> {
+  factory $UserCopyWith(User value, $Res Function(User) then) =
+      _$UserCopyWithImpl<$Res, User>;
+  @useResult
+  $Res call(
+      {String? userId,
+      String? firstName,
+      String? lastName,
+      String? aboutMe,
+      bool? active,
+      String? city,
+      String? email,
+      String? picture,
+      String? phone,
+      String? rating,
+      String? state,
+      String? country,
+      String? id,
+      String? dob});
+}
+
+/// @nodoc
+class _$UserCopyWithImpl<$Res, $Val extends User>
+    implements $UserCopyWith<$Res> {
+  _$UserCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? userId = freezed,
+    Object? firstName = freezed,
+    Object? lastName = freezed,
+    Object? aboutMe = freezed,
+    Object? active = freezed,
+    Object? city = freezed,
+    Object? email = freezed,
+    Object? picture = freezed,
+    Object? phone = freezed,
+    Object? rating = freezed,
+    Object? state = freezed,
+    Object? country = freezed,
+    Object? id = freezed,
+    Object? dob = freezed,
+  }) {
+    return _then(_value.copyWith(
+      userId: freezed == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      firstName: freezed == firstName
+          ? _value.firstName
+          : firstName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      lastName: freezed == lastName
+          ? _value.lastName
+          : lastName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      aboutMe: freezed == aboutMe
+          ? _value.aboutMe
+          : aboutMe // ignore: cast_nullable_to_non_nullable
+              as String?,
+      active: freezed == active
+          ? _value.active
+          : active // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      city: freezed == city
+          ? _value.city
+          : city // ignore: cast_nullable_to_non_nullable
+              as String?,
+      email: freezed == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String?,
+      picture: freezed == picture
+          ? _value.picture
+          : picture // ignore: cast_nullable_to_non_nullable
+              as String?,
+      phone: freezed == phone
+          ? _value.phone
+          : phone // ignore: cast_nullable_to_non_nullable
+              as String?,
+      rating: freezed == rating
+          ? _value.rating
+          : rating // ignore: cast_nullable_to_non_nullable
+              as String?,
+      state: freezed == state
+          ? _value.state
+          : state // ignore: cast_nullable_to_non_nullable
+              as String?,
+      country: freezed == country
+          ? _value.country
+          : country // ignore: cast_nullable_to_non_nullable
+              as String?,
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String?,
+      dob: freezed == dob
+          ? _value.dob
+          : dob // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$_UserCopyWith<$Res> implements $UserCopyWith<$Res> {
+  factory _$$_UserCopyWith(_$_User value, $Res Function(_$_User) then) =
+      __$$_UserCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {String? userId,
+      String? firstName,
+      String? lastName,
+      String? aboutMe,
+      bool? active,
+      String? city,
+      String? email,
+      String? picture,
+      String? phone,
+      String? rating,
+      String? state,
+      String? country,
+      String? id,
+      String? dob});
+}
+
+/// @nodoc
+class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$_User>
+    implements _$$_UserCopyWith<$Res> {
+  __$$_UserCopyWithImpl(_$_User _value, $Res Function(_$_User) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? userId = freezed,
+    Object? firstName = freezed,
+    Object? lastName = freezed,
+    Object? aboutMe = freezed,
+    Object? active = freezed,
+    Object? city = freezed,
+    Object? email = freezed,
+    Object? picture = freezed,
+    Object? phone = freezed,
+    Object? rating = freezed,
+    Object? state = freezed,
+    Object? country = freezed,
+    Object? id = freezed,
+    Object? dob = freezed,
+  }) {
+    return _then(_$_User(
+      userId: freezed == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      firstName: freezed == firstName
+          ? _value.firstName
+          : firstName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      lastName: freezed == lastName
+          ? _value.lastName
+          : lastName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      aboutMe: freezed == aboutMe
+          ? _value.aboutMe
+          : aboutMe // ignore: cast_nullable_to_non_nullable
+              as String?,
+      active: freezed == active
+          ? _value.active
+          : active // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      city: freezed == city
+          ? _value.city
+          : city // ignore: cast_nullable_to_non_nullable
+              as String?,
+      email: freezed == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String?,
+      picture: freezed == picture
+          ? _value.picture
+          : picture // ignore: cast_nullable_to_non_nullable
+              as String?,
+      phone: freezed == phone
+          ? _value.phone
+          : phone // ignore: cast_nullable_to_non_nullable
+              as String?,
+      rating: freezed == rating
+          ? _value.rating
+          : rating // ignore: cast_nullable_to_non_nullable
+              as String?,
+      state: freezed == state
+          ? _value.state
+          : state // ignore: cast_nullable_to_non_nullable
+              as String?,
+      country: freezed == country
+          ? _value.country
+          : country // ignore: cast_nullable_to_non_nullable
+              as String?,
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String?,
+      dob: freezed == dob
+          ? _value.dob
+          : dob // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_User implements _User {
+  const _$_User(
+      {required this.userId,
+      required this.firstName,
+      required this.lastName,
+      required this.aboutMe,
+      required this.active,
+      required this.city,
+      required this.email,
+      required this.picture,
+      required this.phone,
+      required this.rating,
+      required this.state,
+      required this.country,
+      required this.id,
+      required this.dob});
+
+  factory _$_User.fromJson(Map<String, dynamic> json) => _$$_UserFromJson(json);
+
+  @override
+  final String? userId;
+  @override
+  final String? firstName;
+  @override
+  final String? lastName;
+  @override
+  final String? aboutMe;
+  @override
+  final bool? active;
+  @override
+  final String? city;
+  @override
+  final String? email;
+  @override
+  final String? picture;
+  @override
+  final String? phone;
+  @override
+  final String? rating;
+  @override
+  final String? state;
+  @override
+  final String? country;
+  @override
+  final String? id;
+  @override
+  final String? dob;
+
+  @override
+  String toString() {
+    return 'User(userId: $userId, firstName: $firstName, lastName: $lastName, aboutMe: $aboutMe, active: $active, city: $city, email: $email, picture: $picture, phone: $phone, rating: $rating, state: $state, country: $country, id: $id, dob: $dob)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_User &&
+            (identical(other.userId, userId) || other.userId == userId) &&
+            (identical(other.firstName, firstName) ||
+                other.firstName == firstName) &&
+            (identical(other.lastName, lastName) ||
+                other.lastName == lastName) &&
+            (identical(other.aboutMe, aboutMe) || other.aboutMe == aboutMe) &&
+            (identical(other.active, active) || other.active == active) &&
+            (identical(other.city, city) || other.city == city) &&
+            (identical(other.email, email) || other.email == email) &&
+            (identical(other.picture, picture) || other.picture == picture) &&
+            (identical(other.phone, phone) || other.phone == phone) &&
+            (identical(other.rating, rating) || other.rating == rating) &&
+            (identical(other.state, state) || other.state == state) &&
+            (identical(other.country, country) || other.country == country) &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.dob, dob) || other.dob == dob));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      userId,
+      firstName,
+      lastName,
+      aboutMe,
+      active,
+      city,
+      email,
+      picture,
+      phone,
+      rating,
+      state,
+      country,
+      id,
+      dob);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_UserCopyWith<_$_User> get copyWith =>
+      __$$_UserCopyWithImpl<_$_User>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_UserToJson(
+      this,
+    );
+  }
+}
+
+abstract class _User implements User {
+  const factory _User(
+      {required final String? userId,
       required final String? firstName,
-      required final String? id,
       required final String? lastName,
+      required final String? aboutMe,
+      required final bool? active,
+      required final String? city,
+      required final String? email,
       required final String? picture,
+      required final String? phone,
       required final String? rating,
-      required final String? userId,
       required final String? state,
-      required final bool? active}) = _$_ContactsList;
+      required final String? country,
+      required final String? id,
+      required final String? dob}) = _$_User;
 
-  factory _ContactsList.fromJson(Map<String, dynamic> json) =
-      _$_ContactsList.fromJson;
+  factory _User.fromJson(Map<String, dynamic> json) = _$_User.fromJson;
 
-  @override
-  String? get city;
-  @override
-  String? get country;
-  @override
-  String? get firstName;
-  @override
-  String? get id;
-  @override
-  String? get lastName;
-  @override
-  String? get picture;
-  @override
-  String? get rating;
   @override
   String? get userId;
   @override
-  String? get state;
+  String? get firstName;
+  @override
+  String? get lastName;
+  @override
+  String? get aboutMe;
   @override
   bool? get active;
   @override
+  String? get city;
+  @override
+  String? get email;
+  @override
+  String? get picture;
+  @override
+  String? get phone;
+  @override
+  String? get rating;
+  @override
+  String? get state;
+  @override
+  String? get country;
+  @override
+  String? get id;
+  @override
+  String? get dob;
+  @override
   @JsonKey(ignore: true)
-  _$$_ContactsListCopyWith<_$_ContactsList> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$_UserCopyWith<_$_User> get copyWith => throw _privateConstructorUsedError;
 }

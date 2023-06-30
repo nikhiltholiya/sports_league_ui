@@ -36,6 +36,7 @@ class MsgNode with _$MsgNode{
     required String? id,
     required String? message,
     required String? messageId,
+    required bool? read,
     required String? updatedAt,
     required MsgRecipient? recipient,
     required MsgRecipient? sender,
@@ -56,7 +57,7 @@ class MsgRecipient with _$MsgRecipient{
     required String? rating,
     required String? userId,
     required String? state,
-    required bool? active,
+    required bool? active
 }) =_MsgRecipient;
   factory MsgRecipient.fromJson(Map<String, dynamic> recMap) => _$MsgRecipientFromJson(recMap);
 }

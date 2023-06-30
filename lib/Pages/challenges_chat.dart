@@ -41,8 +41,7 @@ class ChallengesChat extends StatefulWidget {
   _ChallengesChatState createState() => _ChallengesChatState();
 }
 
-class _ChallengesChatState extends State<ChallengesChat>
-    with isInternetConnection {
+class _ChallengesChatState extends State<ChallengesChat> with isInternetConnection {
   ScrollController? _scrollController;
   var _stackKey = GlobalKey();
   var _textTitleKey = GlobalKey();
@@ -75,11 +74,11 @@ class _ChallengesChatState extends State<ChallengesChat>
   bool? isBuildWidgets = false;
   late AllUsersData _allUsersData;
   List<String>? errorList = [];
+  bool? isLoaded = false;
 
   double? _getHeight(GlobalKey? gKey) {
     try {
-      final RenderBox? rBox =
-          gKey?.currentContext?.findRenderObject() as RenderBox;
+      final RenderBox? rBox = gKey?.currentContext?.findRenderObject() as RenderBox;
       return rBox?.size.height;
     } catch (e) {
       return null;
@@ -97,9 +96,7 @@ class _ChallengesChatState extends State<ChallengesChat>
       _visibility = false;
     });
 
-    _totalHeight = (stack ?? 0.0) +
-        (title ?? 0.0) /*+ (location ?? 0.0) + (btn ?? 0.0)*/ +
-        kToolbarHeight;
+    _totalHeight = (stack ?? 0.0) + (title ?? 0.0) /*+ (location ?? 0.0) + (btn ?? 0.0)*/ + kToolbarHeight;
 
     // print('Height == $_totalHeight');
   }
@@ -141,8 +138,7 @@ class _ChallengesChatState extends State<ChallengesChat>
     setState(() {
       try {
         if (_scrollController!.offset >
-                _totalHeight! -
-                    kToolbarHeight /*&&
+                _totalHeight! - kToolbarHeight /*&&
           !_scrollController!.position.outOfRange*/
             //100
             ) {
@@ -159,8 +155,7 @@ class _ChallengesChatState extends State<ChallengesChat>
       // print(_scrollController!.offset);
       // collapsing
       if (_scrollController!.offset >
-              _totalHeight! -
-                  kToolbarHeight /*&&
+              _totalHeight! - kToolbarHeight /*&&
           !_scrollController!.position.outOfRange*/
           //100
           ) {
@@ -172,8 +167,14 @@ class _ChallengesChatState extends State<ChallengesChat>
     });
   }
 
+
+  Map<String, dynamic> passAllUsersVariable = {};
+  Map<String, dynamic> paramAllUsers = {};
+  Map<String, dynamic> paramAllUsersType = {};
+
   @override
   void initState() {
+    print("object");
     initInternet(context);
     _scrollController = ScrollController();
     _chatNode = FocusNode();
@@ -181,6 +182,13 @@ class _ChallengesChatState extends State<ChallengesChat>
 
     // _getListItems(); No Need for right now
     setToolbarTitle();
+
+    paramAllUsers = {
+      '\$userId': 'UUID',
+    };
+    paramAllUsersType = {
+      'userId': '\$userId',
+    };
 
     paramSendMsg = {
       '\$passParam': ' MessagingInput!',
@@ -226,26 +234,22 @@ class _ChallengesChatState extends State<ChallengesChat>
               color: aWhite,
               child: Consumer<UserIdProvider>(
                 builder: (context, value, child) {
-                  Map<String, dynamic> param = {
-                    '\$userId': 'UUID',
-                  };
-                  Map<String, dynamic> paramType = {
-                    'userId': '\$userId',
-                  };
-                  Map<String, dynamic> passVariable = {
-                    'userId': '${value.getUserId}'
-                  };
+                  if (!isLoaded!) {
+                    passAllUsersVariable = {'userId': '${value.getUserId}'};
 
-                  variableForMsg = {
-                    'senderReceipientSearch':
-                        '${value.getUserId}|${SharedPreferencesUtils.getUserId}'
-                  };
+                    variableForMsg = {
+                      'senderReceipientSearch': '${value.getUserId}|${SharedPreferencesUtils.getUserId}'
+                    };
+
+                    print('${value.getUserId}|${SharedPreferencesUtils.getUserId}');
+                    isLoaded = true;
+                  }
 
                   return Query(
                     options: QueryOptions(
-                      document: gql(allUsers(param, paramType)),
+                      document: gql(allUsers(paramAllUsers, paramAllUsersType)),
                       // this is the query string you just created
-                      variables: passVariable,
+                      variables: passAllUsersVariable,
                       pollInterval: Duration(seconds: 100),
                     ),
                     builder: (userResult, {fetchMore, refetch}) {
@@ -254,8 +258,7 @@ class _ChallengesChatState extends State<ChallengesChat>
                       }
 
                       if (userResult.isLoading && userResult.data == null) {
-                        return const Center(
-                            child: CupertinoActivityIndicator());
+                        return const Center(child: CupertinoActivityIndicator());
                       }
 
                       try {
@@ -263,8 +266,7 @@ class _ChallengesChatState extends State<ChallengesChat>
 
                         if (!isBuildWidgets!) {
                           isBuildWidgets = true;
-                          WidgetsBinding.instance
-                              .addPostFrameCallback(_getTotalHeight);
+                          WidgetsBinding.instance.addPostFrameCallback(_getTotalHeight);
                         }
                       } catch (e) {
                         debugPrint('Exception -- allUsers -- $e');
@@ -277,8 +279,7 @@ class _ChallengesChatState extends State<ChallengesChat>
                           Expanded(
                               child: CustomScrollView(
                                 controller: _scrollController,
-                                keyboardDismissBehavior:
-                                    ScrollViewKeyboardDismissBehavior.onDrag,
+                                keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
                                 physics: const BouncingScrollPhysics(),
                                 shrinkWrap: true,
                                 slivers: <Widget>[
@@ -301,14 +302,8 @@ class _ChallengesChatState extends State<ChallengesChat>
                                               : Icons.arrow_back),
                                     ),
                                     titleTextStyle: TextStyle(
-                                        fontSize: 10,
-                                        color: _isSilverCollapsed!
-                                            ? Colors.black
-                                            : Colors.white),
-                                    iconTheme: IconThemeData(
-                                        color: _isSilverCollapsed!
-                                            ? Colors.black
-                                            : Colors.white),
+                                        fontSize: 10, color: _isSilverCollapsed! ? Colors.black : Colors.white),
+                                    iconTheme: IconThemeData(color: _isSilverCollapsed! ? Colors.black : Colors.white),
                                     // titleTextStyle: TextStyle(
                                     //        fontSize: 10.0,
                                     //        color: scrollPosition >= _totalHeight
@@ -326,19 +321,15 @@ class _ChallengesChatState extends State<ChallengesChat>
                                               '${_allUsersData.allUsers?.edges?.first.node?.firstName} ${_allUsersData.allUsers?.edges?.first.node?.lastName}',
                                           playerLocation:
                                               '${_allUsersData.allUsers?.edges?.first.node?.city}, ${_allUsersData.allUsers?.edges?.first.node?.state}',
-                                          playerImg: _allUsersData.allUsers
-                                              ?.edges?.first.node?.picture,
+                                          playerImg: _allUsersData.allUsers?.edges?.first.node?.picture,
                                           // NOT RECEIVED
-                                          playerRate:
-                                              '${_allUsersData.allUsers?.edges?.first.node?.rating}',
+                                          playerRate: '${_allUsersData.allUsers?.edges?.first.node?.rating}',
                                           // NOT RECEIVED
                                           onViewProfile: () {
-                                            Navigator.pushReplacementNamed(
-                                                context, ProfilePage.path);
+                                            Navigator.pushReplacementNamed(context, ProfilePage.path);
                                           },
                                           onSubmitScore: () {
-                                            Navigator.pushNamed(context,
-                                                SubmitScoreDetails.path);
+                                            Navigator.pushNamed(context, SubmitScoreDetails.path);
                                           },
                                           stackKey: _stackKey,
                                           textTitleKey: _textTitleKey,
@@ -346,26 +337,17 @@ class _ChallengesChatState extends State<ChallengesChat>
                                         title: _isSilverCollapsed!
                                             ? Center(
                                                 child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.center,
+                                                  mainAxisAlignment: MainAxisAlignment.center,
+                                                  crossAxisAlignment: CrossAxisAlignment.center,
                                                   children: [
                                                     SizedBox(
                                                       width: 40,
                                                     ),
                                                     Padding(
-                                                      padding:
-                                                          const EdgeInsets.all(
-                                                              5.0),
+                                                      padding: const EdgeInsets.all(5.0),
                                                       child: ProfilePicAvatar(
                                                           radius: 20,
-                                                          path: _allUsersData
-                                                              .allUsers
-                                                              ?.edges
-                                                              ?.first
-                                                              .node
-                                                              ?.picture),
+                                                          path: _allUsersData.allUsers?.edges?.first.node?.picture),
                                                     ),
                                                     Expanded(
                                                       flex: 1,
@@ -374,18 +356,14 @@ class _ChallengesChatState extends State<ChallengesChat>
                                                         maxLines: 1,
                                                         style: TextStyle(
                                                           fontSize: 18,
-                                                          fontWeight:
-                                                              FontWeight.bold,
+                                                          fontWeight: FontWeight.bold,
                                                         ),
                                                       ),
                                                     ),
                                                     Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              right: 10.0),
+                                                      padding: const EdgeInsets.only(right: 10.0),
                                                       child: RateBadges(
-                                                        rate:
-                                                            '${_allUsersData.allUsers?.edges?.first.node?.rating}',
+                                                        rate: '${_allUsersData.allUsers?.edges?.first.node?.rating}',
                                                         textSize: 16.0,
                                                       ),
                                                     )
@@ -402,77 +380,59 @@ class _ChallengesChatState extends State<ChallengesChat>
                                       if (snapshot.hasData) {
                                         return Query(
                                           options: QueryOptions(
-                                            document: gql(allMessaging(
-                                                paramForMsg, paramTypeForMsg)),
+                                            document: gql(allMessaging(paramForMsg, paramTypeForMsg)),
                                             // this is the query string you just created
                                             variables: variableForMsg,
                                             pollInterval: Duration(seconds: 5),
                                           ),
-                                          builder: (msgresult,
-                                              {fetchMore, refetch}) {
+                                          builder: (msgresult, {fetchMore, refetch}) {
                                             if (msgresult.hasException) {
                                               return SliverToBoxAdapter(
                                                 child: Text(
-                                                  msgresult.exception
-                                                      .toString(),
+                                                  msgresult.exception.toString(),
                                                 ),
                                               );
                                             }
 
-                                            if (msgresult.isLoading &&
-                                                msgresult.data == null) {
+                                            if (msgresult.isLoading && msgresult.data == null) {
                                               return SliverToBoxAdapter(
                                                 child: const Center(
-                                                  child:
-                                                      CupertinoActivityIndicator(),
+                                                  child: CupertinoActivityIndicator(),
                                                 ),
                                               );
                                             }
 
                                             if (msgresult.data != null) {
                                               try {
-                                                _allMessagingData =
-                                                    AllMessagingData.fromJson(
-                                                        msgresult.data!);
+                                                _allMessagingData = AllMessagingData.fromJson(msgresult.data!);
 
                                                 _chatList = [];
                                                 // MsgNode
-                                                for (var msgData
-                                                    in _allMessagingData
-                                                        .allMessaging!.edges!) {
+                                                for (var msgData in _allMessagingData.allMessaging!.edges!) {
                                                   _chatList!.add(msgData.node!);
                                                 }
 
-                                                _streamController.sink
-                                                    .add(_chatList ?? []);
+                                                _streamController.sink.add(_chatList ?? []);
 
                                                 if (!_isLoaded!) {
                                                   _isLoaded = true;
                                                   scrollToLast();
                                                 }
                                               } catch (e) {
-                                                debugPrint(
-                                                    'Exception -- allMessaging -- $e');
+                                                debugPrint('Exception -- allMessaging -- $e');
                                               }
 
                                               // return SliverToBoxAdapter(
                                               //   child: Text('Loaded'),
                                               // );
                                               return SliverList(
-                                                delegate:
-                                                    SliverChildBuilderDelegate(
-                                                  (context, index) =>
-                                                      ChattingListTile(
+                                                delegate: SliverChildBuilderDelegate(
+                                                  (context, index) => ChattingListTile(
                                                     key: ValueKey(index),
-                                                    isMe: _chatList![index]
-                                                            .sender
-                                                            ?.userId ==
-                                                        SharedPreferencesUtils
-                                                            .getUserId,
-                                                    msg: _chatList![index]
-                                                        .message,
-                                                    time:
-                                                        '${convertTime(_chatList![index].createdAt, null)}',
+                                                    isMe: _chatList![index].sender?.userId ==
+                                                        SharedPreferencesUtils.getUserId,
+                                                    msg: _chatList![index].message,
+                                                    time: '${convertTime(_chatList![index].createdAt, null)}',
                                                   ),
                                                   childCount: _chatList!.length,
                                                 ),
@@ -519,10 +479,7 @@ class _ChallengesChatState extends State<ChallengesChat>
                                   ),
                                   SliverToBoxAdapter(
                                     child: Padding(
-                                        padding: EdgeInsets.only(
-                                            bottom: MediaQuery.of(context)
-                                                .viewInsets
-                                                .bottom)),
+                                        padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom)),
                                   )
                                 ], //<Widget>[]
                               ),
@@ -537,20 +494,17 @@ class _ChallengesChatState extends State<ChallengesChat>
                               setState(() {
                                 _textController?.text = value;
                                 _textController?.selection =
-                                    TextSelection.fromPosition(TextPosition(
-                                        offset: _textController!.text.length));
+                                    TextSelection.fromPosition(TextPosition(offset: _textController!.text.length));
                               });
                             },
                             suffixIcon: _textController!.text.trim().isNotEmpty
                                 ? Mutation(
                                     options: MutationOptions(
                                       document: gql(
-                                        sendMessage(
-                                            paramSendMsg, paramTypeSendMsg),
+                                        sendMessage(paramSendMsg, paramTypeSendMsg),
                                       ),
                                       onError: (OperationException? error) {
-                                        debugPrint(
-                                            '${ChallengesChat.path} * erroR -- $error');
+                                        debugPrint('${ChallengesChat.path} * erroR -- $error');
                                         errorList = [];
                                         errorList!.add('$error');
 
@@ -560,27 +514,21 @@ class _ChallengesChatState extends State<ChallengesChat>
                                       onCompleted: (dynamic resultData) {
                                         // Text('Thanks for your star!');
 
-                                        debugPrint(
-                                            '${ChallengesChat.path} **** RESULT * $resultData');
+                                        debugPrint('${ChallengesChat.path} **** RESULT * $resultData');
 
                                         if (resultData != null) {
-                                          _sendMessageData =
-                                              SendMessageData.fromJson(
-                                                  resultData);
+                                          _sendMessageData = SendMessageData.fromJson(resultData);
 
-                                          _chatList!.add(_sendMessageData!
-                                              .sendMessage!.messaging!);
+                                          _chatList!.add(_sendMessageData!.sendMessage!.messaging!);
 
-                                          _streamController.sink
-                                              .add(_chatList ?? []);
+                                          _streamController.sink.add(_chatList ?? []);
 
                                           scrollToLast();
                                         }
                                       },
                                       // 'Sorry you changed your mind!',
                                     ),
-                                    builder: (RunMutation _sendMessage,
-                                        QueryResult? addResult) {
+                                    builder: (RunMutation _sendMessage, QueryResult? addResult) {
                                       final doSendMsg = (result) {
                                         _sendMessage(result);
                                       };
@@ -589,26 +537,17 @@ class _ChallengesChatState extends State<ChallengesChat>
 
                                       return IconButton(
                                         onPressed: () {
-                                          if (_textController!.text
-                                              .trim()
-                                              .isNotEmpty) {
+                                          if (_textController!.text.trim().isNotEmpty) {
                                             var data = LoggedUser.fromJson(
-                                                jsonDecode(
-                                                    SharedPreferencesUtils
-                                                        .getUserData
-                                                        .toString()));
+                                                jsonDecode(SharedPreferencesUtils.getUserData.toString()));
 
-                                            Map<String, dynamic>
-                                                passVariableSendMsg = {
-                                              'message':
-                                                  '${_textController?.text}',
+                                            Map<String, dynamic> passVariableSendMsg = {
+                                              'message': '${_textController?.text}',
                                               'sender': '${data.userId}',
                                               'recipient': '${value.getUserId}',
                                             };
 
-                                            doSendMsg({
-                                              'passParam': passVariableSendMsg
-                                            });
+                                            doSendMsg({'passParam': passVariableSendMsg});
 
                                             _textController!.text = '';
 

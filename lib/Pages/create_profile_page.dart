@@ -464,6 +464,7 @@ class _CreateProfilePageState extends State<CreateProfilePage> with isInternetCo
     );
   }
 
+  //20230624 Remove Done Message and Only Add Button
   _showAlert() async {
     return await showDialog(
         context: context,
@@ -472,20 +473,25 @@ class _CreateProfilePageState extends State<CreateProfilePage> with isInternetCo
           return AppDialog(
             title: profile,
             body: [
-              ListView.builder(
-                shrinkWrap: true,
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(errorList![index].toString()),
-                  );
-                },
-                itemCount: errorList!.length,
-              )
+              errorList?.first?.toString().toLowerCase() == 'done'
+                  ? const SizedBox(
+                      height: 0,
+                      width: 0,
+                    )
+                  : ListView.builder(
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(errorList![index].toString()),
+                        );
+                      },
+                      itemCount: errorList!.length,
+                    )
             ],
             isBtnPositiveAvail: false,
             btnPositiveText: '',
-            btnNegativeText: dialogDismiss,
+            btnNegativeText: btnDone,
             onNegativeClick: () {
               Navigator.pop(context);
               if (errorList?.first?.toString().toLowerCase() == 'done') {
