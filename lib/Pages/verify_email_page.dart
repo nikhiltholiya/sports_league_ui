@@ -108,7 +108,7 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> with isInternetConnec
 
   Future<void> onBackManage() async {
     print('passData $passData');
-//20230706 Removed this portion, that used for reset password
+//20230706 Removed this portion, that used for reset password.
     // if (passData != null) {
     //   if (passData['for'] == forgotPassword) {
     //     // await Navigator.pushReplacementNamed(context, PasswordResetPage.path);
