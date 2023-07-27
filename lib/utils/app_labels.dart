@@ -95,5 +95,11 @@ const String allMatchesTitle = 'All Matches';
 const String latestScoreTitle = 'Latest Score';
 const String errorActLink = 'Please check your email for activation link';
 const String resendEmail = 'Resend Email';
+//20230727 For delete account functionality
+const String deleteAc = 'Delete Account';
+const String deleteAcHead = 'Request Permanent Deletion';
+const String deleteAcMsg = 'Deleting your account is permanent. When you delete your account, all of your content, transaction history and messages will be permanently erased and you will not be able to retrieve them.';
+const String deleteAcInst = 'Please enter your password for delete account, if you have any query then please contact to our customer care.';
+const String confDel = 'Confirm';
 
 
