@@ -5,7 +5,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:tenniston/utils/app_labels.dart';
 
+import '../Pages/delete_account_page.dart';
 import '../Pages/all_matches_pages.dart';
 import '../Pages/all_messaging_list_page.dart';
 import '../Pages/base_activity.dart';
@@ -39,15 +41,13 @@ class DashboardPage extends StatefulWidget {
   State<DashboardPage> createState() => _DashboardPageState();
 }
 
-class _DashboardPageState extends State<DashboardPage>
-    with isInternetConnection {
+class _DashboardPageState extends State<DashboardPage> with isInternetConnection {
   Map<String, dynamic> paramRevoke = {};
   Map<String, dynamic> paramTypeRevoke = {};
   var _scKey = GlobalKey<ScaffoldState>();
 
   // TODO GHOST #
   late RunMutation ghost;
-  // var _revokeToken = GlobalKey<MutationState>();
 
   @override
   void initState() {
@@ -64,6 +64,7 @@ class _DashboardPageState extends State<DashboardPage>
       {'null': null},
       {'Contact Us': Icons.phone_outlined},
       {'Communication Settings': Icons.settings_outlined},
+      {deleteAc: Icons.person_remove_alt_1_outlined}, //Added on 20230727 For delete account functionality
       {'Sign out': Icons.logout_outlined},
     ];
 
@@ -126,9 +127,7 @@ class _DashboardPageState extends State<DashboardPage>
     Map<String, dynamic> paramType = {
       'userId': '\$userId',
     };
-    Map<String, dynamic> passVariable = {
-      'userId': '${SharedPreferencesUtils.getUserId!}'
-    };
+    Map<String, dynamic> passVariable = {'userId': '${SharedPreferencesUtils.getUserId!}'};
 
     // var data = LoggedUser.fromJson(jsonDecode(SharedPreferencesUtils.getUserData.toString()));
 
@@ -162,12 +161,8 @@ class _DashboardPageState extends State<DashboardPage>
                 // setLoggedUser(AllUsersData.fromJson(result.data!).allUsers?.edges?.first.node?.toJson().toString());
                 // setLoggedUser(jsonEncode(AllUsersData.fromJson(result.data!).allUsers.));
 
-                SharedPreferencesUtils.setUserData(jsonEncode(
-                    AllUsersData.fromJson(result.data!)
-                        .allUsers
-                        ?.edges
-                        ?.first
-                        .node));
+                SharedPreferencesUtils.setUserData(
+                    jsonEncode(AllUsersData.fromJson(result.data!).allUsers?.edges?.first.node));
 
                 // print('USER DATA ${SharedPreferencesUtils.getUserData}');
                 return Column(
@@ -176,21 +171,11 @@ class _DashboardPageState extends State<DashboardPage>
                   children: [
                     AppHeadTile(
                       isDashboard: true,
-                      name: AllUsersData.fromJson(result.data!)
-                          .allUsers
-                          ?.edges
-                          ?.first
-                          .node
-                          ?.firstName,
+                      name: AllUsersData.fromJson(result.data!).allUsers?.edges?.first.node?.firstName,
                       onMenuClick: () {
                         _scKey.currentState?.openDrawer();
                       },
-                      userImage: AllUsersData.fromJson(result.data!)
-                          .allUsers
-                          ?.edges
-                          ?.first
-                          .node
-                          ?.picture,
+                      userImage: AllUsersData.fromJson(result.data!).allUsers?.edges?.first.node?.picture,
 
                       // onMenuClick: (){
                       //   scKey.currentState?.openEndDrawer();
@@ -205,12 +190,8 @@ class _DashboardPageState extends State<DashboardPage>
                         child: GridView.builder(
                           physics: BouncingScrollPhysics(),
                           padding: EdgeInsets.all(10.0),
-                          gridDelegate:
-                              SliverGridDelegateWithMaxCrossAxisExtent(
-                                  maxCrossAxisExtent: 200,
-                                  childAspectRatio: 2,
-                                  crossAxisSpacing: 10,
-                                  mainAxisSpacing: 10),
+                          gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                              maxCrossAxisExtent: 200, childAspectRatio: 2, crossAxisSpacing: 10, mainAxisSpacing: 10),
                           itemCount: dashBoardMenuItems.length,
                           itemBuilder: (BuildContext ctx, index) {
                             return DashboardMenuItem(
@@ -220,17 +201,12 @@ class _DashboardPageState extends State<DashboardPage>
                               subtitle: dashBoardMenuItems[index].subtitle,
                               title: dashBoardMenuItems[index].title,
                               onMenuClick: () {
-                                Provider.of<UserIdProvider>(context,
-                                        listen: false)
-                                    .setUserId(
-                                        SharedPreferencesUtils.getUserId);
-                                Provider.of<LeagueIdProvider>(context,
-                                        listen: false)
-                                    .setLeagueId('');
+                                Provider.of<UserIdProvider>(context, listen: false)
+                                    .setUserId(SharedPreferencesUtils.getUserId);
+                                Provider.of<LeagueIdProvider>(context, listen: false).setLeagueId('');
 
                                 if (dashBoardMenuItems[index].path!.isNotEmpty)
-                                  Navigator.pushNamed(context,
-                                      dashBoardMenuItems[index].path ?? '');
+                                  Navigator.pushNamed(context, dashBoardMenuItems[index].path ?? '');
                               },
                             );
                           },
@@ -243,8 +219,7 @@ class _DashboardPageState extends State<DashboardPage>
                       // TODO GHOST #
                       // key: _revokeToken,
                       options: MutationOptions(
-                        document:
-                            gql(revokeToken(paramRevoke, paramTypeRevoke)),
+                        document: gql(revokeToken(paramRevoke, paramTypeRevoke)),
                         // update: update,
                         onError: (OperationException? error) {
                           debugPrint('${DashboardPage.path} * erroR -- $error');
@@ -253,15 +228,18 @@ class _DashboardPageState extends State<DashboardPage>
                         // _simpleAlert(context, error.toString()),
                         onCompleted: (dynamic resultData) async {
                           // Text('Thanks for your star!');
-                          debugPrint(
-                              '${DashboardPage.path} * Result -- $resultData');
+                          debugPrint('${DashboardPage.path} * Result -- $resultData');
 
                           if (resultData != null) {
                             var data = resultData['revokeToken']['success'];
 
                             if (data) {
                               SharedPreferencesUtils.dataClear();
-                              Navigator.pushNamedAndRemoveUntil(context, HomePage.path,(route) => false,);
+                              Navigator.pushNamedAndRemoveUntil(
+                                context,
+                                HomePage.path,
+                                (route) => false,
+                              );
                             }
                           } else {
                             // errorList = [];
@@ -316,8 +294,7 @@ class _DashboardPageState extends State<DashboardPage>
           return index == 0
               ? Padding(
                   padding: const EdgeInsets.all(20.0),
-                  child: Image.asset('assets/tennis_toon_logo.png',
-                      height: 40, alignment: Alignment.centerLeft),
+                  child: Image.asset('assets/tennis_toon_logo.png', height: 40, alignment: Alignment.centerLeft),
                 )
               : DashboardDrawerListTile(
                   onMenuClick: () {
@@ -329,13 +306,12 @@ class _DashboardPageState extends State<DashboardPage>
                         Navigator.pop(context);
                         break;
                       case 3:
-                        Map<String, dynamic> passVars = {
-                          'refreshToken':
-                              '${SharedPreferencesUtils.getRefreshToken}'
-                        };
+                        Navigator.popAndPushNamed(context, DeleteAccountPage.path);
+                        break;
+                      case 4:
+                        Map<String, dynamic> passVars = {'refreshToken': '${SharedPreferencesUtils.getRefreshToken}'};
 
-                        print(
-                            'revoke -$paramRevoke :: $paramTypeRevoke :: $passVars');
+                        print('revoke -$paramRevoke :: $paramTypeRevoke :: $passVars');
                         // TODO GHOST #
                         ghost(passVars);
                         // _revokeToken.currentState?.runMutation(passVars);

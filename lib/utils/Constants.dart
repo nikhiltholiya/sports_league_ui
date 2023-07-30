@@ -542,3 +542,15 @@ String verifyToken(Map<String, dynamic>? param, Map<String, dynamic>? paramType)
       }
 ''';
 }
+
+//20230727 Added Delete Account
+String deleteAccount(Map<String, dynamic>? param, Map<String, dynamic>? paramType) {
+  return '''
+      mutation deleteAccount(${param.toString().trim().substring(1, param.toString().trim().length - 1)}) {
+          deleteAccount(${paramType.toString().trim().substring(1, paramType.toString().trim().length - 1)}) {
+              success
+              errors
+          }
+      }
+''';
+}

@@ -30,6 +30,7 @@ import '../Pages/splash_page.dart';
 import '../Pages/submit_score_details.dart';
 import '../Pages/submit_score_list.dart';
 import '../Pages/verify_email_page.dart';
+import '../Pages/delete_account_page.dart';
 import '../graphql/graphql_view.dart';
 import '../providers/league_id_provider.dart';
 import '../providers/user_id_provider.dart';
@@ -218,6 +219,10 @@ class AppBody extends StatelessWidget {
           } else if (settings.name == LatestScorePage.path) {
             return CupertinoPageRoute(
                 builder: (context) => LatestScorePage(), settings: settings);
+          }//20230727 Added for delete account page redirections
+          else if (settings.name == DeleteAccountPage.path) {
+            return CupertinoPageRoute(
+                builder: (context) => DeleteAccountPage(), settings: settings);
           } else {
             return null;
           }
