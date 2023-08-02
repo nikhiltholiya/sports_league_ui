@@ -164,7 +164,7 @@ class _MyLeagueListState extends State<MyLeagueList> with isInternetConnection {
                                   child: Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: DropDownView(
-                                      dropList: ['Portland, Oregon', 'Los Angeles, California', 'Atlanta, Georgia'],
+                                      dropList: ['Portland, Oregon', 'Atlanta, Georgia', 'Austin, Texas'],
                                       hint: joinLeagueByCity,
                                       dropdownValue: dropDownValue,
                                       onValueChange: (value) {
