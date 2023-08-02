@@ -1,12 +1,13 @@
+import 'dart:convert';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:provider/provider.dart';
-
 import '../Pages/base_activity.dart';
 import '../Pages/dashboard.dart';
 import '../Pages/home_page.dart';
 import '../Pages/no_internet_page.dart';
+import '../bean/token_auth/token_auth.dart';
 import '../providers/internet_provider.dart';
 import '../utils/Constants.dart';
 import '../utils/Internet.dart';
@@ -59,9 +60,9 @@ class _SplashPageState extends State<SplashPage> with SingleTickerProviderStateM
 
     _animController.addStatusListener((status) {
       // setState(() {
-        if (status == AnimationStatus.completed) {
-          getDelay();
-        }
+      if (status == AnimationStatus.completed) {
+        getDelay();
+      }
       // });
     });
     // _animController.addStatusListener((status) async {
@@ -124,7 +125,20 @@ class _SplashPageState extends State<SplashPage> with SingleTickerProviderStateM
                       if (resultData != null) {
                         print(resultData);
                         var success = resultData['verifyToken']['success'];
-                        Navigator.pushReplacementNamed(context, success ? DashboardPage.path : HomePage.path);
+                        //20230802 Resolve issue of null / red screen in app.
+                        // use case : User sign in success fully and after denied to fill basic details like name, last name and so on and close app.
+                        // when user come back to app then ,basically this Mutation check token,that return success true but user data like name and details are null.
+                        // so this problem occur.
+                        bool validUser = false;
+
+                        if (SharedPreferencesUtils.getUserData != null) {
+                          var data = LoggedUser.fromJson(jsonDecode(SharedPreferencesUtils.getUserData.toString()));
+                          validUser = data.firstName.toString().isNotEmpty ? true : false;
+                        } else {
+                          validUser = false;
+                        }
+                        Navigator.pushReplacementNamed(
+                            context, (validUser && success) ? DashboardPage.path : HomePage.path);
                       }
                     },
                     // 'Sorry you changed your mind!',
@@ -137,7 +151,6 @@ class _SplashPageState extends State<SplashPage> with SingleTickerProviderStateM
                               child: CupertinoActivityIndicator(color: aWhite),
                             )
                           : SizedBox();
-
                     }
                     return SizedBox();
                     // _streamController.sink.add(addResult!.isLoading);
@@ -155,7 +168,6 @@ class _SplashPageState extends State<SplashPage> with SingleTickerProviderStateM
     });
   }
 
-
   Widget AnimatedIcon() {
     _animController.forward();
     return AnimatedContainer(
@@ -167,67 +179,3 @@ class _SplashPageState extends State<SplashPage> with SingleTickerProviderStateM
     );
   }
 }
-
-
-// import 'package:flutter/material.dart';
-// import 'package:graphql_flutter/graphql_flutter.dart';
-//
-// class MyMutationScreen extends StatefulWidget {
-//   @override
-//   _MyMutationScreenState createState() => _MyMutationScreenState();
-// }
-//
-// class _MyMutationScreenState extends State<MyMutationScreen> {
-//   late RunMutation runMutation; // Declare the runMutation variable
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text('Mutation Example'),
-//       ),
-//       body: Mutation(
-//         options: MutationOptions(
-//           document: gql('''
-//             mutation CreateUser(\$name: String!, \$age: Int!) {
-//               createUser(name: \$name, age: \$age) {
-//                 id
-//                 name
-//                 age
-//               }
-//             }
-//           '''),
-//         ),
-//         builder: (RunMutation runMutation, QueryResult? result) {
-//           // Assign the runMutation function to the outer scope variable
-//           this.runMutation = runMutation;
-//
-//           return Center(
-//             child: ElevatedButton(
-//               onPressed: _onCreateUserPressed,
-//               child: Text('Create User'),
-//             ),
-//           );
-//         },
-//       ),
-//     );
-//   }
-//
-//   void _onCreateUserPressed() {
-//     // Access the runMutation function outside of the builder
-//     runMutation({
-//       'name': 'John',
-//       'age': 25,
-//     }).then((QueryResult result) {
-//       // Handle the result of the mutation
-//       if (result.hasException) {
-//         // Handle any errors
-//       } else {
-//         // Handle the successful mutation response
-//         var data = result.data;
-//         // Do something with the data
-//       }
-//     });
-//   }
-// }
-

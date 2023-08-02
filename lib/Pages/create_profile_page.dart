@@ -13,6 +13,7 @@ import 'package:provider/provider.dart';
 import '../Pages/base_activity.dart';
 import '../Pages/create_profile_picture_page.dart';
 import '../Pages/no_internet_page.dart';
+import '../bean/cities_query/cities_query.dart';
 import '../bean/create_profile/create_profile_data.dart';
 import '../bean/token_auth/token_auth.dart';
 import '../components/app_dialog.dart';
@@ -39,7 +40,7 @@ class CreateProfilePage extends StatefulWidget {
 
 class _CreateProfilePageState extends State<CreateProfilePage> with isInternetConnection {
   String? bDate = 'Date of Birth';
-  String? dropDownValueCity;
+  String? dropDownValueState;
   String? selectedCity = '';
   String? selectedState = '';
   String? dropDownValueRate;
@@ -50,6 +51,16 @@ class _CreateProfilePageState extends State<CreateProfilePage> with isInternetCo
   String? lastNameValue = '';
   String? mobileNoValue = '';
   String? cityValue = '';
+  String? Search = '';
+  var _citySearchStream = StreamController<List<Edges>>();
+  late CitiesQueryData _citiesQueryData;
+  Map<String, dynamic> paramForSearchCity = {};
+  Map<String, dynamic> paramTypeForSearchCity = {};
+
+  // bool isCitySelected = false;
+  final TextEditingController _cityTextController = TextEditingController();
+  late List<String>? cityList = [];
+  late List<String>? stateList = [];
 
   // bool? isEnable = true;
 
@@ -104,8 +115,18 @@ class _CreateProfilePageState extends State<CreateProfilePage> with isInternetCo
       'picture': ' \$picture',
     };
 
+    //20230801 Added for search City Query
+    paramForSearchCity = {
+      '\$cityNameSearch': 'String!',
+    };
+    paramTypeForSearchCity = {
+      'cityNameSearch': '\$cityNameSearch',
+    };
+
     _streamController = StreamController<bool>();
     _streamController.sink.add(true);
+    _citySearchStream.sink.add([]);
+    _cityTextController.text = cityValue!;
 
     fnameFocusNode = FocusNode();
     lnameFocusNode = FocusNode();
@@ -128,6 +149,7 @@ class _CreateProfilePageState extends State<CreateProfilePage> with isInternetCo
     stateFocusNode!.dispose();
     ratingFocusNode!.dispose();
     submitFocusNode!.dispose();
+    _citySearchStream.close();
     disposeInternet();
     super.dispose();
   }
@@ -292,47 +314,101 @@ class _CreateProfilePageState extends State<CreateProfilePage> with isInternetCo
                               ),
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 5),
-                            child: EditTextFormField(
-                              focusNode: cityFocusNode,
-                              isEnable: isEnabled.data!,
-                              validator: RequiredValidator(errorText: errCity),
-                              inputFormatter: [FilteringTextInputFormatter(RegExp(r'[a-zA-Z]'), allow: true)],
-                              textInputAction: TextInputAction.next,
-                              onTextChange: (value) {
-                                cityValue = value;
-                              },
-                              onTap: () {},
-                              onFieldSubmitted: (action) {
-                                print(action);
-                                cityFocusNode!.unfocus();
-                              },
-                              hint: city,
-                            ),
+
+                          //20230801 Added new view for city searchable and states list from selected city.
+                          StreamBuilder<List<Edges>>(
+                            stream: _citySearchStream.stream,
+                            builder: (context, snapshot) {
+                              cityList = [];
+                              if (snapshot.hasData) {
+                                for (var cityItem in snapshot.data!) {
+                                  if (!cityList!.contains(cityItem.node!.name!)) cityList!.add(cityItem.node!.name!);
+                                }
+                              }
+
+                              return Wrap(
+                                children: [
+                                  EditTextFormField(
+                                    onTap: () {
+                                      _cityTextController.selection = TextSelection.fromPosition(
+                                        TextPosition(offset: _cityTextController.text.length),
+                                      );
+                                    },
+                                    focusNode: cityFocusNode,
+                                    hint: city,
+                                    validator: RequiredValidator(errorText: errCity),
+                                    inputFormatter: [FilteringTextInputFormatter(RegExp(r'[a-zA-Z]'), allow: true)],
+                                    onTextChange: (value) {
+                                      cityValue = value;
+                                      Search = value;
+                                      if (value.toString().trim().length > 2) {
+                                        executeGraphQLQuery(Search!);
+                                      } else {
+                                        _citySearchStream.sink.add([]);
+                                      }
+                                    },
+                                    textController: _cityTextController,
+                                  ),
+                                  cityList!.length > 0
+                                      ? Search.toString().trim().length > 2
+                                          ? cityList!.length > 0
+                                              ? Padding(
+                                                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                                                  child: ListView.separated(
+                                                    itemBuilder: (context, index) => GestureDetector(
+                                                      onTap: () {
+                                                        cityValue = '${cityList![index]}';
+                                                        _cityTextController.text = cityValue!;
+                                                        cityFocusNode!.unfocus();
+
+                                                        stateList = [];
+                                                        dropDownValueState = null;
+                                                        for (var cityItem in snapshot.data!) {
+                                                          if (cityValue == cityItem.node!.name &&
+                                                              !stateList!.contains(cityItem.node!.state!))
+                                                            stateList!.add(cityItem.node!.state!);
+                                                        }
+                                                        _citySearchStream.sink.add([]);
+                                                      },
+                                                      child: Container(
+                                                        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 12),
+                                                        child: Text(
+                                                          '${cityList![index]}',
+                                                          style: TextStyle(
+                                                            color: aGray,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    separatorBuilder: (context, index) => Divider(height: 1),
+                                                    itemCount: cityList!.length,
+                                                    shrinkWrap: true,
+                                                    physics: const BouncingScrollPhysics(),
+                                                  ),
+                                                )
+                                              : SizedBox()
+                                          : SizedBox()
+                                      : SizedBox(),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+                                    child: DropDownView(
+                                      dropList: stateList ?? [],
+                                      hint: selectState,
+                                      dropdownValue: dropDownValueState,
+                                      onValueChange: (value) {
+                                        dropDownValueState = value;
+                                        // final split = value.split(',');
+                                        // selectedCity = split![0].toString().trim();
+                                        // selectedState = split![1].toString().trim();
+                                        selectedState = value;
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              );
+                            },
                           ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-                            child: DropDownView(
-                              dropList: [
-                                // 'Portland, Oregon',
-                                // 'Los Angeles, California',
-                                // 'Atlanta, Georgia'
-                                'Oregon',
-                                'California',
-                                'Georgia'
-                              ],
-                              hint: selectState,
-                              dropdownValue: dropDownValueCity,
-                              onValueChange: (value) {
-                                dropDownValueCity = value;
-                                // final split = value.split(',');
-                                // selectedCity = split![0].toString().trim();
-                                // selectedState = split![1].toString().trim();
-                                selectedState = value;
-                              },
-                            ),
-                          ),
+
                           Padding(
                             padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
                             child: DropDownView(
@@ -464,7 +540,7 @@ class _CreateProfilePageState extends State<CreateProfilePage> with isInternetCo
     );
   }
 
-  //20230624 Remove Done Message and Only Add Button
+//20230624 Remove Done Message and Only Add Button
   _showAlert() async {
     return await showDialog(
         context: context,
@@ -504,5 +580,45 @@ class _CreateProfilePageState extends State<CreateProfilePage> with isInternetCo
             },
           );
         });
+  }
+
+  Future<bool?> executeGraphQLQuery(String Search) async {
+    final QueryOptions getCities = QueryOptions(
+      document: gql(cities(paramForSearchCity, paramTypeForSearchCity)),
+      variables: {'cityNameSearch': Search},
+      fetchPolicy: FetchPolicy.networkOnly,
+      pollInterval: Duration(seconds: 100),
+    );
+
+    final client = GraphQLProvider.of(context).value;
+    final QueryResult result = await client.query(getCities);
+    _citySearchStream.sink.add([]);
+
+    if (result.hasException) {
+      print(result.exception.toString());
+      return false;
+    } else if (result.isLoading) {
+      print('Loading..');
+      return false;
+    } else {
+      try {
+        print('$result');
+        if (Search.trim().length > 0) {
+          _citiesQueryData = CitiesQueryData.fromJson(result.data!);
+
+          List<Edges> cityList = [];
+          cityList.addAll(_citiesQueryData.cities!.edges!);
+          // for (var data in _citiesQueryData.cities!.edges!) {
+          //   cityList.add(data.node!.name!);
+          // }
+
+          _citySearchStream.sink.add(cityList);
+        }
+        return true;
+      } catch (e) {
+        debugPrint('Exception -- $e');
+        return false;
+      }
+    }
   }
 }

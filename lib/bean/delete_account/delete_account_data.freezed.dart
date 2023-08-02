@@ -343,8 +343,8 @@ Errors _$ErrorsFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Errors {
-  List<ErrorsFields>? get nonFieldErrors => throw _privateConstructorUsedError;
   List<ErrorsFields>? get password => throw _privateConstructorUsedError;
+  List<ErrorsFields>? get nonFieldErrors => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -356,7 +356,7 @@ abstract class $ErrorsCopyWith<$Res> {
   factory $ErrorsCopyWith(Errors value, $Res Function(Errors) then) =
       _$ErrorsCopyWithImpl<$Res, Errors>;
   @useResult
-  $Res call({List<ErrorsFields>? nonFieldErrors, List<ErrorsFields>? password});
+  $Res call({List<ErrorsFields>? password, List<ErrorsFields>? nonFieldErrors});
 }
 
 /// @nodoc
@@ -372,17 +372,17 @@ class _$ErrorsCopyWithImpl<$Res, $Val extends Errors>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? nonFieldErrors = freezed,
     Object? password = freezed,
+    Object? nonFieldErrors = freezed,
   }) {
     return _then(_value.copyWith(
-      nonFieldErrors: freezed == nonFieldErrors
-          ? _value.nonFieldErrors
-          : nonFieldErrors // ignore: cast_nullable_to_non_nullable
-              as List<ErrorsFields>?,
       password: freezed == password
           ? _value.password
           : password // ignore: cast_nullable_to_non_nullable
+              as List<ErrorsFields>?,
+      nonFieldErrors: freezed == nonFieldErrors
+          ? _value.nonFieldErrors
+          : nonFieldErrors // ignore: cast_nullable_to_non_nullable
               as List<ErrorsFields>?,
     ) as $Val);
   }
@@ -394,7 +394,7 @@ abstract class _$$_ErrorsCopyWith<$Res> implements $ErrorsCopyWith<$Res> {
       __$$_ErrorsCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<ErrorsFields>? nonFieldErrors, List<ErrorsFields>? password});
+  $Res call({List<ErrorsFields>? password, List<ErrorsFields>? nonFieldErrors});
 }
 
 /// @nodoc
@@ -407,17 +407,17 @@ class __$$_ErrorsCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? nonFieldErrors = freezed,
     Object? password = freezed,
+    Object? nonFieldErrors = freezed,
   }) {
     return _then(_$_Errors(
-      nonFieldErrors: freezed == nonFieldErrors
-          ? _value._nonFieldErrors
-          : nonFieldErrors // ignore: cast_nullable_to_non_nullable
-              as List<ErrorsFields>?,
       password: freezed == password
           ? _value._password
           : password // ignore: cast_nullable_to_non_nullable
+              as List<ErrorsFields>?,
+      nonFieldErrors: freezed == nonFieldErrors
+          ? _value._nonFieldErrors
+          : nonFieldErrors // ignore: cast_nullable_to_non_nullable
               as List<ErrorsFields>?,
     ));
   }
@@ -427,23 +427,13 @@ class __$$_ErrorsCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_Errors implements _Errors {
   const _$_Errors(
-      {required final List<ErrorsFields>? nonFieldErrors,
-      required final List<ErrorsFields>? password})
-      : _nonFieldErrors = nonFieldErrors,
-        _password = password;
+      {required final List<ErrorsFields>? password,
+      required final List<ErrorsFields>? nonFieldErrors})
+      : _password = password,
+        _nonFieldErrors = nonFieldErrors;
 
   factory _$_Errors.fromJson(Map<String, dynamic> json) =>
       _$$_ErrorsFromJson(json);
-
-  final List<ErrorsFields>? _nonFieldErrors;
-  @override
-  List<ErrorsFields>? get nonFieldErrors {
-    final value = _nonFieldErrors;
-    if (value == null) return null;
-    if (_nonFieldErrors is EqualUnmodifiableListView) return _nonFieldErrors;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(value);
-  }
 
   final List<ErrorsFields>? _password;
   @override
@@ -455,9 +445,19 @@ class _$_Errors implements _Errors {
     return EqualUnmodifiableListView(value);
   }
 
+  final List<ErrorsFields>? _nonFieldErrors;
+  @override
+  List<ErrorsFields>? get nonFieldErrors {
+    final value = _nonFieldErrors;
+    if (value == null) return null;
+    if (_nonFieldErrors is EqualUnmodifiableListView) return _nonFieldErrors;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
   @override
   String toString() {
-    return 'Errors(nonFieldErrors: $nonFieldErrors, password: $password)';
+    return 'Errors(password: $password, nonFieldErrors: $nonFieldErrors)';
   }
 
   @override
@@ -465,17 +465,17 @@ class _$_Errors implements _Errors {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Errors &&
+            const DeepCollectionEquality().equals(other._password, _password) &&
             const DeepCollectionEquality()
-                .equals(other._nonFieldErrors, _nonFieldErrors) &&
-            const DeepCollectionEquality().equals(other._password, _password));
+                .equals(other._nonFieldErrors, _nonFieldErrors));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(_nonFieldErrors),
-      const DeepCollectionEquality().hash(_password));
+      const DeepCollectionEquality().hash(_password),
+      const DeepCollectionEquality().hash(_nonFieldErrors));
 
   @JsonKey(ignore: true)
   @override
@@ -493,15 +493,15 @@ class _$_Errors implements _Errors {
 
 abstract class _Errors implements Errors {
   const factory _Errors(
-      {required final List<ErrorsFields>? nonFieldErrors,
-      required final List<ErrorsFields>? password}) = _$_Errors;
+      {required final List<ErrorsFields>? password,
+      required final List<ErrorsFields>? nonFieldErrors}) = _$_Errors;
 
   factory _Errors.fromJson(Map<String, dynamic> json) = _$_Errors.fromJson;
 
   @override
-  List<ErrorsFields>? get nonFieldErrors;
-  @override
   List<ErrorsFields>? get password;
+  @override
+  List<ErrorsFields>? get nonFieldErrors;
   @override
   @JsonKey(ignore: true)
   _$$_ErrorsCopyWith<_$_Errors> get copyWith =>
