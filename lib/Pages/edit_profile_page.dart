@@ -18,6 +18,8 @@ import 'package:provider/provider.dart';
 
 import '../Pages/base_activity.dart';
 import '../Pages/no_internet_page.dart';
+import '../bean/all_users/all_users.dart';
+import '../bean/cities_query/cities_query.dart';
 import '../bean/create_profile/create_profile_data.dart';
 import '../bean/token_auth/token_auth.dart';
 import '../components/app_dialog.dart';
@@ -52,9 +54,9 @@ class _EditProfilePageState extends State<EditProfilePage> with isInternetConnec
   var userData = LoggedUser.fromJson(jsonDecode(SharedPreferencesUtils.getUserData.toString()));
 
   String? bDate;
-  String? dropDownValueCity;
-  String? selectedCity = '';
-  String? selectedState = '';
+  String? dropDownValueState;
+  String? selectedCity = ''; // not Used
+  String? selectedState = ''; // not Used
   String? dropDownValueRate;
   String? selectedRate = '';
   List<String>? rate;
@@ -88,6 +90,19 @@ class _EditProfilePageState extends State<EditProfilePage> with isInternetConnec
   XFile? _pickedFile;
   CroppedFile? _croppedFile;
 
+  String? Search = '';
+  var _citySearchStream = StreamController<List<Edges>>();
+  late CitiesQueryData _citiesQueryData;
+  Map<String, dynamic> paramForSearchCity = {};
+  Map<String, dynamic> paramTypeForSearchCity = {};
+
+  // bool isCitySelected = false;
+  final TextEditingController _cityTextController = TextEditingController();
+  late List<String>? cityList = [];
+  late List<String>? stateList = [];
+
+  FocusNode? cityFocusNode;
+
   @override
   void initState() {
     initInternet(context);
@@ -98,7 +113,7 @@ class _EditProfilePageState extends State<EditProfilePage> with isInternetConnec
     }
 
     bDate = userData.dob ?? 'Date of Birth';
-    dropDownValueCity = userData.state;
+    dropDownValueState = userData.state;
     selectedCity = userData.city;
     selectedState = userData.state;
     dropDownValueRate = userData.rating;
@@ -143,10 +158,25 @@ class _EditProfilePageState extends State<EditProfilePage> with isInternetConnec
       'userid': '\$userId',
     };
 
+    cityFocusNode = FocusNode();
+
+    //20230801 Added for search City Query
+    paramForSearchCity = {
+      '\$cityNameSearch': 'String!',
+    };
+    paramTypeForSearchCity = {
+      'cityNameSearch': '\$cityNameSearch',
+    };
+
     _streamFormController = StreamController<bool?>();
     _streamImgState = StreamController<imgState>();
     _streamImgState.sink.add(imgState.free);
     _streamFormController.sink.add(true);
+
+    _citySearchStream.sink.add([]);
+    _cityTextController.text = cityValue!;
+    stateList = [];
+    if (dropDownValueState != null) stateList!.add(dropDownValueState!);
 
     super.initState();
   }
@@ -155,6 +185,9 @@ class _EditProfilePageState extends State<EditProfilePage> with isInternetConnec
   void dispose() {
     _streamImgState.close();
     _streamFormController.close();
+    cityFocusNode!.dispose();
+    _citySearchStream.close();
+    _clearImage();
     disposeInternet();
 
     super.dispose();
@@ -322,42 +355,99 @@ class _EditProfilePageState extends State<EditProfilePage> with isInternetConnec
                                   ),
                                 ),
                               ),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 5),
-                                child: EditTextFormField(
-                                  textController: TextEditingController(text: cityValue),
-                                  isEnable: isEnabled.data!,
-                                  validator: RequiredValidator(errorText: errCity),
-                                  inputFormatter: [FilteringTextInputFormatter(RegExp(r'[a-zA-Z]'), allow: true)],
-                                  textInputAction: TextInputAction.send,
-                                  onTextChange: (value) {
-                                    cityValue = value;
-                                  },
-                                  onTap: () {},
-                                  hint: city,
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-                                child: DropDownView(
-                                  dropList: [
-                                    // 'Portland, Oregon',
-                                    // 'Los Angeles, California',
-                                    // 'Atlanta, Georgia'
-                                    'Oregon',
-                                    'California',
-                                    'Georgia'
-                                  ],
-                                  hint: selectState,
-                                  dropdownValue: dropDownValueCity,
-                                  onValueChange: (value) {
-                                    dropDownValueCity = value;
-                                    // final split = value.split(',');
-                                    // selectedCity = split![0].toString().trim();
-                                    // selectedState = split![1].toString().trim();
-                                    selectedState = value;
-                                  },
-                                ),
+
+                              //20230801 Added new view for city searchable and states list from selected city.
+                              StreamBuilder<List<Edges>>(
+                                stream: _citySearchStream.stream,
+                                builder: (context, snapshot) {
+                                  cityList = [];
+                                  if (snapshot.hasData) {
+                                    for (var cityItem in snapshot.data!) {
+                                      if (!cityList!.contains(cityItem.node!.name!))
+                                        cityList!.add(cityItem.node!.name!);
+                                    }
+                                  }
+
+                                  return Wrap(
+                                    children: [
+                                      EditTextFormField(
+                                        onTap: () {
+                                          _cityTextController.selection = TextSelection.fromPosition(
+                                            TextPosition(offset: _cityTextController.text.length),
+                                          );
+                                        },
+                                        textController: _cityTextController,
+                                        validator: RequiredValidator(errorText: errCity),
+                                        inputFormatter: [FilteringTextInputFormatter(RegExp(r'[a-zA-Z]'), allow: true)],
+                                        hint: city,
+                                        onTextChange: (value) {
+                                          cityValue = value;
+                                          Search = value;
+                                          if (value.toString().trim().length > 2) {
+                                            executeGraphQLQuery(Search!);
+                                          } else {
+                                            _citySearchStream.sink.add([]);
+                                          }
+                                        },
+                                      ),
+                                      cityList!.length > 0
+                                          ? Search.toString().trim().length > 2
+                                              ? cityList!.length > 0
+                                                  ? Padding(
+                                                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                                                      child: ListView.separated(
+                                                        itemBuilder: (context, index) => GestureDetector(
+                                                          onTap: () {
+                                                            cityValue = '${cityList![index]}';
+                                                            _cityTextController.text = cityValue!;
+                                                            cityFocusNode!.unfocus();
+
+                                                            stateList = [];
+                                                            dropDownValueState = null;
+                                                            for (var cityItem in snapshot.data!) {
+                                                              if (cityValue == cityItem.node!.name &&
+                                                                  !stateList!.contains(cityItem.node!.state!))
+                                                                stateList!.add(cityItem.node!.state!);
+                                                            }
+                                                            _citySearchStream.sink.add([]);
+                                                          },
+                                                          child: Container(
+                                                            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 12),
+                                                            child: Text(
+                                                              '${cityList![index]}',
+                                                              style: TextStyle(
+                                                                color: aGray,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        separatorBuilder: (context, index) => Divider(height: 1),
+                                                        itemCount: cityList!.length,
+                                                        shrinkWrap: true,
+                                                        physics: const BouncingScrollPhysics(),
+                                                      ),
+                                                    )
+                                                  : SizedBox()
+                                              : SizedBox()
+                                          : SizedBox(),
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+                                        child: DropDownView(
+                                          dropList: stateList ?? [],
+                                          hint: selectState,
+                                          dropdownValue: dropDownValueState,
+                                          onValueChange: (value) {
+                                            dropDownValueState = value;
+                                            // final split = value.split(',');
+                                            // selectedCity = split![0].toString().trim();
+                                            // selectedState = split![1].toString().trim();
+                                            selectedState = value;
+                                          },
+                                        ),
+                                      ),
+                                    ],
+                                  );
+                                },
                               ),
                               Padding(
                                 padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
@@ -378,16 +468,17 @@ class _EditProfilePageState extends State<EditProfilePage> with isInternetConnec
                                     document: gql(uploadImage(paramImgUpload, paramTypeImgUpload)),
                                     onCompleted: (dynamic resultData) {
                                       if (resultData != null) {
-                                        // errorList = [];
-                                        // var result = resultData['uploadImage']['success'];
-                                        // errorList!.add(result ? 'DONE' : 'some problem for update picture');
-                                        // _showAlert();
+                                        errorList = [];
+                                        var result = resultData['uploadImage']['success'];
+                                        errorList!.add(result ? 'DONE' : 'some problem for update picture');
+                                        _showAlert();
                                       }
                                     },
                                     onError: (OperationException? error) {
                                       print('erroR -- $error');
                                     }),
                                 builder: (runMutation, result) {
+                                  this._profileImgMutation = runMutation; //20230802 Resolve image uploading
                                   return SizedBox();
                                 },
                               ),
@@ -416,7 +507,7 @@ class _EditProfilePageState extends State<EditProfilePage> with isInternetConnec
                     // Text('$error');
                   },
                   // _simpleAlert(context, error.toString()),
-                  onCompleted: (dynamic resultData) {
+                  onCompleted: (dynamic resultData) async {
                     // Text('Thanks for your star!');
                     _streamFormController.sink.add(true);
                     debugPrint('${EditProfilePage.path} **** RESULT * $resultData');
@@ -435,10 +526,13 @@ class _EditProfilePageState extends State<EditProfilePage> with isInternetConnec
                           errorList!.add(_createProfileData.updateAccount!.errors?.dob?.first.message);
                       }
 
-                      imageUploadProgress();
+                      //20230802 prevent from multiple call
+                      if (_pickedFile != null || _croppedFile != null) {
+                        await imageUploadProgress();
+                      }
 
-                      print('After');
                       if (errorList!.isNotEmpty) _showAlert();
+                      executeForUpdate();
                     }
                   },
                   // 'Sorry you changed your mind!',
@@ -507,7 +601,7 @@ class _EditProfilePageState extends State<EditProfilePage> with isInternetConnec
     );
   }
 
-  void imageUploadProgress() async {
+  Future<void> imageUploadProgress() async {
     // var byteData = imageFile != null
     //     ? imageFile!.readAsBytesSync()
     //     : await getImageFileFromAssets('avatar${selectedAvatar.first}.png').then((value) => value.readAsBytesSync());
@@ -523,17 +617,10 @@ class _EditProfilePageState extends State<EditProfilePage> with isInternetConnec
       contentType: MediaType('image', 'jpg'),
     );
 
-    // TODO GHOST #
-    // var resp =
-    //     await _profileImgMutation.currentState?.runMutation(<String, dynamic>{
-    //   'file': multipartFile,
-    //   'userId': '${userData.userId}',
-    // });
-    var resp = await _profileImgMutation(<String, dynamic>{
+    await _profileImgMutation(<String, dynamic>{
       'file': multipartFile,
       'userId': '${userData.userId}',
     });
-    print('resp 522 *$resp');
   }
 
   Future<File> getImageFileFromAssets(String path) async {
@@ -562,6 +649,12 @@ class _EditProfilePageState extends State<EditProfilePage> with isInternetConnec
               radius: 100,
             )
           : CircleAvatar(backgroundImage: FileImage(File(path)), radius: 100);
+    } else if (picture != null || picture != '') {
+      //20230802 show images if already uploaded
+      return CircleAvatar(
+        backgroundImage: NetworkImage(picture!),
+        radius: 100,
+      );
     } else {
       return CircleAvatar(
         backgroundImage: AssetImage('assets/avatar0.png'),
@@ -642,14 +735,12 @@ class _EditProfilePageState extends State<EditProfilePage> with isInternetConnec
   void _clearImage() {
     _pickedFile = null;
     _croppedFile = null;
-    _streamImgState.sink.add(imgState.free);
     // setState(() {
     //   state = imgState.free;
     // });
   }
 
 //IMAGE OVER
-
   //20230608 Change Dialog with done only if success and is failure then it shows Error list in dialog..
   _showAlert() async {
     return await showDialog(
@@ -692,5 +783,81 @@ class _EditProfilePageState extends State<EditProfilePage> with isInternetConnec
             },
           );
         });
+  }
+
+//20230801 Add city with searchable and states as per city selected
+  Future<bool?> executeGraphQLQuery(String Search) async {
+    final QueryOptions getCities = QueryOptions(
+      document: gql(cities(paramForSearchCity, paramTypeForSearchCity)),
+      variables: {'cityNameSearch': Search},
+      fetchPolicy: FetchPolicy.networkOnly,
+      pollInterval: Duration(seconds: 100),
+    );
+
+    final client = GraphQLProvider.of(context).value;
+    final QueryResult result = await client.query(getCities);
+    _citySearchStream.sink.add([]);
+
+    if (result.hasException) {
+      print(result.exception.toString());
+      return false;
+    } else if (result.isLoading) {
+      print('Loading..');
+      return false;
+    } else {
+      try {
+        print('$result');
+        if (Search.trim().length > 0) {
+          _citiesQueryData = CitiesQueryData.fromJson(result.data!);
+
+          List<Edges> cityList = [];
+          cityList.addAll(_citiesQueryData.cities!.edges!);
+          // for (var data in _citiesQueryData.cities!.edges!) {
+          //   cityList.add(data.node!.name!);
+          // }
+
+          _citySearchStream.sink.add(cityList);
+        }
+        return true;
+      } catch (e) {
+        debugPrint('Exception -- $e');
+        return false;
+      }
+    }
+  }
+
+//20230802 Added for update user data in shared preferences
+  Future<bool?> executeForUpdate() async {
+    Map<String, dynamic> param = {
+      '\$userId': 'UUID',
+    };
+    Map<String, dynamic> paramType = {
+      'userId': '\$userId',
+    };
+    Map<String, dynamic> passVariable = {'userId': '${SharedPreferencesUtils.getUserId!}'};
+
+    final QueryOptions getUserDetails = QueryOptions(
+      document: gql(allUsers(param, paramType)),
+      variables: passVariable,
+      fetchPolicy: FetchPolicy.networkOnly,
+      pollInterval: Duration(seconds: 100),
+    );
+
+    final client = GraphQLProvider.of(context).value;
+    final QueryResult result = await client.query(getUserDetails);
+
+    if (result.hasException) {
+      return false;
+    } else if (result.isLoading) {
+      return false;
+    } else {
+      try {
+        SharedPreferencesUtils.setUserData(jsonEncode(AllUsersData.fromJson(result.data!).allUsers?.edges?.first.node));
+        return true;
+      } catch (e) {
+        debugPrint('Exception -- $e');
+        return false;
+      }
+    }
   }
 }

@@ -309,6 +309,25 @@ String allMatches(Map<String, dynamic>? param, Map<String, dynamic>? paramType) 
 ''';
 }
 
+//20230801 Added query for fetching city list from server.
+String cities(Map<String, dynamic>? param, Map<String, dynamic>? paramType) {
+  return '''
+      query cities(${param.toString().trim().substring(1, param.toString().trim().length - 1)}) {
+          cities(${paramType.toString().trim().substring(1, paramType.toString().trim().length - 1)}) {
+              edges {
+                 node {
+                      name
+                      state
+                      stateCode
+                      county
+                      cityId
+                 }
+               }
+          }
+      }
+''';
+}
+
 // Add additional param in match =
 // matchId
 // startDate

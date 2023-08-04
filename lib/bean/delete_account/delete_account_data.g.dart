@@ -33,17 +33,17 @@ Map<String, dynamic> _$$_DeleteAccountToJson(_$_DeleteAccount instance) =>
     };
 
 _$_Errors _$$_ErrorsFromJson(Map<String, dynamic> json) => _$_Errors(
-      nonFieldErrors: (json['nonFieldErrors'] as List<dynamic>?)
+      password: (json['password'] as List<dynamic>?)
           ?.map((e) => ErrorsFields.fromJson(e as Map<String, dynamic>))
           .toList(),
-      password: (json['password'] as List<dynamic>?)
+      nonFieldErrors: (json['nonFieldErrors'] as List<dynamic>?)
           ?.map((e) => ErrorsFields.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
 Map<String, dynamic> _$$_ErrorsToJson(_$_Errors instance) => <String, dynamic>{
-      'nonFieldErrors': instance.nonFieldErrors,
       'password': instance.password,
+      'nonFieldErrors': instance.nonFieldErrors,
     };
 
 _$_ErrorsFields _$$_ErrorsFieldsFromJson(Map<String, dynamic> json) =>
