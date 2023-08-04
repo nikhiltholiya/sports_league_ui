@@ -139,6 +139,7 @@ class _ProfileDetailPageState extends State<ProfileDetailPage>
                         'userId': '${userId.getUserId}',
                       },
                       pollInterval: Duration(seconds: 100),
+                      fetchPolicy: FetchPolicy.networkOnly, // Used for fetch and display Data from network only, Ignore cache data
                     ),
                     builder: (userResult, {fetchMore, refetch}) {
                       late UserProfiles? newProfile;
