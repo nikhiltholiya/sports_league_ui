@@ -26,7 +26,9 @@ import '../components/app_dialog.dart';
 import '../components/drop_down_view.dart';
 import '../components/edit_text_form_field.dart';
 import '../components/elevated_buttons.dart';
+import '../components/profile_pic_avatar.dart';
 import '../providers/internet_provider.dart';
+import '../providers/user_id_provider.dart';
 import '../utils/Constants.dart';
 import '../utils/Internet.dart';
 import '../utils/app_colors.dart';
@@ -529,10 +531,18 @@ class _EditProfilePageState extends State<EditProfilePage> with isInternetConnec
                       //20230802 prevent from multiple call
                       if (_pickedFile != null || _croppedFile != null) {
                         await imageUploadProgress();
+                      } else {
+                        if (errorList!.isNotEmpty) _showAlert();
                       }
+                      await executeForUpdate().then((value){
 
-                      if (errorList!.isNotEmpty) _showAlert();
-                      executeForUpdate();
+                        //20230804 Added for update information to previous screen
+                        Provider.of<UserIdProvider>(context, listen: false).setUserId('------');
+                        Timer(Duration(milliseconds: 200), () {
+                          Provider.of<UserIdProvider>(context, listen: false).setUserId(SharedPreferencesUtils.getUserId);
+                        });
+
+                      });
                     }
                   },
                   // 'Sorry you changed your mind!',
@@ -621,6 +631,8 @@ class _EditProfilePageState extends State<EditProfilePage> with isInternetConnec
       'file': multipartFile,
       'userId': '${userData.userId}',
     });
+
+    _clearImage();
   }
 
   Future<File> getImageFileFromAssets(String path) async {
@@ -632,32 +644,33 @@ class _EditProfilePageState extends State<EditProfilePage> with isInternetConnec
     return file;
   }
 
+  //20230804 Resolve image displaying issues.
   Widget imagePreview() {
     if (_croppedFile != null) {
       final path = _croppedFile!.path;
       return kIsWeb
-          ? CircleAvatar(
-              backgroundImage: NetworkImage(path),
+          ? ProfilePicAvatar(
+              path: path,
               radius: 100,
             )
           : CircleAvatar(backgroundImage: FileImage(File(path)), radius: 100);
     } else if (_pickedFile != null) {
       final path = _pickedFile!.path;
       return kIsWeb
-          ? CircleAvatar(
-              backgroundImage: NetworkImage(path),
+          ? ProfilePicAvatar(
+              path: path,
               radius: 100,
             )
           : CircleAvatar(backgroundImage: FileImage(File(path)), radius: 100);
     } else if (picture != null || picture != '') {
       //20230802 show images if already uploaded
-      return CircleAvatar(
-        backgroundImage: NetworkImage(picture!),
+      return ProfilePicAvatar(
+        path: picture,
         radius: 100,
       );
     } else {
-      return CircleAvatar(
-        backgroundImage: AssetImage('assets/avatar0.png'),
+      return ProfilePicAvatar(
+        path: null,
         radius: 100,
       );
     }
@@ -780,6 +793,9 @@ class _EditProfilePageState extends State<EditProfilePage> with isInternetConnec
             },
             onPositiveClick: () {
               Navigator.of(context).pop();
+              if (errorList?.first?.toString().toLowerCase() == 'done') {
+                Navigator.of(context).pop();
+              }
             },
           );
         });
