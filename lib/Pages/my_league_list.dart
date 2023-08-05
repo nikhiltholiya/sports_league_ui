@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:form_field_validator/form_field_validator.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:provider/provider.dart';
 
@@ -10,7 +12,9 @@ import '../Pages/base_activity.dart';
 import '../Pages/league_details.dart';
 import '../Pages/no_internet_page.dart';
 import '../bean/all_leagues/all_leagues.dart';
+import '../bean/cities_query/cities_query.dart';
 import '../components/drop_down_view.dart';
+import '../components/edit_text_form_field.dart';
 import '../components/my_league_list_tile.dart';
 import '../components/no_data_list_tile.dart';
 import '../providers/internet_provider.dart';
@@ -50,23 +54,23 @@ class _MyLeagueListState extends State<MyLeagueList> with isInternetConnection {
   var streamController;
   int completed = 0;
 
+  //20230805 Added this for search cities with typing
+  String? Search = '';
+  var _citySearchStream = StreamController<List<Edges>>();
+  late CitiesQueryData _citiesQueryData;
+  Map<String, dynamic> paramForSearchCity = {};
+  Map<String, dynamic> paramTypeForSearchCity = {};
+  final TextEditingController _cityTextController = TextEditingController();
+  late List<String>? cityList = [];
+  FocusNode? cityFocusNode;
+
   @override
   void initState() {
     _scrollController = ScrollController();
 
-    // param = {
-    //   '\$applicant_UserId': 'UUID',
-    // };
-    // paramType = {
-    //   'applicant_UserId': '\$applicant_UserId',
-    // };
-    // passVariable = {
-    //   'applicant_UserId': '${SharedPreferencesUtils.getUserId}'
-    // };
-
     //20230610 Adding New Param and Query.
-    param = {'\$orderby': 'String','\$league_State': 'String', '\$league_City': 'String'};
-    paramType = {'orderBy': '\$orderby','state': '\$league_State', 'city': '\$league_City'};
+    param = {'\$orderby': 'String', '\$league_State': 'String', '\$league_City': 'String'};
+    paramType = {'orderBy': '\$orderby', 'state': '\$league_State', 'city': '\$league_City'};
 
     if (SharedPreferencesUtils.getLastCity != null) {
       dropDownValue = SharedPreferencesUtils.getLastCity;
@@ -84,6 +88,35 @@ class _MyLeagueListState extends State<MyLeagueList> with isInternetConnection {
         'orderBy': '-createdAt',
         'league_State': '',
         'league_City': '',
+      };
+    }
+    streamController = StreamController<Map<String, dynamic>>();
+
+    //20230805 Added for search city Query
+    applicantsList = [];
+    cityFocusNode = FocusNode();
+    paramForSearchCity = {
+      '\$cityNameSearch': 'String!',
+    };
+    paramTypeForSearchCity = {
+      'cityNameSearch': '\$cityNameSearch',
+    };
+    _citySearchStream.sink.add([]);
+    _cityTextController.text = '';
+
+    if (SharedPreferencesUtils.getLastCity != null) {
+      final split = SharedPreferencesUtils.getLastCity!.split(',');
+      selectedCity = split[0].toString().trim();
+      selectedState = split[1].toString().trim();
+
+      _cityTextController.text = '${selectedCity!}, ${selectedState}';
+      cityFocusNode!.unfocus();
+      _citySearchStream.sink.add([]);
+
+      passVariable = {
+        'league_State': selectedState ?? '',
+        'league_City': selectedCity ?? '',
+        'orderBy': '-createdAt',
       };
     }
 
@@ -109,92 +142,124 @@ class _MyLeagueListState extends State<MyLeagueList> with isInternetConnection {
             onBackClick: () => Navigator.pop(context),
             body: Container(
               color: aWhite,
-              child: StreamBuilder<Map<String, dynamic>>(
-                stream: streamController.stream,
-                builder: (context, streamSnapshot) {
-                  if (streamSnapshot.hasError) return Text('Error in Stream');
-
-                  // debugPrint('${MyLeagueList.path} * params : $param -- $paramType -- $passVariable');
-                  // debugPrint('${MyLeagueList.path} * data :${streamSnapshot.data} *');
-
-                  if (streamSnapshot.hasData) {
-                    return Query(
-                      options: QueryOptions(
-                        document: gql(allLeaguesQuery(param, paramType)),
-                        variables: passVariable,
-                        pollInterval: Duration(seconds: 100),
+              child: CustomScrollView(
+                controller: _scrollController,
+                physics: const BouncingScrollPhysics(),
+                shrinkWrap: true,
+                slivers: <Widget>[
+                  SliverPersistentHeader(
+                    delegate: SilverDelegates(
+                      child: Container(
+                        width: double.infinity,
+                        color: aWhite,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          //20230805 Added new view for city searchable and states list from selected city.
+                          child: EditTextFormField(
+                            onTap: () {
+                              _cityTextController.selection = TextSelection.fromPosition(
+                                TextPosition(offset: _cityTextController.text.length),
+                              );
+                            },
+                            textController: _cityTextController,
+                            validator: RequiredValidator(errorText: errCity),
+                            inputFormatter: [FilteringTextInputFormatter(RegExp(r'[a-zA-Z ,]'), allow: true)],
+                            hint: selectCity,
+                            focusNode: cityFocusNode,
+                            onTextChange: (value) async {
+                              selectedCity = value;
+                              Search = value;
+                              await executeForCities(Search!);
+                            },
+                          ),
+                        ),
                       ),
-                      builder: (result, {fetchMore, refetch}) {
-                        if (result.hasException) {
-                          return Text(result.exception.toString());
-                        }
+                    ),
+                    floating: false,
+                    pinned: true,
+                  ),
+                  StreamBuilder<List<Edges>>(
+                      stream: _citySearchStream.stream,
+                      builder: (context, snapshot) {
+                        cityList = [];
+                        if (snapshot.hasData) {
+                          for (var cityItem in snapshot.data!) {
+                            cityList!.add('${cityItem.node!.name!}, ${cityItem.node!.state!}');
+                          }
 
-                        if (result.isLoading && result.data == null) {
-                          return const Center(child: CupertinoActivityIndicator());
-                        }
-
-                        allLeaguesApps = AllLeaguesData.fromJson(result.data!);
-                        applicantsList = [];
-                        applicantsList!.addAll(allLeaguesApps!.allLeagues!.edges!);
-
-                        // completed = 0;
-                        // for (var data in allLeaguesApps!.allLeagueApplications!.edges!) {
-                        //   if (data.node!.status!.toLowerCase() == 'approved') {
-                        //     if (data.node!.league!.status!.toLowerCase() != 'ongoing') {
-                        //       if (completed < 5) {
-                        //         applicantsList!.add(data);
-                        //         completed++;
-                        //       }
-                        //     } else {
-                        //       applicantsList!.add(data);
-                        //     }
-                        //   }
-                        // }
-
-                        return CustomScrollView(
-                          controller: _scrollController,
-                          physics: const BouncingScrollPhysics(),
-                          shrinkWrap: true,
-                          slivers: <Widget>[
-                            SliverPersistentHeader(
-                              delegate: SilverDelegates(
-                                child: Container(
-                                  width: double.infinity,
-                                  color: aWhite,
+                          return cityList!.length > 0
+                              ? SliverToBoxAdapter(
                                   child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: DropDownView(
-                                      dropList: ['Portland, Oregon', 'Atlanta, Georgia', 'Austin, Texas'],
-                                      hint: joinLeagueByCity,
-                                      dropdownValue: dropDownValue,
-                                      onValueChange: (value) {
-                                        dropDownValue = value;
-                                        final split = value.split(',');
-                                        selectedCity = split![0].toString().trim();
-                                        selectedState = split![1].toString().trim();
+                                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                                    child: ListView.separated(
+                                      itemBuilder: (context, index) => GestureDetector(
+                                        onTap: () {
+                                          final split = cityList![index].split(',');
+                                          selectedCity = split[0].toString().trim();
+                                          selectedState = split[1].toString().trim();
 
-                                        // setState(() {
-                                        // param = {'\$league_State': 'String!', '\$league_City': 'String!'};
-                                        // paramType = {'league_State': '\$league_State', 'league_City': '\$league_City'};
-                                        passVariable = {
-                                          'league_State': selectedState ?? '',
-                                          'league_City': selectedCity ?? '',
-                                          'orderBy': '-createdAt',
-                                        };
+                                          _cityTextController.text = '${selectedCity!}, ${selectedState}';
+                                          cityFocusNode!.unfocus();
+                                          _citySearchStream.sink.add([]);
 
-                                        SharedPreferencesUtils.setLastCity(value); //20230608
+                                          passVariable = {
+                                            'league_State': selectedState ?? '',
+                                            'league_City': selectedCity ?? '',
+                                            'orderBy': '-createdAt',
+                                          };
 
-                                        streamController.sink.add(passVariable);
-                                        // });
-                                      },
+                                          SharedPreferencesUtils.setLastCity(cityList![index]); //20230608
+
+                                          streamController.sink.add(passVariable);
+                                        },
+                                        child: Container(
+                                          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 12),
+                                          child: Text(
+                                            '${cityList![index]}',
+                                            style: TextStyle(
+                                              color: aGray,
+                                            ),
+                                          ),
+                                          decoration: BoxDecoration(color: aWhite),
+                                        ),
+                                      ),
+                                      separatorBuilder: (context, index) => Divider(height: 1),
+                                      itemCount: cityList!.length,
+                                      shrinkWrap: true,
+                                      physics: const BouncingScrollPhysics(),
                                     ),
                                   ),
-                                ),
-                              ),
-                              floating: false,
-                              pinned: true,
-                            ),
-                            (applicantsList!.isEmpty)
+                                )
+                              : SliverToBoxAdapter(child: SizedBox());
+                        }
+                        return SliverToBoxAdapter(child: SizedBox());
+                      }),
+                  StreamBuilder<Map<String, dynamic>>(
+                    stream: streamController.stream,
+                    builder: (context, streamSnapshot) {
+                      if (streamSnapshot.hasError) return SliverToBoxAdapter(child: Text('Error in Stream'));
+
+                      if (streamSnapshot.hasData) {
+                        return Query(
+                          options: QueryOptions(
+                            document: gql(allLeaguesQuery(param, paramType)),
+                            variables: passVariable,
+                            pollInterval: Duration(seconds: 100),
+                          ),
+                          builder: (result, {fetchMore, refetch}) {
+                            if (result.hasException) {
+                              return SliverToBoxAdapter(child: Text(result.exception.toString()));
+                            }
+
+                            if (result.isLoading && result.data == null) {
+                              return SliverToBoxAdapter(child: const Center(child: CupertinoActivityIndicator()));
+                            }
+
+                            allLeaguesApps = AllLeaguesData.fromJson(result.data!);
+                            applicantsList = [];
+                            applicantsList!.addAll(allLeaguesApps!.allLeagues!.edges!);
+
+                            return (applicantsList!.isEmpty)
                                 ? SliverToBoxAdapter(
                                     child: NoDataListTile(
                                       onTileClick: () {},
@@ -205,23 +270,23 @@ class _MyLeagueListState extends State<MyLeagueList> with isInternetConnection {
                                 : SliverList(
                                     delegate: SliverChildBuilderDelegate(
                                       (context, index) => MyLeagueListTile(
-                                            leagueStatus: applicantsList![index].node!.status,
-                                            profileImg: 'assets/winner_cup.png',
-                                            leagueLocation:
+                                        leagueStatus: applicantsList![index].node!.status,
+                                        profileImg: 'assets/winner_cup.png',
+                                        leagueLocation:
                                             '${applicantsList![index].node!.city}, ${applicantsList![index].node!.state}, ${applicantsList![index].node!.country}',
-                                            leagueDate: convertDate(applicantsList?[index].node?.startDate,
-                                                applicantsList?[index].node?.endDate),
-                                            leagueTitle: applicantsList![index].node!.name,
-                                            onTileClick: () {
-                                              Provider.of<LeagueIdProvider>(context, listen: false)
-                                                  .setLeagueId(applicantsList![index].node!.leagueId);
-                                              Navigator.pushNamed(
-                                                context,
-                                                LeagueDetails.path, /*arguments: applicantsList![index].node*/
-                                              );
-                                            },
-                                            onProfileClick: () {},
-                                          ),
+                                        leagueDate: convertDate(applicantsList?[index].node?.startDate,
+                                            applicantsList?[index].node?.endDate),
+                                        leagueTitle: applicantsList![index].node!.name,
+                                        onTileClick: () {
+                                          Provider.of<LeagueIdProvider>(context, listen: false)
+                                              .setLeagueId(applicantsList![index].node!.leagueId);
+                                          Navigator.pushNamed(
+                                            context,
+                                            LeagueDetails.path, /*arguments: applicantsList![index].node*/
+                                          );
+                                        },
+                                        onProfileClick: () {},
+                                      ),
                                       //     MyLeagueListTile(
                                       //   leagueStatus: applicantsList![index].node!.league!.status,
                                       //   profileImg: 'assets/winner_cup.png',
@@ -242,14 +307,14 @@ class _MyLeagueListState extends State<MyLeagueList> with isInternetConnection {
                                       // ),
                                       childCount: applicantsList?.length,
                                     ),
-                                  )
-                          ],
+                                  );
+                          },
                         );
-                      },
-                    );
-                  }
-                  return Center(child: CupertinoActivityIndicator());
-                },
+                      }
+                      return SliverToBoxAdapter(child: Center(child: CupertinoActivityIndicator()));
+                    },
+                  ),
+                ],
               ),
             ),
           );
@@ -271,5 +336,39 @@ class _MyLeagueListState extends State<MyLeagueList> with isInternetConnection {
     _scrollController!.dispose();
     disposeInternet();
     super.dispose();
+  }
+
+  //20230805 Add city with searchable and states as per city selected
+  Future<bool?> executeForCities(String Search) async {
+    final QueryOptions getCities = QueryOptions(
+      document: gql(cities(paramForSearchCity, paramTypeForSearchCity)),
+      variables: {'cityNameSearch': Search},
+      fetchPolicy: FetchPolicy.networkOnly,
+      pollInterval: Duration(seconds: 100),
+    );
+
+    final client = GraphQLProvider.of(context).value;
+    final QueryResult result = await client.query(getCities);
+    _citySearchStream.sink.add([]);
+
+    if (result.hasException) {
+      print(result.exception.toString());
+      return false;
+    } else if (result.isLoading) {
+      print('Loading..');
+      return false;
+    } else {
+      try {
+        print('$result');
+        if (Search.trim().length > 0) {
+          _citiesQueryData = CitiesQueryData.fromJson(result.data!);
+          _citySearchStream.sink.add(_citiesQueryData.cities!.edges!);
+        }
+        return true;
+      } catch (e) {
+        debugPrint('Exception -- $e');
+        return false;
+      }
+    }
   }
 }

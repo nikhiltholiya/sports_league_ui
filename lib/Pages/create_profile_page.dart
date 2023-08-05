@@ -337,7 +337,8 @@ class _CreateProfilePageState extends State<CreateProfilePage> with isInternetCo
                                     focusNode: cityFocusNode,
                                     hint: city,
                                     validator: RequiredValidator(errorText: errCity),
-                                    inputFormatter: [FilteringTextInputFormatter(RegExp(r'[a-zA-Z]'), allow: true)],
+                                    // 20230805 input contain space
+                                    inputFormatter: [FilteringTextInputFormatter(RegExp(r'[a-zA-Z ]'), allow: true)],
                                     onTextChange: (value) {
                                       cityValue = value;
                                       Search = value;
