@@ -380,7 +380,10 @@ class _EditProfilePageState extends State<EditProfilePage> with isInternetConnec
                                         },
                                         textController: _cityTextController,
                                         validator: RequiredValidator(errorText: errCity),
-                                        inputFormatter: [FilteringTextInputFormatter(RegExp(r'[a-zA-Z]'), allow: true)],
+                                        // 20230805 input contain space
+                                        inputFormatter: [
+                                          FilteringTextInputFormatter(RegExp(r'[a-zA-Z ]'), allow: true)
+                                        ],
                                         hint: city,
                                         onTextChange: (value) {
                                           cityValue = value;
@@ -534,14 +537,13 @@ class _EditProfilePageState extends State<EditProfilePage> with isInternetConnec
                       } else {
                         if (errorList!.isNotEmpty) _showAlert();
                       }
-                      await executeForUpdate().then((value){
-
+                      await executeForUpdate().then((value) {
                         //20230804 Added for update information to previous screen
                         Provider.of<UserIdProvider>(context, listen: false).setUserId('------');
                         Timer(Duration(milliseconds: 200), () {
-                          Provider.of<UserIdProvider>(context, listen: false).setUserId(SharedPreferencesUtils.getUserId);
+                          Provider.of<UserIdProvider>(context, listen: false)
+                              .setUserId(SharedPreferencesUtils.getUserId);
                         });
-
                       });
                     }
                   },
